@@ -18,10 +18,6 @@
     <!-- PERSONALIZATION Settings  -->
     <!-- Settings main menu category heading. Interface (Launcher, Themes, System). [CHAR LIMIT=40] -->
     <string name="header_category_interface">DEMENTED Interface</string>
-    
-    <!-- INTERFACE Settings  -->
-    <!-- Settings main menu category heading. Rom (Launcher, Themes, System). [CHAR LIMIT=40] -->
-    <string name="header_category_rom_settings">ASS</string>
 
     <!-- Interface settings  -->
     <string name="interface_settings_title">Interface</string>
@@ -29,6 +25,7 @@
 
     <!-- Notification Drawer  -->
     <string name="notification_drawer_title">Notification drawer</string>
+
     <!-- Power Widget  -->
     <string name="power_widget_title">Power widget</string>
     <string name="title_expanded_widget">Power widget</string>

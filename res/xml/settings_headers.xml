@@ -57,26 +57,16 @@
         android:breadCrumbTitle="@string/wireless_networks_settings_title"
         android:fragment="com.android.settings.WirelessSettings"
         android:icon="@drawable/empty_icon" />
-    <!-- ROM -->
-    <header android:title="@string/header_category_rom_settings" />
-
-    <!-- Interface -->
-    <header
-        android:id="@+id/interface_settings"
-        android:icon="@drawable/ic_settings_slim"
-        android:fragment="com.android.settings.slim.InterfaceSettings"
-        android:title="@string/interface_settings_title" />
 
    <!-- INTERFACE -->
     <header android:id="@+id/interface_section"
         android:title="@string/header_category_interface" />
 
-    <!-- Statusbar -->
     <header
-        android:id="@+id/statusbar_settings"
-	android:icon="@drawable/ic_settings_statusbar"
-        android:fragment="com.android.settings.demented.StatusBar"
-        android:title="@string/status_bar_title" />
+        android:id="@+id/interface_settings"
+        android:icon="@drawable/ic_settings_demented"
+        android:fragment="com.android.settings.demented.InterfaceSettings"
+        android:title="@string/interface_settings_title" />
 
     <!-- Themes -->
     <header
