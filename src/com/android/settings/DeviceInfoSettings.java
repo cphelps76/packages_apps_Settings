@@ -70,6 +70,8 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
 
     static final int TAPS_TO_BE_A_DEVELOPER = 7;
 
+    private static final String KEY_MOD_BUILD_DATE = "build_date";
+
     long[] mHits = new long[3];
     int mDevHitCountdown;
     Toast mDevHitToast;
@@ -101,6 +103,7 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
         setStringSummary(KEY_FIRMWARE_REVISION, Utils.getProp("ro.matricom.firmware.version"));
         findPreference(KEY_BUILD_NUMBER).setEnabled(true);
         findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
+        setValueSummary(KEY_MOD_BUILD_DATE, "ro.build.date");
 
         if (!SELinux.isSELinuxEnabled()) {
             String status = getResources().getString(R.string.selinux_status_disabled);
