@@ -5035,6 +5035,10 @@
     <string name="pie_control_trigger_top">Top screen border</string>
     <string name="pie_control_trigger_top_summary">Only navigation will be displayed at top</string>
 
+    <!-- Stylus Icon -->
+    <string name="stylus_icon_enabled_title">Show icon when using stylus</string>
+    <string name="stylus_icon_enabled_summary">Show the pointer icon when hovering or drawing with the stylus</string>
+
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
 
     <string name="volume_adjust_sounds_enable_title">Volume adjust sound</string>
