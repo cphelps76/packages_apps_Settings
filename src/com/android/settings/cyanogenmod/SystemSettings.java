@@ -81,6 +81,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String PREF_LOW_BATTERY_WARNING_POLICY = "pref_low_battery_warning_policy";
     private static final String PREF_POWER_CRT_MODE = "system_power_crt_mode";
     private static final String PREF_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off";
+    private static final String KEY_HARDWARE_KEYS = "hardware_keys";
 
     private PreferenceScreen mPieControl;
     private ListPreference mLowBatteryWarning;
@@ -155,6 +156,17 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
         mDualpane = (CheckBoxPreference) findPreference(PREF_FORCE_DUAL_PANEL);
             mDualpane.setOnPreferenceChangeListener(this);
+
+        // Only show the hardware keys config on a device that does not have a navbar
+        IWindowManager windowManager = IWindowManager.Stub.asInterface(
+                ServiceManager.getService(Context.WINDOW_SERVICE));
+        try {
+            if (windowManager.hasNavigationBar()) {
+                getPreferenceScreen().removePreference(findPreference(KEY_HARDWARE_KEYS));
+            }
+        } catch (RemoteException e) {
+            // Do nothing
+        }
 
     }
 
