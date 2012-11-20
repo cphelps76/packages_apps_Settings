@@ -27,6 +27,9 @@
     <string name="advanced_catagory_title">Advanced</string>
     <string name="general_settings_title">General</string>
 
+    <!-- Launcher settings  -->
+    <string name="launcher_settings_title">Launcher</string>
+
     <!-- Hostname setting -->
     <string name="device_hostname">Device hostname</string>
 

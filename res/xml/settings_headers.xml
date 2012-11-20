@@ -68,6 +68,12 @@
         android:fragment="com.android.settings.demented.InterfaceSettings"
         android:title="@string/interface_settings_title" />
 
+    <!-- Launcher -->
+    <header
+        android:id="@+id/launcher_settings"
+        android:title="@string/launcher_settings_title"
+        android:icon="@drawable/ic_settings_cmlauncher" />
+
     <!-- Themes -->
     <header
         android:id="@+id/themes_settings"
