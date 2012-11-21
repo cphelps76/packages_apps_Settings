@@ -25,6 +25,8 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 import android.view.IWindowManager;
 
@@ -36,17 +38,11 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "InterfaceSettings";
 
-    private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
-    private static final String KEY_NOTIFICATION_DRAWER_TABLET = "notification_drawer_tablet";
-    private static final String KEY_NAVIGATION_BAR = "navigation_bar";
-    private static final String KEY_NAVIGATION_BAR_RING = "navring_settings";
-    private static final String KEY_HARDWARE_KEYS = "hardware_keys";
+    private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
+    private static final String KEY_BATTERY_LIGHT = "battery_light";
 
-    private PreferenceScreen mPhoneDrawer;
-    private PreferenceScreen mTabletDrawer;
-    private PreferenceScreen mHardwareKeys;
-
-    private final Configuration mCurConfig = new Configuration();
+    private PreferenceScreen mNotificationPulse;
+    private PreferenceScreen mBatteryPulse;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,50 +50,43 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.interface_settings);
 
-        mPhoneDrawer = (PreferenceScreen) findPreference(KEY_NOTIFICATION_DRAWER);
-        mTabletDrawer = (PreferenceScreen) findPreference(KEY_NOTIFICATION_DRAWER_TABLET);
-        mHardwareKeys = (PreferenceScreen) findPreference(KEY_HARDWARE_KEYS);
-
-        if (Utils.isTablet(getActivity())) {
-            if (mPhoneDrawer != null) {
-                getPreferenceScreen().removePreference(mPhoneDrawer);
-                getPreferenceScreen().removePreference(mHardwareKeys);
-            }
-        } else {
-            if (mTabletDrawer != null) {
-                getPreferenceScreen().removePreference(mTabletDrawer);
-            }
-        }
-
-        IWindowManager windowManager = IWindowManager.Stub.asInterface(
-                ServiceManager.getService(Context.WINDOW_SERVICE));
-        try {
-            if (!windowManager.hasNavigationBar()) {
-                Preference naviBar = findPreference(KEY_NAVIGATION_BAR);
-                Preference naviBarRing = findPreference(KEY_NAVIGATION_BAR_RING);
-                if (naviBar != null) {
-                    getPreferenceScreen().removePreference(naviBar);
-                    getPreferenceScreen().removePreference(naviBarRing);
-                }
+        mNotificationPulse = (PreferenceScreen) findPreference(KEY_NOTIFICATION_PULSE);
+        if (mNotificationPulse != null) {
+            if (!getResources().getBoolean(com.android.internal.R.bool.config_intrusiveNotificationLed)) {
+                getPreferenceScreen().removePreference(mNotificationPulse);
             } else {
-                Preference hardKeys = findPreference(KEY_HARDWARE_KEYS);
-                if (hardKeys != null) {
-                    getPreferenceScreen().removePreference(hardKeys);
-                }
+                updateLightPulseDescription();
             }
-        } catch (RemoteException e) {
+        }
+
+        mBatteryPulse = (PreferenceScreen) findPreference(KEY_BATTERY_LIGHT);
+        if (mBatteryPulse != null) {
+            if (getResources().getBoolean(
+                    com.android.internal.R.bool.config_intrusiveBatteryLed) == false) {
+                getPreferenceScreen().removePreference(mBatteryPulse);
+            } else {
+                updateBatteryPulseDescription();
+            }
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    private void updateLightPulseDescription() {
+        if (Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.NOTIFICATION_LIGHT_PULSE, 0) == 1) {
+            mNotificationPulse.setSummary(getString(R.string.notification_light_enabled));
+        } else {
+            mNotificationPulse.setSummary(getString(R.string.notification_light_disabled));
+         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
+    private void updateBatteryPulseDescription() {
+        if (Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.BATTERY_LIGHT_ENABLED, 1) == 1) {
+            mBatteryPulse.setSummary(getString(R.string.notification_light_enabled));
+        } else {
+            mBatteryPulse.setSummary(getString(R.string.notification_light_disabled));
+        }
+     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
