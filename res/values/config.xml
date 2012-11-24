@@ -43,5 +43,8 @@
     <!-- Whether can use color tuning -->
     <bool name="has_color_tuning">true</bool>
 
+    <!-- Show Expanded Desktop preference -->
+    <bool name="config_show_expandedDesktop">false</bool>
+
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
 </resources>
