@@ -62,6 +62,7 @@
     <header android:id="@+id/interface_section"
         android:title="@string/header_category_interface" />
 
+    <!-- Interface -->
     <header
         android:id="@+id/interface_settings"
         android:icon="@drawable/ic_settings_demented"
@@ -80,6 +81,13 @@
         android:fragment="com.android.settings.demented.superuser.PolicyNativeFragment"
         android:icon="@drawable/ic_action_permission"
         android:title="@string/superuser" />
+
+    <!-- Performance -->
+    <header
+        android:id="@+id/performance_settings"
+        android:fragment="com.android.settings.cyanogenmod.PerformanceSettings"
+        android:icon="@drawable/ic_settings_performance"
+        android:title="@string/performance_settings_title" />
 
     <!-- Themes -->
     <header
@@ -225,6 +233,13 @@
         android:fragment="com.android.settings.DevelopmentSettings"
         android:icon="@drawable/ic_settings_development"
         android:title="@string/development_settings_title" />
+
+    <!-- Performance -->
+    <header
+        android:id="@+id/performance_settings"
+        android:fragment="com.android.settings.cyanogenmod.PerformanceSettings"
+        android:icon="@drawable/ic_settings_performance"
+        android:title="@string/performance_settings_title" />
 
     <!-- About Device -->
     <header
