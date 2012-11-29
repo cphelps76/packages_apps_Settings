@@ -84,11 +84,15 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
     private static final String KEY_MISSED_CALL_BREATH = "missed_call_breath";
     private static final String KEY_MMS_BREATH = "mms_breath";
+    private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
+    private static final String KEY_BATTERY_LIGHT = "battery_light";
 
     private PreferenceScreen mPieControl;
     private ListPreference mLowBatteryWarning;
     private static ContentResolver mContentResolver;
     private CheckBoxPreference mMMSBreath;
+    private PreferenceScreen mNotificationPulse;
+    private PreferenceScreen mBatteryPulse;
 
     CheckBoxPreference mShowActionOverflow;
     Preference mCustomLabel;
@@ -178,7 +182,43 @@ public class SystemSettings extends SettingsPreferenceFragment implements
             // Do nothing
         }
 
+        mNotificationPulse = (PreferenceScreen) findPreference(KEY_NOTIFICATION_PULSE);
+        if (mNotificationPulse != null) {
+            if (!getResources().getBoolean(com.android.internal.R.bool.config_intrusiveNotificationLed)) {
+                getPreferenceScreen().removePreference(mNotificationPulse);
+            } else {
+                updateLightPulseDescription();
+            }
+        }
+
+        mBatteryPulse = (PreferenceScreen) findPreference(KEY_BATTERY_LIGHT);
+        if (mBatteryPulse != null) {
+            if (getResources().getBoolean(
+                    com.android.internal.R.bool.config_intrusiveBatteryLed) == false) {
+                getPreferenceScreen().removePreference(mBatteryPulse);
+            } else {
+                updateBatteryPulseDescription();
+            }
+        }
     }
+
+    private void updateLightPulseDescription() {
+        if (Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.NOTIFICATION_LIGHT_PULSE, 0) == 1) {
+            mNotificationPulse.setSummary(getString(R.string.notification_light_enabled));
+        } else {
+            mNotificationPulse.setSummary(getString(R.string.notification_light_disabled));
+        }
+    }
+
+    private void updateBatteryPulseDescription() {
+        if (Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.BATTERY_LIGHT_ENABLED, 1) == 1) {
+            mBatteryPulse.setSummary(getString(R.string.notification_light_enabled));
+        } else {
+            mBatteryPulse.setSummary(getString(R.string.notification_light_disabled));
+        }
+     }
 
     @Override
     public void onResume() {
@@ -186,6 +226,8 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         if (mPieControl != null) {
             updatePieControlDescription();
         }
+        updateLightPulseDescription();
+        updateBatteryPulseDescription();
     }
 
     @Override
