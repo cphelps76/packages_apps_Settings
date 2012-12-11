@@ -1559,6 +1559,8 @@
 
         <!-- DEMENTED activities Start -->
         <activity android:name=".demented.StatusBar" />
+        <activity android:name=".demented.InterfaceSettings" />
+        <activity android:name=".demented.PowerWidget" />
 
         <!-- DEMENTED activities End -->
 
