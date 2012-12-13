@@ -66,4 +66,9 @@
 
     </PreferenceCategory>
 
+    <PreferenceScreen
+        android:key="sound_settings"
+        android:fragment="com.android.settings.slim.SoundSettings"
+        android:title="@string/sound_title" />
+
 </PreferenceScreen>

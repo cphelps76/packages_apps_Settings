@@ -48,6 +48,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.VolumePanel;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -62,8 +63,11 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     /** If there is no setting in the provider, use this. */
     private static final int FALLBACK_EMERGENCY_TONE_VALUE = 0;
 
+    private static final String KEY_VOLUME_OVERLAY = "volume_overlay";
+    private static final String KEY_SILENT_MODE = "silent_mode";
     private static final String KEY_VIBRATE = "vibrate_when_ringing";
     private static final String KEY_RING_VOLUME = "ring_volume";
+    private static final String KEY_INCREASING_RING = "increasing_ring";
     private static final String KEY_MUSICFX = "musicfx";
     private static final String KEY_DTMF_TONE = "dtmf_tone";
     private static final String KEY_SOUND_EFFECTS = "sound_effects";
@@ -81,9 +85,13 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private static final String KEY_QUIET_HOURS = "quiet_hours";
 
 
+    private static final String SILENT_MODE_OFF = "off";
+    private static final String SILENT_MODE_VIBRATE = "vibrate";
+    private static final String SILENT_MODE_MUTE = "mute";
+
     private static final String[] NEED_VOICE_CAPABILITY = {
             KEY_RINGTONE, KEY_DTMF_TONE, KEY_CATEGORY_CALLS,
-            KEY_EMERGENCY_TONE, KEY_VIBRATE
+            KEY_EMERGENCY_TONE, KEY_VIBRATE, KEY_INCREASING_RING
     };
 
     private static final int MSG_UPDATE_RINGTONE_SUMMARY = 1;
@@ -253,6 +261,10 @@ public class SoundSettings extends SettingsPreferenceFragment implements
 
         IntentFilter filter = new IntentFilter(Intent.ACTION_DOCK_EVENT);
         getActivity().registerReceiver(mReceiver, filter);
+
+        filter = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
+        getActivity().registerReceiver(mReceiver, filter);
+
     }
 
     @Override
@@ -275,6 +287,29 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         } else {
             mQuietHours.setSummary(getString(R.string.quiet_hours_summary));
         }
+    }
+
+    private void setPhoneSilentSettingValue(String value) {
+        int ringerMode = AudioManager.RINGER_MODE_NORMAL;
+        if (value.equals(SILENT_MODE_MUTE)) {
+            ringerMode = AudioManager.RINGER_MODE_SILENT;
+        } else if (value.equals(SILENT_MODE_VIBRATE)) {
+            ringerMode = AudioManager.RINGER_MODE_VIBRATE;
+        }
+        mAudioManager.setRingerMode(ringerMode);
+    }
+
+    private String getPhoneSilentModeSettingValue() {
+        switch (mAudioManager.getRingerMode()) {
+        case AudioManager.RINGER_MODE_NORMAL:
+            return SILENT_MODE_OFF;
+        case AudioManager.RINGER_MODE_VIBRATE:
+            return SILENT_MODE_VIBRATE;
+        case AudioManager.RINGER_MODE_SILENT:
+            return SILENT_MODE_MUTE;
+        }
+        // Shouldn't happen
+        return SILENT_MODE_OFF;
     }
 
     private void updateRingtoneName(int type, Preference preference, int msg) {

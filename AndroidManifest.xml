@@ -1563,6 +1563,7 @@
         <activity android:name=".demented.InterfaceSettings" />
         <activity android:name=".demented.PowerWidget" />
         <activity android:name=".demented.PerformanceSettings" />
+        <activity android:name=".demented.SoundSettings" />
 
         <!-- DEMENTED activities End -->
 
