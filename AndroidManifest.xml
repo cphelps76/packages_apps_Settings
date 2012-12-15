@@ -1464,6 +1464,8 @@
 
         <activity android:name=".cyanogenmod.PowerMenu" />
 
+        <activity android:name=".aokp.StatusBarBattery" />
+
         <activity android:name=".profiles.NFCProfile"
                 android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
@@ -1564,6 +1566,16 @@
                 <action android:name="android.provider.Contacts.PROFILE_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".aokp.StatusBarBattery"
+            android:label="@string/title_statusbar_battery" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
 
     </application>
 </manifest>
