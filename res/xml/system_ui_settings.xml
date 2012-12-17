@@ -34,6 +34,12 @@
         android:fragment="com.android.settings.cyanogenmod.NotificationDrawer"
         android:title="@string/notification_drawer_title" />
 
+    <Preference
+        android:fragment="com.android.settings.slim.NotificationDrawerStyle"
+        android:key="notification_style"
+        android:title="@string/notification_style_title"
+        android:summary="@string/notification_style_summary" />
+
     <ListPreference
         android:key="expanded_desktop"
         android:title="@string/power_menu_expanded_desktop"
