@@ -42,7 +42,6 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String KEY_NOTIFICATION_DRAWER_TABLET = "notification_drawer_tablet";
     private static final String KEY_NAVIGATION_BAR = "navigation_bar";
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
-    private static final String KEY_NAVIGATION_BAR = "navigation_bar";
 
     private PreferenceScreen mPhoneDrawer;
     private PreferenceScreen mTabletDrawer;
@@ -81,29 +80,8 @@ public class SystemSettings extends SettingsPreferenceFragment implements
                 if (hardKeys != null) {
                     getPreferenceScreen().removePreference(hardKeys);
                 }
-        // Only show the navigation bar config on phones that has a navigation bar
-        boolean removeKeys = false;
-        boolean removeNavbar = false;
-        IWindowManager windowManager = IWindowManager.Stub.asInterface(
-                ServiceManager.getService(Context.WINDOW_SERVICE));
-        try {
-            if (windowManager.hasNavigationBar()) {
-                removeKeys = true;
-                if (!Utils.isPhone(getActivity())) {
-                    removeNavbar = true;
-                }
-            } else {
-                removeNavbar = true;
             }
         } catch (RemoteException e) {
-        }
-
-        // Act on the above
-        if (removeKeys) {
-            getPreferenceScreen().removePreference(findPreference(KEY_HARDWARE_KEYS));
-        }
-        if (removeNavbar) {
-            getPreferenceScreen().removePreference(findPreference(KEY_NAVIGATION_BAR));
         }
     }
 

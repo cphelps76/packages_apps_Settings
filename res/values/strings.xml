@@ -37,11 +37,11 @@
     <!-- Settings main menu category heading. Wireless and networks (Wi-Fi, Bluetooth, data usage...). [CHAR LIMIT=40] -->
     <string name="header_category_wireless_networks">WIRELESS &amp; NETWORKS</string>
     <!-- Settings main menu category heading. Device (Sound, display, battery, applications...). [CHAR LIMIT=40] -->
-    <string name="header_category_device">DEVICE</string>
+    <string name="header_category_device">DEMENTED Mods</string>
     <!-- Settings main menu category heading. Personal (Accounts, security, language, backup...). [CHAR LIMIT=40] -->
     <string name="header_category_personal">PERSONAL</string>
     <!-- Settings main menu category heading. System (Updates, data, accessibility, about phone). [CHAR LIMIT=40] -->
-    <string name="header_category_system">SYSTEM</string>
+    <string name="header_category_system">DEMENTED SYSTEM</string>
 
     <!-- Phone info -->
     <!-- Phone Info screen. Button label to turn on the radio . Only shown in diagnostic screen, so precise translation is not needed. -->
@@ -4797,7 +4797,6 @@
     <string name="volume_ring_only_description">Ringtone</string>
 
     <!-- Navigation Bar #CM -->
-    <string name="navigation_bar_title">Navigation bar</string>
     <string name="navigation_bar_help_text">1 - To begin editing, tap the lock icon\n\n2 - Tap any button to assign or change functionality\n\n3 - Long press any button to rearrange the order\n\n4 - To save, tap the lock icon again\n\n5 - To restore system default, tap the reset button\n\n</string>
     <string name="navigation_bar_tips">&#8226; Actions can only be assigned to one button at a time\n\n&#8226; The home button cannot be re-assigned\n\n&#8226; Side buttons cannot be rearranged</string>
     <string name="navigation_bar_tips_title">Quick tips</string>
