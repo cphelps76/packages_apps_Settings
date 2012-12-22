@@ -4860,15 +4860,15 @@
     <string name="volume_key_cursor_control_on_reverse">Volume up/down moves cursor right/left</string>
 
     <!-- About phone screen,  setting developer name-->
-    <string name="mod_build_host">DEMENTED Developer Id</string>
-    <string name="mod_build_host_default">Unknown</string>
+    <string name="build_host">Developer Id</string>
+    <string name="build_host_default">Unknown</string>
 
     <!-- About phone screen,  setting option name-->
     <string name="mod_version">DEMENTED Version</string>
     <string name="mod_version_default">Unknown</string>
 
     <!-- About phone screen, build date of ROM -->
-    <string name="build_date">DEMENTED Build date</string>
+    <string name="build_date">Build date</string>
     <string name="build_date_default">2012-01-01-0000</string>
 
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
