@@ -65,6 +65,7 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment {
     private static final String PROPERTY_EQUIPMENT_ID = "ro.ril.fccid";
     private static final String KEY_MOD_VERSION = "mod_version";
     private static final String KEY_MOD_BUILD_DATE = "build_date";
+    private static final String KEY_MOD_BUILD_HOST = "build_host";
 
     static final int TAPS_TO_BE_A_DEVELOPER = 7;
 
@@ -89,6 +90,7 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment {
         findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
         setValueSummary(KEY_MOD_VERSION, "ro.modversion");
         setValueSummary(KEY_MOD_BUILD_DATE, "ro.build.date");
+        setValueSummary(KEY_MOD_BUILD_HOST, "ro.build.host");
 
         if (!SELinux.isSELinuxEnabled()) {
             String status = getResources().getString(R.string.selinux_status_disabled);
