@@ -104,6 +104,8 @@ public class Navbar extends SettingsPreferenceFragment implements
     ListPreference mNavigationBarHeightLandscape;
     ListPreference mNavigationBarWidth;
     SeekBarPreference mButtonAlpha;
+    SeekBarPreference mNavBarAlpha;
+
     CheckBoxPreference mEnableNavringLong;
     CheckBoxPreference mMenuArrowKeysCheckBox;
     Preference mConfigureWidgets;
@@ -179,11 +181,11 @@ public class Navbar extends SettingsPreferenceFragment implements
         mGlowTimes = (ListPreference) findPreference(PREF_GLOW_TIMES);
         mGlowTimes.setOnPreferenceChangeListener(this);
 
-        float defaultAlpha = Settings.System.getFloat(getActivity()
+        final float defaultButtonAlpha = Settings.System.getFloat(getActivity()
                 .getContentResolver(), Settings.System.NAVIGATION_BAR_BUTTON_ALPHA,
                 0.6f);
         mButtonAlpha = (SeekBarPreference) findPreference("button_transparency");
-        mButtonAlpha.setInitValue((int) (defaultAlpha * 100));
+        mButtonAlpha.setInitValue((int) (defaultButtonAlpha * 100));
         mButtonAlpha.setOnPreferenceChangeListener(this);
 
         // don't allow devices that must use a navigation bar to disable it
@@ -204,6 +206,9 @@ public class Navbar extends SettingsPreferenceFragment implements
         mMenuArrowKeysCheckBox = (CheckBoxPreference) findPreference(PREF_MENU_ARROWS);
         mMenuArrowKeysCheckBox.setChecked(Settings.System.getBoolean(getContentResolver(),
                 Settings.System.NAVIGATION_BAR_MENU_ARROW_KEYS, true));
+
+        mNavBarAlpha = (SeekBarPreference) findPreference("navigation_bar_alpha");
+        mNavBarAlpha.setOnPreferenceChangeListener(this);
 
         refreshSettings();
         setHasOptionsMenu(true);
@@ -408,11 +413,15 @@ public class Navbar extends SettingsPreferenceFragment implements
             return true;
         } else if (preference == mButtonAlpha) {
             float val = Float.parseFloat((String) newValue);
-            Log.e("R", "value: " + val * 0.01f);
             Settings.System.putFloat(getActivity().getContentResolver(),
                     Settings.System.NAVIGATION_BAR_BUTTON_ALPHA,
                     val * 0.01f);
             return true;
+        } else if (preference == mNavBarAlpha) {
+            float val = (float) (Integer.parseInt((String)newValue) * 0.01);
+            return Settings.System.putFloat(getActivity().getContentResolver(),
+                    Settings.System.NAVIGATION_BAR_ALPHA,
+                    val);
         }
         return false;
     }
@@ -797,6 +806,12 @@ public class Navbar extends SettingsPreferenceFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        if(mNavBarAlpha != null) {
+            final float defaultNavAlpha = Settings.System.getFloat(getActivity()
+                    .getContentResolver(), Settings.System.NAVIGATION_BAR_ALPHA,
+                    0.8f);
+            mNavBarAlpha.setInitValue(Math.round(defaultNavAlpha * 100));
+        }
         refreshSettings();
     }
 
