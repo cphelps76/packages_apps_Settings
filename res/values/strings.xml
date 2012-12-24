@@ -4860,7 +4860,7 @@
     <string name="volume_key_cursor_control_on_reverse">Volume up/down moves cursor right/left</string>
 
     <!-- About phone screen,  setting developer name-->
-    <string name="build_host">Developer Id</string>
+    <string name="build_host">DEMENTED Developer</string>
     <string name="build_host_default">Unknown</string>
 
     <!-- About phone screen,  setting option name-->
