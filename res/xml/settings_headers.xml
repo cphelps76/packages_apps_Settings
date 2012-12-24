@@ -81,6 +81,13 @@
         android:title="@string/lock_screen_title"
         android:icon="@drawable/ic_settings_lockscreen" />
 
+    <!-- Performance -->
+    <header
+        android:id="@+id/performance_settings"
+        android:fragment="com.android.settings.cyanogenmod.PerformanceSettings"
+        android:icon="@drawable/ic_settings_performance"
+        android:title="@string/performance_settings_title" />
+
     <!-- Themes -->
     <header
         android:id="@+id/themes_settings"
@@ -202,6 +209,13 @@
     <header android:id="@+id/system_section"
         android:title="@string/header_category_system" />
 
+    <!-- Development -->
+    <header
+        android:id="@+id/development_settings"
+        android:fragment="com.android.settings.DevelopmentSettings"
+        android:icon="@drawable/ic_settings_development"
+        android:title="@string/development_settings_title" />
+
     <!-- Date & Time -->
     <header
         android:id="@+id/date_time_settings"
@@ -215,20 +229,6 @@
         android:fragment="com.android.settings.AccessibilitySettings"
         android:icon="@drawable/ic_settings_accessibility"
         android:title="@string/accessibility_settings" />
-
-    <!-- Development -->
-    <header
-        android:id="@+id/development_settings"
-        android:fragment="com.android.settings.DevelopmentSettings"
-        android:icon="@drawable/ic_settings_development"
-        android:title="@string/development_settings_title" />
-
-    <!-- Performance -->
-    <header
-        android:id="@+id/performance_settings"
-        android:fragment="com.android.settings.cyanogenmod.PerformanceSettings"
-        android:icon="@drawable/ic_settings_performance"
-        android:title="@string/performance_settings_title" />
 
     <!-- About Device -->
     <header
