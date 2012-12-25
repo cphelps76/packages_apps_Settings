@@ -179,44 +179,40 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment {
                     Log.e(LOG_TAG, "Unable to start activity " + intent.toString());
                 }
             }
-        } else if (preference.getKey().equals(KEY_BUILD_NUMBER)) {
-            // Only allow the owner of the device to turn on dev and performance options
-            if (UserHandle.myUserId() == UserHandle.USER_OWNER) {
-                if (mDevHitCountdown > 0) {
-                    mDevHitCountdown--;
-                    if (mDevHitCountdown == 0) {
-                        getActivity().getSharedPreferences(DevelopmentSettings.PREF_FILE,
-                                Context.MODE_PRIVATE).edit().putBoolean(
-                                        DevelopmentSettings.PREF_SHOW, true).apply();
-                        if (mDevHitToast != null) {
-                            mDevHitToast.cancel();
-                        }
-                        mDevHitToast = Toast.makeText(getActivity(), R.string.show_dev_on,
-                                Toast.LENGTH_LONG);
-                        mDevHitToast.show();
-                    } else if (mDevHitCountdown > 0
-                            && mDevHitCountdown < (TAPS_TO_BE_A_DEVELOPER-2)) {
-                        if (mDevHitToast != null) {
-                            mDevHitToast.cancel();
-                        }
-                        mDevHitToast = Toast.makeText(getActivity(), getResources().getString(
-                                R.string.show_dev_countdown, mDevHitCountdown),
-                                Toast.LENGTH_SHORT);
-                        mDevHitToast.show();
-                    }
-                } else if (mDevHitCountdown < 0) {
+        } else if (preference.getKey().equals(KEY_BUILD_NUMBER)) {	
+            if (mDevHitCountdown > 0) {	  	
+                mDevHitCountdown--;	  	
+                if (mDevHitCountdown == 0) {	  	
+                    getActivity().getSharedPreferences(DevelopmentSettings.PREF_FILE,	  	
+                            Context.MODE_PRIVATE).edit().putBoolean(	  	
+                                    DevelopmentSettings.PREF_SHOW, true).apply();	  	
+                    if (mDevHitToast != null) {	  	
+                        mDevHitToast.cancel();
+                    }	
+                    mDevHitToast = Toast.makeText(getActivity(), R.string.show_dev_on,	  	
+                            Toast.LENGTH_LONG);	  	
+                    mDevHitToast.show();	  	
+                } else if (mDevHitCountdown > 0	  	
+                        && mDevHitCountdown < (TAPS_TO_BE_A_DEVELOPER-2)) {
                     if (mDevHitToast != null) {
                         mDevHitToast.cancel();
-                    }
-                    mDevHitToast = Toast.makeText(getActivity(), R.string.show_dev_already,
-                            Toast.LENGTH_LONG);
+                    }	
+                    mDevHitToast = Toast.makeText(getActivity(), getResources().getString(	  	
+                            R.string.show_dev_countdown, mDevHitCountdown),	  	
+                            Toast.LENGTH_SHORT);
                     mDevHitToast.show();
-                }
+                }	  	
+            } else if (mDevHitCountdown < 0) {	  	
+                if (mDevHitToast != null) {	  	
+                    mDevHitToast.cancel();	  	
+                }	  	
+                mDevHitToast = Toast.makeText(getActivity(), R.string.show_dev_already,	  	
+                        Toast.LENGTH_LONG);	  	
+                mDevHitToast.show();
             }
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
-
     private void removePreferenceIfPropertyMissing(PreferenceGroup preferenceGroup,
             String preference, String property ) {
         if (SystemProperties.get(property).equals("")) {
