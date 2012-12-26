@@ -34,6 +34,7 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -61,6 +62,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
     private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
     private static final String KEY_LOCKSCREEN_CAMERA_WIDGET = "lockscreen_camera_widget";
+    private static final String KEY_ADDITIONAL_OPTIONS = "options_group";
+    private static final String KEY_LOCKSCREEN_BUTTONS = "lockscreen_buttons";
 
     private ListPreference mCustomBackground;
     private ListPreference mBatteryStatus;
@@ -68,6 +71,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private CheckBoxPreference mMaximizeWidgets;
     private CheckBoxPreference mLockscreenHideInitialPageHints;
     private CheckBoxPreference mCameraWidget;
+    private PreferenceScreen mLockscreenButtons;
+    private PreferenceCategory mAdditionalOptions;
 
     private File mWallpaperImage;
     private File mWallpaperTemporary;
@@ -87,6 +92,12 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         mBatteryStatus = (ListPreference) findPreference(KEY_ALWAYS_BATTERY_PREF);
         if (mBatteryStatus != null) {
             mBatteryStatus.setOnPreferenceChangeListener(this);
+        }
+
+        mAdditionalOptions = (PreferenceCategory) prefSet.findPreference(KEY_ADDITIONAL_OPTIONS);
+        mLockscreenButtons = (PreferenceScreen) findPreference(KEY_LOCKSCREEN_BUTTONS);
+        if (!hasButtons()) {
+            mAdditionalOptions.removePreference(mLockscreenButtons);
         }
 
         mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);

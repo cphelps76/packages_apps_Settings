@@ -28,6 +28,12 @@
          <extra android:name="cm_security" android:value="true" />
      </PreferenceScreen>
 
+     <PreferenceScreen
+        android:key="lockscreen_buttons"
+        android:fragment="com.android.settings.cyanogenmod.LockscreenButtons"
+        android:title="@string/lockscreen_buttons_title"
+        android:summary="@string/lockscreen_buttons_summary" />
+
      <ListPreference
         android:key="lockscreen_background"
         android:persistent="false"
