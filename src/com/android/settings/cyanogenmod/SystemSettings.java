@@ -16,37 +16,30 @@
 
 package com.android.settings.cyanogenmod;
 
-import android.app.ActivityManagerNative;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.content.Context;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.preference.ListPreference;
+import android.view.IWindowManager;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
-import android.util.Log;
-import android.view.IWindowManager;
+import android.provider.Settings;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
-public class SystemSettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+public class SystemSettings extends SettingsPreferenceFragment {
     private static final String TAG = "SystemSettings";
 
-    private static final String KEY_FONT_SIZE = "font_size";
-    private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
-    private static final String KEY_NOTIFICATION_DRAWER_TABLET = "notification_drawer_tablet";
-    private static final String KEY_NAVIGATION_BAR = "navigation_bar";
-    private static final String KEY_HARDWARE_KEYS = "hardware_keys";
+    private static final String KEY_POWER_BUTTON_TORCH = "power_button_torch";
 
-    private PreferenceScreen mPhoneDrawer;
-    private PreferenceScreen mTabletDrawer;
+    private CheckBoxPreference mPowerButtonTorch;
 
-    private final Configuration mCurConfig = new Configuration();
+    private boolean torchSupported() {
+        return getResources().getBoolean(R.bool.has_led_flash);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,55 +47,19 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.system_settings);
 
-        mPhoneDrawer = (PreferenceScreen) findPreference(KEY_NOTIFICATION_DRAWER);
-        mTabletDrawer = (PreferenceScreen) findPreference(KEY_NOTIFICATION_DRAWER_TABLET);
-
-        /*if (Utils.isTablet(getActivity())) {
-            if (mPhoneDrawer != null) {
-                getPreferenceScreen().removePreference(mPhoneDrawer);
-            }
-        } else*/ {
-            if (mTabletDrawer != null) {
-                getPreferenceScreen().removePreference(mTabletDrawer);
-            }
+        mPowerButtonTorch = (CheckBoxPreference) findPreference(KEY_POWER_BUTTON_TORCH);
+        if (torchSupported()) {
+            mPowerButtonTorch.setChecked((Settings.System.getInt(getActivity().
+                    getApplicationContext().getContentResolver(),
+                    Settings.System.POWER_BUTTON_TORCH, 0) == 1));
+        } else {
+            getPreferenceScreen().removePreference(mPowerButtonTorch);
         }
-
-        IWindowManager windowManager = IWindowManager.Stub.asInterface(
-                ServiceManager.getService(Context.WINDOW_SERVICE));
-        try {
-            if (!windowManager.hasNavigationBar()) {
-                Preference naviBar = findPreference(KEY_NAVIGATION_BAR);
-                if (naviBar != null) {
-                    getPreferenceScreen().removePreference(naviBar);
-                }
-            } else {
-                Preference hardKeys = findPreference(KEY_HARDWARE_KEYS);
-                if (hardKeys != null) {
-                    getPreferenceScreen().removePreference(hardKeys);
-                }
-            }
-        } catch (RemoteException e) {
-        }
-    }
-
-    int floatToIndex(float val) {
-        String[] indices = getResources().getStringArray(R.array.entryvalues_font_size);
-        float lastVal = Float.parseFloat(indices[0]);
-        for (int i=1; i<indices.length; i++) {
-            float thisVal = Float.parseFloat(indices[i]);
-            if (val < (lastVal + (thisVal-lastVal)*.5f)) {
-                return i-1;
-            }
-            lastVal = thisVal;
-        }
-        return indices.length-1;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        updateState();
     }
 
     @Override
@@ -110,12 +67,16 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         super.onPause();
     }
 
-    private void updateState() {
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mPowerButtonTorch) {
+            boolean enabled = mPowerButtonTorch.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.POWER_BUTTON_TORCH,
+                    enabled ? 1 : 0);
+            return true;
+        } else {
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
     }
 
-    public boolean onPreferenceChange(Preference preference, Object objValue) {
-        final String key = preference.getKey();
-
-        return true;
-    }
 }
