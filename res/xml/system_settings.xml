@@ -31,12 +31,12 @@
 
     <!-- Lock clock -->
     <PreferenceScreen
-        android:key="lock_clock"
-        android:title="@string/lock_clock_title"
-        android:summary="@string/lock_clock_summary">
+        android:key="chronus"
+        android:title="@string/chronus_title"
+        android:summary="@string/chronus_summary">
         <intent android:action="android.intent.action.MAIN"
-                android:targetPackage="com.cyanogenmod.lockclock"
-                android:targetClass="com.cyanogenmod.lockclock.preference.Preferences" />
+                android:targetPackage="com.cyanogenmod.chronus"
+                android:targetClass="com.cyanogenmod.chronus.preference.Preferences" />
     </PreferenceScreen>
 
     <PreferenceScreen

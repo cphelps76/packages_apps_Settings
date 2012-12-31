@@ -46,7 +46,7 @@ public class SystemSettings extends SettingsPreferenceFragment {
     private static final String KEY_POWER_BUTTON_TORCH = "power_button_torch";
 
     private CheckBoxPreference mPowerButtonTorch;
-    private static final String KEY_LOCK_CLOCK = "lock_clock";
+    private static final String KEY_CHRONUS = "chronus";
 
     private boolean torchSupported() {
         return getResources().getBoolean(R.bool.has_led_flash);
@@ -59,7 +59,7 @@ public class SystemSettings extends SettingsPreferenceFragment {
         addPreferencesFromResource(R.xml.system_settings);
 
         // Dont display the lock clock preference if its not installed
-        removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
+        removePreferenceIfPackageNotInstalled(findPreference(KEY_CHRONUS));
 
         mPowerButtonTorch = (CheckBoxPreference) findPreference(KEY_POWER_BUTTON_TORCH);
         if (torchSupported()) {
