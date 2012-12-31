@@ -4942,6 +4942,9 @@
     <string name="icon_picker_search">Search</string>
     <string name="icon_picker_sms">Messaging</string>
     <string name="icon_picker_twitter">Twitter</string>
+    <!--- Lock clock -->
+    <string name="lock_clock_title">Clock widget</string>
+    <string name="lock_clock_summary">View or change how the \'Chronus\' Home and Lock screen widgets will display</string>
 
     <!-- String for IconPicker -->
     <string name="icon_picker_title">Choose icon source</string>
@@ -4993,7 +4996,4 @@
     <string name="set">Set</string>
     <string name="ics_color">Holo</string>
 
-    <!--- Lock clock -->
-    <string name="lock_clock_title">Lock clock widget</string>
-    <string name="lock_clock_summary">View or change how the Lock clock widgets will display</string>
 </resources>
