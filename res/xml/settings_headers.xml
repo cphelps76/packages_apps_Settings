@@ -80,7 +80,7 @@
         android:title="@string/lock_screen_title"
         android:icon="@drawable/ic_settings_lockscreen" />
 
-    <!-- Batery Bar-->
+    <!-- Battery Bar-->
     <header
         android:id="@+id/statusbar_battery"
         android:title="@string/header_summary_battery"
