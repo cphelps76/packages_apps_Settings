@@ -60,7 +60,7 @@
     <!-- INTERFACE -->
     <header android:title="@string/header_category_interface" />
 
- <!-- System -->
+    <!-- System -->
     <header
         android:id="@+id/system_settings"
         android:icon="@drawable/ic_settings_system"
@@ -79,6 +79,13 @@
         android:fragment="com.android.settings.cyanogenmod.LockscreenInterface"
         android:title="@string/lock_screen_title"
         android:icon="@drawable/ic_settings_lockscreen" />
+
+    <!-- Batery Bar-->
+    <header
+        android:id="@+id/statusbar_battery"
+        android:title="@string/header_summary_battery"
+        android:fragment="com.android.settings.aokp.StatusBarBattery"
+        android:icon="@drawable/ic_rom_control_battery"  />
 
     <!-- Performance -->
     <header

@@ -3,12 +3,6 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:title="@string/header_summary_battery"
 	xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
-	
-	<ListPreference
-			android:key="battery_icon_list"
-			android:title="@string/battery_icon"
-			android:entries="@array/battery_icon_entries"
-			android:entryValues="@array/battery_icon_values" />
 
 	<PreferenceCategory
 		android:key="battery_bar_cat"
