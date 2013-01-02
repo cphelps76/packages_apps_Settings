@@ -4949,7 +4949,7 @@
     <string name="icon_picker_gallery_title">Gallery</string>
     <string name="icon_picker_pack_title">Icon pack</string>
 
-    <string name="title_statusbar_battery">Statusbar Battery</string>
+    <string name="title_statusbar_battery">Battery Bar</string>
     <string name="header_summary_battery">Battery Bar</string>
     <string name="battery">Battery</string>
     <string name="app_name">DEMENTED Settings</string>

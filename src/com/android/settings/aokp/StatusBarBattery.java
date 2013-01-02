@@ -24,14 +24,12 @@ import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 public class StatusBarBattery extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
-    private static final String PREF_BATT_ICON = "battery_icon_list";
     private static final String PREF_BATT_BAR = "battery_bar_list";
     private static final String PREF_BATT_BAR_STYLE = "battery_bar_style";
     private static final String PREF_BATT_BAR_COLOR = "battery_bar_color";
     private static final String PREF_BATT_BAR_WIDTH = "battery_bar_thickness";
     private static final String PREF_BATT_ANIMATE = "battery_bar_animate";
 
-    ListPreference mBatteryIcon;
     ListPreference mBatteryBar;
     ListPreference mBatteryBarStyle;
     ListPreference mBatteryBarThickness;
@@ -48,13 +46,6 @@ public class StatusBarBattery extends SettingsPreferenceFragment implements OnPr
             addPreferencesFromResource(R.xml.prefs_statusbar_battery);
 
             PreferenceScreen prefSet = getPreferenceScreen();
-
-            mBatteryIcon = (ListPreference) prefSet.findPreference(PREF_BATT_ICON);
-            mBatteryIcon.setOnPreferenceChangeListener(this);
-            mBatteryIcon.setValue((Settings.System.getInt(getActivity()
-                    .getContentResolver(), Settings.System.STATUSBAR_BATTERY_ICON,
-                    0))
-                    + "");
 
             mBatteryBar = (ListPreference) prefSet.findPreference(PREF_BATT_BAR);
             mBatteryBar.setOnPreferenceChangeListener(this);
@@ -100,14 +91,10 @@ public class StatusBarBattery extends SettingsPreferenceFragment implements OnPr
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-    @Override
+     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mBatteryIcon) {
+        if (preference == mBatteryBar) {
 
-            int val = Integer.parseInt((String) newValue);
-            return Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_BATTERY_ICON, val);
-        } else if (preference == mBatteryBarColor) {
             String hex = ColorPickerPreference.convertToARGB(Integer
                     .valueOf(String.valueOf(newValue)));
             preference.setSummary(hex);
