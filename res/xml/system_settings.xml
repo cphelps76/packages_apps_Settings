@@ -35,6 +35,11 @@
         android:fragment="com.android.settings.projectelite.StatusBarToggles" />
 
     <PreferenceScreen
+        android:id="@+id/statusbar_battery"
+        android:title="@string/header_summary_battery"
+        android:fragment="com.android.settings.aokp.StatusBarBattery" />
+
+    <PreferenceScreen
 	android:key="navigation_bar"
 	android:fragment="com.android.settings.projectelite.NavBarprefs"
 	android:title="@string/navigation_bar_title" />
