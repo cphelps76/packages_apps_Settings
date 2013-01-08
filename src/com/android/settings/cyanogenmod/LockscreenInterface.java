@@ -31,7 +31,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     Preference.OnPreferenceChangeListener {
 
     private static final String KEY_ALWAYS_BATTERY_PREF = "lockscreen_battery_status";
-    private static final String KEY_LOCKSCREEN_BUTTONS = "lockscreen_buttons";
     private static final String KEY_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
 
     private ListPreference mBatteryStatus;
@@ -58,11 +57,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             mMaximizeWidgets = null;
         } else {
             mMaximizeWidgets.setOnPreferenceChangeListener(this);
-        }
-
-        PreferenceScreen lockscreenButtons = (PreferenceScreen) findPreference(KEY_LOCKSCREEN_BUTTONS);
-        if (!hasButtons()) {
-            getPreferenceScreen().removePreference(lockscreenButtons);
         }
     }
 
