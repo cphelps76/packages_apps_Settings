@@ -49,12 +49,11 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
 
         mBatteryStatus = (ListPreference) findPreference(KEY_ALWAYS_BATTERY_PREF);
-        mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
-        mLockscreenHideInitialPageHints.setOnPreferenceChangeListener(this);
-   
         if (mBatteryStatus != null) {
             mBatteryStatus.setOnPreferenceChangeListener(this);
         }
+        mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
+            mLockscreenHideInitialPageHints.setOnPreferenceChangeListener(this);
         mMaximizeWidgets = (CheckBoxPreference)findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS);
         if (!Utils.isPhone(getActivity())) {
             getPreferenceScreen().removePreference(mMaximizeWidgets);
@@ -99,7 +98,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         } else if (preference == mLockscreenHideInitialPageHints) {
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS,
-                    ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
             return true;
         }
         return false;
