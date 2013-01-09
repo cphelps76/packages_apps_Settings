@@ -50,8 +50,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
 
         mBatteryStatus = (ListPreference) findPreference(KEY_ALWAYS_BATTERY_PREF);
         mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
-        mLockscreenHideInitialPageHints.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
-                Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, false));
+        mLockscreenHideInitialPageHints.setChecked.setONPreferenceChangeListener(this);
    
         if (mBatteryStatus != null) {
             mBatteryStatus.setOnPreferenceChangeListener(this);
