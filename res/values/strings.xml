@@ -5001,14 +5001,9 @@
     <string name="hex">Hex:</string>
     <string name="hex_hint">#FF000000</string>
     <string name="set">Set</string>
-<<<<<<< HEAD
     <string name="ics_color">Holo</string>
-
-=======
-    <string name="ics_color">!!!</string>
     <string name="lockscreen_hide_initial_page_hints_summary">Set wether the hints for the left and right widgets are shown when the screen is turned on.</string>
     <string name="lockscreen_hide_initial_page_hints_title">Hide initial page hints</string>
->>>>>>> c85c492... LockScreen: Option to hide initial page hints (2/2)(AOKP)
     <string name="lockscreen_maximize_widgets_title">Maximize widgets</string>
     <string name="lockscreen_maximize_widgets_summary">Show widgets maximized and the unlock mimimized when the screen is turned on</string>
 
