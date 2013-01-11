@@ -85,6 +85,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private static final String KEY_QUIET_HOURS = "quiet_hours";
     private static final String KEY_VOLBTN_MUSIC_CTRL = "volbtn_music_controls";
     private static final String KEY_HEADSET_CONNECT_PLAYER = "headset_connect_player";
+    private static final String KEY_VOLUME_ADJUST_SOUNDS = "volume_adjust_sounds";
 
     private static final String SILENT_MODE_OFF = "off";
     private static final String SILENT_MODE_VIBRATE = "vibrate";
@@ -111,6 +112,11 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private Preference mRingtonePreference;
     private Preference mNotificationPreference;
     private PreferenceScreen mQuietHours;
+<<<<<<< HEAD
+=======
+    private CheckBoxPreference mSafeHeadsetVolume;
+    private CheckBoxPreference mVolumeAdjustSounds;
+>>>>>>> f449ce9... add toggle to turn off bong sound when changing volumes
 
     private Runnable mRingtoneLookupRunnable;
 
@@ -205,6 +211,10 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         mHapticFeedback.setPersistent(false);
         mHapticFeedback.setChecked(Settings.System.getInt(resolver,
                 Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0);
+        mVolumeAdjustSounds = (CheckBoxPreference) findPreference(KEY_VOLUME_ADJUST_SOUNDS);
+        mVolumeAdjustSounds.setPersistent(false);
+        mVolumeAdjustSounds.setChecked(Settings.System.getInt(resolver,
+                Settings.System.VOLUME_ADJUST_SOUNDS_ENABLED, 1) != 0);
         mLockSounds = (CheckBoxPreference) findPreference(KEY_LOCK_SOUNDS);
         mLockSounds.setPersistent(false);
         mLockSounds.setChecked(Settings.System.getInt(resolver,
@@ -394,6 +404,10 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         } else if (preference == mHapticFeedback) {
             Settings.System.putInt(getContentResolver(), Settings.System.HAPTIC_FEEDBACK_ENABLED,
                     mHapticFeedback.isChecked() ? 1 : 0);
+
+         } else if (preference == mVolumeAdjustSounds) {
+            Settings.System.putInt(getContentResolver(), Settings.System.VOLUME_ADJUST_SOUNDS_ENABLED ,
+                    mVolumeAdjustSounds.isChecked() ? 1 : 0);
 
         } else if (preference == mLockSounds) {
             Settings.System.putInt(getContentResolver(), Settings.System.LOCKSCREEN_SOUNDS_ENABLED,

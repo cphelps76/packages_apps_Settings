@@ -4800,6 +4800,7 @@
     <string name="volbtn_music_controls_title">Volume rocker music controls</string>
     <string name="volbtn_music_controls_summary">When screen off, long-pressing the volume rockers will seek music tracks</string>
     <string name="headset_connect_player_title">Launch music app on connect</string>
+<<<<<<< HEAD
     <string name="volume_ring_only_description">Ringtone</string>
 
     <!-- Navigation Bar #CM -->
@@ -5008,4 +5009,10 @@
     <string name="lockscreen_maximize_widgets_summary">Show widgets maximized and the unlock mimimized when the screen is turned on</string>
 
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
+=======
+
+      <string name="volume_adjust_sounds_enable_title">Volume adjust sound</string>
+    <!-- Sound settings screen, setting check box summary -->
+    <string name="volume_adjust_sounds_enable_summary">Play sound when adjusting volume with hard keys</string>
+>>>>>>> f449ce9... add toggle to turn off bong sound when changing volumes
 </resources>
