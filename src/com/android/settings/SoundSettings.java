@@ -112,11 +112,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private Preference mRingtonePreference;
     private Preference mNotificationPreference;
     private PreferenceScreen mQuietHours;
-<<<<<<< HEAD
-=======
-    private CheckBoxPreference mSafeHeadsetVolume;
     private CheckBoxPreference mVolumeAdjustSounds;
->>>>>>> f449ce9... add toggle to turn off bong sound when changing volumes
 
     private Runnable mRingtoneLookupRunnable;
 
