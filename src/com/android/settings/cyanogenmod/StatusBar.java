@@ -102,9 +102,9 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
         int clockWeekday = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.CLOCK_WEEKDAY, 0);
-        mStatusBarCmSignal.setValue(String.valueOf(clockWeekday));
-        mStatusBarCmSignal.setSummary(mClockWeekday.getEntry());
-        mStatusBarCmSignal.setOnPreferenceChangeListener(this);
+        mClockWeekday.setValue(String.valueOf(clockWeekday));
+        mClockWeekday.setSummary(mClockWeekday.getEntry());
+        mClockWeekday.setOnPreferenceChangeListener(this);
 
         mPrefCategoryGeneral = (PreferenceCategory) findPreference(STATUS_BAR_CATEGORY_GENERAL);
 
