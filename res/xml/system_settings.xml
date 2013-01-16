@@ -54,6 +54,11 @@
 	android:fragment="com.android.settings.projectelite.NavBarprefs"
 	android:title="@string/navigation_bar_title" />
 
+    <Preference
+        android:key="custom_carrier_label"
+	android:fragment="com.android.settings.demented.CarrierLabel"
+        android:title="@string/custom_carrier_label_title" />
+
     <CheckBoxPreference
         android:key="power_button_torch"
         android:title="@string/power_button_torch_title"
