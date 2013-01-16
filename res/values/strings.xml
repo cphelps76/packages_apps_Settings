@@ -4988,8 +4988,6 @@
     <string name="battery_bar_thickness_title">Battery bar thickness</string>
     <string name="battery_bar_animate_title">Charging animation</string>
     <string name="battery_bar_animate_summary">The charging animation may result in a poor user experience. Enable at your own discretion.</string>
-
-
     <string name="statusbar">Statusbar</string>
     <string name="top_of_navbar">Top of navbar</string>
     <string name="bottom_of_navbar">Bottom of navbar</string>
