@@ -61,7 +61,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarAmPm = (ListPreference) prefSet.findPreference(STATUS_BAR_AM_PM);
         mStatusBarBattery = (ListPreference) prefSet.findPreference(STATUS_BAR_BATTERY);
         mStatusBarCmSignal = (ListPreference) prefSet.findPreference(STATUS_BAR_SIGNAL);
-        mClockWeekday = {ListPreference) prefset.findPreference(CLOCK_WEEKDAY);
 
         try {
             if (Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
@@ -100,11 +99,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarNotifCount.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.STATUS_BAR_NOTIF_COUNT, 0) == 1));
 
-        int clockWeekday = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                Settings.System.CLOCK_WEEKDAY, 0);
-        mClockWeekday.setValue(String.valueOf(clockWeekday));
-        mClockWeekday.setSummary(mClockWeekday.getEntry());
+        mClockWeekday = (ListPreference) findPreference(PREF_CLOCK_WEEKDAY);
         mClockWeekday.setOnPreferenceChangeListener(this);
+        mClockWeekday.setValue(Integer.toString(Settings.System.getInt(getActivity()
+                .getContentResolver(), Settings.System.STATUSBAR_CLOCK_WEEKDAY,
+                0)));
 
         mPrefCategoryGeneral = (PreferenceCategory) findPreference(STATUS_BAR_CATEGORY_GENERAL);
 
@@ -143,10 +142,10 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             mStatusBarCmSignal.setSummary(mStatusBarCmSignal.getEntries()[index]);
             return true;
         } else if (preference == mClockWeekday) {
-            int signalStyle = Integer.valueOf((String) newValue);
+            int val = Integer.parseInt((String) newValue);
             int index = mClockWeekday.findIndexOfValue((String) newValue);
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.STATUSBAR_CLOCK_WEEKDAY, clockWeekday);
+                    Settings.System.STATUSBAR_CLOCK_WEEKDAY, val);
             mClockWeekday.setSummary(mClockWeekday.getEntries()[index]);
             return true;
         }

@@ -1,7 +1,12 @@
-package com.settings.android.demented;
+package com.android.settings.demented;
 
 import android.app.ActivityManagerNative;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -11,6 +16,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceGroup;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
@@ -18,13 +24,22 @@ import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 
-public class CarrierLabel extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
+import com.android.settings.R;
+import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.Utils;
+
+import java.io.File;
+import java.util.List;
+
+public class CarrierLabel extends SettingsPreferenceFragment {
 
     private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
 
     Preference mCustomLabel;
 
     String mCustomLabelText = null;
+
+    Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +62,7 @@ public class CarrierLabel extends SettingsPreferenceFragment implements OnPrefer
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             final Preference preference) {
+
         if (preference == mCustomLabel) {
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle(R.string.custom_carrier_label_title);
@@ -74,7 +90,10 @@ public class CarrierLabel extends SettingsPreferenceFragment implements OnPrefer
                     // Canceled.
                 }
             });
+
             alert.show();
         }
+
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }
