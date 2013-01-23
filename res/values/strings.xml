@@ -354,6 +354,15 @@
     <!-- Bluetooth phone book permission Alert Activity checkbox text [CHAR LIMIT=none] -->
     <string name="bluetooth_pb_remember_choice">Don\'t ask again</string>
 
+    <!-- Activity label of BluetoothMasPermissionActivity, also used as Strings in the permission dialog [CHAR LIMIT=none] -->
+    <string name="bluetooth_mas_request">"Message Access request"</string>
+
+    <!-- Bluetooth MAS permission Alert Activity text [CHAR LIMIT=none] -->
+    <string name="bluetooth_mas_acceptance_dialog_text">%1$s would like to access your messages. Give access to %2$s?</string>
+
+    <!-- Bluetooth MAS permission Alert Activity checkbox text [CHAR LIMIT=none] -->
+    <string name="bluetooth_mas_remember_choice">Don\'t ask again</string>
+
     <!-- Date & time settings screen title -->
     <string name="date_and_time">Date &amp; time settings</string>
     <!-- The title of the activity to pick a time zone. -->
@@ -4949,7 +4958,20 @@
     <string name="icon_picker_search">Search</string>
     <string name="icon_picker_sms">Messaging</string>
     <string name="icon_picker_twitter">Twitter</string>
-    <!--- Lock clock -->
+
+    <!-- Status Bar Weekday -->
+    <string name="small_weekday">Small weekday</string>
+    <string name="regular_weekday">Regular weekday</string>
+    <string name="enable_clock_weekday">Day of the week</string>
+    <string name="enable_clock_weekday_summary">Abbreviated day of the week before the time</string>
+    <string name="dont_show">Don\'t show</string>
+
+    <!-- Custom Carrier Label -->
+    <string name="custom_carrier_label_title">Custom carrier label</string>
+    <string name="custom_carrier_label_explain">Please enter a new label. Enter an empty label to revert to stock label.</string>
+    <string name="custom_carrier_label_notset">Custom label currently not set</string>
+
+    <!-- Lock clock -->
     <string name="chronus_title">Clock widget</string>
     <string name="chronus_summary">View or change how the \'Chronus\' Home and Lock screen widgets will display</string>
 
@@ -4975,7 +4997,6 @@
     <string name="battery_bar_thickness_title">Battery bar thickness</string>
     <string name="battery_bar_animate_title">Charging animation</string>
     <string name="battery_bar_animate_summary">The charging animation may result in a poor user experience. Enable at your own discretion.</string>
-    <string name="dont_show">Don\'t show</string>
     <string name="statusbar">Statusbar</string>
     <string name="top_of_navbar">Top of navbar</string>
     <string name="bottom_of_navbar">Bottom of navbar</string>
@@ -5009,7 +5030,12 @@
 
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
 
-      <string name="volume_adjust_sounds_enable_title">Volume adjust sound</string>
+    <string name="volume_adjust_sounds_enable_title">Volume adjust sound</string>
     <!-- Sound settings screen, setting check box summary -->
     <string name="volume_adjust_sounds_enable_summary">Play sound when adjusting volume with hard keys</string>
+
+    <!-- MultiPanel Views -->
+    <string name="multipane_ui">Enable/Disable Dual panel</string>
+    <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (Reboot Required!)</string>
+
 </resources>
