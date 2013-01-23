@@ -709,6 +709,8 @@ public class Navbar extends SettingsPreferenceFragment implements
                 return getResources().getDrawable(R.drawable.ic_sysbar_back);
             } else if (uri.equals("**recents**")) {
                 return getResources().getDrawable(R.drawable.ic_sysbar_recent);
+            } else if (uri.equals("**recentsgb**")) {
+                return getResources().getDrawable(R.drawable.ic_sysbar_recent_gb);
             } else if (uri.equals("**search**")) {
                 return getResources().getDrawable(R.drawable.ic_sysbar_search);
             } else if (uri.equals("**screenshot**")) {
@@ -757,6 +759,8 @@ public class Navbar extends SettingsPreferenceFragment implements
                 return getResources().getString(R.string.navbar_action_back);
             else if (uri.equals("**recents**"))
                 return getResources().getString(R.string.navbar_action_recents);
+            else if (uri.equals("**recentsgb**"))
+                return getResources().getString(R.string.navbar_action_recents_gb);
             else if (uri.equals("**search**"))
                 return getResources().getString(R.string.navbar_action_search);
             else if (uri.equals("**screenshot**"))
