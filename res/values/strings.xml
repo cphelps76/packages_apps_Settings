@@ -4804,7 +4804,7 @@
     <string name="power_menu_airplane_title">Airplane mode</string>
     <string name="power_menu_user_title">User switcher</string>
     <string name="power_menu_silent_title">Sound panel</string>
-
+    <string name="title_show_navbar_hide">Show navigation bar toggle</string>
 
     <!-- Whether to display IME switcher notifcation -->
     <string name="ime_switcher_notify">Selector notification</string>
