@@ -76,6 +76,10 @@
             android:fragment="com.android.settings.demented.HardwareKeys"
             android:title="@string/hardware_keys_title" />
 
+        <Preference
+            android:key="transparency_dialog"
+            android:title="@string/transparency_dialog_title" />
+
         <PreferenceScreen
             android:id="@+id/nav_bar"
             android:fragment="com.android.settings.demented.Navbar"

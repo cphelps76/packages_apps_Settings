@@ -208,6 +208,17 @@
                 android:resource="@id/wifi_settings" />
         </activity>
 
+        <activity
+            android:name=".demented.TransparencyDialog"
+            android:theme="@android:style/Theme.Dialog"
+            android:label="@string/title_ui" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
         <!-- Keep compatibility with old shortcuts. -->
         <activity-alias android:name=".wifi.WifiSettings"
                 android:uiOptions="splitActionBarWhenNarrow"
