@@ -29,13 +29,13 @@
         <net.margaritov.preference.colorpicker.ColorPickerPreference
                 android:key="nav_button_color"
                 android:title="@string/navigation_bar_tint_title"
-                android:defaultValue="#FFFFFF" />
+                android:defaultValue="#33B5E5" />
 
         <net.margaritov.preference.colorpicker.ColorPickerPreference
                 android:key="nav_button_glow_color"
                 android:title="@string/navigation_bar_glow_tint_title"
                 android:summary="@string/navigation_bar_glow_tint_summary"
-                android:defaultValue="#FFFFFF" />
+                android:defaultValue="#33B5E5" />
 
         <CheckBoxPreference
                 android:key="navigation_bar_menu_arrow_keys"
