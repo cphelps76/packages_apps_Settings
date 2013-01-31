@@ -91,11 +91,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             mMaximizeWidgets.setOnPreferenceChangeListener(this);
         }
 
-        PreferenceScreen lockscreenButtons = (PreferenceScreen) findPreference(KEY_LOCKSCREEN_BUTTONS);
-        if (!hasButtons()) {
-            getPreferenceScreen().removePreference(lockscreenButtons);
-        }
-
         mCustomBackground = (ListPreference) findPreference(KEY_BACKGROUND_PREF);
         mCustomBackground.setOnPreferenceChangeListener(this);
         updateCustomBackgroundSummary();
