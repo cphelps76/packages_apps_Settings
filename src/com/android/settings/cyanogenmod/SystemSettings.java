@@ -42,6 +42,7 @@ import android.view.IWindowManager;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
+import com.android.setting.aokp.widgets.SeekBarPreference;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,11 +84,20 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         mDualpane = (CheckBoxPreference) findPreference(PREF_FORCE_DUAL_PANEL);
             mDualpane.setOnPreferenceChangeListener(this);
 
+        mNavBarAlpha = (SeekBarPreference) findPreference("navigation_bar_alpha");
+        mNavBarAlpha.setOnPreferenceChangeListener(this);
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if(mNavBarAlpha != null) {
+            final float defaultNavAlpha = Settings.System.getFloat(getActivity()
+                    .getContentResolver(), Settings.System.NAVIGATION_BAR_ALPHA,
+                    0.8f);
+            mNavBarAlpha.setInitValue(Math.round(defaultNavAlpha * 100));
+        }
     }
 
     @Override
@@ -114,6 +124,11 @@ public class SystemSettings extends SettingsPreferenceFragment implements
                     Settings.System.FORCE_DUAL_PANEL,
                     ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
             return true;
+        } else if (preference == mNavBarAlpha) {
+            float val = (float) (Integer.parseInt((String)newValue) * 0.01);
+            return Settings.System.putFloat(getActivity().getContentResolver(),
+                    Settings.System.NAVIGATION_BAR_ALPHA,
+                    val);
         }
         return false;
     }

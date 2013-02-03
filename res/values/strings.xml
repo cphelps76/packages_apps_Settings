@@ -5175,4 +5175,7 @@
     <string name="multipane_ui">Enable/Disable Dual panel</string>
     <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (Reboot Required!)</string>
 
+    <!-- Statusbar and NavBar Opacity Slider -->
+    <string name="navigation_bar_alpha_title">Statusbar and NavBar opacity</string>
+
 </resources>
