@@ -93,6 +93,7 @@ public class Navbar extends SettingsPreferenceFragment implements
     Preference mNavRingTargets;
 
     // move these later
+    ColorPickerPreference mNavigationColor;
     ColorPickerPreference mNavigationBarColor;
     ColorPickerPreference mNavigationBarGlowColor;
     ListPreference mGlowTimes;
@@ -105,6 +106,7 @@ public class Navbar extends SettingsPreferenceFragment implements
     ListPreference mNavigationBarHeightLandscape;
     ListPreference mNavigationBarWidth;
     SeekBarPreference mButtonAlpha;
+    SeekBarPreference mNavBarAlpha;
     CheckBoxPreference mEnableNavringLong;
     CheckBoxPreference mMenuArrowKeysCheckBox;
     Preference mConfigureWidgets;
@@ -208,6 +210,9 @@ public class Navbar extends SettingsPreferenceFragment implements
         mMenuArrowKeysCheckBox = (CheckBoxPreference) findPreference(PREF_MENU_ARROWS);
         mMenuArrowKeysCheckBox.setChecked(Settings.System.getBoolean(getContentResolver(),
                 Settings.System.NAVIGATION_BAR_MENU_ARROW_KEYS, true));
+
+        mNavBarAlpha = (SeekBarPreference) findPreference("navigation_bar_alpha");
+        mNavBarAlpha.setOnPreferenceChangeListener(this);
 
         refreshSettings();
         setHasOptionsMenu(true);
@@ -426,6 +431,11 @@ public class Navbar extends SettingsPreferenceFragment implements
                     Settings.System.NAVIGATION_BAR_BUTTON_ALPHA,
                     val * 0.01f);
             return true;
+        } else if (preference == mNavBarAlpha) {
+            float val = (float) (Integer.parseInt((String)newValue) * 0.01);
+            return Settings.System.putFloat(getActivity().getContentResolver(),
+                    Settings.System.NAVIGATION_BAR_ALPHA,
+                    val);
         }
         return false;
     }
@@ -814,6 +824,12 @@ public class Navbar extends SettingsPreferenceFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        if(mNavBarAlpha != null) {
+            final float defaultNavAlpha = Settings.System.getFloat(getActivity()
+                    .getContentResolver(), Settings.System.NAVIGATION_BAR_ALPHA,
+                    0.8f);
+            mNavBarAlpha.setInitValue(Math.round(defaultNavAlpha * 100));
+        }
         refreshSettings();
     }
 
