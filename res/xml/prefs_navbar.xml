@@ -30,6 +30,10 @@
                 android:key="navigation_bar_alpha"
                 android:title="@string/navigation_bar_alpha_title" />
 
+        <com.android.settings.aokp.widgets.SeekBarPreference
+                android:key="button_transparency"
+                android:title="@string/button_transparency_title" />
+
         <net.margaritov.preference.colorpicker.ColorPickerPreference
                 android:key="nav_bar_color"
                 android:title="@string/navigation_bar_color_title"
@@ -46,9 +50,7 @@
                 android:summary="@string/navigation_bar_glow_tint_summary"
                 android:defaultValue="#FFFFFF" />
 
-        <com.android.settings.aokp.widgets.SeekBarPreference
-            android:key="button_transparency"
-            android:title="@string/button_transparency_title" />
+
 
         <CheckBoxPreference
                 android:key="navigation_bar_menu_arrow_keys"
