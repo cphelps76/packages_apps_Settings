@@ -5026,7 +5026,7 @@
     <string name="summary_pref_menu_display">Remember to remove your menu buttons if you\'re using the big menu button!</string>
     <string name="title_pref_navigation_menu_display">Menu visibility</string>
     <string name="summary_pref_navigation_menu_display">How and when do you want the menu buttons to appear?</string>
-    <string name="navbar_qty_title">Navigation button quantity</string>
+    <string name="navbar_qty_title">NavBar button quantity</string>
     <string name="navbar_qty_summary">Choose the number of navigation buttons</string>
     <string name="navbar_action_title">Button %1$s action &amp; icon</string>
     <string name="button_transparency_title">Nav button transparency</string>
@@ -5163,7 +5163,7 @@
     <string name="size_0_dp">0 dp (off)</string>
 
     <!-- Menu Strings -->
-    <string name="menu_nav_bar_reset">Reset nav bar</string>
+    <string name="menu_nav_bar_reset">Reset NavBar</string>
     <string name="custom_app_icon_successfully">"'s icon set successfully!"</string>
     <string name="title_navring">Navigation Ring</string>
 
@@ -5177,6 +5177,6 @@
     <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (Reboot Required!)</string>
 
     <!-- Statusbar and NavBar Opacity Slider -->
-    <string name="navigation_bar_alpha_title">Statusbar and NavBar opacity</string>
+    <string name="navigation_bar_alpha_title">Set the NavBar opacity</string>
 
 </resources>
