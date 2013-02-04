@@ -119,6 +119,11 @@
             android:entryValues="@array/values_system_power_crt_mode"
             android:dependency="system_power_crt_screen_off" />
 
+        <CheckBoxPreference
+            android:key="statusbar_hidden"
+            android:title="@string/statusbar_hide_title"
+            android:summary="@string/statusbar_hide_summary" />
+
         <PreferenceScreen
             android:key="notification_pulse"
             android:title="@string/notification_pulse_title"

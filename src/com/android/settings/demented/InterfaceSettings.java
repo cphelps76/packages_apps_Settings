@@ -66,6 +66,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     private static final String KEY_POWER_CRT_MODE = "system_power_crt_mode";
     private static final String KEY_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off";
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
+    private static final String STATUSBAR_HIDDEN = "statusbar_hidden";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
@@ -73,6 +74,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     private ListPreference mCrtMode;
     private CheckBoxPreference mCrtOff;
     private static ContentResolver mContentResolver;
+    CheckBoxPreference mStatusBarHide;
 
     private boolean mIsCrtOffChecked = false;
 
@@ -147,6 +149,10 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         mCrtMode.setValue(Integer.toString(Settings.System.getInt(mContentResolver,
                 Settings.System.SYSTEM_POWER_CRT_MODE, crtMode)));
         mCrtMode.setOnPreferenceChangeListener(this);
+
+        mStatusBarHide = (CheckBoxPreference) findPreference(STATUSBAR_HIDDEN);
+        mStatusBarHide.setChecked(Settings.System.getBoolean(mContentResolver,
+                Settings.System.STATUSBAR_HIDDEN, false));
     }
 
     private CheckBoxPreference findAndInitCheckboxPref(String key) {
@@ -243,6 +249,11 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
             // getFragmentManager().beginTransaction().add(new
             // TransparencyDialog(), null).commit();
             openTransparencyDialog();
+            return true;
+        } else if (preference == mStatusBarHide) {
+            boolean checked = ((CheckBoxPreference)preference).isChecked();
+            Settings.System.putBoolean(getActivity().getContentResolver(),
+                    Settings.System.STATUSBAR_HIDDEN, checked ? true : false);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
