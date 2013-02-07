@@ -486,9 +486,6 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         } else if (preference == mSilentMode) {
             setPhoneSilentSettingValue(objValue.toString());
 
-        } else if (preference == mRingMode) {
-            setPhoneRingModeValue(objValue.toString());
-
         } else if (preference == mVolumeOverlay) {
             final int value = Integer.valueOf((String) objValue);
             final int index = mVolumeOverlay.findIndexOfValue((String) objValue);
