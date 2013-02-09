@@ -61,11 +61,10 @@
         android:title="@string/pie_controls_title"
         android:summary="@string/pie_controls_summary" />
 
-    <!-- WORK IN PROGRESS...
+    <!-- Custom Carrier Label -->
     <Preference
         android:key="custom_carrier_label"
-	android:fragment="com.android.settings.demented.CarrierLabel"
-        android:title="@string/custom_carrier_label_title" />  -->
+        android:title="@string/custom_carrier_label_title" />  
 
     <CheckBoxPreference
         android:key="power_button_torch"
@@ -73,7 +72,6 @@
         android:summary="@string/power_button_torch_summary"
         android:persistent="false"
         android:defaultValue="false" />
-
 
     <CheckBoxPreference
 	android:key="force_dualpanel"
