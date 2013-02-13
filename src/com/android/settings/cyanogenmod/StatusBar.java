@@ -41,7 +41,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_BATTERY = "status_bar_battery";
     private static final String STATUS_BAR_CLOCK_STYLE = "status_bar_clock_style";
     private static final String PREF_CLOCK_PICKER = "clock_color";
-    private static final String PREF_EXPANDED_CLOCK_PICKER = "expanded_clock_color";
     private static final String STATUS_BAR_SIGNAL = "status_bar_signal";
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String STATUS_BAR_CATEGORY_GENERAL = "status_bar_general";
@@ -55,7 +54,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private PreferenceCategory mPrefCategoryGeneral;
     private ListPreference mClockWeekday;
     private ColorPickerPreference mClockPicker;
-    private ColorPickerPreference mExpandedClockPicker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,9 +85,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
         mClockPicker = (ColorPickerPreference) findPreference(PREF_CLOCK_PICKER);
         mClockPicker.setOnPreferenceChangeListener(this);
-
-        mExpandedClockPicker = (ColorPickerPreference) findPreference(PREF_EXPANDED_CLOCK_PICKER);
-        mExpandedClockPicker.setOnPreferenceChangeListener(this);
 
         int statusBarAmPm = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.STATUS_BAR_AM_PM, 2);
@@ -142,14 +137,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_CLOCK_COLOR, intHex);
             return true;
-        } else if (preference == mExpandedClockPicker) {
-            String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String
-                    .valueOf( newValue)));
-            preference.setSummary(hex);
-            int intHex = ColorPickerPreference.convertToColorInt(hex);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_EXPANDED_CLOCK_COLOR, intHex);
-            return true;
         } else if (preference == mStatusBarAmPm) {
             int statusBarAmPm = Integer.valueOf((String) newValue);
             int index = mStatusBarAmPm.findIndexOfValue((String) newValue);
@@ -181,6 +168,5 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         }
         return false;
     }
-
 
 }

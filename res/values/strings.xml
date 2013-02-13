@@ -5254,6 +5254,5 @@
 
     <!-- Status bar clock color -->
     <string name="clock_color_title">Clock color</string>
-    <string name="expanded_clock_color_title">Expanded Notification Clock color</string>
 
 </resources>
