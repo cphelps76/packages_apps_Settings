@@ -5243,6 +5243,8 @@
     <string name="pie_search_summary">Access to GoogleNow via Pie</string>
     <string name="all_color">Custom Colors</string>
     <string name="stock_color">Default Colors</string>
+    <string name="pie_center_title">Center pie</string>
+    <string name="pie_center_summary">If un-checked, pie appears where your triggers it</string>
 
     <!-- Menu Overflow -->
     <string name="show_overflow_title">Show Menu UI Overflow</string>

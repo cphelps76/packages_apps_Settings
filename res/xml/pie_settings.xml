@@ -42,6 +42,11 @@
             android:summary="@string/pie_gravity_summary"
             android:entries="@array/entries_pie_gravity"
             android:entryValues="@array/values_pie_gravity" />
+        <CheckBoxPreference
+
+            android:key="pie_center"
+            android:title="@string/pie_center_title"
+            android:summary="@string/pie_center_summary" />
 
         <ListPreference
             android:key="pie_size"

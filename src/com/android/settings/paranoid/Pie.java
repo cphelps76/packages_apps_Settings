@@ -49,6 +49,7 @@ public class Pie extends SettingsPreferenceFragment
     private static final String PIE_NOTIFICATIONS = "pie_notifications";
     private static final String PIE_MENU = "pie_menu";
     private static final String PIE_SEARCH = "pie_search";
+    private static final String PIE_CENTER = "pie_center";
 
     private ListPreference mPieMode;
     private ListPreference mPieSize;
@@ -59,6 +60,7 @@ public class Pie extends SettingsPreferenceFragment
     private CheckBoxPreference mPieControls;
     private CheckBoxPreference mPieMenu;
     private CheckBoxPreference mPieSearch;
+    private CheckBoxPreference mPieCenter;
 
     private Context mContext;
     private int mAllowedLocations;
@@ -74,6 +76,10 @@ public class Pie extends SettingsPreferenceFragment
         mPieControls = (CheckBoxPreference) findPreference(PIE_CONTROLS);
         mPieControls.setChecked((Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.PIE_CONTROLS, 0) == 1));
+
+        mPieCenter = (CheckBoxPreference) prefSet.findPreference(PIE_CENTER);
+        mPieCenter.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PIE_CENTER, 1) == 1);
 
         mPieGravity = (ListPreference) prefSet.findPreference(PIE_GRAVITY);
         int pieGravity = Settings.System.getInt(mContext.getContentResolver(),
@@ -155,6 +161,9 @@ public class Pie extends SettingsPreferenceFragment
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.PIE_SEARCH, 
                     mPieSearch.isChecked() ? 1 : 0);
+        } else if (preference == mPieCenter) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.PIE_CENTER, mPieCenter.isChecked() ? 1 : 0);
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
