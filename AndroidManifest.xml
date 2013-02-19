@@ -64,6 +64,7 @@
     <uses-permission android:name="android.permission.CONFIGURE_WIFI_DISPLAY" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SET_TIME" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
     <permission
         android:name="android.permission.REQUEST_SUPERUSER"
@@ -1644,20 +1645,6 @@
                 android:resource="@id/display_settings" />
         </activity>
 
-        <activity android:name="Settings$QuietHoursSettingsActivity"
-                android:label="@string/quiet_hours_title"
-                android:taskAffinity=""
-                android:excludeFromRecents="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
-                android:value="com.android.settings.QuietHours" />
-            <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
-                android:resource="@id/sound_settings" />
-        </activity>
-
         <receiver android:name=".widget.SettingsAppWidgetProvider"
                 android:label="@string/gadget_title"
                 android:exported="true"
@@ -1753,13 +1740,12 @@
         </activity>
 
         <activity
-            android:name=".aokp.TransparencyDialog"
-            android:theme="@android:style/Theme.Dialog"
-            android:label="@string/title_ui" >
+            android:name=".demented.NavRingTargets"
+            android:label="@string/title_navring" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="com.android.settings.SHORTCUT" />
+                <category android:name="com.aokp.romcontrol.SHORTCUT" />
             </intent-filter>
         </activity>
 

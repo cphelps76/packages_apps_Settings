@@ -67,6 +67,12 @@
         android:title="@string/title_navbar"
         android:summary="@string/header_summary_navbar" />
 
+     <header
+        android:id="@+id/nav_ring"
+        android:fragment="com.android.settings.aokp.NavRingTargets"
+        android:title="@string/interface_navring_settings_title"
+        android:summary="@string/interface_navring_settings_summary" />
+
     <ListPreference
         android:key="pref_low_battery_warning_policy"
         android:title="@string/pref_low_battery_warning_policy_title"
