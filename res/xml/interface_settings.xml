@@ -81,10 +81,14 @@
             android:title="@string/transparency_dialog_title" />
 
         <PreferenceScreen
-            android:id="@+id/nav_bar"
             android:fragment="com.android.settings.demented.Navbar"
             android:title="@string/title_navbar"
             android:summary="@string/header_summary_navbar" />
+
+        <PreferenceScreen
+            android:fragment="com.android.settings.demented.NavRingTargets"
+            android:title="@string/interface_navring_settings_title"
+            android:summary="@string/interface_navring_settings_summary" />
 
         <PreferenceScreen
             android:key="power_menu"
