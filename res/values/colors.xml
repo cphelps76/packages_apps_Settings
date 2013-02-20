@@ -40,4 +40,7 @@
     <color name="circle_avatar_frame_color">#ffffffff</color>
     <color name="circle_avatar_frame_shadow_color">#80000000</color>
     <color name="circle_avatar_frame_pressed_color">#ffffffff</color>
+
+    <color name="extension_list_item_color">#ffc9c9c9</color>
+    <color name="configure_light_background">#00000000</color>
 </resources>
