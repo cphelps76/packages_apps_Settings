@@ -1832,4 +1832,6 @@
     <string name="user_picture_title" msgid="7297782792000291692">"Документ с фото"</string>
     <string name="cell_broadcast_settings" msgid="8415582011920085222">"Широковещательная передача сообщений"</string>
     <string name="cell_broadcast_settings_summary" msgid="3301339398950905913">"Выберите типы экстренных оповещений на экране."</string>
+    <string name="accessibility_power_button_ends_call_title" msgid="5468375366375940894">"Кнопка питания завершает вызов"</string>
+    <string name="accessibility_home_button_answers_call_title">"Кнопка Домой отвечает на вызов"</string>
 </resources>
