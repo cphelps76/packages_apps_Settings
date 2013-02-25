@@ -42,6 +42,7 @@ public class PowerMenu extends SettingsPreferenceFragment implements
     private static final String KEY_USER = "power_menu_user";
     private static final String KEY_SILENT = "power_menu_silent";
     private static final String PREF_NAVBAR_HIDE = "show_navbar_hide";
+    private static final String PREF_REBOOT_KEYGUARD = "show_reboot_keyguard";
 
     private CheckBoxPreference mRebootPref;
     private CheckBoxPreference mScreenshotPref;
@@ -51,6 +52,7 @@ public class PowerMenu extends SettingsPreferenceFragment implements
     private CheckBoxPreference mUserPref;
     private CheckBoxPreference mSilentPref;
     private CheckBoxPreference mShowNavBarHide;
+    CheckBoxPreference mShowRebootKeyguard;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,9 @@ public class PowerMenu extends SettingsPreferenceFragment implements
         mShowNavBarHide.setChecked(Settings.System.getBoolean(getActivity()
                 .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_NAVBAR_HIDE,
                 false));
-
+        mShowRebootKeyguard = (CheckBoxPreference) findPreference(PREF_REBOOT_KEYGUARD);
+        mShowRebootKeyguard.setChecked(Settings.System.getBoolean(getActivity()
+                .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_REBOOT_KEYGUARD, true));
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -156,6 +160,11 @@ public class PowerMenu extends SettingsPreferenceFragment implements
             Settings.System.putInt(getContentResolver(),
                     Settings.System.POWER_DIALOG_SHOW_NAVBAR_HIDE,
                     value ? 1 : 0);
+        } else if (preference == mShowRebootKeyguard) {
+            Settings.System.putBoolean(getActivity().getContentResolver(),
+                    Settings.System.POWER_DIALOG_SHOW_REBOOT_KEYGUARD,
+                    ((CheckBoxPreference)preference).isChecked());
+            return true;
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
