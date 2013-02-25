@@ -103,7 +103,7 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
     private static final String TOGGLE_POWER_BUTTON_ENDS_CALL_PREFERENCE =
             "toggle_power_button_ends_call_preference";
     private static final String TOGGLE_HOME_BUTTON_ANSWERS_CALL_PREFERENCE =
-        "toggle_home_button_answers_call_preference";
+            "toggle_home_button_answers_call_preference";
     private static final String TOGGLE_LOCK_SCREEN_ROTATION_PREFERENCE =
             "toggle_lock_screen_rotation_preference";
     private static final String TOGGLE_SPEAK_PASSWORD_PREFERENCE =
