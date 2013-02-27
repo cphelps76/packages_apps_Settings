@@ -5236,7 +5236,6 @@
     <string name="pie_stick_summary">If checked Pie will stay in place no matter which orientation option is choosen</string>
     <string name="all_color">Custom Colors</string>
     <string name="stock_color">Default Colors</string>
-    <string name="pie_center_title">Center pie</string>
 
     <!-- Menu Overflow -->
     <string name="show_overflow_title">Show Menu UI Overflow</string>

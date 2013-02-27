@@ -139,6 +139,10 @@ public class Pie extends SettingsPreferenceFragment
 
     private void checkControls() {
         boolean pieCheck = mPieControls.isChecked();
+	mPieMenu.setEnabled(pieCheck);
+	mPieStick.setEnabled(pieCheck);
+	mPieSearch.setEnabled(pieCheck);
+	mPieCenter.setEnabled(pieCheck);
         mPieGravity.setEnabled(pieCheck);
         mPieMode.setEnabled(pieCheck);
         mPieSize.setEnabled(pieCheck);
