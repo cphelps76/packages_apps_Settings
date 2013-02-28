@@ -215,6 +215,13 @@
         android:icon="@drawable/ic_settings_development"
         android:title="@string/development_settings_title" />
 
+    <!-- Superuser -->
+    <header
+        android:id="@+id/superuser"
+        android:fragment="com.koushikdutta.superuser.PolicyNativeFragment"
+        android:icon="@drawable/ic_action_permission"
+        android:title="@string/superuser" />
+
     <!-- Date & Time -->
     <header
         android:id="@+id/date_time_settings"
