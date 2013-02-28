@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 
 import com.android.settings.PEPreferenceFragment;
 import com.android.settings.R;
+import com.android.settings.Utils;
 import com.android.settings.widget.TouchInterceptor;
 import com.android.settings.widget.SeekBarPreference;
 
@@ -49,11 +51,13 @@ public class StatusBarToggles extends PEPreferenceFragment implements
     private static final String PREF_TOGGLES_PER_ROW = "toggles_per_row";
     private static final String PREF_TOGGLE_FAV_CONTACT = "toggle_fav_contact";
     private final int PICK_CONTACT = 1;
+    private static final String QUICK_PULLDOWN = "quick_pulldown";
 
     Preference mEnabledToggles;
     Preference mLayout;
     ListPreference mTogglesPerRow;
     Preference mFavContact;
+    ListPreference mQuickPulldown;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,11 +91,35 @@ public class StatusBarToggles extends PEPreferenceFragment implements
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+  PreferenceScreen prefSet = getPreferenceScreen();
+        ContentResolver resolver = getActivity().getApplicationContext().getContentResolver();
+        
+        mQuickPulldown = (ListPreference) prefSet.findPreference(QUICK_PULLDOWN);
+        if (!Utils.isPhone(getActivity())) {
+            prefSet.removePreference(mQuickPulldown);
+        } else {
+            mQuickPulldown.setOnPreferenceChangeListener(this);
+            int statusQuickPulldown = Settings.System.getInt(resolver, Settings.System.QS_QUICK_PULLDOWN, 0);
+            mQuickPulldown.setValue(String.valueOf(statusQuickPulldown));
+            updatePulldownSummary();
+        }
+    }
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        ContentResolver resolver = getActivity().getApplicationContext().getContentResolver();
         if (preference == mTogglesPerRow) {
             int val = Integer.parseInt((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.QUICK_TOGGLES_PER_ROW, val);
+        } else if (preference == mQuickPulldown) {
+            int statusQuickPulldown = Integer.valueOf((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.QS_QUICK_PULLDOWN,
+                    statusQuickPulldown);
+            updatePulldownSummary();
+            return true;
         }
         return false;
     }
@@ -120,30 +148,30 @@ public class StatusBarToggles extends PEPreferenceFragment implements
             builder.setPositiveButton(R.string.toggles_display_close,
                     new DialogInterface.OnClickListener() {
 
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+	dialog.dismiss();
                         }
-                    });
-            builder.setMultiChoiceItems(values, checkedToggles, new OnMultiChoiceClickListener() {
+	});
+	builder.setMultiChoiceItems(values, checkedToggles, new OnMultiChoiceClickListener() {
 
-                @Override
-                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                    String toggleKey = (finalArray[which]);
+    @Override
+    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+	String toggleKey = (finalArray[which]);
 
-                    if (isChecked)
-                        addToggle(getActivity(), toggleKey);
-                    else
-                        removeToggle(getActivity(), toggleKey);
-                    if (toggleKey.equals("FAVCONTACT")) {
-                        mFavContact.setEnabled(isChecked);
-                    }
-                }
-            });
+	if (isChecked)
+		addToggle(getActivity(), toggleKey);
+	else
+		removeToggle(getActivity(), toggleKey);
+	if (toggleKey.equals("FAVCONTACT")) {
+		 mFavContact.setEnabled(isChecked);
+		}
+	}
+	});
 
-            AlertDialog d = builder.create();
+	AlertDialog d = builder.create();
 
-            d.show();
+	d.show();
 
             return true;
         } else if (preference == mLayout) {
@@ -383,5 +411,29 @@ public class StatusBarToggles extends PEPreferenceFragment implements
             }
         }
         return iloveyou;
+    }
+
+    private void updatePulldownSummary() {
+        ContentResolver resolver = getActivity().getApplicationContext().getContentResolver();
+        int summaryId;
+        int directionId;
+        summaryId = R.string.summary_quick_pulldown;
+        String value = Settings.System.getString(resolver, Settings.System.QS_QUICK_PULLDOWN);
+        String[] pulldownArray = getResources().getStringArray(R.array.quick_pulldown_values);
+        if (pulldownArray[0].equals(value)) {
+            directionId = R.string.quick_pulldown_off;
+            mQuickPulldown.setValueIndex(0);
+            mQuickPulldown.setSummary(getResources().getString(directionId));
+        } else if (pulldownArray[1].equals(value)) {
+            directionId = R.string.quick_pulldown_right;
+            mQuickPulldown.setValueIndex(1);
+            mQuickPulldown.setSummary(getResources().getString(directionId)
+                    + " " + getResources().getString(summaryId));
+        } else {
+            directionId = R.string.quick_pulldown_left;
+            mQuickPulldown.setValueIndex(2);
+            mQuickPulldown.setSummary(getResources().getString(directionId)
+                    + " " + getResources().getString(summaryId));
+        }
     }
 }

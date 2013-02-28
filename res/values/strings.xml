@@ -4859,6 +4859,11 @@
 
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
     <string name="qs_title">Quick Settings Control</string>
+    <string name="quick_pulldown_off">Off</string>
+    <string name="quick_pulldown_left">Left</string>
+    <string name="quick_pulldown_right">Right</string>
+    <string name="title_quick_pulldown">Quick pulldown</string>
+    <string name="summary_quick_pulldown">edge of the status bar pulls down Quick Settings</string>
 
     <!-- Toggle Strings to be called from device overlays -->
     <string name="toggle_airplane_mode">Airplane Mode</string>
