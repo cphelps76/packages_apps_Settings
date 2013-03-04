@@ -1739,7 +1739,7 @@
 
         <activity
             android:name=".demented.StatusBarToggles"
-            android:label="@string/@string/qs_title">
+            android:label="@string/qs_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
