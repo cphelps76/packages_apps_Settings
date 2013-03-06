@@ -5255,4 +5255,8 @@
     <!-- Status bar clock color -->
     <string name="clock_color_title">Clock color</string>
 
+ <!-- Swap volume buttons when the screen is rotated by 90 or 180 degrees -->
+    <string name="swap_volume_buttons_title">Swap volume buttons</string>
+    <string name="swap_volume_buttons_summary">Swap volume buttons when the screen is rotated by 90 or 180 degrees</string>
+
 </resources>
