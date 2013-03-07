@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -55,6 +56,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final int LOCKSCREEN_BACKGROUND_DEFAULT_WALLPAPER = 2;
 
     private static final String KEY_ALWAYS_BATTERY_PREF = "lockscreen_battery_status";
+    private static final String KEY_SEE_TRHOUGH = "see_through";
     private static final String KEY_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
     private static final String PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
     private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
@@ -62,6 +64,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
 
     private ListPreference mCustomBackground;
     private ListPreference mBatteryStatus;
+    private CheckBoxPreference mSeeThrough;
     private CheckBoxPreference mMaximizeWidgets;
     private CheckBoxPreference mLockscreenHideInitialPageHints;
     private CheckBoxPreference mCameraWidget;
@@ -76,6 +79,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ContentResolver resolver = getContentResolver();
+        mContext = getActivity();
 
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
 
@@ -91,6 +96,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
 
         mCameraWidget = (CheckBoxPreference) prefSet.findPreference(KEY_LOCKSCREEN_CAMERA_WIDGET);
             mCameraWidget.setOnPreferenceChangeListener(this);
+
+        mSeeThrough = (CheckBoxPreference) findPreference(KEY_SEE_TRHOUGH);
+        mSeeThrough.setChecked(Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1);
 
         mMaximizeWidgets = (CheckBoxPreference)findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS);
         if (!Utils.isPhone(getActivity())) {
@@ -195,6 +204,11 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         } else if (preference == mCustomBackground) {
             int selection = mCustomBackground.findIndexOfValue(objValue.toString());
             return handleBackgroundSelection(selection);
+         } else if (preference == mSeeThrough) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_SEE_THROUGH,
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
+            return true;
         }
         return false;
     }
