@@ -63,7 +63,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String KEY_POWER_BUTTON_TORCH = "power_button_torch";
 
     private CheckBoxPreference mPowerButtonTorch;
-    private static final String KEY_CHRONUS = "chronus";
+    private static final String KEY_LOCK_CLOCK = "lock_clock";
     private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
     private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
@@ -90,7 +90,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         updateCustomLabelTextSummary();
 
         // Dont display the lock clock preference if its not installed
-        removePreferenceIfPackageNotInstalled(findPreference(KEY_CHRONUS));
+        removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
 
         mPowerButtonTorch = (CheckBoxPreference) findPreference(KEY_POWER_BUTTON_TORCH);
         if (torchSupported()) {
