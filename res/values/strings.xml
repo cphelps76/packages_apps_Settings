@@ -4629,4 +4629,8 @@
     <string name="regulatory_info_text"></string>
     <!-- Roaming Date Settings -->
     <string name="label_global_roaming_settings">Global roaming settings</string>
+
+    <!-- TRDS Settings -->
+    <string name="trds_settings_title">DEMENTED Darkside</string>
+
 </resources>
