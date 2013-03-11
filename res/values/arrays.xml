@@ -1072,6 +1072,7 @@
         <item>@string/status_bar_style_hidden</item>
         <item>@string/status_bar_battery_status_digital</item>
         <item>@string/status_bar_battery_status_fat</item>
+        <item>@string/status_bar_battery_status_gear</item>
     </string-array>
 
     <string-array name="values_status_bar_battery" translatable="false">
@@ -1082,6 +1083,7 @@
         <item>4</item>
         <item>5</item>
         <item>6</item>
+	<item>7</item>
     </string-array>
 
     <string-array name="entries_status_bar_signal" translatable="false">
