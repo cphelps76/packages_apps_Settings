@@ -5129,9 +5129,11 @@
     <!-- stylus gestures support -->
     <string name="stylus_app_not_installed">%s is not installed</string>
 
-    <!-- **** CYANOGENMOD ADDITIONS END **** -->
-
     <string name="volume_adjust_sounds_enable_title">Volume adjust sound</string>
+
+    <!-- Breathing Notifications -->
+    <string name="missed_call_breath">Breathing Missed Call</string>
+    <string name="missed_call_breath_summary">Will give your missed call notifications a breathing effect on the statusbar.</string>
 
     <!-- Sound settings screen, setting check box summary -->
     <string name="volume_adjust_sounds_enable_summary">Play sound when adjusting volume with hard keys</string>
