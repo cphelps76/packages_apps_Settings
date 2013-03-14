@@ -399,7 +399,7 @@ public class StatusBarToggles extends PEPreferenceFragment implements
         if (clusterfuck == null) {
             Log.e(TAG, "clusterfuck was null");
             // return null;
-            clusterfuck = "getResources().getString(R.string.toggle_default_entries);";
+            clusterfuck = getResources().getString(R.string.toggle_default_entries);
         }
 
         String[] togglesStringArray = clusterfuck.split("\\|");
