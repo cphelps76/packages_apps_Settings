@@ -5257,8 +5257,12 @@
     <!-- Status bar clock color -->
     <string name="clock_color_title">Clock color</string>
 
- <!-- Swap volume buttons when the screen is rotated by 90 or 180 degrees -->
+    <!-- Swap volume buttons when the screen is rotated by 90 or 180 degrees -->
     <string name="swap_volume_buttons_title">Swap volume buttons</string>
     <string name="swap_volume_buttons_summary">Swap volume buttons when the screen is rotated by 90 or 180 degrees</string>
+
+    <!-- Lockscreen Camera widget toggle -->
+    <string name="lockscreen_camera_widget_title">Camera widget</string>
+    <string name="lockscreen_camera_widget_summary">Show the lockscreen camera widget</string>
 
 </resources>

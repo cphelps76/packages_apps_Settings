@@ -43,6 +43,11 @@
         android:defaultValue="0" />
 
      <CheckBoxPreference
+        android:key="lockscreen_camera_widget"
+        android:title="@string/lockscreen_camera_widget_title" 
+        android:summary="@string/lockscreen_camera_widget_summary"/>
+
+     <CheckBoxPreference
         android:key="lockscreen_maximize_widgets"
         android:persistent="false"
         android:title="@string/lockscreen_maximize_widgets_title"

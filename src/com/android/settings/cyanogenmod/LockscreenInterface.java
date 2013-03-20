@@ -58,11 +58,13 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String KEY_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
     private static final String PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
     private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
+    private static final String KEY_LOCKSCREEN_CAMERA_WIDGET = "lockscreen_camera_widget";
 
     private ListPreference mCustomBackground;
     private ListPreference mBatteryStatus;
     private CheckBoxPreference mMaximizeWidgets;
     private CheckBoxPreference mLockscreenHideInitialPageHints;
+    private CheckBoxPreference mCameraWidget;
 
     private File mWallpaperImage;
     private File mWallpaperTemporary;
@@ -77,12 +79,19 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
 
+        PreferenceScreen prefSet = getPreferenceScreen();
+
         mBatteryStatus = (ListPreference) findPreference(KEY_ALWAYS_BATTERY_PREF);
         if (mBatteryStatus != null) {
             mBatteryStatus.setOnPreferenceChangeListener(this);
         }
+
         mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
             mLockscreenHideInitialPageHints.setOnPreferenceChangeListener(this);
+
+        mCameraWidget = (CheckBoxPreference) prefSet.findPreference(KEY_LOCKSCREEN_CAMERA_WIDGET);
+            mCameraWidget.setOnPreferenceChangeListener(this);
+
         mMaximizeWidgets = (CheckBoxPreference)findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS);
         if (!Utils.isPhone(getActivity())) {
             getPreferenceScreen().removePreference(mMaximizeWidgets);
@@ -168,6 +177,11 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             int index = mBatteryStatus.findIndexOfValue((String) objValue);
             Settings.System.putInt(cr, Settings.System.LOCKSCREEN_ALWAYS_SHOW_BATTERY, value);
             mBatteryStatus.setSummary(mBatteryStatus.getEntries()[index]);
+            return true;
+	} else if (preference == mCameraWidget) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.KG_CAMERA_WIDGET, 
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
             return true;
         } else if (preference == mMaximizeWidgets) {
             boolean value = (Boolean) objValue;
