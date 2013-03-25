@@ -1800,5 +1800,14 @@
                 <category android:name="com.android.settings.SHORTCUT"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".demented.RibbonTargets"
+            android:label="@string/title_ribbon" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
