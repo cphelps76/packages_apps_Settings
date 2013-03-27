@@ -107,6 +107,23 @@ public class SystemSettings extends SettingsPreferenceFragment implements
             getPreferenceScreen().removePreference(mPowerButtonTorch);
         }
 
+        // Only show the hardware keys config on a device that does not have a navbar
+        // and the navigation bar config on phones that has a navigation bar
+        boolean removeKeys = false;
+        boolean removeNavbar = false;
+
+        IWindowManager windowManager = IWindowManager.Stub.asInterface(
+                ServiceManager.getService(Context.WINDOW_SERVICE));
+        try {
+            if (windowManager.hasNavigationBar()) {
+                removeKeys = true;
+            } else {
+                removeNavbar = true;
+            }
+        } catch (RemoteException e) {
+            // Do nothing
+        }
+
         mShowActionOverflow = (CheckBoxPreference) findPreference(PREF_SHOW_OVERFLOW);
         mShowActionOverflow.setChecked(Settings.System.getBoolean(getActivity().
                         getApplicationContext().getContentResolver(),
@@ -114,6 +131,14 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
         mDualpane = (CheckBoxPreference) findPreference(PREF_FORCE_DUAL_PANEL);
             mDualpane.setOnPreferenceChangeListener(this);
+
+        // Pie controls
+        mPieControl = (PreferenceScreen) findPreference(KEY_PIE_CONTROL);
+        if (mPieControl != null && removeNavbar) {
+            // Remove on devices without a navbar to start with
+            prefScreen.removePreference(mPieControl);
+            mPieControl = null;
+        }
 
     }
 
