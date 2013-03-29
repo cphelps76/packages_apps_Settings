@@ -1538,10 +1538,6 @@
 
         <activity android:name=".cyanogenmod.PowerMenu" />
 
-        <activity android:name=".paranoid.Pie" />
-
-        <activity android:name=".paranoid.PieColor" />
-
         <activity android:name=".aokp.StatusBarBattery" />
 
         <activity android:name=".demented.CarrierLabel" />

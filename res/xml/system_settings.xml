@@ -55,12 +55,6 @@
         android:title="@string/title_navbar"
         android:summary="@string/header_summary_navbar" />
 
-  <PreferenceScreen
-        android:key="pie_control"
-        android:fragment="com.android.settings.paranoid.Pie"
-        android:title="@string/pie_controls_title"
-        android:summary="@string/pie_controls_summary" />
-
     <!-- Custom Carrier Label -->
     <Preference
         android:key="custom_carrier_label"
