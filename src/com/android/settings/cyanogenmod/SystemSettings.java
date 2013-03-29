@@ -64,9 +64,12 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mPowerButtonTorch;
     private static final String KEY_LOCK_CLOCK = "lock_clock";
+    private static final String KEY_PIE_CONTROL = "pie_control";
     private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
     private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
+
+    private PreferenceScreen mPieControl;
 
     CheckBoxPreference mShowActionOverflow;
     Preference mCustomLabel;
@@ -92,6 +95,9 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         // Dont display the lock clock preference if its not installed
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
 
+        // Pie controls
+        mPieControl = (PreferenceScreen) findPreference(KEY_PIE_CONTROL);
+
         mPowerButtonTorch = (CheckBoxPreference) findPreference(KEY_POWER_BUTTON_TORCH);
         if (torchSupported()) {
             mPowerButtonTorch.setChecked((Settings.System.getInt(getActivity().
@@ -114,6 +120,9 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        if (mPieControl != null) {
+            updatePieControlDescription();
+        }
     }
 
     @Override
@@ -186,6 +195,15 @@ public class SystemSettings extends SettingsPreferenceFragment implements
             return true;
         }
         return false;
+    }
+
+    private void updatePieControlDescription() {
+        if (Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.PIE_CONTROLS, 0) == 1) {
+            mPieControl.setSummary(getString(R.string.pie_control_enabled));
+        } else {
+            mPieControl.setSummary(getString(R.string.pie_control_disabled));
+        }
     }
 
     private boolean removePreferenceIfPackageNotInstalled(Preference preference) {

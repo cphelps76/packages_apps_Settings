@@ -50,6 +50,7 @@
         android:fragment="com.android.settings.aokp.StatusBarBattery" />
 
     <PreferenceScreen
+
         android:id="@+id/nav_bar"
         android:fragment="com.android.settings.aokp.Navbar"
         android:title="@string/title_navbar"
@@ -78,5 +79,10 @@
 	android:title="@string/multipane_ui"
 	android:summary="@string/multipane_ui_summary"
 	android:defaultValue="false" />
+
+    <PreferenceScreen
+        android:key="pie_control"
+        android:fragment="com.android.settings.cyanogenmod.PieControl"
+        android:title="@string/pie_control_title" />
 
 </PreferenceScreen>
