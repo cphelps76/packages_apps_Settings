@@ -1195,6 +1195,26 @@
         <item>@string/media_scanner_on_boot_disabled</item>
     </string-array>
 
+    <!-- Screenshot delay -->
+    <string-array name="screenshot_delay_entries" translatable="false">
+        <item>2 seconds</item>
+        <item>3 seconds</item>
+        <item>4 seconds</item>
+        <item>5 seconds</item>
+        <item>6 seconds</item>
+        <item>7 seconds</item>
+        <item>8 seconds</item>
+    </string-array>
+    <string-array name="screenshot_delay_values" translatable="false">
+        <item>2000</item>
+        <item>3000</item>
+        <item>4000</item>
+        <item>5000</item>
+        <item>6000</item>
+        <item>7000</item>
+        <item>8000</item>
+    </string-array>
+
     <string-array name="media_scanner_on_boot_values" translatable="false">
         <item>0</item>
         <item>1</item>

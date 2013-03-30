@@ -4938,6 +4938,8 @@
     <string name="add_toggles">Add toggles</string>
     <string name="toggles_style_title">Toggles style</string>
     <string name="toggles_style_summary">Notification (traditional) or tiles</string>
+    <string name="screenshot_delay_title">Screenshot delay</string>
+    <string name="screenshot_delay_summary">Delay to use after long pressing the screenshot toggle</string>
 
     <!-- Lock screen shortcuts -->
     <string name="picker_activities">Activities</string>
@@ -5211,6 +5213,7 @@
     <string name="interface_navring_settings_title">Navigation Ring</string>
     <string name="interface_navring_settings_summary">@null</string>
     <string name="navring_target_info">Drag your finger to targets to assign actions</string>
+    <string name="navring_clear">Clear action</string>
     <string name="navring_short">Short action</string>
     <string name="navring_long">Long action</string>
     <string name="navring_icon">Custom icon</string>

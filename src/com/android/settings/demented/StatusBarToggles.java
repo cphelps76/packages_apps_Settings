@@ -24,7 +24,7 @@ import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.android.settings.PEPreferenceFragment;
+import com.android.settings.aokp.AOKPPreferenceFragment;
 import com.android.settings.R;
 import com.android.settings.Utils;
 
@@ -34,7 +34,7 @@ import com.android.settings.aokp.util.Helpers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatusBarToggles extends PEPreferenceFragment implements
+public class StatusBarToggles extends AOKPPreferenceFragment implements
         OnPreferenceChangeListener {
 
     private static final String TAG = "TogglesLayout";
@@ -43,6 +43,7 @@ public class StatusBarToggles extends PEPreferenceFragment implements
     private static final String PREF_TOGGLES_PER_ROW = "toggles_per_row";
     private static final String PREF_TOGGLES_STYLE = "toggles_style";
     private static final String PREF_TOGGLE_FAV_CONTACT = "toggle_fav_contact";
+    private static final String PREF_SCREENSHOT_DELAY = "screenshot_delay";
     private final int PICK_CONTACT = 1;
     private static final String QUICK_PULLDOWN = "quick_pulldown";
 
@@ -52,7 +53,7 @@ public class StatusBarToggles extends PEPreferenceFragment implements
     ListPreference mTogglesStyle;
     Preference mFavContact;
     ListPreference mQuickPulldown;
-
+    ListPreference mScreenshotDelay;
     BroadcastReceiver mReceiver;
     ArrayList<String> mToggles;
 
@@ -94,6 +95,11 @@ public class StatusBarToggles extends PEPreferenceFragment implements
         mLayout = findPreference("toggles");
 
         mFavContact = findPreference(PREF_TOGGLE_FAV_CONTACT);
+
+        mScreenshotDelay = (ListPreference) findPreference(PREF_SCREENSHOT_DELAY);
+        mScreenshotDelay.setOnPreferenceChangeListener(this);
+        mScreenshotDelay.setValue(String.valueOf(Settings.System.getInt(mContentRes,
+                Settings.System.SCREENSHOT_TOGGLE_DELAY, 5000)));
     }
 
     static ArrayList<EasyPair<String, String>> buildToggleMap(Bundle toggleInfo) {
@@ -176,6 +182,11 @@ public class StatusBarToggles extends PEPreferenceFragment implements
                     statusQuickPulldown);
             updatePulldownSummary();
             return true;
+        } else if (preference == mScreenshotDelay) {
+            int val = Integer.parseInt((String) newValue);
+            Settings.System.putInt(mContentRes,
+                    Settings.System.SCREENSHOT_TOGGLE_DELAY, val);
+            mScreenshotDelay.setValue((String) newValue);
         }
         return true;
     }

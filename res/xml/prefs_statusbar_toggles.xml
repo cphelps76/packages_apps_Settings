@@ -20,16 +20,23 @@
         android:title="@string/toggles_per_row_title"
         android:summary="@string/toggles_per_row_summary" />
 
-    <Preference
-        android:key="toggle_fav_contact"
-        android:summary="@string/toggle_favcontact_summary"
-        android:title="@string/toggle_favcontact_title" />
-
     <ListPreference
 	android:key="quick_pulldown"
         android:title="@string/title_quick_pulldown"
         android:entries="@array/quick_pulldown_entries"
         android:entryValues="@array/quick_pulldown_values"
         android:persistent="false" />
+
+    <Preference
+        android:key="toggle_fav_contact"
+        android:summary="@string/toggle_favcontact_summary"
+        android:title="@string/toggle_favcontact_title" />
+
+    <ListPreference
+        android:entries="@array/screenshot_delay_entries"
+        android:entryValues="@array/screenshot_delay_values"
+        android:key="screenshot_delay"
+        android:summary="@string/screenshot_delay_summary"
+        android:title="@string/screenshot_delay_title" />
 
 </PreferenceScreen>
