@@ -32,6 +32,11 @@
 			android:title="@string/demented_source_title"
 			android:summary="@string/demented_source_summary" />
 
+		<Preference
+			android:key="dc_source"
+			android:title="@string/dc_source_title"
+			android:summary="@string/dc_source_summary" />
+
 	</PreferenceCategory>
 
 </PreferenceScreen>

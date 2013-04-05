@@ -15,7 +15,7 @@ public class About extends SettingsPreferenceFragment {
 
     Preference mSiteUrl;
     Preference mSourceUrl;
-    Preference mIrcUrl;
+    Preference mSourceDCUrl;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class About extends SettingsPreferenceFragment {
         addPreferencesFromResource(R.xml.prefs_about);
         mSiteUrl = findPreference("dc_website");
         mSourceUrl = findPreference("demented_source");
+        mSourceDCUrl = findPreference("dc_source");
     }
 
     @Override
@@ -32,6 +33,8 @@ public class About extends SettingsPreferenceFragment {
             launchUrl("http://www.droidconcepts.com/");
         } else if (preference == mSourceUrl) {
             launchUrl("https://github.com/cphelps76");
+        } else if (preference == mSourceDCUrl) {
+            launchUrl("https://github.com/davros-");
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
