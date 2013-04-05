@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:demented="http://schemas.android.com/apk/res/com.android.settings">
+
+	<PreferenceCategory
+		android:key="devs"
+		android:title="@string/devs">
+		<com.android.settings.demented.DeveloperPreference
+			android:title="cphelps76"
+			demented:twitterHandle="csphelps76"
+			demented:donateLink="@string/donate_cphelps76" />
+
+		<com.android.settings.demented.DeveloperPreference
+			android:title="davros"
+			demented:twitterHandle="davros"
+			demented:donateLink="@string/donate_davros" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:key="demented"
+		android:title="@string/demented">
+
+		<Preference
+			android:key="dc_website"
+			android:title="@string/dc_website_title"
+			android:summary="@string/dc_website_summary" />
+
+		<Preference
+			android:key="demented_source"
+			android:title="@string/demented_source_title"
+			android:summary="@string/demented_source_summary" />
+
+	</PreferenceCategory>
+
+</PreferenceScreen>
