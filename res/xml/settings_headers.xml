@@ -60,12 +60,6 @@
     <!-- INTERFACE -->
     <header android:title="@string/header_category_interface" />
 
-    <header
-	android:id="@+id/about"
-        android:icon="@drawable/ic_settings_demented"
-	android:fragment="com.android.settings.demented.About"
-	android:title="@string/about_demented" />
-
     <!-- System -->
     <header
         android:id="@+id/system_settings"
@@ -110,6 +104,13 @@
             android:targetPackage="com.tmobile.themechooser"
             android:targetClass="com.tmobile.themechooser.ThemeChooser" />
     </header>
+
+    <!-- About -->
+    <header
+	android:id="@+id/about"
+        android:icon="@drawable/ic_settings_demented"
+	android:fragment="com.android.settings.demented.About"
+	android:title="@string/about_demented" />
 
     <!-- DEVICE -->
     <header android:id="@+id/device_section"
