@@ -208,8 +208,8 @@ public class SystemSettings extends SettingsPreferenceFragment implements
                     ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
             return true;
         } else if (preference == mLowBatteryWarning) {
-            int lowBatteryWarning = Integer.valueOf((String) Value);
-            int index = mLowBatteryWarning.findIndexOfValue((String) Value);
+            int lowBatteryWarning = Integer.valueOf((String) objValue);
+            int index = mLowBatteryWarning.findIndexOfValue((String) objValue);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.POWER_UI_LOW_BATTERY_WARNING_POLICY, lowBatteryWarning);
             mLowBatteryWarning.setSummary(mLowBatteryWarning.getEntries()[index]);
