@@ -5241,4 +5241,7 @@
    <string name="notification_show_wifi_ssid_summary">Display the name of the currently connected Wifi network</string>
    <string name="statusbar_header">StatusBar &amp; Notification Drawer</string>
 
+   <!-- Low Battery Warning -->
+   <string name="pref_low_battery_warning_policy_title">Low battery warning</string>
+
 </resources>
