@@ -70,6 +70,7 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.demented.notificationshortcuts.IconPicker;
 import com.android.settings.demented.notificationshortcuts.ShortcutPickHelper;
+import com.android.settings.util.Helpers;
 
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
 
@@ -275,6 +276,7 @@ public class NotificationShortcuts extends SettingsPreferenceFragment implements
             public boolean onPreferenceChange(Preference preference,
                         Object newValue) {
                 Settings.System.putInt(mCr, Settings.System.NOTIFICATION_SHORTCUTS_HIDE_CARRIER, (Boolean) newValue ? 1 : 0);
+                Helpers.restartSystemUI();
                 return true;
             }
         });
