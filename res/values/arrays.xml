@@ -1579,7 +1579,7 @@
         <item>@*android:drawable/ic_shortcut_music</item>
         <item>@*android:drawable/ic_shortcut_nav</item>
         <item>@*android:drawable/ic_shortcut_phone</item>
-        <item>@*android:drawable/ic_shortcut_pintrest</item>
+        <item>@*android:drawable/ic_shortcut_pinterest</item>
         <item>@*android:drawable/ic_shortcut_play</item>
         <item>@*android:drawable/ic_shortcut_podcast</item>
         <item>@*android:drawable/ic_shortcut_quicksettings</item>
