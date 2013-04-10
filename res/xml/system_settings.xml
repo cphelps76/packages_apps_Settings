@@ -39,30 +39,21 @@
                 android:targetClass="com.cyanogenmod.lockclock.preference.Preferences" />
     </PreferenceScreen>
 
-    <PreferenceCategory
-        android:key="options"
-        android:title="@string/additional_options_title">
-         <CheckBoxPreference
-            android:key="notification_show_wifi_ssid"
-            android:title="@string/notification_show_wifi_ssid_title"
-            android:summary="@string/notification_show_wifi_ssid_summary"
-            android:defaultValue="false" />
-    </PreferenceCategory>
+    <CheckBoxPreference
+        android:key="notification_show_wifi_ssid"
+        android:title="@string/notification_show_wifi_ssid_title"
+        android:summary="@string/notification_show_wifi_ssid_summary"
+        android:defaultValue="false" />
 
-    <PreferenceCategory
-        android:title="@string/notification_shortcuts_grouptitle">
-
-        <PreferenceScreen
-            android:id="@+id/demented_notification_shortcuts"
-            android:fragment="com.android.settings.demented.notificationshortcuts.NotificationShortcuts"
-            android:key="slim_shortcuts_settings"
-            android:title="@string/notification_shortcuts_settings_title"
-            android:summary="@string/notification_shortcuts_settings_summary" />
-    </PreferenceCategory>
+    <PreferenceScreen
+        android:id="@+id/demented_notification_shortcuts"
+        android:fragment="com.android.settings.demented.notificationshortcuts.NotificationShortcuts"
+        android:key="slim_shortcuts_settings"
+        android:title="@string/notification_shortcuts_settings_title"
+        android:summary="@string/notification_shortcuts_settings_summary" />
 
     <ListPreference
         android:key="pref_low_battery_warning_policy"
-        android:icon="@drawable/ic_rb_battery_warning"
         android:title="@string/pref_low_battery_warning_policy_title"
         android:entries="@array/pref_low_battery_warning_policy_entries"
         android:entryValues="@array/pref_low_battery_warning_policy_values"
@@ -79,7 +70,6 @@
         android:fragment="com.android.settings.aokp.StatusBarBattery" />
 
     <PreferenceScreen
-
         android:id="@+id/nav_bar"
         android:fragment="com.android.settings.aokp.Navbar"
         android:title="@string/title_navbar"
