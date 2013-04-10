@@ -28,9 +28,6 @@ import android.content.Intent;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.view.IWindowManager;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -51,6 +48,7 @@ import android.widget.Toast;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
+import com.android.settings.util.Helpers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,6 +66,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
     private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
+    private static final String PREF_NOTIFICATION_SHOW_WIFI_SSID = "notification_show_wifi_ssid";
 
     private PreferenceScreen mPieControl;
 
@@ -78,7 +77,9 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
     String mCustomLabelText = null;
 
+    CheckBoxPreference mShowWifiName;
     CheckBoxPreference mDualpane;
+
     private boolean torchSupported() {
         return getResources().getBoolean(R.bool.has_led_flash);
     }
@@ -106,6 +107,9 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         } else {
             getPreferenceScreen().removePreference(mPowerButtonTorch);
         }
+
+        mShowWifiName = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_SHOW_WIFI_SSID);
+            mShowWifiName.setOnPreferenceChangeListener(this);
 
         mShowActionOverflow = (CheckBoxPreference) findPreference(PREF_SHOW_OVERFLOW);
         mShowActionOverflow.setChecked(Settings.System.getBoolean(getActivity().
@@ -191,6 +195,10 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         if (preference == mDualpane) {
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.FORCE_DUAL_PANEL,
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
+            return true;
+         } else if (preference == mShowWifiName) {
+            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.NOTIFICATION_SHOW_WIFI_SSID,
                     ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
             return true;
         }

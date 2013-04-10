@@ -39,6 +39,16 @@
                 android:targetClass="com.cyanogenmod.lockclock.preference.Preferences" />
     </PreferenceScreen>
 
+    <PreferenceCategory
+        android:key="options"
+        android:title="@string/additional_options_title">
+         <CheckBoxPreference
+            android:key="notification_show_wifi_ssid"
+            android:title="@string/notification_show_wifi_ssid_title"
+            android:summary="@string/notification_show_wifi_ssid_summary"
+            android:defaultValue="false" />
+    </PreferenceCategory>
+
     <PreferenceScreen
         android:id="@+id/statusbar_toggles"
         android:title="@string/qs_title"

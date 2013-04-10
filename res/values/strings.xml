@@ -5236,4 +5236,9 @@
     <string name="dc_source_title">Droid Concepts Source</string>
     <string name="dc_source_summary">Droid Concepts is fully open source. You can always check out the latest DC source at github.com/davros-</string>
 
+   <!-- Wifi network name in notifiacation drawer -->
+   <string name="notification_show_wifi_ssid_title">Show Wifi network name</string>
+   <string name="notification_show_wifi_ssid_summary">Display the name of the currently connected Wifi network</string>
+   <string name="statusbar_header">StatusBar &amp; Notification Drawer</string>
+
 </resources>
