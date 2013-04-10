@@ -49,6 +49,17 @@
             android:defaultValue="false" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/notification_shortcuts_grouptitle">
+
+        <PreferenceScreen
+            android:id="@+id/demented_notification_shortcuts"
+            android:fragment="com.android.settings.demented.notificationshortcuts.NotificationShortcuts"
+            android:key="slim_shortcuts_settings"
+            android:title="@string/notification_shortcuts_settings_title"
+            android:summary="@string/notification_shortcuts_settings_summary" />
+    </PreferenceCategory>
+
     <ListPreference
         android:key="pref_low_battery_warning_policy"
         android:icon="@drawable/ic_rb_battery_warning"

@@ -85,5 +85,7 @@
     <dimen name="navigation_bar_0">0.0dip</dimen>
     <dimen name="target_icon_size">40dip</dimen>
 
+    <!-- Notification Shortcuts -->
+    <dimen name="notification_shortcut_picker_left_padding">36dip</dimen>
 
 </resources>
