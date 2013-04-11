@@ -214,6 +214,7 @@ public class NotificationShortcuts extends SettingsPreferenceFragment implements
                 mPrefSet.removePreference(mNotificationShortcutsColor);
                 Settings.System.putInt(mCr, Settings.System.NOTIFICATION_SHORTCUTS_COLOR, 0xFFDFE0E0);
                 mPrefSet.addPreference(mNotificationShortcutsColor);
+                Helpers.restartSystemUI();
 
                 return true;
             }
