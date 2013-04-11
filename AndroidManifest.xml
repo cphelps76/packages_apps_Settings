@@ -1540,8 +1540,6 @@
 
         <activity android:name=".aokp.StatusBarBattery" />
 
-        <activity android:name=".demented.CarrierLabel" />
-
         <activity android:name=".aokp.NavRingTargets" />
 
         <activity android:name=".aokp.NavBarItemPreference" />
