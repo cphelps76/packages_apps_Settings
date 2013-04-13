@@ -45,6 +45,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String STATUS_BAR_CATEGORY_GENERAL = "status_bar_general";
     private static final String PREF_CLOCK_WEEKDAY = "clock_weekday";
+    private static final String STATUS_BAR_AUTO_HIDE = "status_bar_auto_hide";
 
     private ListPreference mStatusBarClockStyle;
     private ListPreference mStatusBarAmPm;
@@ -54,6 +55,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private PreferenceCategory mPrefCategoryGeneral;
     private ListPreference mClockWeekday;
     private ColorPickerPreference mClockPicker;
+    private CheckBoxPreference mStatusBarAutoHide;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,10 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                 .getContentResolver(), Settings.System.STATUSBAR_CLOCK_WEEKDAY,
                 0)));
 
+        mStatusBarAutoHide = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_AUTO_HIDE);
+        mStatusBarAutoHide.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.AUTO_HIDE_STATUSBAR, 0) == 1));
+
         mPrefCategoryGeneral = (PreferenceCategory) findPreference(STATUS_BAR_CATEGORY_GENERAL);
 
         if (Utils.isWifiOnly(getActivity())) {
@@ -164,6 +170,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.STATUSBAR_CLOCK_WEEKDAY, val);
             mClockWeekday.setSummary(mClockWeekday.getEntries()[index]);
+            return true;
+        } else if (preference == mStatusBarAutoHide) {
+            value = mStatusBarAutoHide.isChecked();
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.AUTO_HIDE_STATUSBAR, value ? 1 : 0);
             return true;
         }
         return false;
