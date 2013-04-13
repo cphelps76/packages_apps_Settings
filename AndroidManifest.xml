@@ -1550,6 +1550,8 @@
 
         <activity android:name=".aokp.TouchInterceptor" />
 
+        <activity android:name=".demented.NotificationDrawerStyle" />
+
         <activity android:name=".profiles.NFCProfile"
                 android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
