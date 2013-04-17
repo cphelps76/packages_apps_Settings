@@ -30,7 +30,7 @@ public class About extends SettingsPreferenceFragment {
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mSiteUrl) {
-            launchUrl("http://www.droidconcepts.com/");
+            launchUrl("http://www.forums.droidconcepts.com/");
         } else if (preference == mSourceUrl) {
             launchUrl("https://github.com/cphelps76");
         } else if (preference == mSourceDCUrl) {
