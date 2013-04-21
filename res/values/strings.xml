@@ -4722,6 +4722,7 @@
 
     <string name="link_volume_ringtones">Link ringtone &amp; notifications volumes</string>
     <string name="link_volume_mutes">Silent mode affects notifications</string>
+    <string name="volume_keys_control_ring_stream">Volume keys control ringtone volume</string>
 
     <!-- Display settings screen, notification light settings -->
     <string name="notification_pulse_title">Notification light</string>
@@ -5405,5 +5406,7 @@
     <string name="system_power_crt_mode_horizontal">Portrait horizontal</string>
     <string name="system_power_crt_mode_vertical">Portrait vertical</string>
     <string name="system_power_crt_mode_both">Orientation dependent</string>
+
+
 
 </resources>
