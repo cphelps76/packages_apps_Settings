@@ -61,7 +61,7 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
     private static final String KEY_INPUT_METHOD_SELECTOR = "input_method_selector";
     private static final String KEY_USER_DICTIONARY_SETTINGS = "key_user_dictionary_settings";
     private static final String KEY_IME_SWITCHER = "status_bar_ime_switcher";
-    private static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";;
+    private static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
     private static final String KEY_POINTER_SETTINGS_CATEGORY = "pointer_settings_category";
     private static final String KEY_STYLUS_ICON_ENABLED = "stylus_icon_enabled";
     private static final String KEY_STYLUS_GESTURES = "stylus_gestures";
