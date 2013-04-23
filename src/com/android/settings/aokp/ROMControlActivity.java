@@ -1,6 +1,7 @@
 
 package com.android.settings.aokp;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -112,6 +113,8 @@ public class ROMControlActivity extends PreferenceActivity implements ButtonBarH
             } catch (ClassCastException e) {
             }
         }
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
 
