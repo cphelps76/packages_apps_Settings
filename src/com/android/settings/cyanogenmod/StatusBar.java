@@ -33,6 +33,7 @@ import android.widget.EditText;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
+import com.android.settings.util.Helpers;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 public class StatusBar extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
@@ -173,6 +174,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
          } else if (preference == mStatusBarAutoHide) {
             Settings.System.putInt(getActivity().getContentResolver(), Settings.System.AUTO_HIDE_STATUSBAR,
                     ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
+                    Helpers.restartSystemUI();
             return true;
          } else if (preference == mStatusBarNotifCount) {
             Settings.System.putInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_NOTIF_COUNT,
