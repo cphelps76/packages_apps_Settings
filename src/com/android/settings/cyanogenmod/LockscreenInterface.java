@@ -79,8 +79,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ContentResolver resolver = getContentResolver();
-        mContext = getActivity();
 
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
 
@@ -97,9 +95,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         mCameraWidget = (CheckBoxPreference) prefSet.findPreference(KEY_LOCKSCREEN_CAMERA_WIDGET);
             mCameraWidget.setOnPreferenceChangeListener(this);
 
-        mSeeThrough = (CheckBoxPreference) findPreference(KEY_SEE_TRHOUGH);
-        mSeeThrough.setChecked(Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1);
+        mSeeThrough = (CheckBoxPreference) prefSet.findPreference(KEY_SEE_TRHOUGH);
+            mSeeThrough.setOnPreferenceChangeListener(this);
 
         mMaximizeWidgets = (CheckBoxPreference)findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS);
         if (!Utils.isPhone(getActivity())) {

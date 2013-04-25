@@ -51,11 +51,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private ListPreference mStatusBarAmPm;
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarCmSignal;
-    private CheckBoxPreference mStatusBarNotifCount;
     private PreferenceCategory mPrefCategoryGeneral;
     private ListPreference mClockWeekday;
     private ColorPickerPreference mClockPicker;
-    private CheckBoxPreference mStatusBarAutoHide;
+
+    CheckBoxPreference mStatusBarNotifCount;
+    CheckBoxPreference mStatusBarAutoHide;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,9 +107,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarCmSignal.setSummary(mStatusBarCmSignal.getEntry());
         mStatusBarCmSignal.setOnPreferenceChangeListener(this);
 
-        mStatusBarNotifCount = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_NOTIF_COUNT);
-        mStatusBarNotifCount.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                Settings.System.STATUS_BAR_NOTIF_COUNT, 0) == 1));
+        mStatusBarNotifCount = (CheckBoxPreference) findPreference(STATUS_BAR_NOTIF_COUNT);
+            mStatusBarNotifCount.setOnPreferenceChangeListener(this);
 
         mClockWeekday = (ListPreference) findPreference(PREF_CLOCK_WEEKDAY);
         mClockWeekday.setOnPreferenceChangeListener(this);
@@ -116,9 +116,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                 .getContentResolver(), Settings.System.STATUSBAR_CLOCK_WEEKDAY,
                 0)));
 
-        mStatusBarAutoHide = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_AUTO_HIDE);
-        mStatusBarAutoHide.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                Settings.System.AUTO_HIDE_STATUSBAR, 0) == 1));
+        mStatusBarAutoHide = (CheckBoxPreference) findPreference(STATUS_BAR_AUTO_HIDE);
+            mStatusBarAutoHide.setOnPreferenceChangeListener(this);
 
         mPrefCategoryGeneral = (PreferenceCategory) findPreference(STATUS_BAR_CATEGORY_GENERAL);
 
@@ -171,10 +170,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                     Settings.System.STATUSBAR_CLOCK_WEEKDAY, val);
             mClockWeekday.setSummary(mClockWeekday.getEntries()[index]);
             return true;
-        } else if (preference == mStatusBarAutoHide) {
-            value = mStatusBarAutoHide.isChecked();
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.AUTO_HIDE_STATUSBAR, value ? 1 : 0);
+         } else if (preference == mStatusBarAutoHide) {
+            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.AUTO_HIDE_STATUSBAR,
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
+            return true;
+         } else if (preference == mStatusBarNotifCount) {
+            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_NOTIF_COUNT,
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
             return true;
         }
         return false;
