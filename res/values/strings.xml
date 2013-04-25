@@ -5234,7 +5234,6 @@
     <string name="use_custom_app_summary">Use custom application instead of the recent applications dialog</string>
     <string name="group_applications">Applications</string>
 
-<<<<<<< HEAD
     <!-- MultiPanel Views -->
     <string name="multipane_ui">Enable/Disable Dual panel</string>
     <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (Reboot Required!)</string>
@@ -5376,16 +5375,8 @@
     <string name="media_scanner_on_boot_ask">Ask to scan (notification)</string>
     <string name="media_scanner_on_boot_disabled">Do not scan media</string>
 
-=======
-    <!-- Notification sound to vibration conversion -->
-    <string name="vibration_title">Phone vibration</string>
-    <string name="notification_convert_sound_to_vibration_title">Notification conversion</string>
-    <string name="notification_convert_sound_to_vibration_summary">Sounds to vibrations during vibrate mode</string>
-
     <!-- Auto-Hide Status Bar -->
     <string name="auto_hide_statusbar">Auto Hide statusbar</string>
     <string name="auto_hide_statusbar_summary">Statusbar hides itself when there are no notifications</string>
 
-    <!-- **** CARBON ADDITIONS END **** -->
->>>>>>> 953ce83... Status bar Auto-Hide [2/2]
 </resources>
