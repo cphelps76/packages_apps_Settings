@@ -228,7 +228,7 @@ public class DevelopmentSettings extends PreferenceFragment
         mEnforceReadExternal = findAndInitCheckboxPref(ENFORCE_READ_EXTERNAL);
         mAllowMockLocation = findAndInitCheckboxPref(ALLOW_MOCK_LOCATION);
         mPassword = (PreferenceScreen) findPreference(LOCAL_BACKUP_PASSWORD);
-        mAllPrefs.add(mPassword);'
+        mAllPrefs.add(mPassword);
 
         mMSOB = (ListPreference) findPreference(MEDIA_SCANNER_ON_BOOT);
         mAllPrefs.add(mMSOB);
