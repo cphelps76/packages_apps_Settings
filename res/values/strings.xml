@@ -5386,4 +5386,15 @@
     <!-- Permissions Management -->
     <string name="permissions_settings_title">Permissions</string>
 
+    <!-- Installer -->
+    <string name="persistance">Installer</string>
+    <string name="title_persistance">Persistance Settings</string>
+    <string name="persist_options">Persistence</string>
+    <string name="persist_enable">Enable Persistence</string>
+    <string name="persist_enable_summary">Enable data to persist across installs</string>
+    <string name="persist_prop_density">Persist Density</string>
+    <string name="persist_prop_density_summary">Persist LCD density</string>
+    <string name="persist_file_hosts">Persist Hosts</string>
+    <string name="persist_file_hosts_summary">Persist hosts file</string>
+
 </resources>
