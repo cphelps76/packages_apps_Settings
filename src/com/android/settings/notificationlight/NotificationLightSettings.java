@@ -68,7 +68,7 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
 public class NotificationLightSettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener, AdapterView.OnItemLongClickListener {
+        Preference.OnPreferenceChangeListener, View.OnLongClickListener {
     private static final String TAG = "NotificationLightSettings";
     private static final String NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR = "notification_light_pulse_default_color";
     private static final String NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_ON = "notification_light_pulse_default_led_on";
@@ -99,7 +99,6 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
     private boolean mCustomEnabled;
     private boolean mLightEnabled;
     private boolean mVoiceCapable;
-    private PreferenceGroup mAppList;
     private ApplicationLightPreference mDefaultPref;
     private ApplicationLightPreference mCallPref;
     private ApplicationLightPreference mVoicemailPref;
@@ -133,8 +132,8 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         mApplications = new HashMap<String, Application>();
 
         // Determine if the device has voice capabilities
-        TelephonyManager tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-        mVoiceCapable = tm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE;
+        mVoiceCapable = (((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE)).getPhoneType()
+                != TelephonyManager.PHONE_TYPE_NONE);
 
         setHasOptionsMenu(true);
     }
@@ -145,7 +144,6 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         refreshDefault();
         refreshCustomApplications();
         setCustomEnabled();
-        getListView().setOnItemLongClickListener(this);
     }
 
     private void refreshDefault() {
@@ -206,7 +204,6 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             }
         }
 
-        mAppList = (PreferenceGroup) prefSet.findPreference("applications_list");
     }
 
     private void refreshCustomApplications() {
@@ -219,23 +216,26 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         // Add the Application Preferences
         final PreferenceScreen prefSet = getPreferenceScreen();
         final PackageManager pm = getPackageManager();
+        final PreferenceGroup appList = (PreferenceGroup) prefSet.findPreference("applications_list");
 
-        if (mAppList != null) {
+        if (appList != null) {
             final Map<CharSequence, ApplicationLightPreference> prefs =
                     new TreeMap<CharSequence, ApplicationLightPreference>();
 
-            mAppList.removeAll();
+            appList.removeAll();
 
             for (Application i : mApplications.values()) {
                 try {
                     PackageInfo info = pm.getPackageInfo(i.name, PackageManager.GET_META_DATA);
                     ApplicationLightPreference pref =
-                            new ApplicationLightPreference(context, i.color, i.timeon, i.timeoff);
+                            new ApplicationLightPreference(context, this, i.color, i.timeon, i.timeoff);
                     final CharSequence label = info.applicationInfo.loadLabel(pm);
 
                     pref.setKey(i.name);
                     pref.setTitle(label);
                     pref.setIcon(info.applicationInfo.loadIcon(pm));
+                    // Does not fit on low res devices, we need it so we hide the view in the preference
+                    pref.setSummary(i.name);
                     pref.setPersistent(false);
                     pref.setOnPreferenceChangeListener(this);
 
@@ -246,13 +246,14 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
             }
 
             for (ApplicationLightPreference pref : prefs.values()) {
-                mAppList.addPreference(pref);
+                appList.addPreference(pref);
             }
         }
     }
 
     private void setCustomEnabled() {
-        boolean enabled = mCustomEnabled && mLightEnabled;
+
+        Boolean enabled = mCustomEnabled && mLightEnabled;
 
         // Phone related preferences
         if (mVoiceCapable) {
@@ -261,8 +262,10 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         }
 
         // Custom applications
-        if (mAppList != null) {
-            mAppList.setEnabled(enabled);
+        PreferenceScreen prefSet = getPreferenceScreen();
+        PreferenceGroup appList = (PreferenceGroup) prefSet.findPreference("applications_list");
+        if (appList != null) {
+            appList.setEnabled(enabled);
             setHasOptionsMenu(enabled);
         }
     }
@@ -365,27 +368,27 @@ public class NotificationLightSettings extends SettingsPreferenceFragment implem
         }
     }
 
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        final Preference pref = (Preference) getPreferenceScreen().getRootAdapter().getItem(position);
+    public boolean onLongClick(View v) {
+        final TextView tView;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        if (mAppList.findPreference(pref.getKey()) != pref) {
-            return false;
+        if ((v != null) && ((tView = (TextView) v.findViewById(android.R.id.summary)) != null)) {
+            builder.setTitle(R.string.dialog_delete_title);
+            builder.setMessage(R.string.dialog_delete_message);
+            builder.setIconAttribute(android.R.attr.alertDialogIcon);
+            builder.setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            removeCustomApplication(tView.getText().toString());
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.cancel, null);
+            builder.create().show();
+            return true;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.dialog_delete_title)
-                .setMessage(R.string.dialog_delete_message)
-                .setIconAttribute(android.R.attr.alertDialogIcon)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        removeCustomApplication(pref.getKey());
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, null);
-
-        builder.show();
-        return true;
+        return false;
     }
 
     public boolean onPreferenceChange(Preference preference, Object objValue) {
