@@ -37,6 +37,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.TwoStatePreference;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.util.Log;
@@ -69,12 +70,17 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
     private static final String PREF_NOTIFICATION_SHOW_WIFI_SSID = "notification_show_wifi_ssid";
     private static final String PREF_LOW_BATTERY_WARNING_POLICY = "pref_low_battery_warning_policy";
+    private static final String PREF_POWER_CRT_MODE = "system_power_crt_mode";
+    private static final String PREF_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off";
 
     private PreferenceScreen mPieControl;
     private ListPreference mLowBatteryWarning;
+    private static ContentResolver mContentResolver;
 
     CheckBoxPreference mShowActionOverflow;
     Preference mCustomLabel;
+    ListPreference mCrtMode;
+    CheckBoxPreference mCrtOff;
 
     Context mContext;
 
@@ -110,6 +116,18 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         } else {
             getPreferenceScreen().removePreference(mPowerButtonTorch);
         }
+
+        boolean isCrtOffChecked = (Settings.System.getBoolean(mContentResolver,
+                        Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF, true));
+        mCrtOff = (CheckBoxPreference) findPreference(PREF_POWER_CRT_SCREEN_OFF);
+        mCrtOff.setChecked(isCrtOffChecked);
+
+        mCrtMode = (ListPreference) findPreference(PREF_POWER_CRT_MODE);
+        int crtMode = Settings.System.getInt(mContentResolver,
+                Settings.System.SYSTEM_POWER_CRT_MODE, 0);
+        mCrtMode.setValue(Integer.toString(Settings.System.getInt(mContentResolver,
+                Settings.System.SYSTEM_POWER_CRT_MODE, crtMode)));
+        mCrtMode.setOnPreferenceChangeListener(this);
 
         mShowWifiName = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_SHOW_WIFI_SSID);
             mShowWifiName.setOnPreferenceChangeListener(this);
@@ -195,6 +213,11 @@ public class SystemSettings extends SettingsPreferenceFragment implements
             });
 
             alert.show();   
+        } else if (preference == mCrtOff) {
+            Settings.System.putBoolean(mContentResolver,
+                    Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF,
+                    ((TwoStatePreference) preference).isChecked());
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -217,6 +240,13 @@ public class SystemSettings extends SettingsPreferenceFragment implements
          } else if (preference == mShowWifiName) {
             Settings.System.putInt(getActivity().getContentResolver(), Settings.System.NOTIFICATION_SHOW_WIFI_SSID,
                     ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
+            return true;
+         } else if (preference == mCrtMode) {
+            int crtMode = Integer.valueOf((String) objValue);
+            int index = mCrtMode.findIndexOfValue((String) objValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.SYSTEM_POWER_CRT_MODE, crtMode);
+            mCrtMode.setSummary(mCrtMode.getEntries()[index]);
             return true;
         }
         return false;
