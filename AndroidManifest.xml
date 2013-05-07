@@ -1545,7 +1545,7 @@
 
         <activity android:name=".cyanogenmod.NavBar2" />
 
-        <activity android:name=".projectelite.NavBarprefs" />
+        <activity android:name=".demented.NavBarprefs" />
 
         <activity android:name=".cyanogenmod.QuickSettings" />
 
@@ -1603,7 +1603,7 @@
         </activity>
 
         <activity
-            android:name=".projectelite.StatusBarToggles"
+            android:name=".demented.StatusBarToggles"
             android:label="@string/title_statusbar_toggles" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

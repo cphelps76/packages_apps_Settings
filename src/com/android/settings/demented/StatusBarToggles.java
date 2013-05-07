@@ -1,5 +1,5 @@
 
-package com.android.settings.projectelite;
+package com.android.settings.demented;
 
 import android.app.Activity;
 import android.app.AlertDialog;

@@ -41,7 +41,7 @@
     <PreferenceScreen
         android:id="@+id/statusbar_toggles"
         android:title="@string/qs_title"
-        android:fragment="com.android.settings.projectelite.StatusBarToggles" />
+        android:fragment="com.android.settings.demented.StatusBarToggles" />
 
     <PreferenceScreen
         android:id="@+id/demented_notification_shortcuts"
