@@ -956,8 +956,10 @@
     <string name="ribbon_settings_summary">@null</string>
     <string name="menu_ribbon_reset">Reset ribbon</string>
     <string name="menu_ribbon_rearrange">Rearrange ribbon</string>
+    <string name="menu_ribbon_toggles">Setup toggles</string>
+    <string name="menu_ribbon_toggles_error">Toggles are only available for the left and right swipe ribbons.</string>
 
-   <!-- Ribbon -->
+    <!-- Ribbon -->
     <string name="ribbon_dialog_arrange_title">Ribbon layout</string>
     <string name="ribbon_instructions">Press icon to select actions or delete</string>
     <string name="ribbon_targets_cat">Ribbon options</string>
