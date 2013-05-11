@@ -1544,10 +1544,6 @@
 
         <activity android:name=".cyanogenmod.SystemSettings" />
 
-        <activity android:name=".cyanogenmod.NavBar2" />
-
-        <activity android:name=".demented.NavBarprefs" />
-
         <activity android:name=".cyanogenmod.QuickSettings" />
 
         <activity android:name=".cyanogenmod.QuietHours" />
@@ -1567,6 +1563,8 @@
         <activity android:name=".aokp.TouchInterceptor" />
 
         <activity android:name=".demented.NotificationDrawerStyle" />
+
+        <activity android:name=".demented.ArrangeTogglesFragment" />
 
         <activity android:name=".profiles.NFCProfile"
                 android:theme="@android:style/Theme.NoDisplay">
@@ -1740,12 +1738,32 @@
         </activity>
 
         <activity
-            android:name=".demented.NavRingTargets"
+            android:name=".demented.StatusBarToggles"
+            android:label="@string/@string/qs_title">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".aokp.NavRingTargets"
             android:label="@string/title_navring" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="com.aokp.romcontrol.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".aokp.Navbar"
+            android:label="@string/title_navbar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.aokp.romcontrol.SHORTCUT"/>
             </intent-filter>
         </activity>
 
