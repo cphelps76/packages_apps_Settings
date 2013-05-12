@@ -30,6 +30,7 @@
 
         <PreferenceScreen
             android:id="@+id/statusbar_toggles"
+            android:key="statusbar_toggles"
             android:title="@string/qs_title"
             android:fragment="com.android.settings.demented.StatusBarToggles" />
     </PreferenceCategory>
@@ -56,11 +57,13 @@
 
         <PreferenceScreen
             android:id="@+id/nav_bar"
+            android:key="nav_bar"
             android:fragment="com.android.settings.aokp.Navbar"
             android:title="@string/title_navbar" />
 
         <PreferenceScreen
             android:id="@+id/nav_ring"
+            android:key="nav_ring"
             android:fragment="com.android.settings.aokp.NavRingTargets"
             android:title="@string/interface_navring_settings_title" />
     </PreferenceCategory>
@@ -93,8 +96,9 @@
 
         <PreferenceScreen
             android:id="@+id/statusbar_battery"
+            android:key="tatusbar_battery"
             android:fragment="com.android.settings.aokp.StatusBarBattery"
-            android:title="@string/header_summary_battery" />
+            android:title="@string/title_statusbar_battery" />
 
         <Preference
             android:key="custom_carrier_label"
