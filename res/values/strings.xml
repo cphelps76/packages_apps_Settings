@@ -5238,7 +5238,7 @@
     <string name="action_long_save"> set as long action</string>
     <string name="title_navring_amount">Number of navigation ring targets</string>
     <string name="summary_navring_amount">Choose number of targets in the navigation ring</string>
-    <string name="interface_navring_settings_title">Navigation Ring</string>
+    <string name="interface_navring_settings_title">NavBar Ring</string>
     <string name="interface_navring_settings_summary">@null</string>
     <string name="navring_target_info">Drag your finger to targets to assign actions</string>
     <string name="navring_clear">Clear action</string>
