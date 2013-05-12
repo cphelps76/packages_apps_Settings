@@ -5488,4 +5488,11 @@
     <string name="transparency_dialog_transparency">Homescreen alpha</string>
     <string name="transparency_dialog_transparency_keyguard">Lockscreen alpha</string>
 
+    <!-- DEMENTED System Headers -->
+    <string name="demented_statusbar">Statusbar Mods</string>
+    <string name="demented_notifications">Notification Panel</string>
+    <string name="demented_navbar">NavBar Mods</string>
+    <string name="demented_advanced">Advanced Options</string>
+    <string name="demented_crt">CRT Animation</string>
+    <string name="demented_general">General Settings</string>
 </resources>
