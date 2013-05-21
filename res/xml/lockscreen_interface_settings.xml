@@ -37,6 +37,10 @@
             android:entries="@array/lockscreen_background_entries"
             android:entryValues="@array/lockscreen_background_values" />
 
+        <Preference
+            android:key="transparency_dialog"
+            android:title="@string/transparency_dialog_title" />
+
         <ListPreference
             android:key="lockscreen_battery_status"
             android:persistent="false"

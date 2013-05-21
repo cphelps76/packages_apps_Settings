@@ -21,6 +21,8 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.admin.DeviceAdminReceiver;
 import android.app.admin.DevicePolicyManager;
 import android.content.ActivityNotFoundException;
@@ -44,13 +46,17 @@ import android.preference.PreferenceScreen;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.Display;
+import android.view.View;
 import android.view.Window;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.settings.R;
 import com.android.settings.Utils;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.notificationlight.ColorPickerView;
+import com.android.settings.widget.AlphaSeekBar;
 
 public class LockscreenInterface extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
@@ -72,6 +78,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String LOCKSCREEN_WIDGETS_CATEGORY = "lockscreen_widgets_category";
     private static final String KEY_LOCKSCREEN_ENABLE_WIDGETS = "lockscreen_enable_widgets";
     private static final String KEY_LOCKSCREEN_ENABLE_CAMERA = "lockscreen_enable_camera";
+
+    private static ContentResolver mContentResolver;
 
     private ListPreference mCustomBackground;
     private ListPreference mBatteryStatus;
@@ -95,6 +103,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
         PreferenceCategory generalCategory = (PreferenceCategory) findPreference(LOCKSCREEN_GENERAL_CATEGORY);
         PreferenceCategory widgetsCategory = (PreferenceCategory) findPreference(LOCKSCREEN_WIDGETS_CATEGORY);
+
+        mContentResolver = getContentResolver();
 
         // Determine which user is logged in
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
@@ -230,6 +240,21 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         return false;
     }
 
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+            Preference preference) {
+        if ("transparency_dialog".equals(preference.getKey())) {
+            openTransparencyDialog();
+            return true;
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
+    private void openTransparencyDialog() {
+        getFragmentManager().beginTransaction().add(new AdvancedTransparencyDialog(), null)
+                .commit();
+    }
+
     private void updateKeyguardState(boolean enableCamera, boolean enableWidgets) {
         ComponentName dpmAdminName = new ComponentName(getActivity(),
                 DeviceAdminLockscreenReceiver.class);
@@ -320,4 +345,51 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     }
 
     public static class DeviceAdminLockscreenReceiver extends DeviceAdminReceiver {}
+
+    public static class AdvancedTransparencyDialog extends DialogFragment {
+        private static final int KEYGUARD_ALPHA = 112;
+        private static final int LOCKSCREEN_ALPHA = 0;
+
+        TextView mSbLabel;
+        AlphaSeekBar mSeekBars[] = new AlphaSeekBar[1];
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setShowsDialog(true);
+            setRetainInstance(true);
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            View layout = View.inflate(getActivity(), R.layout.dialog_transparency, null);
+            mSeekBars[LOCKSCREEN_ALPHA] = (AlphaSeekBar) layout.findViewById(R.id.lockscreen_alpha);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setView(layout);
+            builder.setTitle(getString(R.string.transparency_dialog_title));
+            builder.setNegativeButton(R.string.cancel, null);
+            builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Settings.System.putInt(mContentResolver,
+                            Settings.System.LOCKSCREEN_ALPHA_CONFIG,
+                            mSeekBars[LOCKSCREEN_ALPHA].getCurrentAlpha());
+                }
+            });
+            return builder.create();
+        }
+
+        private void resetSettings() {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_ALPHA_CONFIG, KEYGUARD_ALPHA);
+        }
+
+        @Override
+        public void onDestroyView() {
+            if (getDialog() != null && getRetainInstance())
+                getDialog().setDismissMessage(null);
+            super.onDestroyView();
+        }
+    }
 }

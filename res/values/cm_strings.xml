@@ -1104,4 +1104,10 @@ rience. Enable at your own discretion.</string>
     <string name="status_bar_alpha_mode_always">always</string>
     <string name="status_bar_style_reset">Reset</string>
 
+    <!-- Lockscreen tint alpha -->
+    <string name="transparency_dialog_title">Transparency settings</string>
+    <string name="transparency_dialog_transparency_keyguard">Lockscreen alpha</string>
+    <string name="transparency_dialog_lockscreen">Lockscreen</string>
+    <string name="save">Save</string>
+
 </resources>
