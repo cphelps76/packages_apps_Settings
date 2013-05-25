@@ -148,7 +148,7 @@
                 android:text="@string/transparency_dialog_lockscreen"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <com.aokp.romcontrol.widgets.AlphaSeekBar
+            <com.android.settings.aokp.widgets.AlphaSeekBar
                 android:id="@+id/lockscreen_alpha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
