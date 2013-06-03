@@ -17,6 +17,9 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/themes_settings_title" >
 
+     <PreferenceScreen android:key="logo1"
+         android:layout="@layout/logo_row" />
+
      <PreferenceScreen
          android:key="screen_security"
          android:fragment="com.android.settings.SecuritySettings"
