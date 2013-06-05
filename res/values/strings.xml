@@ -5456,17 +5456,6 @@
     <!-- Permissions Management -->
     <string name="permissions_settings_title">Permissions</string>
 
-    <!-- Installer -->
-    <string name="persistance">Installer</string>
-    <string name="title_persistance">Persistance Settings</string>
-    <string name="persist_options">Persistence</string>
-    <string name="persist_enable">Enable Persistence</string>
-    <string name="persist_enable_summary">Enable data to persist across installs</string>
-    <string name="persist_prop_density">Persist Density</string>
-    <string name="persist_prop_density_summary">Persist LCD density</string>
-    <string name="persist_file_hosts">Persist Hosts</string>
-    <string name="persist_file_hosts_summary">Persist hosts file</string>
-
     <!-- CRT Animation -->
     <string name="system_power_crt_screen_off_title">CRT Screen Off</string>
     <string name="system_power_crt_screen_off_summary">Screen will animate an Electron Beam when turned off</string>
@@ -5496,4 +5485,5 @@
     <string name="demented_advanced">Advanced Options</string>
     <string name="demented_crt">CRT Animation</string>
     <string name="demented_general">General Settings</string>
+
 </resources>

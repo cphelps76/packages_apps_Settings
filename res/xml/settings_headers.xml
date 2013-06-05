@@ -105,13 +105,6 @@
             android:targetClass="org.chameleonos.permissionsmanager.activity.PermissionManagerActivity" />
     </header>
 
-    <!-- Installer -->
-    <header
-        android:id="@+id/installer"
-        android:fragment="com.android.settings.demented.Installer"
-        android:icon="@drawable/ic_settings_installer"
-        android:title="@string/persistance" />
-
     <!-- Themes -->
     <header
         android:id="@+id/themes_settings"
