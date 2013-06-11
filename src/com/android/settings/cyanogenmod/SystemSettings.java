@@ -142,7 +142,8 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         mCrtMode.setOnPreferenceChangeListener(this);
 
         mMissedCallBreath = (CheckBoxPreference) findPreference(KEY_MISSED_CALL_BREATH);
-            mMissedCallBreath.setOnPreferenceChangeListener(this);
+        mMissedCallBreath.setChecked(Settings.System.getInt(resolver,
+                Settings.System.MISSED_CALL_BREATH, 0) == 1);
 
         mShowWifiName = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_SHOW_WIFI_SSID);
             mShowWifiName.setOnPreferenceChangeListener(this);
@@ -268,8 +269,8 @@ public class SystemSettings extends SettingsPreferenceFragment implements
             mLowBatteryWarning.setSummary(mLowBatteryWarning.getEntries()[index]);
             return true;
          } else if (preference == mMissedCallBreath) {
-            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.MISSED_CALL_BREATH,
-                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
+            Settings.System.putInt(mContext.getContentResolver(), Settings.System.MISSED_CALL_BREATH, 
+                    mMissedCallBreath.isChecked() ? 1 : 0);
          } else if (preference == mShowWifiName) {
             Settings.System.putInt(getActivity().getContentResolver(), Settings.System.NOTIFICATION_SHOW_WIFI_SSID,
                     ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
