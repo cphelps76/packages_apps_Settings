@@ -149,6 +149,12 @@
             android:defaultValue="false" />
 
         <CheckBoxPreference
+            android:key="sms_breath"
+            android:title="@string/sms_breath"
+            android:summary="@string/sms_breath_summary"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
             android:key="notification_show_wifi_ssid"
             android:title="@string/notification_show_wifi_ssid_title"
             android:summary="@string/notification_show_wifi_ssid_summary"
