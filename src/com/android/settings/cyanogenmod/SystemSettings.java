@@ -83,13 +83,11 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String PREF_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off";
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
     private static final String KEY_MISSED_CALL_BREATH = "missed_call_breath";
-    private static final String KEY_PREF_SMS_BREATH = "sms_breath";
 
     private PreferenceScreen mPieControl;
     private ListPreference mLowBatteryWarning;
     private static ContentResolver mContentResolver;
     private CheckBoxPreference mMissedCallBreath;
-    private CheckBoxPreference mSMSBreath;
 
     CheckBoxPreference mShowActionOverflow;
     Preference mCustomLabel;
@@ -146,10 +144,6 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         mMissedCallBreath = (CheckBoxPreference) findPreference(KEY_MISSED_CALL_BREATH);
         mMissedCallBreath.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.MISSED_CALL_BREATH, 0) == 1);
-
-        mSMSBreath = (CheckBoxPreference) findPreference(KEY_SMS_BREATH);
-        mSMSBreath.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.SMS_BREATH, 0) == 1);
 
         mShowWifiName = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_SHOW_WIFI_SSID);
             mShowWifiName.setOnPreferenceChangeListener(this);
@@ -276,9 +270,6 @@ public class SystemSettings extends SettingsPreferenceFragment implements
             return true;
          } else if (preference == mMissedCallBreath) {
             Settings.System.putInt(mContext.getContentResolver(), Settings.System.MISSED_CALL_BREATH, 
-                    mMissedCallBreath.isChecked() ? 1 : 0);
-         } else if (preference == mSMSBreath) {
-            Settings.System.putInt(mContext.getContentResolver(), Settings.System.SMS_BREATH, 
                     mMissedCallBreath.isChecked() ? 1 : 0);
          } else if (preference == mShowWifiName) {
             Settings.System.putInt(getActivity().getContentResolver(), Settings.System.NOTIFICATION_SHOW_WIFI_SSID,
