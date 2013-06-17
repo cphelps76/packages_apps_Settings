@@ -83,7 +83,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String PREF_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off";
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
     private static final String KEY_MISSED_CALL_BREATH = "missed_call_breath";
-    private static final String KEY_PREF_SMS_BREATH = "sms_breath";
+    private static final String KEY_SMS_BREATH = "sms_breath";
 
     private PreferenceScreen mPieControl;
     private ListPreference mLowBatteryWarning;
