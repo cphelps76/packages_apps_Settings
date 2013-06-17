@@ -87,7 +87,6 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private PreferenceScreen mPieControl;
     private ListPreference mLowBatteryWarning;
     private static ContentResolver mContentResolver;
-    private CheckBoxPreference mMissedCallBreath;
 
     CheckBoxPreference mShowActionOverflow;
     Preference mCustomLabel;
@@ -100,6 +99,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
 
     CheckBoxPreference mShowWifiName;
     CheckBoxPreference mDualpane;
+    CheckBoxPreference mMissedCallBreath;
 
     private boolean torchSupported() {
         return getResources().getBoolean(R.bool.has_led_flash);
@@ -142,8 +142,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         mCrtMode.setOnPreferenceChangeListener(this);
 
         mMissedCallBreath = (CheckBoxPreference) findPreference(KEY_MISSED_CALL_BREATH);
-        mMissedCallBreath.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.MISSED_CALL_BREATH, 0) == 1);
+            mMissedCallBreath.setOnPreferenceChangeListener(this);
 
         mShowWifiName = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_SHOW_WIFI_SSID);
             mShowWifiName.setOnPreferenceChangeListener(this);
@@ -269,8 +268,9 @@ public class SystemSettings extends SettingsPreferenceFragment implements
             mLowBatteryWarning.setSummary(mLowBatteryWarning.getEntries()[index]);
             return true;
          } else if (preference == mMissedCallBreath) {
-            Settings.System.putInt(mContext.getContentResolver(), Settings.System.MISSED_CALL_BREATH, 
-                    mMissedCallBreath.isChecked() ? 1 : 0);
+            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.MISSED_CALL_BREATH,
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
+            return true;
          } else if (preference == mShowWifiName) {
             Settings.System.putInt(getActivity().getContentResolver(), Settings.System.NOTIFICATION_SHOW_WIFI_SSID,
                     ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
