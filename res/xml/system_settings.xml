@@ -149,9 +149,9 @@
             android:defaultValue="false" />
 
         <CheckBoxPreference
-            android:key="sms_breath"
-            android:title="@string/sms_breath"
-            android:summary="@string/sms_breath_summary"
+            android:key="mms_breath"
+            android:title="@string/mms_breath"
+            android:summary="@string/mms_breath_summary"
             android:defaultValue="false" />
 
         <CheckBoxPreference

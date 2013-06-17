@@ -83,11 +83,12 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     private static final String PREF_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off";
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
     private static final String KEY_MISSED_CALL_BREATH = "missed_call_breath";
-    private static final String KEY_SMS_BREATH = "sms_breath";
+    private static final String KEY_MMS_BREATH = "mms_breath";
 
     private PreferenceScreen mPieControl;
     private ListPreference mLowBatteryWarning;
     private static ContentResolver mContentResolver;
+    private CheckBoxPreference mMMSBreath;
 
     CheckBoxPreference mShowActionOverflow;
     Preference mCustomLabel;
@@ -101,7 +102,6 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     CheckBoxPreference mShowWifiName;
     CheckBoxPreference mDualpane;
     CheckBoxPreference mMissedCallBreath;
-    CheckBoxPreference mSMSBreath;
 
     private boolean torchSupported() {
         return getResources().getBoolean(R.bool.has_led_flash);
@@ -146,8 +146,9 @@ public class SystemSettings extends SettingsPreferenceFragment implements
         mMissedCallBreath = (CheckBoxPreference) findPreference(KEY_MISSED_CALL_BREATH);
             mMissedCallBreath.setOnPreferenceChangeListener(this);
 
-        mSMSBreath = (CheckBoxPreference) findPreference(KEY_SMS_BREATH);
-            mSMSBreath.setOnPreferenceChangeListener(this);
+        mMMSBreath = (CheckBoxPreference) findPreference(KEY_MMS_BREATH);
+        mMMSBreath.setChecked(Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.MMS_BREATH, 0) == 1);
 
         mShowWifiName = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_SHOW_WIFI_SSID);
             mShowWifiName.setOnPreferenceChangeListener(this);
@@ -199,6 +200,10 @@ public class SystemSettings extends SettingsPreferenceFragment implements
             boolean enabled = mPowerButtonTorch.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.POWER_BUTTON_TORCH,
                     enabled ? 1 : 0);
+            return true;
+        } else if (preference == mMMSBreath) {
+            Settings.System.putInt(mContext.getContentResolver(), Settings.System.MMS_BREATH, 
+                    mMMSBreath.isChecked() ? 1 : 0);
             return true;
         } else if (preference == mShowActionOverflow) {
             boolean enabled = mShowActionOverflow.isChecked();
@@ -274,10 +279,6 @@ public class SystemSettings extends SettingsPreferenceFragment implements
             return true;
          } else if (preference == mMissedCallBreath) {
             Settings.System.putInt(getActivity().getContentResolver(), Settings.System.MISSED_CALL_BREATH,
-                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
-            return true;
-         } else if (preference == mSMSBreath) {
-            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SMS_BREATH,
                     ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
             return true;
          } else if (preference == mShowWifiName) {
