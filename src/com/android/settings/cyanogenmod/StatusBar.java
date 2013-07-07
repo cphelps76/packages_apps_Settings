@@ -55,9 +55,9 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private PreferenceCategory mPrefCategoryGeneral;
     private ListPreference mClockWeekday;
     private ColorPickerPreference mClockPicker;
+    private ListPreference mStatusBarAutoHide;
 
     CheckBoxPreference mStatusBarNotifCount;
-    CheckBoxPreference mStatusBarAutoHide;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,9 +117,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                 .getContentResolver(), Settings.System.STATUSBAR_CLOCK_WEEKDAY,
                 0)));
 
-        mStatusBarAutoHide = (CheckBoxPreference) findPreference(STATUS_BAR_AUTO_HIDE);
-            mStatusBarAutoHide.setOnPreferenceChangeListener(this);
-
+        mStatusBarAutoHide = (ListPreference) prefSet.findPreference(STATUS_BAR_AUTO_HIDE);
+        int statusBarAutoHideValue = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.AUTO_HIDE_STATUSBAR, 0);
+        mStatusBarAutoHide.setValue(String.valueOf(statusBarAutoHideValue));
+        updateStatusBarAutoHideSummary(statusBarAutoHideValue);
+        mStatusBarAutoHide.setOnPreferenceChangeListener(this);
         mPrefCategoryGeneral = (PreferenceCategory) findPreference(STATUS_BAR_CATEGORY_GENERAL);
 
         if (Utils.isWifiOnly(getActivity())) {
@@ -171,17 +174,29 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                     Settings.System.STATUSBAR_CLOCK_WEEKDAY, val);
             mClockWeekday.setSummary(mClockWeekday.getEntries()[index]);
             return true;
-         } else if (preference == mStatusBarAutoHide) {
-            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.AUTO_HIDE_STATUSBAR,
-                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
-                    Helpers.restartSystemUI();
-            return true;
-         } else if (preference == mStatusBarNotifCount) {
+        } else if (preference == mStatusBarAutoHide) {
+            int statusBarAutoHideValue = Integer.valueOf((String) newValue);
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.AUTO_HIDE_STATUSBAR, statusBarAutoHideValue);
+            updateStatusBarAutoHideSummary(statusBarAutoHideValue);
+            return true;         
+        } else if (preference == mStatusBarNotifCount) {
             Settings.System.putInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_NOTIF_COUNT,
                     ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
             return true;
         }
         return false;
+    }
+
+    private void updateStatusBarAutoHideSummary(int value) {
+        if (value == 0) {
+            /* StatusBar AutoHide deactivated */
+            mStatusBarAutoHide.setSummary(getResources().getString(R.string.auto_hide_statusbar_off));
+        } else {
+            mStatusBarAutoHide.setSummary(getResources().getString(value == 1
+                    ? R.string.auto_hide_statusbar_summary_nonperm
+                    : R.string.auto_hide_statusbar_summary_all));
+        }
     }
 
 }
