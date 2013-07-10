@@ -1340,15 +1340,6 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
     </string-array>
 
     <!-- NavBar -->
@@ -1693,6 +1684,7 @@
         <item>@string/hardware_keys_action_in_app_search</item>
         <item>@string/hardware_keys_action_power</item>
         <item>@string/hardware_keys_action_notifications</item>
+        <item>@string/hardware_keys_action_torch</item>
         <item>@string/hardware_keys_action_expanded</item>
         <item>@string/hardware_keys_action_kill_app</item>
         <item>@string/hardware_keys_action_last_app</item>
@@ -1714,6 +1706,7 @@
         <item>11</item>
         <item>12</item>
         <item>13</item>
+        <item>14</item>
     </string-array>
 
     <!-- Expanded desktop -->
