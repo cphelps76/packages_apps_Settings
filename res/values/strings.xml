@@ -5536,7 +5536,7 @@
     <string name="lockscreen_long_press_app_switch_title">Long press App Switch button</string>
     <string name="lockscreen_long_press_camera_title">Long press Camera button</string>
     <string name="lockscreen_buttons_no_action">No action</string>
-    <string name="lockscreen_buttons_flashlight">Flashlight</string>
+    <string name="lockscreen_buttons_flashlight">Torch toggle</string>
     <string name="lockscreen_buttons_next">Next song</string>
     <string name="lockscreen_buttons_previous">Previous song</string>
     <string name="lockscreen_buttons_playpause">Play/Pause music</string>
