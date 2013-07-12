@@ -52,6 +52,16 @@
             android:key="notification_style"
             android:fragment="com.android.settings.demented.NotificationDrawerStyle"
             android:title="@string/notification_style_title" />
+
+        <PreferenceScreen
+            android:key="notification_pulse"
+            android:title="@string/notification_pulse_title"
+            android:fragment="com.android.settings.notificationlight.NotificationLightSettings" />
+
+        <PreferenceScreen
+            android:key="battery_light"
+            android:title="@string/battery_light_title"
+            android:fragment="com.android.settings.notificationlight.BatteryLightSettings" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -179,15 +189,5 @@
 	    android:summary="@string/multipane_ui_summary"
 	    android:defaultValue="false" />
     </PreferenceCategory>
-
-    <PreferenceScreen
-        android:key="notification_pulse"
-        android:title="@string/notification_pulse_title"
-        android:fragment="com.android.settings.notificationlight.NotificationLightSettings" />
-
-    <PreferenceScreen
-        android:key="battery_light"
-        android:title="@string/battery_light_title"
-        android:fragment="com.android.settings.notificationlight.BatteryLightSettings" />
 
 </PreferenceScreen>
