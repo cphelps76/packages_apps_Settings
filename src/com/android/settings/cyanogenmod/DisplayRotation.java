@@ -94,20 +94,10 @@ public class DisplayRotation extends SettingsPreferenceFragment implements OnPre
         mRotation270Pref.setChecked((mode & ROTATION_270_MODE) != 0);
 
         mSwapVolumeButtons = (CheckBoxPreference) prefSet.findPreference(KEY_SWAP_VOLUME_BUTTONS);
-<<<<<<< HEAD
+
         int swapVolumeKeys = Settings.System.getInt(getContentResolver(),
                 Settings.System.SWAP_VOLUME_KEYS_BY_ROTATE, 0);
         mSwapVolumeButtons.setChecked(swapVolumeKeys != 0);
-=======
-        if (mSwapVolumeButtons != null) {
-            if (!Utils.hasVolumeRocker(getActivity())) {
-                prefSet.removePreference(mSwapVolumeButtons);
-            } else {
-                int swapVolumeKeys = Settings.System.getInt(getContentResolver(),
-                        Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, 0);
-                mSwapVolumeButtons.setChecked(swapVolumeKeys > 0);
-            }
-        }
 
         if (mLockScreenRotationPref != null) {
             mLockScreenRotationPref.setChecked(Settings.System.getInt(getContentResolver(),
@@ -123,7 +113,6 @@ public class DisplayRotation extends SettingsPreferenceFragment implements OnPre
             mRotation180Pref.setDependency(null);
             mRotation270Pref.setDependency(null);
         }
->>>>>>> b6d2bc7... Add lockscreen rotation as an optional rotation setting (2/2)
     }
 
     @Override
