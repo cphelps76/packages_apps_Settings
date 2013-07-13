@@ -31,6 +31,8 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -40,6 +42,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.Display;
 import android.view.Window;
+import android.view.IWindowManager;
 import android.widget.Toast;
 
 import com.android.settings.R;
@@ -77,10 +80,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private File mWallpaperImage;
     private File mWallpaperTemporary;
 
-    public boolean hasButtons() {
-        return !getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +95,14 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
 
         mAdditionalOptions = (PreferenceCategory) prefSet.findPreference(KEY_ADDITIONAL_OPTIONS);
         mLockscreenButtons = (PreferenceScreen) findPreference(KEY_LOCKSCREEN_BUTTONS);
-        if (!hasButtons()) {
-            mAdditionalOptions.removePreference(mLockscreenButtons);
+        IWindowManager windowManager = IWindowManager.Stub.asInterface(
+                ServiceManager.getService(Context.WINDOW_SERVICE));
+        try {
+            if (windowManager.hasNavigationBar()) {
+                getPreferenceScreen().removePreference(mLockscreenButtons);
+            }
+        } catch (RemoteException e) {
+            // Do nothing
         }
 
         mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
