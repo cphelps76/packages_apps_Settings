@@ -4912,6 +4912,10 @@
     <string name="build_date">Build date</string>
     <string name="build_date_default">2012-01-01-0000</string>
 
+    <!-- About phone screen,  setting kernel toolchain name-->
+    <string name="kernel_toolchain">Kernel Toolchain</string>
+    <string name="kernel_toolchain_default">Unknown</string>
+
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
     <string name="qs_title">Quick Settings Control</string>
     <string name="quick_pulldown_off">Off</string>
