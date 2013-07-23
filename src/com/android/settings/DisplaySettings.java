@@ -43,6 +43,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.android.internal.view.RotationPolicy;
+import com.android.settings.demented.DisplayColor;
 import com.android.settings.demented.DisplayRotation;
 import com.android.settings.Utils;
 
@@ -60,6 +61,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_SCREEN_SAVER = "screensaver";
     private static final String KEY_WIFI_DISPLAY = "wifi_display";
     private static final String KEY_DISPLAY_ROTATION = "display_rotation";
+    private static final String KEY_DISPLAY_COLOR = "color_calibration";
 
     // Strings used for building the summary
     private static final String ROTATION_ANGLE_0 = "0";
@@ -143,6 +145,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 == WifiDisplayStatus.FEATURE_STATE_UNAVAILABLE) {
             getPreferenceScreen().removePreference(mWifiDisplayPreference);
             mWifiDisplayPreference = null;
+        }
+
+        if (!DisplayColor.isSupported()) {
+            removePreference(KEY_DISPLAY_COLOR);
         }
     }
 

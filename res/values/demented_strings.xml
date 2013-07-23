@@ -31,6 +31,7 @@
     <string name="notification_drawer_title">Notification Drawer</string>
     <string name="demented_navbar">Navbar / Ribbons</string>
     <string name="toggle_setup">Toggle Setup</string>
+    <string name="reset_button">Reset</string>
 
     <!-- App Ops -->
     <string name="demented_app_ops_title">DEMENTED Permissions</string>
@@ -1220,4 +1221,15 @@
     <string name="lockscreen_camera_widget_summary">Shows camera widget on lockscreen</string>
     <string name="lockscreen_use_widget_container_carousel_title">Widget Carousel</string>
     <string name="lockscreen_use_widget_container_carousel_summary">Use carousel animation when switching between lockscreen widgets.</string>
+
+    <!-- Hardware tunables - Vibrator intensity -->
+    <string name="vibrator_intensity_title">Vibrator intensity</string>
+    <string name="vibrator_warning">Values higher than %1$d are not recommended</string>
+
+    <!-- Hardware tunables - Color calibration -->
+    <string name="color_calibration_title">Color calibration</string>
+    <string name="color_calibration_summary">Calibrate on-screen colors</string>
+    <string name="color_red_title">Red</string>
+    <string name="color_green_title">Green</string>
+    <string name="color_blue_title">Blue</string>
 </resources>
