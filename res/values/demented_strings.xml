@@ -68,6 +68,10 @@
     <string name="battery_text_normal">Battery Color (Above 15%)</string>
     <string name="battery_text_low">Battery Color (Below 15%)</string>
 
+    <!-- Status bar notification count -->
+    <string name="status_bar_notif_count_title">Show notification count</string>
+    <string name="status_bar_notif_count_summary">Display number of pending notifications</string>
+
     <!-- Color picker -->
     <string name="dialog_color_picker">Color Picker</string>
     <string name="press_color_to_apply">Press on Color to apply</string>
