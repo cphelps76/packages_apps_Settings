@@ -45,9 +45,11 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_BATTERY_LIGHT = "battery_light";
     private static final String KEY_LOCK_CLOCK = "lock_clock";
+    private static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
+    private CheckBoxPreference mKillAppLongpressBack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,9 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
                 updateBatteryPulseDescription();
             }
         }
+
+        mKillAppLongpressBack = findAndInitCheckboxPref(KILL_APP_LONGPRESS_BACK);
+
     }
 
     @Override
@@ -91,11 +96,23 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         if (mBatteryPulse != null) {
             updateBatteryPulseDescription();
         }
+        updateKillAppLongpressBackOptions();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    private void writeKillAppLongpressBackOptions() {
+        Settings.Secure.putInt(getActivity().getContentResolver(),
+                Settings.Secure.KILL_APP_LONGPRESS_BACK,
+                mKillAppLongpressBack.isChecked() ? 1 : 0);
+    }
+
+    private void updateKillAppLongpressBackOptions() {
+        mKillAppLongpressBack.setChecked(Settings.Secure.getInt(
+            getActivity().getContentResolver(), Settings.Secure.KILL_APP_LONGPRESS_BACK, 0) != 0);
     }
 
     private boolean removePreferenceIfPackageNotInstalled(Preference preference) {
@@ -136,6 +153,9 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mKillAppLongpressBack) {
+            writeKillAppLongpressBackOptions();
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 

@@ -48,6 +48,16 @@
                     android:targetClass="com.cyanogenmod.lockclock.preference.Preferences" />
         </PreferenceScreen>
 
+        <PreferenceScreen
+            android:key="sound_settings"
+            android:fragment="com.android.settings.demented.SoundSettings"
+            android:title="@string/sound_title" />
+
+        <CheckBoxPreference
+            android:key="kill_app_longpress_back"
+            android:title="@string/kill_app_longpress_back"
+            android:summary="@string/kill_app_longpress_back_summary"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -65,10 +75,5 @@
             android:fragment="com.android.settings.notificationlight.BatteryLightSettings" />
 
     </PreferenceCategory>
-
-    <PreferenceScreen
-        android:key="sound_settings"
-        android:fragment="com.android.settings.slim.SoundSettings"
-        android:title="@string/sound_title" />
 
 </PreferenceScreen>
