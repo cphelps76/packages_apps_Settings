@@ -478,4 +478,17 @@
     <string name="kill_app_longpress_back">Kill app back button</string>
     <string name="kill_app_longpress_back_summary">Kill the foreground app by long-pressing the back key</string>
 
+    <!-- About DEMENTED Droid -->
+    <string name="donate_cphelps76">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=8K47ZJGFZHES2</string>
+    <string name="donate_davros">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=KS7YFYDCVY7HU</string>
+    <string name="devs">Developers</string>
+    <string name="demented">DEMENTED Droid</string>
+    <string name="dc_website_title">DC Website</string>
+    <string name="dc_website_summary">www.forums.droidconcepts.com</string>
+    <string name="demented_source_title">DEMENTED Droid Source</string>
+    <string name="demented_source_summary">DEMENTED Droid is fully open source. You can always check out the latest DEMENTED source at github.com/cphelps76</string>
+    <string name="about_demented">About DEMENTED Droid</string>
+    <string name="dc_source_title">Droid Concepts Source</string>
+    <string name="dc_source_summary">Droid Concepts is fully open source. You can always check out the latest DC source at github.com/davros-</string>
+
 </resources>

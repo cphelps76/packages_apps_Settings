@@ -107,6 +107,12 @@
             android:targetClass="com.tmobile.themechooser.ThemeChooser" />
     </header>
 
+    <header
+	android:id="@+id/about"
+        android:icon="@drawable/ic_about_demented"
+	android:fragment="com.android.settings.demented.About"
+	android:title="@string/about_demented" />
+
     <!-- DEVICE -->
     <header android:id="@+id/device_section"
         android:title="@string/header_category_device" />
