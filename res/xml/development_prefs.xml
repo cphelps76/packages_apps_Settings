@@ -16,6 +16,10 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/development_settings_title">
+
+    <PreferenceScreen android:key="logo1"
+        android:layout="@layout/logo_row" />
+
     <com.android.settings.BugreportPreference
             android:key="bugreport"
             android:title="@*android:string/bugreport_title"
