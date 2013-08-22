@@ -70,6 +70,24 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // All users
+        if (mNotificationPulse != null) {
+            updateLightPulseDescription();
+        }
+        if (mIsPrimary && mBatteryPulse != null) {
+            updateBatteryPulseDescription();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
     private void updateLightPulseDescription() {
         if (Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.NOTIFICATION_LIGHT_PULSE, 0) == 1) {
