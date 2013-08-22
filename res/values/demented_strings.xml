@@ -23,6 +23,17 @@
     <string name="interface_settings_title">Interface</string>
     <string name="interface_title">Interface</string>
 
+    <!-- Hostname setting -->
+    <string name="device_hostname">Device hostname</string>
+
+    <!-- About phone screen,  Modversion-->
+    <string name="mod_version">DEMENTED version</string>
+    <string name="mod_version_default">Unknown</string>
+
+    <!-- About phone screen, build date of ROM -->
+    <string name="build_date">Build date</string>
+    <string name="build_date_default">2012-01-01-0000</string>
+
     <!-- Notification Drawer  -->
     <string name="notification_drawer_title">Notification drawer</string>
 
