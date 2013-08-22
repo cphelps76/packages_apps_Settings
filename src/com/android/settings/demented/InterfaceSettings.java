@@ -18,6 +18,7 @@ package com.android.settings.demented;
 
 import android.app.ActivityManagerNative;
 import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -34,12 +35,16 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class InterfaceSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "InterfaceSettings";
 
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_BATTERY_LIGHT = "battery_light";
+    private static final String KEY_LOCK_CLOCK = "lock_clock";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
@@ -50,6 +55,10 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.interface_settings);
 
+        // Dont display the lock clock preference if its not installed
+        removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
+
+        // Notification lights
         mNotificationPulse = (PreferenceScreen) findPreference(KEY_NOTIFICATION_PULSE);
         if (mNotificationPulse != null) {
             if (!getResources().getBoolean(com.android.internal.R.bool.config_intrusiveNotificationLed)) {
@@ -59,6 +68,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
             }
         }
 
+        // Battery lights
         mBatteryPulse = (PreferenceScreen) findPreference(KEY_BATTERY_LIGHT);
         if (mBatteryPulse != null) {
             if (getResources().getBoolean(
@@ -78,7 +88,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         if (mNotificationPulse != null) {
             updateLightPulseDescription();
         }
-        if (mIsPrimary && mBatteryPulse != null) {
+        if (mBatteryPulse != null) {
             updateBatteryPulseDescription();
         }
     }
@@ -86,6 +96,24 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    private boolean removePreferenceIfPackageNotInstalled(Preference preference) {
+        String intentUri=((PreferenceScreen) preference).getIntent().toUri(1);
+        Pattern pattern = Pattern.compile("component=([^/]+)/");
+        Matcher matcher = pattern.matcher(intentUri);
+
+        String packageName=matcher.find()?matcher.group(1):null;
+        if(packageName != null) {
+            try {
+                getPackageManager().getPackageInfo(packageName, 0);
+            } catch (NameNotFoundException e) {
+                Log.e(TAG,"package "+packageName+" not installed, hiding preference.");
+                getPreferenceScreen().removePreference(preference);
+                return true;
+            }
+        }
+        return false;
     }
 
     private void updateLightPulseDescription() {

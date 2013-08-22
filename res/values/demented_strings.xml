@@ -309,4 +309,8 @@
     <string name="display_rotation_180_title">180 degrees</string>
     <string name="display_rotation_270_title">270 degrees</string>
 
+    <!--- Lock clock -->
+    <string name="lock_clock_title">Lock clock widget</string>
+    <string name="lock_clock_summary">View or change how the Lock clock widgets will display</string>
+
 </resources>
