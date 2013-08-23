@@ -16,9 +16,12 @@
 
 package com.android.settings.demented;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.RemoteException;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -28,6 +31,7 @@ import android.provider.Settings;
 import com.android.internal.view.RotationPolicy;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.Utils;
 
 public class DisplayRotation extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
     private static final String TAG = "DisplayRotation";
@@ -58,8 +62,7 @@ public class DisplayRotation extends SettingsPreferenceFragment implements OnPre
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        boolean hasRotationLock = this.getResources().getBoolean(com.android
-                .internal.R.bool.config_hasRotationLockSwitch);
+        boolean hasRotationLock = this.getResources().getBoolean(com.android.internal.R.bool.config_hasRotationLockSwitch);
 
         super.onCreate(savedInstanceState);
 
@@ -73,6 +76,7 @@ public class DisplayRotation extends SettingsPreferenceFragment implements OnPre
         if (hasRotationLock) {
                 mAccelerometer.setEnabled(false);
         }
+
         mRotation0Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_0_PREF);
         mRotation90Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_90_PREF);
         mRotation180Pref = (CheckBoxPreference) prefSet.findPreference(ROTATION_180_PREF);
