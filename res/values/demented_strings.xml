@@ -491,4 +491,12 @@
     <string name="dc_source_title">Droid Concepts Source</string>
     <string name="dc_source_summary">Droid Concepts is fully open source. You can always check out the latest DC source at github.com/davros-</string>
 
+    <!-- Power menu enable disable -->
+    <string name="power_menu_title">Power menu</string>
+    <string name="power_menu_reboot_title">Reboot menu</string>
+    <string name="power_menu_screenshot_title">Screenshot</string>
+    <string name="power_menu_profiles_title">Profile switcher</string>
+    <string name="power_menu_airplane_title">Airplane mode</string>
+    <string name="power_menu_silent_title">Sound panel</string>
+
 </resources>

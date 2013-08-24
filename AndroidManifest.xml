@@ -1564,6 +1564,7 @@
         <activity android:name=".demented.PowerWidget" />
         <activity android:name=".demented.PerformanceSettings" />
         <activity android:name=".demented.SoundSettings" />
+        <activity android:name=".demented.PowerMenu" />
 
         <!-- DEMENTED activities End -->
 
