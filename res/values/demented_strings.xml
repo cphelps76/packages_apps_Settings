@@ -26,6 +26,7 @@
     <string name="navigation_bar_category">Navigation bar</string>
     <string name="advanced_catagory_title">Advanced</string>
     <string name="general_settings_title">General</string>
+    <string name="notification_drawer_title">Notification Drawer</string>
 
     <!-- Launcher settings  -->
     <string name="launcher_settings_title">Launcher</string>
@@ -498,5 +499,14 @@
     <string name="power_menu_profiles_title">Profile switcher</string>
     <string name="power_menu_airplane_title">Airplane mode</string>
     <string name="power_menu_silent_title">Sound panel</string>
+
+    <!-- Custom Carrier Label Options -->
+    <string name="carrier_label_title">Carrier Label Options</string>
+    <string name="custom_carrier_label_title">Custom carrier label</string>
+    <string name="custom_carrier_label_explain">Please enter a new label. Enter an empty label to revert to stock label.</string>
+    <string name="custom_carrier_label_notset">Custom label currently not set</string>
+    <string name="hide_carrier_title">Hide carrier label</string>
+    <string name="notification_show_wifi_ssid_title">Show Wifi network name</string>
+    <string name="notification_show_wifi_ssid_summary">Display the name of the currently connected Wifi network</string>
 
 </resources>
