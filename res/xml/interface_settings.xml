@@ -43,6 +43,16 @@
         android:title="@string/advanced_catagory_title">
 
         <PreferenceScreen
+            android:id="@+id/advanced_settings"
+            android:title="@string/advanced_device_settings_title"
+            android:summary="@string/advanced_settings_summary">
+        <intent
+                android:action="com.cyanogenmod.action.LAUNCH_DEVICE_SETTINGS"
+                android:targetPackage="com.cyanogenmod.settings.device"
+                android:targetClass="com.cyanogenmod.settings.device.DeviceSettings" />
+        </PreferenceScreen>
+
+        <PreferenceScreen
             android:key="lock_clock"
             android:title="@string/lock_clock_title"
             android:summary="@string/lock_clock_summary">
@@ -60,6 +70,17 @@
             android:key="sound_settings"
             android:fragment="com.android.settings.demented.SoundSettings"
             android:title="@string/sound_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="performance_settings"
+        android:title="@string/performance_settings_title">
+
+        <PreferenceScreen
+            android:id="@+id/performance_settings"
+            android:fragment="com.android.settings.demented.PerformanceSettings"
+            android:title="@string/performance_settings_title" />
 
     </PreferenceCategory>
 
