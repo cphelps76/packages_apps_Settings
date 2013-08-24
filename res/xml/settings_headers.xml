@@ -68,6 +68,12 @@
         android:fragment="com.android.settings.demented.InterfaceSettings"
         android:title="@string/interface_settings_title" />
 
+    <!-- Lockscreen -->
+    <PreferenceScreen
+        android:key="lock_screen_settings"
+        android:fragment="com.android.settings.demented.LockscreenInterface"
+        android:title="@string/lock_screen_title" />
+
     <!-- Launcher -->
     <header
         android:id="@+id/launcher_settings"

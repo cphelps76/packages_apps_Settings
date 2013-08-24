@@ -1565,6 +1565,8 @@
         <activity android:name=".demented.PerformanceSettings" />
         <activity android:name=".demented.SoundSettings" />
         <activity android:name=".demented.PowerMenu" />
+        <activity android:name=".demented.LockscreenTargets" />
+        <activity android:name=".demented.LockscreenInterface" />
 
         <!-- DEMENTED activities End -->
 
