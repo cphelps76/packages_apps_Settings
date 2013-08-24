@@ -25,7 +25,7 @@
         android:entries="@array/volume_overlay_entries"
         android:entryValues="@array/volume_overlay_values" />
 
-    <com.android.settings.slim.IncreasingRingPreference
+    <com.android.settings.demented.IncreasingRingPreference
         android:key="increasing_ring"
         android:title="@string/increasing_ring_title"
         android:dialogTitle="@string/increasing_ring_title"
