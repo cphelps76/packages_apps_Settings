@@ -1567,6 +1567,7 @@
         <activity android:name=".demented.PowerMenu" />
         <activity android:name=".demented.LockscreenTargets" />
         <activity android:name=".demented.LockscreenInterface" />
+        <activity android:name=".demented.LockscreenButtons" />
 
         <!-- DEMENTED activities End -->
 

@@ -19,12 +19,19 @@ package com.android.settings.demented;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.preference.PreferenceCategory;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
 public class LockscreenInterface extends SettingsPreferenceFragment {
     private static final String TAG = "LockscreenInterface";
+
+    private static final String KEY_ADDITIONAL_OPTIONS = "options_group";
+    private static final String KEY_LOCKSCREEN_BUTTONS = "lockscreen_buttons";
+
+    private PreferenceScreen mLockscreenButtons;
+    private PreferenceCategory mAdditionalOptions;
 
     public boolean hasButtons() {
         return !getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar);
@@ -35,6 +42,15 @@ public class LockscreenInterface extends SettingsPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
+
+        PreferenceScreen prefs = getPreferenceScreen();
+        mAdditionalOptions = (PreferenceCategory) prefs.findPreference(KEY_ADDITIONAL_OPTIONS);
+
+        mLockscreenButtons = (PreferenceScreen) findPreference(KEY_LOCKSCREEN_BUTTONS);
+        if (!hasButtons()) {
+            mAdditionalOptions.removePreference(mLockscreenButtons);
+	}
+
     }
 
     @Override
