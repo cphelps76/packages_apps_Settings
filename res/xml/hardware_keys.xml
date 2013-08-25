@@ -94,7 +94,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/additional_options_title">
+        android:key="general_settings"
+        android:title="@string/general_settings_title">
 
        <CheckBoxPreference
             android:key="hardware_keys_show_overflow"
