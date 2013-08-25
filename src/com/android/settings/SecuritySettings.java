@@ -93,6 +93,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private static final String KEY_VIBRATE_PREF = "lockscreen_vibrate";
     DevicePolicyManager mDPM;
 
+    private PackageManager mPM;
+
     private ChooseLockSettingsHelper mChooseLockSettingsHelper;
     private LockPatternUtils mLockPatternUtils;
     private ListPreference mLockAfter;
@@ -322,6 +324,10 @@ public class SecuritySettings extends SettingsPreferenceFragment
         mPowerButtonInstantlyLocks = (CheckBoxPreference) root.findPreference(
                 KEY_POWER_INSTANTLY_LOCKS);
 
+        // Application install
+        PreferenceGroup deviceAdminCategory= (PreferenceGroup)
+                root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
+
         // don't display visible pattern if biometric and backup is not pattern
         if (resid == R.xml.security_settings_biometric_weak &&
                 mLockPatternUtils.getKeyguardStoredPasswordQuality() !=
@@ -375,8 +381,6 @@ public class SecuritySettings extends SettingsPreferenceFragment
                     mToggleVerifyApps.setEnabled(false);
                 }
             } else {
-                PreferenceGroup deviceAdminCategory= (PreferenceGroup)
-                        root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
                 if (deviceAdminCategory != null) {
                     deviceAdminCategory.removePreference(mToggleVerifyApps);
                 } else {
