@@ -28,6 +28,9 @@
     <string name="general_settings_title">General</string>
     <string name="notification_drawer_title">Notification Drawer</string>
 
+    <!-- Addition security options -->
+    <string name="additional_security_options_title">Additonal Security</string>
+
     <!-- Lockscreen Sercurity -->
     <string name="lockscreen_security_grouptitle">Security options</string>
 

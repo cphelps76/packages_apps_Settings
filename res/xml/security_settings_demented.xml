@@ -18,8 +18,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:key="additional_options"
-        android:title="@string/additional_options_title">
+        android:key="additional_security_options"
+        android:title="@string/additional_security_options_title">
 
         <CheckBoxPreference
             android:key="menu_unlock"
