@@ -93,7 +93,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         }
 
         if (removeKeys) {
-            prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
+            prefSet.removePreference(findPreference(KEY_HARDWARE_KEYS));
         }
 
         // Dont display the lock clock preference if its not installed
