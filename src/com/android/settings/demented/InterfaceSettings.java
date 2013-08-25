@@ -76,7 +76,25 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.interface_settings);
 
+        // Only show the hardware keys config on a device that does not have a navbar
+        // and the navigation bar config on phones that has a navigation bar
+        boolean removeKeys = false;
+
         PreferenceScreen prefSet = getPreferenceScreen();
+
+        IWindowManager windowManager = IWindowManager.Stub.asInterface(
+                ServiceManager.getService(Context.WINDOW_SERVICE));
+        try {
+            if (windowManager.hasNavigationBar()) {
+                removeKeys = true;
+            }
+        } catch (RemoteException e) {
+            // Do nothing
+        }
+
+        if (removeKeys) {
+            prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
+        }
 
         // Dont display the lock clock preference if its not installed
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
@@ -123,18 +141,6 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         mCrtMode.setValue(String.valueOf(crtMode));
         mCrtMode.setSummary(mCrtMode.getEntry());
         mCrtMode.setOnPreferenceChangeListener(this);
-
-        // Only show the hardware keys config on a device that does not have a navbar
-        IWindowManager windowManager = IWindowManager.Stub.asInterface(
-                ServiceManager.getService(Context.WINDOW_SERVICE));
-        try {
-            if (windowManager.hasNavigationBar()) {
-                mMisc.removePreference(findPreference(KEY_HARDWARE_KEYS));
-            }
-        } catch (RemoteException e) {
-            // Do nothing
-        }
-    }
 
     private CheckBoxPreference findAndInitCheckboxPref(String key) {
         CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
