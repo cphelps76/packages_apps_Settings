@@ -360,8 +360,17 @@ public class SecuritySettings extends SettingsPreferenceFragment
             // Show password
             mShowPassword = (CheckBoxPreference) root.findPreference(KEY_SHOW_PASSWORD);
 
-            // Credential storage, only for primary user
-            if (mIsPrimary) {
+            // Credential storage
+            final UserManager um = (UserManager) getActivity().getSystemService(Context.USER_SERVICE);
+            if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
+                mKeyStore = KeyStore.getInstance();
+                Preference credentialStorageType = root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE);
+
+                final int storageSummaryRes =
+                    mKeyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware
+                            : R.string.credential_storage_type_software;
+                credentialStorageType.setSummary(storageSummaryRes);
+
                 mResetCredentials = root.findPreference(KEY_RESET_CREDENTIALS);
             } else {
                 removePreference(KEY_CREDENTIALS_MANAGER);
