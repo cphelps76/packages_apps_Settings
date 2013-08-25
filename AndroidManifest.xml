@@ -1568,6 +1568,7 @@
         <activity android:name=".demented.LockscreenTargets" />
         <activity android:name=".demented.LockscreenInterface" />
         <activity android:name=".demented.LockscreenButtons" />
+        <activity android:name=".demented.HardwareKeys" />
 
         <!-- DEMENTED activities End -->
 

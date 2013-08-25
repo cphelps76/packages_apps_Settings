@@ -27,6 +27,7 @@ import android.os.ServiceManager;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.ListPreference;
 import android.preference.TwoStatePreference;
@@ -53,6 +54,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     private static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
     private static final String KEY_POWER_CRT_MODE = "system_power_crt_mode";
     private static final String KEY_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off";
+    private static final String KEY_HARDWARE_KEYS = "hardware_keys";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
@@ -122,6 +124,16 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         mCrtMode.setSummary(mCrtMode.getEntry());
         mCrtMode.setOnPreferenceChangeListener(this);
 
+        // Only show the hardware keys config on a device that does not have a navbar
+        IWindowManager windowManager = IWindowManager.Stub.asInterface(
+                ServiceManager.getService(Context.WINDOW_SERVICE));
+        try {
+            if (windowManager.hasNavigationBar()) {
+                mMisc.removePreference(findPreference(KEY_HARDWARE_KEYS));
+            }
+        } catch (RemoteException e) {
+            // Do nothing
+        }
     }
 
     private CheckBoxPreference findAndInitCheckboxPref(String key) {
