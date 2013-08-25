@@ -28,7 +28,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment {
     private static final String TAG = "LockscreenInterface";
 
     private static final String KEY_ADDITIONAL_OPTIONS = "options_group";
+    private static final String KEY_SLIDER_OPTIONS = "slider_group";
     private static final String KEY_LOCKSCREEN_BUTTONS = "lockscreen_buttons";
+
+    private int mUnsecureUnlockMethod;
 
     private PreferenceScreen mLockscreenButtons;
     private PreferenceCategory mAdditionalOptions;
@@ -41,9 +44,18 @@ public class LockscreenInterface extends SettingsPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.lockscreen_interface_settings);
+        createCustomLockscreenView();
+    }
 
+    private PreferenceScreen createCustomLockscreenView() {
         PreferenceScreen prefs = getPreferenceScreen();
+        if (prefs != null) {
+            prefs.removeAll();
+        }
+
+        addPreferencesFromResource(R.xml.lockscreen_interface_settings);
+        prefs = getPreferenceScreen();
+
         mAdditionalOptions = (PreferenceCategory) prefs.findPreference(KEY_ADDITIONAL_OPTIONS);
 
         mLockscreenButtons = (PreferenceScreen) findPreference(KEY_LOCKSCREEN_BUTTONS);
@@ -51,11 +63,21 @@ public class LockscreenInterface extends SettingsPreferenceFragment {
             mAdditionalOptions.removePreference(mLockscreenButtons);
 	}
 
+        mUnsecureUnlockMethod = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.LOCKSCREEN_UNSECURE_USED, 1);
+
+        //setup custom lockscreen customize view
+        if (mUnsecureUnlockMethod != 1) {
+             PreferenceCategory sliderCategory = (PreferenceCategory) findPreference(KEY_SLIDER_OPTIONS);
+             getPreferenceScreen().removePreference(sliderCategory);
+        }
+        return prefs;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        createCustomLockscreenView();
     }
 
     @Override
