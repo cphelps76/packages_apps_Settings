@@ -18,6 +18,7 @@ package com.android.settings.demented;
 
 import android.app.ActivityManagerNative;
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -61,6 +62,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mKillAppLongpressBack;
     private ListPreference mCrtMode;
     private CheckBoxPreference mCrtOff;
+    private static ContentResolver mContentResolver;
 
     private boolean mIsCrtOffChecked = false;
 
@@ -75,6 +77,8 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.interface_settings);
+
+        mContentResolver = getContentResolver();
 
         // Only show the hardware keys config on a device that does not have a navbar
         // and the navigation bar config on phones that has a navigation bar
@@ -122,24 +126,16 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 
         mKillAppLongpressBack = findAndInitCheckboxPref(KILL_APP_LONGPRESS_BACK);
 
-        // respect device default configuration
-        // true fades while false animates
-        boolean electronBeamFadesConfig = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_animateScreenLights);
-
-        // use this to enable/disable crt on feature
-        mIsCrtOffChecked = Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF,
-                electronBeamFadesConfig ? 0 : 1) == 1;
-
+        boolean isCrtOffChecked = (Settings.System.getBoolean(mContentResolver,
+                        Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF, true));
         mCrtOff = (CheckBoxPreference) findPreference(KEY_POWER_CRT_SCREEN_OFF);
-        mCrtOff.setChecked(mIsCrtOffChecked);
+        mCrtOff.setChecked(isCrtOffChecked);
 
-        mCrtMode = (ListPreference) prefSet.findPreference(KEY_POWER_CRT_MODE);
-        int crtMode = Settings.System.getInt(getActivity().getContentResolver(),
+        mCrtMode = (ListPreference) findPreference(KEY_POWER_CRT_MODE);
+        int crtMode = Settings.System.getInt(mContentResolver,
                 Settings.System.SYSTEM_POWER_CRT_MODE, 0);
-        mCrtMode.setValue(String.valueOf(crtMode));
-        mCrtMode.setSummary(mCrtMode.getEntry());
+        mCrtMode.setValue(Integer.toString(Settings.System.getInt(mContentResolver,
+                Settings.System.SYSTEM_POWER_CRT_MODE, crtMode)));
         mCrtMode.setOnPreferenceChangeListener(this);
     }
 
@@ -224,9 +220,9 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         if (preference == mKillAppLongpressBack) {
             writeKillAppLongpressBackOptions();
         } else if (preference == mCrtOff) {
-            Settings.System.putInt(getActivity().getContentResolver(),
+            Settings.System.putBoolean(mContentResolver,
                     Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF,
-                    mCrtOff.isChecked() ? 1 : 0);
+                    ((TwoStatePreference) preference).isChecked());
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -234,7 +230,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 
     public boolean onPreferenceChange(Preference preference, Object objValue) {
         final String key = preference.getKey();
-        if (preference == mCrtMode) {
+         if (preference == mCrtMode) {
             int crtMode = Integer.valueOf((String) objValue);
             int index = mCrtMode.findIndexOfValue((String) objValue);
             Settings.System.putInt(getActivity().getContentResolver(),
