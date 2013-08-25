@@ -34,8 +34,8 @@
     <string name="device_info_default">Unknown</string>
     <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
     <plurals name="show_dev_countdown">
-        <item quantity="one">You are now <xliff:g id="step_count">%1$d</xliff:g> No need, Development Options are already unhidden.</item>
-        <item quantity="other">You are now <xliff:g id="step_count">%1$d</xliff:g>  No need, Development Options are already unhidden.</item>
+        <item quantity="one">No need, Development Options are already unhidden.</item>
+        <item quantity="other">No need, Development Options are already unhidden.</item>
     </plurals>
     <!-- [CHAR LIMIT=NONE] Device Info screen. Confirmation that developer settings are enabled -->
     <string name="show_dev_on"> No need, Development Options are already unhidden.</string>
