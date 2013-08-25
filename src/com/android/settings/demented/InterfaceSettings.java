@@ -141,6 +141,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         mCrtMode.setValue(String.valueOf(crtMode));
         mCrtMode.setSummary(mCrtMode.getEntry());
         mCrtMode.setOnPreferenceChangeListener(this);
+    }
 
     private CheckBoxPreference findAndInitCheckboxPref(String key) {
         CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
