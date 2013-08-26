@@ -27,6 +27,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
@@ -56,15 +57,15 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
     private static final String KEY_ADDITIONAL_OPTIONS = "options_group";
     private static final String KEY_SLIDER_OPTIONS = "slider_group";
     private static final String KEY_LOCKSCREEN_BUTTONS = "lockscreen_buttons";
-
     private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
     private static final String KEY_BACKGROUND_ALPHA_PREF = "lockscreen_alpha";
-
+    private static final String KEY_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
 
     private PreferenceScreen mLockscreenButtons;
     private PreferenceCategory mAdditionalOptions;
     private ListPreference mCustomBackground;
     private SeekBarPreference mBgAlpha;
+    private CheckBoxPreference mMaximizeWidgets;
 
     private int mUnsecureUnlockMethod;
     private boolean mIsScreenLarge;
@@ -98,6 +99,14 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
         prefs = getPreferenceScreen();
 
         mAdditionalOptions = (PreferenceCategory) prefs.findPreference(KEY_ADDITIONAL_OPTIONS);
+
+        mMaximizeWidgets = (CheckBoxPreference)findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS);
+        if (Utils.isTablet(getActivity())) {
+            getPreferenceScreen().removePreference(mMaximizeWidgets);
+            mMaximizeWidgets = null;
+        } else {
+            mMaximizeWidgets.setOnPreferenceChangeListener(this);
+        }
 
         mCustomBackground = (ListPreference) findPreference(KEY_BACKGROUND_PREF);
         mCustomBackground.setOnPreferenceChangeListener(this);
@@ -140,6 +149,12 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
     @Override
     public void onResume() {
         super.onResume();
+        ContentResolver cr = getActivity().getContentResolver();
+
+        if (mMaximizeWidgets != null) {
+            mMaximizeWidgets.setChecked(Settings.System.getInt(cr,
+                    Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, 0) == 1);
+        }
         createCustomLockscreenView();
     }
 
@@ -155,6 +170,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object objValue) {
+        ContentResolver cr = getActivity().getContentResolver();
         if (preference == mCustomBackground) {
             int indexOf = mCustomBackground.findIndexOfValue(objValue.toString());
             switch (indexOf) {
@@ -253,6 +269,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
             float val = Float.parseFloat((String) objValue);
             Settings.System.putFloat(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_ALPHA, val / 100);
+            return true;
+        } else if (preference == mMaximizeWidgets) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, value ? 1 : 0);
             return true;
         }
         return false;

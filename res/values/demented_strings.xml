@@ -651,4 +651,8 @@
     <string name="lockscreen_background_default_wallpaper">Default wallpaper</string>
     <string name="lockscreen_alpha_title">Background transparency</string>
 
+    <!-- Lock screen widgets -->
+    <string name="lockscreen_maximize_widgets_title">Maximize widgets</string>
+    <string name="lockscreen_maximize_widgets_summary">Show widgets maximized and the unlock mimimized when the screen is turned on</string>
+
 </resources>

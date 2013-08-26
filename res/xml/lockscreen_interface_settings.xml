@@ -53,6 +53,7 @@
         android:key="advanced_catagory"
        android:title="@string/advanced_catagory_title">
 
+
          <PreferenceScreen
              android:fragment="com.android.settings.demented.LockscreenButtons"
              android:key="lockscreen_buttons"
@@ -64,6 +65,18 @@
              android:key="lockscreen_targets"
              android:summary="@string/lockscreen_target_summary"
              android:title="@string/lockscreen_target_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="general_settings"
+        android:title="@string/general_settings_title">
+
+     <CheckBoxPreference
+        android:key="lockscreen_maximize_widgets"
+        android:persistent="false"
+        android:title="@string/lockscreen_maximize_widgets_title"
+        android:summary="@string/lockscreen_maximize_widgets_summary" />
 
     </PreferenceCategory>
 
