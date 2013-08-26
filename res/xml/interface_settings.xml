@@ -45,7 +45,7 @@
         <PreferenceScreen
             android:id="@+id/advanced_settings"
             android:title="@string/advanced_device_settings_title"
-            android:summary="@string/advanced_settings_summary">
+            android:summary="@string/advanced_device_settings_summary">
         <intent
                 android:action="com.cyanogenmod.action.LAUNCH_DEVICE_SETTINGS"
                 android:targetPackage="com.cyanogenmod.settings.device"

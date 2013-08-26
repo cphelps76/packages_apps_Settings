@@ -40,7 +40,7 @@
     <!-- Advanced, Device specific (DeviceParts) settings  -->
     <string name="advanced_device_settings_title">Advanced Settings</string>
     <string name="advanced_settings_title">Advanced</string>
-    <string name="advanced_settings_summary">Device specific advanced settings</string>
+    <string name="advanced_device_settings_summary">Device specific advanced settings</string>
 
     <!-- Lock Screen  -->
     <string name="lock_screen_title">Lock screen</string>
@@ -58,6 +58,9 @@
 
     <!-- Notification Drawer  -->
     <string name="notification_drawer_title">Notification drawer</string>
+
+    <!-- Lock screen widgets group -->
+    <string name="lockscreen_widgets_title">Widget Options</string>
 
     <!-- Power Widget  -->
     <string name="power_widget_title">Power widget</string>

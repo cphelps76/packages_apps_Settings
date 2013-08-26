@@ -69,11 +69,11 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="general_settings"
-        android:title="@string/general_settings_title">
+        android:key="lockscreen_widgets_group"
+        android:title="@string/lockscreen_widgets_title">
 
         <CheckBoxPreference
-            android:key="lockscreen_hide_initial_page_hints"
+            android:key="lockscreen_disable_hints"
             android:title="@string/lockscreen_hide_initial_page_hints_title"
             android:summary="@string/lockscreen_hide_initial_page_hints_summary" />
 
