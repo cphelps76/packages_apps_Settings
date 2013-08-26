@@ -72,11 +72,16 @@
         android:key="general_settings"
         android:title="@string/general_settings_title">
 
-     <CheckBoxPreference
-        android:key="lockscreen_maximize_widgets"
-        android:persistent="false"
-        android:title="@string/lockscreen_maximize_widgets_title"
-        android:summary="@string/lockscreen_maximize_widgets_summary" />
+        <CheckBoxPreference
+            android:key="lockscreen_hide_initial_page_hints"
+            android:title="@string/lockscreen_hide_initial_page_hints_title"
+            android:summary="@string/lockscreen_hide_initial_page_hints_summary" />
+
+         <CheckBoxPreference
+            android:key="lockscreen_maximize_widgets"
+            android:persistent="false"
+            android:title="@string/lockscreen_maximize_widgets_title"
+            android:summary="@string/lockscreen_maximize_widgets_summary" />
 
     </PreferenceCategory>
 

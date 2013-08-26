@@ -60,12 +60,14 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
     private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
     private static final String KEY_BACKGROUND_ALPHA_PREF = "lockscreen_alpha";
     private static final String KEY_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
+    private static final String PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
 
     private PreferenceScreen mLockscreenButtons;
     private PreferenceCategory mAdditionalOptions;
     private ListPreference mCustomBackground;
     private SeekBarPreference mBgAlpha;
     private CheckBoxPreference mMaximizeWidgets;
+    private CheckBoxPreference mLockscreenHideInitialPageHints;
 
     private int mUnsecureUnlockMethod;
     private boolean mIsScreenLarge;
@@ -107,6 +109,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
         } else {
             mMaximizeWidgets.setOnPreferenceChangeListener(this);
         }
+
+        mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
+        mLockscreenHideInitialPageHints.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
+                Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, false));
 
         mCustomBackground = (ListPreference) findPreference(KEY_BACKGROUND_PREF);
         mCustomBackground.setOnPreferenceChangeListener(this);
@@ -165,6 +171,12 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mLockscreenHideInitialPageHints) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS,
+                    ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
+            return true;
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
