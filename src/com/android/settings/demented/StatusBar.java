@@ -47,6 +47,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String PREF_BATT_BAR_WIDTH = "battery_bar_thickness";
     private static final String PREF_BATT_ANIMATE = "battery_bar_animate";
     private static final String BATTERY_TEXT = "battery_text";
+    private static final String KEY_MISSED_CALL_BREATH = "missed_call_breath";
+    private static final String KEY_MMS_BREATH = "mms_breath";
 
     private ListPreference mClockStyle;
     private ListPreference mClockAmPmstyle;
@@ -141,12 +143,17 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                 Settings.System.STATUSBAR_BATTERY_BAR_THICKNESS, 1))
                 + "");
 
+        mMissedCallBreath = (CheckBoxPreference) findPreference(KEY_MISSED_CALL_BREATH);
+            mMissedCallBreath.setOnPreferenceChangeListener(this);
+
+        mMMSBreath = (CheckBoxPreference) findPreference(KEY_MMS_BREATH);
+            mMMSBreath.setOnPreferenceChangeListener(this);
+
         mPrefCategoryGeneral = (PreferenceCategory) findPreference(STATUS_BAR_CATEGORY_GENERAL);
 
         if (Utils.isWifiOnly(getActivity())) {
             mPrefCategoryGeneral.removePreference(mStatusBarCmSignal);
         }
-
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -183,30 +190,30 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             String hex = ColorPickerPreference.convertToARGB(Integer
                     .valueOf(String.valueOf(newValue)));
             preference.setSummary(hex);
-
             int intHex = ColorPickerPreference.convertToColorInt(hex);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_BATTERY_BAR_COLOR, intHex);
             return true;
-
         } else if (preference == mBatteryBar) {
-
             int val = Integer.parseInt((String) newValue);
             return Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_BATTERY_BAR, val);
-
         } else if (preference == mBatteryBarStyle) {
-
             int val = Integer.parseInt((String) newValue);
             return Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_BATTERY_BAR_STYLE, val);
-
         } else if (preference == mBatteryBarThickness) {
-
             int val = Integer.parseInt((String) newValue);
             return Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_BATTERY_BAR_THICKNESS, val);
-
+        } else if (preference == mMissedCallBreath) {
+            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.MISSED_CALL_BREATH,
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
+            return true;
+        } else if (preference == mMMSBreath) {
+            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.MMS_BREATH,
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
+            return true;
         }
         return false;
     }

@@ -697,4 +697,11 @@
     <string name="remove_blacklist_entry">Do you want to remove this blacklist entry?</string>
     <string name="select_contact">Select contact</string>
 
+    <!-- Breathing Notifications -->
+    <string name="breathing_notifications_title">Breathing Notifications</string>
+    <string name="mms_breath">Breathing SMS</string>
+    <string name="mms_breath_summary">Show sms icon with a breathing effect</string>
+    <string name="missed_call_breath">Breathing Missed Call</string>
+    <string name="missed_call_breath_summary">Show missed call icon with a breathing effect</string>
+
 </resources>
