@@ -63,6 +63,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private PreferenceCategory mPrefCategoryGeneral;
     private ColorPickerPreference mBatteryBarColor;
     private CheckBoxPreference mBattText;
+    private CheckBoxPreference mMissedCallBreath;
+    private CheckBoxPreference mMMSBreath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
