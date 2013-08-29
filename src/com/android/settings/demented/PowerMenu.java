@@ -33,12 +33,14 @@ public class PowerMenu extends SettingsPreferenceFragment {
     private static final String KEY_PROFILES = "power_menu_profiles";
     private static final String KEY_AIRPLANE = "power_menu_airplane";
     private static final String KEY_SILENT = "power_menu_silent";
+    private static final String PREF_NAVBAR_HIDE = "show_navbar_hide";
 
     private CheckBoxPreference mRebootPref;
     private CheckBoxPreference mScreenshotPref;
     private CheckBoxPreference mProfilesPref;
     private CheckBoxPreference mAirplanePref;
     private CheckBoxPreference mSilentPref;
+    private CheckBoxPreference mShowNavBarHide;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,11 @@ public class PowerMenu extends SettingsPreferenceFragment {
         mSilentPref.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.POWER_MENU_SILENT_ENABLED, 1) == 1));
 
+        mShowNavBarHide = (CheckBoxPreference) findPreference(PREF_NAVBAR_HIDE);
+        mShowNavBarHide.setChecked(Settings.System.getBoolean(getActivity()
+                .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_NAVBAR_HIDE,
+                false));
+
     }
 
     @Override
@@ -92,21 +99,25 @@ public class PowerMenu extends SettingsPreferenceFragment {
             Settings.System.putInt(getContentResolver(),
                     Settings.System.POWER_MENU_PROFILES_ENABLED,
                     value ? 1 : 0);
-       } else if (preference == mAirplanePref) {
+        } else if (preference == mAirplanePref) {
             value = mAirplanePref.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.POWER_MENU_AIRPLANE_ENABLED,
                     value ? 1 : 0);
-       } else if (preference == mSilentPref) {
+        } else if (preference == mSilentPref) {
             value = mSilentPref.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.POWER_MENU_SILENT_ENABLED,
                     value ? 1 : 0);
+        } else if (preference == mShowNavBarHide) {
+			value = mShowNavBarHide.isChecked();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.POWER_DIALOG_SHOW_NAVBAR_HIDE,
+                    value ? 1 : 0);
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
-
-        return true;
+      return true;
     }
 
 }

@@ -510,6 +510,7 @@
     <string name="power_menu_profiles_title">Profile switcher</string>
     <string name="power_menu_airplane_title">Airplane mode</string>
     <string name="power_menu_silent_title">Sound panel</string>
+    <string name="title_show_navbar_hide">Show navigation bar toggle</string>
 
     <!-- Custom Carrier Label Options -->
     <string name="carrier_label_title">Carrier Label Options</string>
