@@ -1754,15 +1754,9 @@
 
         <activity
             android:name=".demented.CarrierLabel"
-<<<<<<< HEAD
             android:label="@string/carrier_label_title" >
-=======
-            android:label="@string/custom_carrier_label_title" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="com.android.settings.SHORTCUT" />
             </intent-filter>
         </activity>
 
@@ -1770,9 +1764,10 @@
             android:name=".aokp.Navbar"
             android:label="@string/title_navbar" >
 
->>>>>>> 8d04355... Port: AOKP navbar navring to settings
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.android.settings.SHORTCUT" />
             </intent-filter>
         </activity>
 
