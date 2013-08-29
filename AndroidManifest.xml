@@ -1569,8 +1569,13 @@
         <activity android:name=".demented.LockscreenInterface" />
         <activity android:name=".demented.LockscreenButtons" />
         <activity android:name=".demented.HardwareKeys" />
-
         <!-- DEMENTED activities End -->
+
+        <activity android:name=".aokp.NavRingTargets" />
+        <activity android:name=".aokp.NavBarItemPreference" />
+        <activity android:name=".aokp.WidgetConfigurationFragment" />
+        <activity android:name=".aokp.SeekBarPreference" />
+        <activity android:name=".aokp.TouchInterceptor" />
 
         <!-- Pseudo-activity used to provide an intent-filter entry point to encryption settings -->
         <activity android:name="Settings$CryptKeeperSettingsActivity"
@@ -1749,7 +1754,23 @@
 
         <activity
             android:name=".demented.CarrierLabel"
+<<<<<<< HEAD
             android:label="@string/carrier_label_title" >
+=======
+            android:label="@string/custom_carrier_label_title" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".aokp.Navbar"
+            android:label="@string/title_navbar" >
+
+>>>>>>> 8d04355... Port: AOKP navbar navring to settings
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
