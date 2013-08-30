@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012 The CyanogenMod Project
+<!-- Copyright (C) 2013 DEMENTED Droid
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -35,6 +35,11 @@
             android:key="notification_drawer"
             android:fragment="com.android.settings.demented.PowerWidget"
             android:title="@string/notification_drawer_title" />
+
+        <PreferenceScreen
+            android:key="statusbar_toggles"
+            android:fragment="com.android.settings.demented.StatusBarToggles"
+            android:title="@string/title_statusbar_toggles" />
 
     </PreferenceCategory>
 

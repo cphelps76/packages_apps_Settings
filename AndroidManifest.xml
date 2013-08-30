@@ -1577,6 +1577,15 @@
         <activity android:name=".aokp.SeekBarPreference" />
         <activity android:name=".aokp.TouchInterceptor" />
 
+        <activity
+            android:name=".liquid.StatusBarToggles"
+            android:label="@string/title_statusbar_toggles" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
         <!-- Pseudo-activity used to provide an intent-filter entry point to encryption settings -->
         <activity android:name="Settings$CryptKeeperSettingsActivity"
                 android:label="@string/crypt_keeper_encrypt_title">
@@ -1767,6 +1776,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".demented.StatusBarToggles"
+            android:label="@string/title_statusbar_toggles" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.settings.SHORTCUT" />
             </intent-filter>
         </activity>
