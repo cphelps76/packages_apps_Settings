@@ -37,7 +37,7 @@
                 android:summary="@string/navigation_bar_glow_tint_summary"
                 android:defaultValue="#FFFFFF" />
 
-        <com.aokp.romcontrol.widgets.SeekBarPreference
+        <com.android.demented.widgets.SeekBarPreference
                 android:key="navigation_bar_alpha"
                 android:title="@string/navigation_bar_alpha_title" />
 
