@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.settings.aokp.util;
+package com.android.settings.demented.util;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 

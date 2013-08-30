@@ -1,4 +1,4 @@
-package com.android.settings.aokp.widgets;
+package com.android.settings.demented.widgets;
 
 import android.content.Context;
 import android.preference.ListPreference;

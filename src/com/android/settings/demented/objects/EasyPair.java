@@ -1,5 +1,5 @@
 
-package com.android.settings.aokp.objects;
+package com.android.settings.demented.objects;
 
 import android.util.Pair;
 

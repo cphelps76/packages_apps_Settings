@@ -1,11 +1,11 @@
 
-package com.android.settings.aokp.util;
+package com.android.settings.demented.util;
 
 import android.os.AsyncTask;
 
-import com.android.settings.aokp.objects.EasyPair;
-import com.android.settings.aokp.util.CMDProcessor;
-import com.android.settings.aokp.util.Helpers;
+import com.android.settings.demented.objects.EasyPair;
+import com.android.settings.demented.util.CMDProcessor;
+import com.android.settings.demented.util.Helpers;
 
 /**
  * An abstract implentation of AsyncTask

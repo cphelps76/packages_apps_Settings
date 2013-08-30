@@ -1,5 +1,5 @@
 
-package com.android.settings.aokp;
+package com.android.settings.demented;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,9 +23,9 @@ import java.net.URISyntaxException;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
-import com.android.settings.aokp.util.Helpers;
-import com.android.settings.aokp.util.ShortcutPickerHelper;
-import com.android.settings.aokp.widgets.NavBarItemPreference;
+import com.android.settings.demented.util.Helpers;
+import com.android.settings.demented.util.ShortcutPickerHelper;
+import com.android.settings.demented.widgets.NavBarItemPreference;
 
 public class NavRingTargets extends SettingsPreferenceFragment implements
         ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {

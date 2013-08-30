@@ -1,5 +1,5 @@
 
-package com.android.settings.aokp.util;
+package com.android.settings.demented.util;
 
 import android.util.Log;
 
@@ -7,7 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 
-import com.android.settings.aokp.objects.EasyPair;
+import com.android.settings.demented.objects.EasyPair;
 
 public class CMDProcessor {
 

@@ -1569,13 +1569,12 @@
         <activity android:name=".demented.LockscreenInterface" />
         <activity android:name=".demented.LockscreenButtons" />
         <activity android:name=".demented.HardwareKeys" />
+        <activity android:name=".demented.NavRingTargets" />
+        <activity android:name=".demented.WidgetConfigurationFragment" />
+        <activity android:name=".demented.widgets.NavBarItemPreference" />
+        <activity android:name=".demented.widgets.SeekBarPreference" />
+        <activity android:name=".demented.widgets.TouchInterceptor" />
         <!-- DEMENTED activities End -->
-
-        <activity android:name=".aokp.NavRingTargets" />
-        <activity android:name=".aokp.NavBarItemPreference" />
-        <activity android:name=".aokp.WidgetConfigurationFragment" />
-        <activity android:name=".aokp.SeekBarPreference" />
-        <activity android:name=".aokp.TouchInterceptor" />
 
         <activity
             android:name=".liquid.StatusBarToggles"
@@ -1770,7 +1769,7 @@
         </activity>
 
         <activity
-            android:name=".aokp.Navbar"
+            android:name=".demented.Navbar"
             android:label="@string/title_navbar" >
 
             <intent-filter>

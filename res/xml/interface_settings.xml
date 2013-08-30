@@ -78,7 +78,7 @@
 
         <PreferenceScreen
             android:id="@+id/nav_bar"
-            android:fragment="com.android.settings.aokp.Navbar"
+            android:fragment="com.android.settings.demented.Navbar"
             android:title="@string/title_navbar"
             android:summary="@string/header_summary_navbar" />
 

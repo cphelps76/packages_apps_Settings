@@ -1,5 +1,5 @@
 
-package com.android.settings.aokp.widgets;
+package com.android.settings.demented.widgets;
 
 /*
  * Copyright (C) 2008 The Android Open Source Project
