@@ -16,23 +16,6 @@
 
 package com.android.settings;
 
-<<<<<<< HEAD
-=======
-import com.android.internal.util.ArrayUtils;
-import com.android.settings.ChooseLockGeneric.ChooseLockGenericFragment;
-import com.android.settings.accounts.AccountSyncSettings;
-import com.android.settings.accounts.AuthenticatorHelper;
-import com.android.settings.accounts.ManageAccountsSettings;
-import com.android.settings.applications.InstalledAppDetails;
-import com.android.settings.applications.ManageApplications;
-import com.android.settings.bluetooth.BluetoothEnabler;
-import com.android.settings.deviceinfo.Memory;
-import com.android.settings.fuelgauge.PowerUsageSummary;
-import com.android.settings.TRDSEnabler;
-import com.android.settings.vpn2.VpnSettings;
-import com.android.settings.wifi.WifiEnabler;
-
->>>>>>> a0a393d... Squash Dark UI commits from Slim
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.OnAccountsUpdateListener;
@@ -55,6 +38,7 @@ import android.os.UserManager;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import com.android.settings.TRDSEnabler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
