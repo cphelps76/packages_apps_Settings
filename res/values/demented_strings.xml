@@ -802,6 +802,7 @@
     <string name="interface_navring_settings_title">Navigation Ring</string>
     <string name="interface_navring_settings_summary">@null</string>
     <string name="navring_target_info">Drag your finger to targets to assign actions</string>
+    <string name="navring_clear">Clear action</string>
     <string name="navring_short">Short action</string>
     <string name="navring_long">Long action</string>
     <string name="navring_icon">Custom icon</string>
@@ -900,6 +901,8 @@
     <string name="toggle_style_scrollable">Traditional (Scrollable)</string>
     <string name="toggle_swap_handle_side">Drag handle on right</string>
     <string name="add_toggles">Change toggles</string>
+    <string name="screenshot_delay_title">Screenshot delay</string>
+    <string name="screenshot_delay_summary">Delay to use after long pressing the screenshot toggle</string>
 
     <!-- Toggle Strings to be called from device overlays -->
     <string name="toggle_airplane_mode">Airplane Mode</string>
