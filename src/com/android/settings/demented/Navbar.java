@@ -720,7 +720,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
                 mResources.getString(R.string.navbar_delete_menu)};
         final AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(mResources.getString(R.string.navbar_title_menu))
-                .setSingleChoiceItems(items, -1, l)
+                .setItems(mActions, l)
                 .create();
 
         dialog.show();
@@ -737,7 +737,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
 
         final AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(mResources.getString(R.string.navbar_title_menu))
-                .setSingleChoiceItems(mActions, -1, l)
+                .setItems(mActions, l)
                 .create();
 
         dialog.show();
