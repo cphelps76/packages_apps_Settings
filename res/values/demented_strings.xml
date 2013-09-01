@@ -984,8 +984,8 @@
     <string name="transparency_dialog_transparency_keyguard">Lockscreen alpha</string>
 
     <!-- Ribbon Header -->
-    <string name="title_ribbon">Ribbon Options</string>
-    <string name="ribbon_settings_title">Ribbon options</string>
+    <string name="title_ribbon">Ribbons</string>
+    <string name="ribbon_settings_title">Ribbons</string>
     <string name="ribbon_settings_summary">@null</string>
 
     <!-- Ribbon -->
