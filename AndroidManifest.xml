@@ -211,11 +211,6 @@
         <activity
             android:name=".demented.TransparencyDialog"
             android:theme="@android:style/Theme.Dialog" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="com.android.settings.SHORTCUT" />
-            </intent-filter>
         </activity>
 
         <!-- Keep compatibility with old shortcuts. -->
