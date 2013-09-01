@@ -23,8 +23,8 @@ import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.android.settings.AOKPPreferenceFragment;
 import com.android.settings.R;
+import com.android.settings.demented.DEMENTEDPreferenceFragment;
 import com.android.settings.demented.objects.EasyPair;
 import com.android.settings.demented.util.Helpers;
 

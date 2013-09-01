@@ -62,21 +62,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.settings.R;
 import com.android.internal.util.aokp.AwesomeConstants;
 import com.android.internal.util.aokp.AwesomeConstants.AwesomeConstant;
 import com.android.internal.util.aokp.BackgroundAlphaColorDrawable;
 import com.android.internal.util.aokp.NavBarHelpers;
-import com.android.settings.demented.R;
+import com.android.settings.demented.DEMENTEDActivity;
+import com.android.settings.demented.DEMENTEDPreferenceFragment;
 import com.android.settings.demented.NavRingTargets;
-import com.android.settings.demented.util.AOKPPreferenceFragment;
 import com.android.settings.demented.util.Helpers;
-import com.android.settings.demented.util.ROMControlActivity;
 import com.android.settings.demented.util.ShortcutPickerHelper;
 import com.android.settings.demented.widgets.SeekBarPreference;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-public class Navbar extends SettingsPreferenceFragment implements
+public class Navbar extends DEMENTEDPreferenceFragment implements
         OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener {
 
     // move these later

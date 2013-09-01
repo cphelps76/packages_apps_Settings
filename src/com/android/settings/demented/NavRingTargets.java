@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2013 Android Open Kang Project
- * Copyright (C) 2013 The Cyanogenmod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +35,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.UserHandle;
+import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -48,11 +48,11 @@ import static com.android.internal.util.aokp.AwesomeConstants.*;
 import com.android.internal.util.aokp.NavRingHelpers;
 import com.android.internal.widget.multiwaveview.GlowPadView;
 import com.android.internal.widget.multiwaveview.TargetDrawable;
-import com.android.settings.util.ShortcutPickerHelper;
 import com.android.settings.R;
-import com.android.settings.util.Helpers;
-import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.demented.util.ROMControlActivity;
+import com.android.settings.demented.util.ShortcutPickerHelper;
+import com.android.settings.demented.util.Helpers;
+import com.android.settings.demented.DEMENTEDPreferenceFragment;
+import com.android.settings.demented.DEMENTEDActivity;
 
 import java.util.ArrayList;
 import java.io.File;
@@ -61,14 +61,7 @@ import java.io.FileOutputStream;
 import java.net.URISyntaxException;
 import java.lang.NumberFormatException;
 
-import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.Utils;
-import com.android.settings.demented.util.Helpers;
-import com.android.settings.demented.util.ShortcutPickerHelper;
-import com.android.settings.demented.widgets.NavBarItemPreference;
-
-public class NavRingTargets extends Fragment implements
+public class NavRingTargets extends DEMENTEDPreferenceFragment implements
         ShortcutPickerHelper.OnPickListener, GlowPadView.OnTriggerListener {
     private static final String TAG = "NavRing";
     private static final boolean DEBUG = false;
@@ -121,7 +114,6 @@ public class NavRingTargets extends Fragment implements
     }
 
     private String mString;
-    protected Context mContext;
 
     private static final int MENU_RESET = Menu.FIRST;
     private static final int MENU_SAVE = Menu.FIRST + 1;
