@@ -29,8 +29,10 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceScreen;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceGroup;
+import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.ListPreference;
 import android.preference.TwoStatePreference;
@@ -67,6 +69,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     private static final String KEY_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off";
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
     private static final String STATUSBAR_HIDDEN = "statusbar_hidden";
+    private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
@@ -75,6 +78,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mCrtOff;
     private static ContentResolver mContentResolver;
     CheckBoxPreference mStatusBarHide;
+    CheckBoxPreference mDualpane;
 
     private boolean mIsCrtOffChecked = false;
 
@@ -153,6 +157,9 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         mStatusBarHide = (CheckBoxPreference) findPreference(STATUSBAR_HIDDEN);
         mStatusBarHide.setChecked(Settings.System.getBoolean(mContentResolver,
                 Settings.System.STATUSBAR_HIDDEN, false));
+
+        mDualpane = (CheckBoxPreference) findPreference(PREF_FORCE_DUAL_PANEL);
+            mDualpane.setOnPreferenceChangeListener(this);
     }
 
     private CheckBoxPreference findAndInitCheckboxPref(String key) {
@@ -254,6 +261,11 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
             boolean checked = ((CheckBoxPreference)preference).isChecked();
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_HIDDEN, checked ? true : false);
+            return true;
+        } else if (preference == mDualpane) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.FORCE_DUAL_PANEL,
+                    ((CheckBoxPreference)preference).isChecked() ? 0 : 1);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);

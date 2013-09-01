@@ -1021,4 +1021,7 @@
     <string name="ribbon_toggles_button_title">Toggles button on bottom</string>
     <string name="ribbon_hide_ime_title">Keyboard swipe area hide.</string>
 
+   <!-- MultiPanel Views -->
+   <string name="multipane_ui">Enable/Disable Dual panel</string>
+   <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (Reboot Required!)</string>
 </resources>

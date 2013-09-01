@@ -129,6 +129,12 @@
             android:entryValues="@array/values_system_power_crt_mode"
             android:dependency="system_power_crt_screen_off" />
 
+        <CheckBoxPreference
+            android:key="force_dualpanel"
+            android:title="@string/multipane_ui"
+            android:summary="@string/multipane_ui_summary"
+            android:defaultValue="false" />
+
         <PreferenceScreen
             android:key="notification_pulse"
             android:title="@string/notification_pulse_title"
