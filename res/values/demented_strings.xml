@@ -30,6 +30,7 @@
     <string name="general_settings_title">General</string>
     <string name="notification_drawer_title">Notification Drawer</string>
     <string name="demented_navbar">Navbar / Ribbons</string>
+    <string name="status_bar_style_title">Status Bar Style</string>
 
     <!-- Addition security options -->
     <string name="additional_security_options_title">Additonal Security</string>
@@ -1077,4 +1078,15 @@
     <!-- MultiPanel Views -->
     <string name="multipane_ui">Enable/Disable Dual panel</string>
     <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (Reboot Required!)</string>
+
+    <!-- Status bar background style -->
+    <string name="status_bar_transparency_title">Status bar transparency</string>
+    <string name="status_bar_color_title">Status bar color</string>
+    <string name="status_bar_background_style">Background style</string>
+    <string name="status_bar_alpha_mode_dialog_text_title">Show status bar transparency</string>
+    <string name="status_bar_alpha_mode_text_title">Transparency mode</string>
+    <string name="status_bar_alpha_mode_home">on launcher</string>
+    <string name="status_bar_alpha_mode_default">on launcher and keyguard</string>
+    <string name="status_bar_alpha_mode_always">always</string>
+    <string name="status_bar_style_reset">Reset</string>
 </resources>
