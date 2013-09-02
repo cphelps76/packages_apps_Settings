@@ -1,23 +1,13 @@
-
 package com.android.settings.demented;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
-import android.app.ListFragment;
-import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
@@ -31,11 +21,9 @@ import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
@@ -45,38 +33,33 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.StateSet;
 import android.util.TypedValue;
-import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.settings.R;
 import com.android.internal.util.aokp.AwesomeConstants;
 import com.android.internal.util.aokp.AwesomeConstants.AwesomeConstant;
 import com.android.internal.util.aokp.BackgroundAlphaColorDrawable;
 import com.android.internal.util.aokp.NavBarHelpers;
-import com.android.settings.demented.DEMENTEDActivity;
-import com.android.settings.demented.DEMENTEDPreferenceFragment;
-import com.android.settings.demented.NavRingTargets;
+import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.R;
 import com.android.settings.demented.util.Helpers;
 import com.android.settings.demented.util.ShortcutPickerHelper;
 import com.android.settings.demented.widgets.SeekBarPreference;
-
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-public class Navbar extends DEMENTEDPreferenceFragment implements
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+
+public class Navbar extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener {
 
     // move these later
@@ -119,7 +102,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
     ListPreference mNavigationBarHeightLandscape;
     ListPreference mNavigationBarWidth;
     SeekBarPreference mButtonAlpha;
-	Preference mWidthHelp;
+    Preference mWidthHelp;
     SeekBarPreference mWidthPort;
     SeekBarPreference mWidthLand;
     CheckBoxPreference mMenuArrowKeysCheckBox;
@@ -132,7 +115,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
     // NavBar Buttons Stuff
     Resources mResources;
     private ImageView mLeftMenu, mRightMenu;
-    private ImageButton mResetButton, mAddButton,mSaveButton;
+    private ImageButton mResetButton, mAddButton, mSaveButton;
     private LinearLayout mNavBarContainer;
     private LinearLayout mNavButtonsContainer;
     private int mNumberofButtons = 0;
@@ -149,6 +132,9 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
     public static final float STOCK_ALPHA = .7f;
 
     private ShortcutPickerHelper mPicker;
+
+    Context mContext;
+    ContentResolver mContentRes;
 
     private static final String TAG = "NavBar";
 
@@ -170,26 +156,26 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
         mActionCodes = NavBarHelpers.getNavBarActions();
         mActions = new String[mActionCodes.length];
         int actionqty = mActions.length;
-                    for (int i = 0; i < actionqty; i++) {
+        for (int i = 0; i < actionqty; i++) {
             mActions[i] = AwesomeConstants.getProperName(mContext, mActionCodes[i]);
         }
 
         menuDisplayLocation = (ListPreference) findPreference(PREF_MENU_UNLOCK);
         menuDisplayLocation.setOnPreferenceChangeListener(this);
         menuDisplayLocation.setValue(Settings.System.getInt(mContentRes,
-                Settings.System.MENU_LOCATION,0) + "");
+                Settings.System.MENU_LOCATION, 0) + "");
 
         mNavBarMenuDisplay = (ListPreference) findPreference(PREF_NAVBAR_MENU_DISPLAY);
         mNavBarMenuDisplay.setOnPreferenceChangeListener(this);
         mNavBarMenuDisplay.setValue(Settings.System.getInt(mContentRes,
-                Settings.System.MENU_VISIBILITY,0) + "");
+                Settings.System.MENU_VISIBILITY, 0) + "");
 
         mNavBarHideEnable = (CheckBoxPreference) findPreference(NAVBAR_HIDE_ENABLE);
         mNavBarHideEnable.setChecked(Settings.System.getBoolean(mContentRes,
                 Settings.System.NAV_HIDE_ENABLE, false));
 
         final int defaultDragOpacity = Settings.System.getInt(mContentRes,
-                Settings.System.DRAG_HANDLE_OPACITY,50);
+                Settings.System.DRAG_HANDLE_OPACITY, 50);
         mDragHandleOpacity = (SeekBarPreference) findPreference(DRAG_HANDLE_OPACITY);
         mDragHandleOpacity.setInitValue((int) (defaultDragOpacity));
         mDragHandleOpacity.setOnPreferenceChangeListener(this);
@@ -228,7 +214,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
         mGlowTimes.setOnPreferenceChangeListener(this);
 
         final float defaultButtonAlpha = Settings.System.getFloat(mContentRes,
-                Settings.System.NAVIGATION_BAR_BUTTON_ALPHA,0.6f);
+                Settings.System.NAVIGATION_BAR_BUTTON_ALPHA, 0.6f);
         mButtonAlpha = (SeekBarPreference) findPreference("button_transparency");
         mButtonAlpha.setInitValue((int) (defaultButtonAlpha * 100));
         mButtonAlpha.setOnPreferenceChangeListener(this);
@@ -236,13 +222,13 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
         mWidthHelp = (Preference) findPreference("width_help");
 
         float defaultPort = Settings.System.getFloat(mContentRes,
-                Settings.System.NAVIGATION_BAR_WIDTH_PORT,0f);
+                Settings.System.NAVIGATION_BAR_WIDTH_PORT, 0f);
         mWidthPort = (SeekBarPreference) findPreference("width_port");
         mWidthPort.setInitValue((int) (defaultPort * 2.5f));
         mWidthPort.setOnPreferenceChangeListener(this);
 
         float defaultLand = Settings.System.getFloat(mContentRes,
-                Settings.System.NAVIGATION_BAR_WIDTH_LAND,0f);
+                Settings.System.NAVIGATION_BAR_WIDTH_LAND, 0f);
         mWidthLand = (SeekBarPreference) findPreference("width_land");
         mWidthLand.setInitValue((int) (defaultLand * 2.5f));
         mWidthLand.setOnPreferenceChangeListener(this);
@@ -250,7 +236,8 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
         mNavigationBarHeight = (ListPreference) findPreference("navigation_bar_height");
         mNavigationBarHeight.setOnPreferenceChangeListener(this);
 
-        mNavigationBarHeightLandscape = (ListPreference) findPreference("navigation_bar_height_landscape");
+        mNavigationBarHeightLandscape =
+                (ListPreference) findPreference("navigation_bar_height_landscape");
         mNavigationBarHeightLandscape.setOnPreferenceChangeListener(this);
 
         mNavigationBarWidth = (ListPreference) findPreference("navigation_bar_width");
@@ -266,21 +253,20 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
             prefs.removePreference(mEnableNavigationBar);
         }
         PreferenceGroup pg = (PreferenceGroup) prefs.findPreference("advanced_cat");
-        if (isTablet(mContext)) {
+        if (isTabletUI(mContext)) {
             mNavigationBarHeight.setTitle(R.string.system_bar_height_title);
             mNavigationBarHeight.setSummary(R.string.system_bar_height_summary);
             mNavigationBarHeightLandscape.setTitle(R.string.system_bar_height_landscape_title);
             mNavigationBarHeightLandscape.setSummary(R.string.system_bar_height_landscape_summary);
             pg.removePreference(mNavigationBarWidth);
-            mNavBarHideEnable.setEnabled(false);
-            mDragHandleOpacity.setEnabled(false);
-            mDragHandleWidth.setEnabled(false);
-            mNavBarHideTimeout.setEnabled(false);
+            mNavBarHideEnable.setTitle(R.string.systembar_hide_enable_title);
+            mNavBarHideTimeout.setTitle(R.string.title_systembar_timeout);
+            mNavBarHideTimeout.setSummary(R.string.summary_systembar_timeout);
         } else { // Phones&Phablets don't have SystemBar
             pg.removePreference(mWidthPort);
             pg.removePreference(mWidthLand);
             pg.removePreference(mWidthHelp);
-            if (isPhablet(mContext)) { // Phablets don't have NavBar onside
+            if (isPhabletUI(mContext)) { // Phablets don't have NavBar onside
                 pg.removePreference(mNavigationBarWidth);
             } else {
                 pg.removePreference(mNavigationBarHeightLandscape);
@@ -297,28 +283,29 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedinstanceState){
-       View ll = inflater.inflate(R.layout.navbar, container, false);
-       mResetButton = (ImageButton) ll.findViewById(R.id.reset_button);
-       mResetButton.setOnClickListener(mCommandButtons);
-       mAddButton = (ImageButton) ll.findViewById(R.id.add_button);
-       mAddButton.setOnClickListener(mCommandButtons);
-       mSaveButton = (ImageButton) ll.findViewById(R.id.save_button);
-       mSaveButton.setOnClickListener(mCommandButtons);
-       mLeftMenu = (ImageView) ll.findViewById(R.id.left_menu);
-       mNavBarContainer = (LinearLayout) ll.findViewById(R.id.navbar_container);
-       mNavButtonsContainer = (LinearLayout) ll.findViewById(R.id.button_container);
-       mButtonViews.clear();
-       for (int i = 0; i < mNavButtonsContainer.getChildCount(); i++) {
-           ImageButton ib = (ImageButton) mNavButtonsContainer.getChildAt(i);
-           mButtonViews.add(ib);
-       }
-       mRightMenu = (ImageView) ll.findViewById(R.id.right_menu);
-       if (mButtons.size() == 0){
-           loadButtons();
-       }
-       refreshButtons();
-       return ll;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedinstanceState) {
+        View ll = inflater.inflate(R.layout.navbar, container, false);
+        mResetButton = (ImageButton) ll.findViewById(R.id.reset_button);
+        mResetButton.setOnClickListener(mCommandButtons);
+        mAddButton = (ImageButton) ll.findViewById(R.id.add_button);
+        mAddButton.setOnClickListener(mCommandButtons);
+        mSaveButton = (ImageButton) ll.findViewById(R.id.save_button);
+        mSaveButton.setOnClickListener(mCommandButtons);
+        mLeftMenu = (ImageView) ll.findViewById(R.id.left_menu);
+        mNavBarContainer = (LinearLayout) ll.findViewById(R.id.navbar_container);
+        mNavButtonsContainer = (LinearLayout) ll.findViewById(R.id.button_container);
+        mButtonViews.clear();
+        for (int i = 0; i < mNavButtonsContainer.getChildCount(); i++) {
+            ImageButton ib = (ImageButton) mNavButtonsContainer.getChildAt(i);
+            mButtonViews.add(ib);
+        }
+        mRightMenu = (ImageView) ll.findViewById(R.id.right_menu);
+        if (mButtons.size() == 0) {
+            loadButtons();
+        }
+        refreshButtons();
+        return ll;
     }
 
     @Override
@@ -370,7 +357,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
-            Preference preference) {
+                                         Preference preference) {
         if (preference == mEnableNavigationBar) {
 
             Settings.System.putInt(mContentRes,
@@ -386,10 +373,11 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
             Settings.System.putBoolean(mContentRes,
                     Settings.System.NAV_HIDE_ENABLE,
                     ((CheckBoxPreference) preference).isChecked());
-            mDragHandleOpacity.setInitValue(Settings.System.getInt(getActivity().getContentResolver(),
-                    Settings.System.DRAG_HANDLE_OPACITY,50));
+            mDragHandleOpacity
+                    .setInitValue(Settings.System.getInt(getActivity().getContentResolver(),
+                            Settings.System.DRAG_HANDLE_OPACITY, 50));
             mDragHandleWidth.setInitValue(Settings.System.getInt(getActivity().getContentResolver(),
-                    Settings.System.DRAG_HANDLE_WEIGHT,5));
+                    Settings.System.DRAG_HANDLE_WEIGHT, 5));
             mNavBarHideTimeout.setValue(Settings.System.getInt(getActivity().getContentResolver(),
                     Settings.System.NAV_HIDE_TIMEOUT, 3000) + "");
             refreshSettings();
@@ -498,7 +486,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
                     val * 0.01f);
             refreshSettings();
             return true;
-       } else if (preference == mDragHandleOpacity) {
+        } else if (preference == mDragHandleOpacity) {
             String newVal = (String) newValue;
             int op = Integer.parseInt(newVal);
             Settings.System.putInt(mContentRes,
@@ -580,11 +568,9 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
 
     public void refreshSettings() {
         refreshButtons();
-        if (!isTablet(mContext)) {
-            mDragHandleOpacity.setEnabled(mNavBarHideEnable.isChecked());
-            mDragHandleWidth.setEnabled(mNavBarHideEnable.isChecked());
-            mNavBarHideTimeout.setEnabled(mNavBarHideEnable.isChecked());
-        }
+        mDragHandleOpacity.setEnabled(mNavBarHideEnable.isChecked());
+        mDragHandleWidth.setEnabled(mNavBarHideEnable.isChecked());
+        mNavBarHideTimeout.setEnabled(mNavBarHideEnable.isChecked());
     }
 
     private Uri getTempFileUri() {
@@ -613,8 +599,8 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
         }
     };
 
-    private void loadButtons(){
-        mNumberofButtons =  Settings.System.getInt(mContentRes,
+    private void loadButtons() {
+        mNumberofButtons = Settings.System.getInt(mContentRes,
                 Settings.System.NAVIGATION_BAR_BUTTONS_QTY, 3);
         mButtons.clear();
         for (int i = 0; i < mNumberofButtons; i++) {
@@ -649,7 +635,8 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
             BarAlpha = Float.parseFloat(alphas[0]) / 255;
         }
         int a = Math.round(BarAlpha * 255);
-        Drawable mBackground = AwesomeConstants.getSystemUIDrawable(mContext, "com.android.systemui:drawable/nav_bar_bg");
+        Drawable mBackground = AwesomeConstants
+                .getSystemUIDrawable(mContext, "com.android.systemui:drawable/nav_bar_bg");
         if (mBackground instanceof ColorDrawable) {
             BackgroundAlphaColorDrawable bacd = new BackgroundAlphaColorDrawable(
                     navBarColor > 0 ? navBarColor : ((ColorDrawable) mBackground).getColor());
@@ -670,11 +657,11 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
             ib.setVisibility(View.VISIBLE);
             ib.setAlpha(navButtonAlpha);
             StateListDrawable sld = new StateListDrawable();
-            sld.addState(new int[] { android.R.attr.state_pressed }, new ColorDrawable(glowColor));
+            sld.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(glowColor));
             sld.addState(StateSet.WILD_CARD, mNavBarContainer.getBackground());
             ib.setBackground(sld);
         }
-        for (int i = mNumberofButtons; i < mButtonViews.size(); i++){
+        for (int i = mNumberofButtons; i < mButtonViews.size(); i++) {
             ImageButton ib = mButtonViews.get(i);
             ib.setVisibility(View.GONE);
         }
@@ -704,15 +691,16 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
         }
     }
 
-    private void saveButtons(){
-        Settings.System.putInt(mContentRes,Settings.System.NAVIGATION_BAR_BUTTONS_QTY,
+    private void saveButtons() {
+        Settings.System.putInt(mContentRes, Settings.System.NAVIGATION_BAR_BUTTONS_QTY,
                 mNumberofButtons);
         for (int i = 0; i < mNumberofButtons; i++) {
             NavBarButton button = mButtons.get(i);
             Settings.System.putString(mContentRes, Settings.System.NAVIGATION_CUSTOM_ACTIVITIES[i],
                     button.getClickAction());
-            Settings.System.putString(mContentRes, Settings.System.NAVIGATION_LONGPRESS_ACTIVITIES[i],
-                    button.getLongAction());
+            Settings.System
+                    .putString(mContentRes, Settings.System.NAVIGATION_LONGPRESS_ACTIVITIES[i],
+                            button.getLongAction());
             Settings.System.putString(mContentRes, Settings.System.NAVIGATION_CUSTOM_APP_ICONS[i],
                     button.getIconURI());
         }
@@ -724,19 +712,19 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
             public void onClick(DialogInterface dialog, int item) {
                 onDialogClick(button, item);
                 dialog.dismiss();
-                }
-            };
+            }
+        };
 
         String action = mResources.getString(R.string.navbar_actiontitle_menu);
         action = String.format(action, button.getClickName());
         String longpress = mResources.getString(R.string.navbar_longpress_menu);
         longpress = String.format(longpress, button.getLongName());
-        String[] items = {action,longpress,
+        String[] items = {action, longpress,
                 mResources.getString(R.string.navbar_icon_menu),
                 mResources.getString(R.string.navbar_delete_menu)};
         final AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(mResources.getString(R.string.navbar_title_menu))
-                .setItems(mActions, l)
+                .setItems(items, l)
                 .create();
 
         dialog.show();
@@ -748,8 +736,8 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
             public void onClick(DialogInterface dialog, int item) {
                 onActionDialogClick(button, item);
                 dialog.dismiss();
-                }
-            };
+            }
+        };
 
         final AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(mResources.getString(R.string.navbar_title_menu))
@@ -759,7 +747,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
         dialog.show();
     }
 
-    private void onDialogClick(NavBarButton button, int command){
+    private void onDialogClick(NavBarButton button, int command) {
         switch (command) {
             case 0: // Set Click Action
                 button.setPickLongPress(false);
@@ -783,7 +771,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempFileUri());
                 intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
                 Log.i(TAG, "started for result, should output to: " + getTempFileUri());
-                startActivityForResult(intent,REQUEST_PICK_CUSTOM_ICON);
+                startActivityForResult(intent, REQUEST_PICK_CUSTOM_ICON);
                 break;
             case 3: // Delete Button
                 mButtons.remove(mPendingButton);
@@ -793,10 +781,10 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
         refreshButtons();
     }
 
-    private void onActionDialogClick(NavBarButton button, int command){
-        if (command == mActions.length -1) {
+    private void onActionDialogClick(NavBarButton button, int command) {
+        if (command == mActions.length - 1) {
             // This is the last action - should be **app**
-                mPicker.pickShortcut();
+            mPicker.pickShortcut();
         } else { // This should be any other defined action.
             if (button.getPickLongPress()) {
                 button.setLongPress(mActionCodes[command]);
@@ -818,7 +806,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
                     break;
                 case R.id.add_button:
                     if (mNumberofButtons < 7) { // Maximum buttons is 7
-                        mButtons.add(new NavBarButton("**null**","**null**",""));
+                        mButtons.add(new NavBarButton("**null**", "**null**", ""));
                         mNumberofButtons++;
                     }
                     break;
@@ -833,16 +821,18 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
     private Drawable setIcon(String uri, String action) {
         if (uri != null && uri.length() > 0) {
             File f = new File(Uri.parse(uri).getPath());
-            if (f.exists())
+            if (f.exists()) {
                 return resize(new BitmapDrawable(mResources, f.getAbsolutePath()));
+            }
         }
         if (uri != null && !uri.equals("")
                 && uri.startsWith("file")) {
             // it's an icon the user chose from the gallery here
             File icon = new File(Uri.parse(uri).getPath());
-            if (icon.exists())
+            if (icon.exists()) {
                 return resize(new BitmapDrawable(mResources, icon
                         .getAbsolutePath()));
+            }
 
         } else if (uri != null && !uri.equals("")) {
             // here they chose another app icon
@@ -859,8 +849,9 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
     }
 
     private Drawable getNavbarIconImage(String uri) {
-        if (uri == null)
+        if (uri == null) {
             uri = AwesomeConstant.ACTION_NULL.value();
+        }
         if (uri.startsWith("**")) {
             return AwesomeConstants.getActionIcon(mContext, uri);
         } else {
@@ -902,7 +893,7 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(TAG, "RequestCode:"+resultCode);
+        Log.i(TAG, "RequestCode:" + resultCode);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT
                     || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION
@@ -928,11 +919,12 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
                     return;
                 }
                 mButtons.get(mPendingButton).setIconURI(Uri.fromFile(
-                                new File(mContext.getFilesDir(), iconName)).getPath());
+                        new File(mContext.getFilesDir(), iconName)).getPath());
 
                 File f = new File(selectedImageUri.getPath());
-                if (f.exists())
+                if (f.exists()) {
                     f.delete();
+                }
                 refreshButtons();
             }
         }
@@ -940,8 +932,9 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
     }
 
     private String getProperSummary(String uri) {
-        if (uri == null)
+        if (uri == null) {
             return AwesomeConstants.getProperName(mContext, "**null**");
+        }
         if (uri.startsWith("**")) {
             return AwesomeConstants.getProperName(mContext, uri);
         } else {
@@ -972,13 +965,13 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
         Drawable mIcon;
         boolean mPickingLongPress;
 
-        public NavBarButton(String clickaction, String longpress, String iconuri ) {
+        public NavBarButton(String clickaction, String longpress, String iconuri) {
             mClickAction = clickaction;
             mLongPressAction = longpress;
             mIconURI = iconuri;
             mClickFriendlyName = getProperSummary(mClickAction);
-            mLongPressFriendlyName = getProperSummary (mLongPressAction);
-            mIcon = setIcon(mIconURI,mClickAction);
+            mLongPressFriendlyName = getProperSummary(mLongPressAction);
+            mIcon = setIcon(mIconURI, mClickAction);
         }
 
         public void setClickAction(String click) {
@@ -986,38 +979,47 @@ public class Navbar extends DEMENTEDPreferenceFragment implements
             mClickFriendlyName = getProperSummary(mClickAction);
             // ClickAction was reset - so we should default to stock Icon for now
             mIconURI = "";
-            mIcon = setIcon(mIconURI,mClickAction);
+            mIcon = setIcon(mIconURI, mClickAction);
         }
 
         public void setLongPress(String action) {
             mLongPressAction = action;
-            mLongPressFriendlyName = getProperSummary (mLongPressAction);
+            mLongPressFriendlyName = getProperSummary(mLongPressAction);
         }
+
         public void setPickLongPress(boolean pick) {
             mPickingLongPress = pick;
         }
+
         public boolean getPickLongPress() {
             return mPickingLongPress;
         }
-        public void setIconURI (String uri) {
+
+        public void setIconURI(String uri) {
             mIconURI = uri;
-            mIcon = setIcon(mIconURI,mClickAction);
+            mIcon = setIcon(mIconURI, mClickAction);
         }
+
         public String getClickName() {
             return mClickFriendlyName;
         }
+
         public String getLongName() {
             return mLongPressFriendlyName;
         }
+
         public Drawable getIcon() {
             return mIcon;
         }
+
         public String getClickAction() {
             return mClickAction;
         }
+
         public String getLongAction() {
             return mLongPressAction;
         }
+
         public String getIconURI() {
             return mIconURI;
         }

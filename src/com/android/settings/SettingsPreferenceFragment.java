@@ -26,10 +26,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,6 +52,8 @@ public class SettingsPreferenceFragment extends PreferenceFragment implements Di
 
     private String mHelpUrl;
 
+    protected boolean hasVibration = false;
+
     // Cache the content resolver for async callbacks
     private ContentResolver mContentResolver;
 
@@ -61,6 +66,11 @@ public class SettingsPreferenceFragment extends PreferenceFragment implements Di
         if (helpResource != 0) {
             mHelpUrl = getResources().getString(helpResource);
         }
+
+        Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (mVibrator != null && mVibrator.hasVibrator()) {
+            hasVibration = true;
+        }
     }
 
     @Override
@@ -69,6 +79,27 @@ public class SettingsPreferenceFragment extends PreferenceFragment implements Di
         if (!TextUtils.isEmpty(mHelpUrl)) {
             setHasOptionsMenu(true);
         }
+    }
+
+    public void setTitle(int resId) {
+        getActivity().setTitle(resId);
+    }
+
+    public static boolean isSW600DPScreen(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int widthPixels = displayMetrics.widthPixels;
+        float density = displayMetrics.density;
+        return ((widthPixels / density) >= 600);
+    }
+
+    public static boolean isTabletUI(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.CURRENT_UI_MODE, 0) == 1;
+    }
+
+    public static boolean isPhabletUI(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.CURRENT_UI_MODE, 0) == 2;
     }
 
     protected void removePreference(String key) {

@@ -31,7 +31,7 @@ import android.widget.TextView;
 
 import com.android.internal.util.aokp.NavBarHelpers;
 import com.android.settings.R;
-import com.android.settings.demented.DEMENTEDPreferenceFragment;
+import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.demented.DEMENTEDActivity;
 import com.google.android.apps.dashclock.ui.SwipeDismissListViewTouchListener;
 import com.mobeta.android.dslv.DragSortController;

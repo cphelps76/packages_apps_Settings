@@ -26,7 +26,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.settings.R;
-import com.android.settings.demented.DEMENTEDPreferenceFragment;
+import com.android.settings.SettingsPreferenceFragment;
 import com.google.android.apps.dashclock.ui.SwipeDismissListViewTouchListener;
 import com.mobeta.android.dslv.DragSortController;
 import com.mobeta.android.dslv.DragSortListView;

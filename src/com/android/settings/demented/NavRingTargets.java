@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 Android Open Kang Project
+ * Copyright (C) 2013 The Cyanogenmod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +19,12 @@ package com.android.settings.demented;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Intent.ShortcutIconResource;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,33 +34,40 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.UserHandle;
-import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-
-import static com.android.internal.util.aokp.AwesomeConstants.*;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.Toast;
+import com.android.internal.util.aokp.AwesomeConstants;
 import com.android.internal.util.aokp.NavRingHelpers;
 import com.android.internal.widget.multiwaveview.GlowPadView;
 import com.android.internal.widget.multiwaveview.TargetDrawable;
 import com.android.settings.R;
 import com.android.settings.demented.util.ShortcutPickerHelper;
-import com.android.settings.demented.util.Helpers;
-import com.android.settings.demented.DEMENTEDPreferenceFragment;
-import com.android.settings.demented.DEMENTEDActivity;
+import com.android.settings.SettingsPreferenceFragment;
 
-import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.net.URISyntaxException;
-import java.lang.NumberFormatException;
+import java.util.ArrayList;
 
-public class NavRingTargets extends DEMENTEDPreferenceFragment implements
+import static com.android.internal.util.aokp.AwesomeConstants.ASSIST_ICON_METADATA_NAME;
+import static com.android.internal.util.aokp.AwesomeConstants.AwesomeConstant;
+
+public class NavRingTargets extends SettingsPreferenceFragment implements
         ShortcutPickerHelper.OnPickListener, GlowPadView.OnTriggerListener {
     private static final String TAG = "NavRing";
     private static final boolean DEBUG = false;
@@ -83,6 +89,9 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
     private String[] customIcons = new String[5];
     private ViewGroup mContainer;
 
+    private String[] mActions;
+    private String[] mActionCodes;
+
     private int mTargetIndex = 0;
     private int startPosOffset;
     private int endPosOffset;
@@ -94,17 +103,45 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
 
 
     public static enum DialogConstant {
-        ICON_ACTION  { @Override public String value() { return "**icon**";}},
-        LONG_ACTION  { @Override public String value() { return "**long**";}},
-        SHORT_ACTION { @Override public String value() { return "**short**";}},
-        CUSTOM_APP   { @Override public String value() { return "**app**";}},
-        NOT_IN_ENUM  { @Override public String value() { return "**notinenum**";}};
-        public String value() { return this.value(); }
+        ICON_ACTION {
+            @Override
+            public String value() {
+                return "**icon**";
+            }
+        },
+        LONG_ACTION {
+            @Override
+            public String value() {
+                return "**long**";
+            }
+        },
+        SHORT_ACTION {
+            @Override
+            public String value() {
+                return "**short**";
+            }
+        },
+        CUSTOM_APP {
+            @Override
+            public String value() {
+                return "**app**";
+            }
+        },
+        NOT_IN_ENUM {
+            @Override
+            public String value() {
+                return "**notinenum**";
+            }
+        };
+
+        public String value() {
+            return this.value();
+        }
     }
 
     public static DialogConstant funcFromString(String string) {
         DialogConstant[] allTargs = DialogConstant.values();
-        for (int i=0; i < allTargs.length; i++) {
+        for (int i = 0; i < allTargs.length; i++) {
             if (string.equals(allTargs[i].value())) {
                 return allTargs[i];
             }
@@ -123,11 +160,19 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         mContainer = container;
         setHasOptionsMenu(true);
         mContext = getActivity();
         cr = mContext.getContentResolver();
+
+        // Get NavRing Actions
+        mActionCodes = NavRingHelpers.getNavRingActions();
+        mActions = new String[mActionCodes.length];
+        int actionqty = mActions.length;
+        for (int i = 0; i < actionqty; i++) {
+            mActions[i] = AwesomeConstants.getProperName(mContext, mActionCodes[i]);
+        }
 
         mPicker = new ShortcutPickerHelper(this, this);
         boolean tabletui = Settings.System.getInt(cr, Settings.System.CURRENT_UI_MODE, 0) == 1;
@@ -152,7 +197,7 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
                 getActivity(), android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         final String[] entries = getResources().getStringArray(R.array.pref_navring_amount_entries);
-        for (int i = 0; i < entries.length ; i++) {
+        for (int i = 0; i < entries.length; i++) {
             spinnerAdapter.add(entries[i]);
         }
         mTargetNumAmount.setAdapter(spinnerAdapter);
@@ -166,7 +211,8 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
         mLongPressStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton v, boolean checked) {
-                Settings.System.putBoolean(cr, Settings.System.SYSTEMUI_NAVRING_LONG_ENABLE, checked);
+                Settings.System
+                        .putBoolean(cr, Settings.System.SYSTEMUI_NAVRING_LONG_ENABLE, checked);
                 updateDrawables();
             }
         });
@@ -175,11 +221,13 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
 
     public class AmountListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            final String[] values = getResources().getStringArray(R.array.pref_navring_amount_values);
+            final String[] values =
+                    getResources().getStringArray(R.array.pref_navring_amount_values);
             int val = Integer.parseInt((String) values[pos]);
             Settings.System.putInt(cr, Settings.System.SYSTEMUI_NAVRING_AMOUNT, val);
             updateDrawables();
         }
+
         public void onNothingSelected(AdapterView<?> parent) {
             // Do nothing.
         }
@@ -199,45 +247,46 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
         int middleBlanks = 0;
 
         switch (mCurrentUIMode) {
-            case 0 : // Phone Mode
+            case 0: // Phone Mode
                 if (isScreenPortrait()) { // NavRing on Bottom
-                    startPosOffset =  1;
-                    endPosOffset =  (mNavRingAmount) + 1;
-                } else if (mLefty) { // either lefty or... (Ring is actually on right side of screen)
-                        startPosOffset =  1 - (mNavRingAmount % 2);
-                        middleBlanks = mNavRingAmount + 2;
-                        endPosOffset = 0;
+                    startPosOffset = 1;
+                    endPosOffset = (mNavRingAmount) + 1;
+                } else if (mLefty) { // either lefty or... (Ring is actually on right side of
+                // screen)
+                    startPosOffset = 1 - (mNavRingAmount % 2);
+                    middleBlanks = mNavRingAmount + 2;
+                    endPosOffset = 0;
 
                 } else { // righty... (Ring actually on left side of tablet)
-                    startPosOffset =  (Math.min(1,mNavRingAmount / 2)) + 2;
-                    endPosOffset =  startPosOffset - 1;
+                    startPosOffset = (Math.min(1, mNavRingAmount / 2)) + 2;
+                    endPosOffset = startPosOffset - 1;
                 }
                 break;
-            case 1 : // Tablet Mode
+            case 1: // Tablet Mode
                 if (mLefty) { // either lefty or... (Ring is actually on right side of screen)
-                    startPosOffset =  (mNavRingAmount) + 1;
-                    endPosOffset =  (mNavRingAmount *2) + 1;
+                    startPosOffset = (mNavRingAmount) + 1;
+                    endPosOffset = (mNavRingAmount * 2) + 1;
                 } else { // righty... (Ring actually on left side of tablet)
-                    startPosOffset =  1;
+                    startPosOffset = 1;
                     endPosOffset = (mNavRingAmount * 3) + 1;
                 }
                 break;
-            case 2 : // Phablet Mode - Search Ring stays at bottom
-                startPosOffset =  1;
-                endPosOffset =  (mNavRingAmount) + 1;
+            case 2: // Phablet Mode - Search Ring stays at bottom
+                startPosOffset = 1;
+                endPosOffset = (mNavRingAmount) + 1;
                 break;
-         }
+        }
 
-         int middleStart = mNavRingAmount;
-         int tqty = middleStart;
-         int middleFinish = 0;
+        int middleStart = mNavRingAmount;
+        int tqty = middleStart;
+        int middleFinish = 0;
 
-         if (middleBlanks > 0) {
-             middleStart = (tqty/2) + (tqty%2);
-             middleFinish = (tqty/2);
-         }
+        if (middleBlanks > 0) {
+            middleStart = (tqty / 2) + (tqty % 2);
+            middleFinish = (tqty / 2);
+        }
 
-         // Add Initial Place Holder Targets
+        // Add Initial Place Holder Targets
         for (int i = 0; i < startPosOffset; i++) {
             intentList.add(-1);
             storedDraw.add(NavRingHelpers.getTargetDrawable(context, null));
@@ -295,15 +344,15 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.add(0, MENU_RESET, 0, R.string.profile_reset_title)
-            .setIcon(R.drawable.ic_settings_backup)
-            .setAlphabeticShortcut('r')
-            .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
-                MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+                .setIcon(R.drawable.ic_settings_backup)
+                .setAlphabeticShortcut('r')
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
+                        MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         menu.add(0, MENU_SAVE, 0, R.string.wifi_save)
-            .setIcon(R.drawable.ic_menu_save)
-            .setAlphabeticShortcut('s')
-            .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
-                MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+                .setIcon(R.drawable.ic_menu_save)
+                .setAlphabeticShortcut('s')
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
+                        MenuItem.SHOW_AS_ACTION_WITH_TEXT);
     }
 
     @Override
@@ -314,7 +363,8 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
                 return true;
             case MENU_SAVE:
                 saveAll();
-                Toast.makeText(getActivity(), R.string.navring_target_save, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.navring_target_save, Toast.LENGTH_LONG)
+                        .show();
                 return true;
             default:
                 return false;
@@ -334,15 +384,16 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
                     public void onClick(DialogInterface dialog, int id) {
                         for (int i = 0; i < 5; i++) {
                             Settings.System.putString(cr,
-                                Settings.System.SYSTEMUI_NAVRING[i], null);
+                                    Settings.System.SYSTEMUI_NAVRING[i], null);
                             Settings.System.putString(cr,
-                                Settings.System.SYSTEMUI_NAVRING_LONG[i], null);
+                                    Settings.System.SYSTEMUI_NAVRING_LONG[i], null);
                             Settings.System.putString(cr,
-                                Settings.System.SYSTEMUI_NAVRING_ICON[i], null);
+                                    Settings.System.SYSTEMUI_NAVRING_ICON[i], null);
 
                         }
                         Settings.System.putString(cr,
-                                Settings.System.SYSTEMUI_NAVRING[0], AwesomeConstant.ACTION_ASSIST.value());
+                                Settings.System.SYSTEMUI_NAVRING[0],
+                                AwesomeConstant.ACTION_ASSIST.value());
                         Settings.System.putInt(cr,
                                 Settings.System.SYSTEMUI_NAVRING_AMOUNT, 1);
                         updateDrawables();
@@ -380,13 +431,13 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
                 break;
             case 1:
                 longActivities[mTargetIndex] = uri;
-                Toast.makeText(getActivity(), getProperSummary(uri) + "  "
-                     + getResources().getString(R.string.action_long_save),
-                               Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), AwesomeConstants.getProperName(mContext, uri) + "  "
+                        + getResources().getString(R.string.action_long_save),
+                        Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;
-            }
+        }
 
         setDrawables();
     }
@@ -419,17 +470,19 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
                     super.onActivityResult(requestCode, resultCode, data);
                     return;
                 }
-                customIcons[mTargetIndex] = Uri.fromFile(new File(mContext.getFilesDir(), iconName)).getPath();
+                customIcons[mTargetIndex] =
+                        Uri.fromFile(new File(mContext.getFilesDir(), iconName)).getPath();
 
                 File f = new File(selectedImageUri.getPath());
-                if (f.exists())
+                if (f.exists()) {
                     f.delete();
+                }
 
                 Toast.makeText(
                         getActivity(),
                         mTargetIndex
                                 + getResources().getString(
-                                        R.string.custom_app_icon_successfully),
+                                R.string.custom_app_icon_successfully),
                         Toast.LENGTH_LONG).show();
                 setDrawables();
             }
@@ -441,11 +494,15 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
 
     public void updateDrawables() {
         for (int i = 0; i < 5; i++) {
-             targetActivities[i] = Settings.System.getString(cr, Settings.System.SYSTEMUI_NAVRING[i]);
-             longActivities[i] = Settings.System.getString(cr, Settings.System.SYSTEMUI_NAVRING_LONG[i]);
-             customIcons[i] = Settings.System.getString(cr, Settings.System.SYSTEMUI_NAVRING_ICON[i]);
+            targetActivities[i] =
+                    Settings.System.getString(cr, Settings.System.SYSTEMUI_NAVRING[i]);
+            longActivities[i] =
+                    Settings.System.getString(cr, Settings.System.SYSTEMUI_NAVRING_LONG[i]);
+            customIcons[i] =
+                    Settings.System.getString(cr, Settings.System.SYSTEMUI_NAVRING_ICON[i]);
         }
-        mBoolLongPress = (Settings.System.getBoolean(cr, Settings.System.SYSTEMUI_NAVRING_LONG_ENABLE, false));
+        mBoolLongPress = (Settings.System
+                .getBoolean(cr, Settings.System.SYSTEMUI_NAVRING_LONG_ENABLE, false));
 
         mNavRingAmount = Settings.System.getInt(cr, Settings.System.SYSTEMUI_NAVRING_AMOUNT, 1);
         // Not using getBoolean here, because CURRENT_UI_MODE can be 0,1 or 2
@@ -456,57 +513,55 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
     public void onValueChange(String uri) {
         DialogConstant mFromString = funcFromString(uri);
         switch (mFromString) {
-        case CUSTOM_APP:
-            mPicker.pickShortcut();
-            break;
-        case SHORT_ACTION:
-            mTarget = 0;
-            mString = Settings.System.SYSTEMUI_NAVRING[mTargetIndex];
-            createDialog(
-                getResources().getString(R.string.choose_action_short_title),
-                getResources().getStringArray(R.array.navring_dialog_entries),
-                getResources().getStringArray(R.array.navring_dialog_values));
-            break;
-        case LONG_ACTION:
-            mTarget = 1;
-            mString = Settings.System.SYSTEMUI_NAVRING_LONG[mTargetIndex];
-            createDialog(
-                getResources().getString(R.string.choose_action_long_title),
-                getResources().getStringArray(R.array.navring_dialog_entries),
-                getResources().getStringArray(R.array.navring_dialog_values));
-            break;
-        case ICON_ACTION:
-            int width = 85;
-            int height = width;
+            case CUSTOM_APP:
+                mPicker.pickShortcut();
+                break;
+            case SHORT_ACTION:
+                mTarget = 0;
+                mString = Settings.System.SYSTEMUI_NAVRING[mTargetIndex];
+                createDialog(
+                        getResources().getString(R.string.choose_action_short_title),
+                        mActions, mActionCodes);
+                break;
+            case LONG_ACTION:
+                mTarget = 1;
+                mString = Settings.System.SYSTEMUI_NAVRING_LONG[mTargetIndex];
+                createDialog(
+                        getResources().getString(R.string.choose_action_long_title),
+                        mActions, mActionCodes);
+                break;
+            case ICON_ACTION:
+                int width = 85;
+                int height = width;
 
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-            intent.setType("image/*");
-            intent.putExtra("crop", "true");
-            intent.putExtra("aspectX", width);
-            intent.putExtra("aspectY", height);
-            intent.putExtra("outputX", width);
-            intent.putExtra("outputY", height);
-            intent.putExtra("scale", true);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempFileUri());
-            intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
-            Log.i(TAG, "started for result, should output to: " + getTempFileUri());
-            startActivityForResult(intent, REQUEST_PICK_CUSTOM_ICON);
-            break;
-        case NOT_IN_ENUM:
-            switch (mTarget) {
-                case 0:
-                    targetActivities[mTargetIndex] = uri;
-                    break;
-                case 1:
-                    longActivities[mTargetIndex] = uri;
-                    Toast.makeText(getActivity(), getProperSummary(uri)
-                         + "  " + getResources().getString(R.string.action_long_save),
-                             Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    break;
-            }
-            break;
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                intent.setType("image/*");
+                intent.putExtra("crop", "true");
+                intent.putExtra("aspectX", width);
+                intent.putExtra("aspectY", height);
+                intent.putExtra("outputX", width);
+                intent.putExtra("outputY", height);
+                intent.putExtra("scale", true);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempFileUri());
+                intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
+                Log.i(TAG, "started for result, should output to: " + getTempFileUri());
+                startActivityForResult(intent, REQUEST_PICK_CUSTOM_ICON);
+                break;
+            case NOT_IN_ENUM:
+                switch (mTarget) {
+                    case 0:
+                        targetActivities[mTargetIndex] = uri;
+                        break;
+                    case 1:
+                        longActivities[mTargetIndex] = uri;
+                        Toast.makeText(getActivity(), AwesomeConstants.getProperName(mContext, uri)
+                                + "  " + getResources().getString(R.string.action_long_save),
+                                Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
+                }
+                break;
 
         }
         setDrawables();
@@ -516,18 +571,23 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
     public void onTrigger(View v, final int target) {
         mTargetIndex = intentList.get(target);
         if (mBoolLongPress) {
-            final String[] stringArray = mContext.getResources().getStringArray(R.array.navring_long_dialog_entries);
-            stringArray[0] = stringArray[0] + "  :  " + getProperSummary(targetActivities[mTargetIndex]);
-            stringArray[1] = stringArray[1] + "  :  " + getProperSummary(longActivities[mTargetIndex]);
+            final String[] stringArray =
+                    mContext.getResources().getStringArray(R.array.navring_long_dialog_entries);
+            stringArray[0] = stringArray[0] + "  :  " +
+                    AwesomeConstants.getProperName(mContext, targetActivities[mTargetIndex]);
+            stringArray[1] = stringArray[1] + "  :  " +
+                    AwesomeConstants.getProperName(mContext, longActivities[mTargetIndex]);
             createDialog(
-                getResources().getString(R.string.choose_action_title), stringArray,
-                getResources().getStringArray(R.array.navring_long_dialog_values));
+                    getResources().getString(R.string.choose_action_title), stringArray,
+                    getResources().getStringArray(R.array.navring_long_dialog_values));
         } else {
-            final String[] stringArray = mContext.getResources().getStringArray(R.array.navring_short_dialog_entries);
-            stringArray[0] = stringArray[0] + "  :  " + getProperSummary(targetActivities[mTargetIndex]);
+            final String[] stringArray =
+                    mContext.getResources().getStringArray(R.array.navring_short_dialog_entries);
+            stringArray[0] = stringArray[0] + "  :  " +
+                    AwesomeConstants.getProperName(mContext, targetActivities[mTargetIndex]);
             createDialog(
-                getResources().getString(R.string.choose_action_title), stringArray,
-                getResources().getStringArray(R.array.navring_short_dialog_values));
+                    getResources().getString(R.string.choose_action_title), stringArray,
+                    getResources().getStringArray(R.array.navring_short_dialog_values));
         }
     }
 
@@ -552,27 +612,29 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
             public void onClick(DialogInterface dialog, int item) {
                 onValueChange(values[item]);
                 dialog.dismiss();
-                }
-            };
+            }
+        };
 
-            final AlertDialog dialog = new AlertDialog.Builder(mContext)
+        final AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(title)
                 .setItems(entries, l)
                 .create();
 
-            dialog.show();
+        dialog.show();
     }
 
     private void maybeSwapSearchIcon() {
         final Context context = getActivity();
         Intent intent = ((SearchManager) context.getSystemService(Context.SEARCH_SERVICE))
-                .getAssistIntent(context, UserHandle.USER_CURRENT);
+                .getAssistIntent(context, true, UserHandle.USER_CURRENT);
         if (intent != null) {
             ComponentName component = intent.getComponent();
             if (component == null || !mGlowPadView.replaceTargetDrawablesIfPresent(component,
                     ASSIST_ICON_METADATA_NAME,
                     com.android.internal.R.drawable.ic_action_assist_generic)) {
-                if (DEBUG) Log.v(TAG, "Couldn't grab icon for component " + component);
+                if (DEBUG) {
+                    Log.v(TAG, "Couldn't grab icon for component " + component);
+                }
             }
         }
     }
@@ -580,46 +642,6 @@ public class NavRingTargets extends DEMENTEDPreferenceFragment implements
     public boolean isScreenPortrait() {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
-
-    private String getProperSummary(String uri) {
-
-        if (TextUtils.isEmpty(uri) || AwesomeConstant.ACTION_NULL.equals(uri)) {
-                return getResources().getString(R.string.none);
-        }
-
-        String newSummary = mContext.getResources().getString(R.string.none);
-        AwesomeConstant stringEnum = fromString(uri);
-        switch (stringEnum) {
-        case ACTION_IME:
-                newSummary = getResources().getString(R.string.open_ime_switcher);
-                break;
-        case ACTION_VIB:
-                newSummary = getResources().getString(R.string.ring_vib);
-                break;
-        case ACTION_SILENT:
-                newSummary = getResources().getString(R.string.ring_silent);
-                break;
-        case ACTION_SILENT_VIB:
-                newSummary = getResources().getString(R.string.ring_vib_silent);
-                break;
-        case ACTION_KILL:
-                newSummary = getResources().getString(R.string.kill_app);
-                break;
-        case ACTION_LAST_APP:
-                newSummary = getResources().getString(R.string.lastapp);
-                break;
-        case ACTION_POWER:
-                newSummary = getResources().getString(R.string.screen_off);
-                break;
-        case ACTION_ASSIST:
-                newSummary = getResources().getString(R.string.google_now);
-                break;
-        case ACTION_APP:
-                newSummary = mPicker.getFriendlyNameForUri(uri);
-                break;
-        }
-        return newSummary;
-   }
 
     private Uri getTempFileUri() {
         return Uri.fromFile(new File(Environment.getExternalStorageDirectory(),

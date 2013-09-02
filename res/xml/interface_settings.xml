@@ -88,7 +88,7 @@
         <PreferenceScreen
             android:fragment="com.android.settings.demented.Navbar"
             android:title="@string/title_navbar"
-            android:summary="@string/header_summary_navbar" />
+            android:summary="@string/header_summary_navigation_bar" />
 
         <PreferenceScreen
             android:fragment="com.android.settings.demented.NavRingTargets"

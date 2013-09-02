@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -77,14 +78,14 @@ import com.android.internal.util.aokp.AwesomeAnimationHelper;
 import com.android.internal.util.aokp.NavBarHelpers;
 import com.android.internal.util.aokp.LockScreenHelpers;
 import com.android.settings.R;
-import com.android.settings.demented.DEMENTEDPreferenceFragment;
+import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.demented.DEMENTEDActivity;
 import com.android.settings.demented.util.Helpers;
 import com.android.settings.demented.util.ShortcutPickerHelper;
 import com.android.settings.demented.widgets.SeekBarPreference;
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
 
-public class RibbonTargets extends DEMENTEDPreferenceFragment implements
+public class RibbonTargets extends SettingsPreferenceFragment implements
           ShortcutPickerHelper.OnPickListener,
           ColorPickerDialog.OnColorChangedListener,
           SeekBar.OnSeekBarChangeListener {
@@ -120,6 +121,9 @@ public class RibbonTargets extends DEMENTEDPreferenceFragment implements
     private MenuItem mMenuRearrange;
     private MenuItem mMenuReset;
     private MenuItem mMenuToggles;
+
+    ContentResolver mContentRes;
+    Context mContext;
 
     private TextView mEnableBottomWarning;
     private Switch mEnableBottomSwitch;
@@ -172,7 +176,6 @@ public class RibbonTargets extends DEMENTEDPreferenceFragment implements
     private Switch mTogglesButton;
     private TextView mRibbonHideImeText;
     private Switch mRibbonHideIme;
-
 
     private int textColor;
     private int ribbonColor;

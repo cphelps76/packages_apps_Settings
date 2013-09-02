@@ -3,8 +3,8 @@ package com.android.settings.demented;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -14,49 +14,40 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceGroup;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.text.TextUtils;
 import android.util.Log;
-import android.util.StateSet;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
+import com.android.internal.util.aokp.AwesomeConstants;
+import com.android.internal.util.aokp.AwesomeConstants.AwesomeConstant;
+import com.android.internal.util.aokp.NavBarHelpers;
 import com.android.internal.util.aokp.AwesomeConstants;
 import com.android.internal.util.aokp.AwesomeConstants.AwesomeConstant;
 import com.android.internal.util.aokp.NavBarHelpers;
 import com.android.settings.R;
-import com.android.settings.demented.DEMENTEDPreferenceFragment;
+import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.demented.objects.EasyPair;
-import com.android.settings.demented.util.ShortcutPickerHelper
+import com.android.settings.demented.util.ShortcutPickerHelper;
 import com.android.settings.demented.util.Helpers;
 import com.android.settings.demented.widgets.CustomTogglePref;
 
@@ -68,7 +59,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
+public class StatusBarToggles extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener {
 
     private static final String TAG = "TogglesLayout";
@@ -116,6 +107,9 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
     BroadcastReceiver mReceiver;
     ArrayList<String> mToggles;
 
+    Context mContext;
+    ContentResolver mContentRes;
+
     // Custom Toggle Stuff
     private int mNumberofToggles = 0;
     ArrayList<ToggleButton> mButtons = new ArrayList<ToggleButton>();
@@ -141,7 +135,8 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
             }
         };
         mContext.registerReceiver(mReceiver,
-                new IntentFilter("com.android.systemui.statusbar.toggles.ACTION_BROADCAST_TOGGLES"));
+                new IntentFilter(
+                        "com.android.systemui.statusbar.toggles.ACTION_BROADCAST_TOGGLES"));
         requestAvailableToggles();
         setTitle(R.string.title_statusbar_toggles);
         // Load the preferences from an XML resource
@@ -210,7 +205,7 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
         mCustomCat = (PreferenceGroup) findPreference(PREF_CUSTOM_CAT);
         mCustomButtons = (PreferenceGroup) findPreference(PREF_CUSTOM_BUTTONS);
 
-        if (isSW600DPScreen(mContext) || isTablet(mContext)) {
+        if (isSW600DPScreen(mContext) || isTabletUI(mContext)) {
             getPreferenceScreen().removePreference(mFastToggle);
             getPreferenceScreen().removePreference(mChooseFastToggleSide);
         }
@@ -255,7 +250,8 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
     }
 
     private void requestAvailableToggles() {
-        Intent request = new Intent("com.android.systemui.statusbar.toggles.ACTION_REQUEST_TOGGLES");
+        Intent request =
+                new Intent("com.android.systemui.statusbar.toggles.ACTION_REQUEST_TOGGLES");
         mContext.sendBroadcast(request);
     }
 
@@ -375,8 +371,7 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
                             String toggleKey = availableToggles.get(which);
                             if (isChecked) {
                                 StatusBarToggles.addToggle(getActivity(), toggleKey);
-                            }
-                            else {
+                            } else {
                                 StatusBarToggles.removeToggle(getActivity(), toggleKey);
                             }
                         }
@@ -606,16 +601,18 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
     private Drawable setIcon(String uri, String action) {
         if (uri != null && uri.length() > 0) {
             File f = new File(Uri.parse(uri).getPath());
-            if (f.exists())
+            if (f.exists()) {
                 return resize(new BitmapDrawable(mResources, f.getAbsolutePath()));
+            }
         }
         if (uri != null && !uri.equals("")
                 && uri.startsWith("file")) {
             // it's an icon the user chose from the gallery here
             File icon = new File(Uri.parse(uri).getPath());
-            if (icon.exists())
+            if (icon.exists()) {
                 return resize(new BitmapDrawable(mResources, icon
                         .getAbsolutePath()));
+            }
 
         } else if (uri != null && !uri.equals("")) {
             // here they chose another app icon
@@ -632,8 +629,9 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
     }
 
     private Drawable getNavbarIconImage(String uri) {
-        if (uri == null)
+        if (uri == null) {
             uri = AwesomeConstant.ACTION_NULL.value();
+        }
         if (uri.startsWith("**")) {
             return AwesomeConstants.getActionIcon(mContext, uri);
         } else {
@@ -679,7 +677,7 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == PICK_CONTACT) {
                 Uri contactData = data.getData();
-                String[] projection = new String[] {
+                String[] projection = new String[]{
                         ContactsContract.Contacts.LOOKUP_KEY
                 };
                 String selection = ContactsContract.Contacts.DISPLAY_NAME + " IS NOT NULL";
@@ -727,8 +725,9 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
                         new File(mContext.getFilesDir(), iconName)).getPath());
 
                 File f = new File(selectedImageUri.getPath());
-                if (f.exists())
+                if (f.exists()) {
                     f.delete();
+                }
                 refreshButtons();
             }
         }
@@ -736,8 +735,9 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
     }
 
     private String getProperSummary(String uri) {
-        if (uri == null)
+        if (uri == null) {
             return AwesomeConstants.getProperName(mContext, "**null**");
+        }
         if (uri.startsWith("**")) {
             return AwesomeConstants.getProperName(mContext, uri);
         } else {
@@ -851,6 +851,7 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
             mLongPressFriendlyName = getProperSummary(mLongPressAction);
             checkEmptyClick();
         }
+
         public void setClickAction(String click) {
             mClickAction = click;
             mClickFriendlyName = getProperSummary(mClickAction);
@@ -929,19 +930,47 @@ public class StatusBarToggles extends DEMENTEDPreferenceFragment implements
     }
 
     private void updateSettings() {
+        boolean screenshotRibbon = false;
+        boolean favoriteRibbon = false;
+        boolean customRibbon = false;
         ContentResolver resolver = mContext.getContentResolver();
         String currentToggles = Settings.System.getString(resolver, Settings.System.QUICK_TOGGLES);
-        if (currentToggles == null)
+        ArrayList<String> leftSwipeToggles = Settings.System.getArrayList(mContentRes,
+                Settings.System.SWIPE_RIBBON_TOGGLES[0]);
+        ArrayList<String> rightSwipeToggles = Settings.System.getArrayList(mContentRes,
+                Settings.System.SWIPE_RIBBON_TOGGLES[1]);
+        ArrayList<String> bottomSwipeToggles = Settings.System.getArrayList(mContentRes,
+                Settings.System.SWIPE_RIBBON_TOGGLES[2]);
+        ArrayList<String> swipeToggles = new ArrayList<String>();
+        swipeToggles.addAll(leftSwipeToggles);
+        swipeToggles.addAll(rightSwipeToggles);
+        swipeToggles.addAll(bottomSwipeToggles);
+
+        for (int i = 0; i < swipeToggles.size(); i++) {
+            if (swipeToggles.get(i).equals("FAVCONTACT")) {
+                favoriteRibbon = true;
+            }
+            if (swipeToggles.get(i).equals("SCREENSHOT")) {
+                screenshotRibbon = true;
+            }
+            if (swipeToggles.get(i).equals("CUSTOM")) {
+                customRibbon = true;
+            }
+        }
+
+        if (currentToggles == null) {
             currentToggles = "";
+        }
         if (currentToggles != null) {
             if (mFavContact != null) {
-                mFavContact.setEnabled(currentToggles.contains("FAVCONTACT"));
+                mFavContact.setEnabled(currentToggles.contains("FAVCONTACT") || favoriteRibbon);
             }
             if (mScreenshotDelay != null) {
-                mScreenshotDelay.setEnabled(currentToggles.contains("SCREENSHOT"));
+                mScreenshotDelay
+                        .setEnabled(currentToggles.contains("SCREENSHOT") || screenshotRibbon);
             }
             if (mCustomCat != null && mCustomButtons != null) {
-                boolean enabled = currentToggles.contains("CUSTOM");
+                boolean enabled = currentToggles.contains("CUSTOM") || customRibbon;
                 mCustomCat.setEnabled(enabled);
                 mCustomButtons.setEnabled(enabled);
                 for (int i = 0; i < 5; i++) {

@@ -28,6 +28,8 @@ import android.widget.ListAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.android.settings.demented.util.ButtonBarHandler;
+import com.android.settings.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +39,7 @@ public class DEMENTEDActivity extends PreferenceActivity implements ButtonBarHan
 
     private static final String TAG = "DEMENTED";
 
-    private static boolean hasNotificationLed;
+     private static boolean hasNotificationLed;
     private static boolean hasSPen;
     private static String KEY_USE_ENGLISH_LOCALE = "use_english_locale";
 
@@ -57,8 +59,6 @@ public class DEMENTEDActivity extends PreferenceActivity implements ButtonBarHan
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        hasNotificationLed = getResources().getBoolean(R.bool.has_notification_led);
-        hasSPen = getResources().getBoolean(R.bool.config_stylusGestures);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         defaultLocale = Locale.getDefault();
         Log.i(TAG, "defualt locale: " + defaultLocale.getDisplayName());
@@ -76,7 +76,7 @@ public class DEMENTEDActivity extends PreferenceActivity implements ButtonBarHan
             setTitle(R.string.app_name);
         }
 
-        if ("com.android.settings.demented.START_NEW_FRAGMENT".equals(getIntent().getAction())) {
+        if ("com.aokp.romcontrol.START_NEW_FRAGMENT".equals(getIntent().getAction())) {
             String className = getIntent().getStringExtra("aokp_fragment_name").toString();
             Class<?> cls = null;
             try {
@@ -87,7 +87,7 @@ public class DEMENTEDActivity extends PreferenceActivity implements ButtonBarHan
             }
 
             try {
-                cls.asSubclass(ROMControlActivity.class);
+                cls.asSubclass(DEMENTEDActivity.class);
                 return;
             } catch (ClassCastException e) {
                 // fall through
@@ -132,16 +132,6 @@ public class DEMENTEDActivity extends PreferenceActivity implements ButtonBarHan
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity, menu);
-
-        MenuItem locale = menu.findItem(R.id.change_locale);
-
-        if (Locale.getDefault().getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-            menu.removeItem(R.id.change_locale);
-        } else {
-            Configuration config = getBaseContext().getResources().getConfiguration();
-            locale.setTitle("Locale (" + config.locale.getDisplayLanguage() + ")");
-        }
         return true;
     }
 
@@ -149,13 +139,7 @@ public class DEMENTEDActivity extends PreferenceActivity implements ButtonBarHan
     public boolean onOptionsItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
-            case R.id.change_locale:
-                Log.e(TAG, "change_locale clicked");
-                SharedPreferences p = getPreferences(MODE_PRIVATE);
-                boolean useEnglishLocale = p.getBoolean(KEY_USE_ENGLISH_LOCALE, false);
-                p.edit().putBoolean(KEY_USE_ENGLISH_LOCALE, !useEnglishLocale).apply();
-                recreate();
-                return true;
+
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -186,36 +170,6 @@ public class DEMENTEDActivity extends PreferenceActivity implements ButtonBarHan
                     getBaseContext().getResources().getDisplayMetrics());
 
         }
-    }
-
-    /**
-     * Populate the activity with the top-level headers.
-     */
-    @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.preference_headers, target);
-        ArrayList<Header> toRemove = new ArrayList<Header>();
-        for (int i = 0; i < target.size(); i++) {
-            Header header = target.get(i);
-            if (header.id == R.id.led) {
-                if (!hasNotificationLed) {
-                    toRemove.add(header);
-                }
-            } else if (header.id == R.id.vibrations) {
-                if (mVibrator == null || !mVibrator.hasVibrator()) {
-                    toRemove.add(header);
-                }
-            } else if (header.id == R.id.spen) {
-                if (!hasSPen) {
-                    toRemove.add(header);
-                }
-            }
-        }
-        for (int i = 0; i < toRemove.size(); i++) {
-            target.remove(toRemove.get(i));
-        }
-        updateHeaderList(target);
-        mHeaders = target;
     }
 
     /**
@@ -301,14 +255,12 @@ public class DEMENTEDActivity extends PreferenceActivity implements ButtonBarHan
     }
 
     protected String getStartingFragmentClass(Intent intent) {
-        if (mFragmentClass != null) {
+        if (mFragmentClass != null)
             return mFragmentClass;
-        }
 
         String intentClass = intent.getComponent().getClassName();
-        if (intentClass.equals(getClass().getName())) {
+        if (intentClass.equals(getClass().getName()))
             return null;
-        }
 
         return intentClass;
     }
