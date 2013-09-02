@@ -125,8 +125,9 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity();
+        mContentRes = getActivity().getContentResolver();
         mReceiver = new BroadcastReceiver() {
-
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra("toggle_bundle")) {
@@ -134,6 +135,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
                 }
             }
         };
+
         mContext.registerReceiver(mReceiver,
                 new IntentFilter(
                         "com.android.systemui.statusbar.toggles.ACTION_BROADCAST_TOGGLES"));

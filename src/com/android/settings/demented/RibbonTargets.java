@@ -244,6 +244,8 @@ public class RibbonTargets extends SettingsPreferenceFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mContext = getActivity();
+        mContentRes = getActivity().getContentResolver();
         mReceiver = new BroadcastReceiver() {
 
             @Override

@@ -142,6 +142,8 @@ public class Navbar extends SettingsPreferenceFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_navbar);
+        mContext = getActivity();
+        mContentRes = getActivity().getContentResolver();
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_navbar);
