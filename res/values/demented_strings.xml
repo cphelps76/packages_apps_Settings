@@ -31,6 +31,8 @@
     <string name="notification_drawer_title">Notification Drawer</string>
     <string name="demented_navbar">Navbar / Ribbons</string>
 
+    <string name="restart_sysui_title">Restart SystemUI to set notification drawer transparency</string>
+
     <!-- Addition security options -->
     <string name="additional_security_options_title">Additonal Security</string>
 

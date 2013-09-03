@@ -36,4 +36,8 @@
              android:key="notification_wallpaper_alpha"
              android:title="@string/notif_wallpaper_alpha_title" />
 
+        <Preference
+            android:key="restart_sysui"
+            android:title="@string/restart_sysui_title" />
+
 </PreferenceScreen>

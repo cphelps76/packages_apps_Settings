@@ -53,6 +53,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.util.Helpers;
 import com.android.settings.widget.SeekBarPreference;
 import net.margaritov.preference.colorpicker.ColorPickerView;
 
@@ -67,10 +68,12 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
     private static final String PREF_NOTIFICATION_WALLPAPER = "notification_wallpaper";
     private static final String PREF_NOTIFICATION_WALLPAPER_LANDSCAPE = "notification_wallpaper_landscape";
     private static final String PREF_NOTIFICATION_WALLPAPER_ALPHA = "notification_wallpaper_alpha";
+    private static final String PREF_SET_NOTIFICATION_WALLPAPER_ALPHA = "restart_sysui";
 
     private ListPreference mNotificationWallpaper;
     private ListPreference mNotificationWallpaperLandscape;
     SeekBarPreference mWallpaperAlpha;
+    Preference mSetAlpha;
 
     private File customnavTemp;
     private File customnavTempLandscape;
@@ -114,6 +117,9 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
         mWallpaperAlpha.setInitValue((int) (wallpaperTransparency * 100));
         mWallpaperAlpha.setProperty(Settings.System.NOTIF_WALLPAPER_ALPHA);
         mWallpaperAlpha.setOnPreferenceChangeListener(this);
+
+        mSetAlpha = (Preference) findPreference(PREF_SET_NOTIFICATION_WALLPAPER_ALPHA);
+        mSetAlpha.setOnPreferenceChangeListener(this);
 
         updateCustomBackgroundSummary();
     }
@@ -234,6 +240,10 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mSetAlpha) {
+            Helpers.restartSystemUI();
+            return true;
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
