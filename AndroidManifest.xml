@@ -1579,6 +1579,7 @@
         <activity android:name=".demented.widgets.NavBarItemPreference" />
         <activity android:name=".demented.widgets.SeekBarPreference" />
         <activity android:name=".demented.widgets.TouchInterceptor" />
+        <activity android:name=".demented.NotificationDrawerStyle" />
         <!-- DEMENTED activities End -->
 
         <!-- Pseudo-activity used to provide an intent-filter entry point to encryption settings -->

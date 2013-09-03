@@ -25,6 +25,11 @@
             android:fragment="com.android.settings.demented.CarrierLabel"
             android:title="@string/carrier_label_title" />
 
+        <Preference
+            android:key="notification_style"
+            android:fragment="com.android.settings.demented.NotificationDrawerStyle"
+            android:title="@string/notification_style_title" />
+
     </PreferenceCategory>
 
     <!-- Notification drawer Power Widget -->
