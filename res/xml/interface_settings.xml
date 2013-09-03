@@ -54,6 +54,7 @@
 
         <PreferenceScreen
             android:key="advanced_settings"
+            android:id="@+id/advanced_settings"
             android:title="@string/advanced_device_settings_title"
             android:summary="@string/advanced_device_settings_summary">
         <intent
@@ -63,6 +64,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:id="@+id/performance_settings"
             android:key="performance_settings"
             android:fragment="com.android.settings.demented.PerformanceSettings"
             android:title="@string/performance_settings_title" />
