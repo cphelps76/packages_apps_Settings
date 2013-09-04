@@ -19,7 +19,6 @@ package com.android.settings.demented;
 import android.app.ActivityManagerNative;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -42,17 +41,8 @@ import android.preference.TwoStatePreference;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.IWindowManager;
-import android.view.Display;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.TextView;
 
-import com.android.settings.demented.widgets.AlphaSeekBar;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
@@ -195,11 +185,6 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         super.onPause();
     }
 
-    private void openTransparencyDialog() {
-        getFragmentManager().beginTransaction().add(new AdvancedTransparencyDialog(), null)
-                .commit();
-    }
-
     private void writeKillAppLongpressBackOptions() {
         Settings.Global.putInt(getActivity().getContentResolver(),
                 Settings.Global.KILL_APP_LONGPRESS_BACK,
@@ -256,11 +241,6 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
                     Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF,
                     ((TwoStatePreference) preference).isChecked());
             return true;
-        } else if (preference.getKey().equals("transparency_dialog")) {
-            // getFragmentManager().beginTransaction().add(new
-            // TransparencyDialog(), null).commit();
-            openTransparencyDialog();
-            return true;
         } else if (preference == mStatusBarHide) {
             boolean checked = ((CheckBoxPreference)preference).isChecked();
             Settings.System.putBoolean(getActivity().getContentResolver(),
@@ -286,195 +266,5 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
             return true;
         }
         return true;
-    }
-
-    public static class AdvancedTransparencyDialog extends DialogFragment {
-        private static final int KEYGUARD_ALPHA = 112;
-
-        private static final int STATUSBAR_ALPHA = 0;
-        private static final int STATUSBAR_KG_ALPHA = 1;
-        private static final int NAVBAR_ALPHA = 2;
-        private static final int NAVBAR_KG_ALPHA = 3;
-        private static final int LOCKSCREEN_ALPHA = 4;
-        boolean linkTransparencies = true;
-
-        CheckBox mLinkCheckBox, mMatchStatusbarKeyguard, mMatchNavbarKeyguard;
-        ViewGroup mNavigationBarGroup;
-        TextView mSbLabel;
-        AlphaSeekBar mSeekBars[] = new AlphaSeekBar[5];
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setShowsDialog(true);
-            setRetainInstance(true);
-            linkTransparencies = getSavedLinkedState();
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            View layout = View.inflate(getActivity(), R.layout.dialog_transparency, null);
-            mLinkCheckBox = (CheckBox) layout.findViewById(R.id.transparency_linked);
-            mLinkCheckBox.setChecked(linkTransparencies);
-            mNavigationBarGroup = (ViewGroup) layout.findViewById(R.id.navbar_layout);
-            mSbLabel = (TextView) layout.findViewById(R.id.statusbar_label);
-            mSeekBars[STATUSBAR_ALPHA] = (AlphaSeekBar) layout.findViewById(R.id.statusbar_alpha);
-            mSeekBars[STATUSBAR_KG_ALPHA] = (AlphaSeekBar) layout
-                    .findViewById(R.id.statusbar_keyguard_alpha);
-            mSeekBars[NAVBAR_ALPHA] = (AlphaSeekBar) layout.findViewById(R.id.navbar_alpha);
-            mSeekBars[NAVBAR_KG_ALPHA] = (AlphaSeekBar) layout
-                    .findViewById(R.id.navbar_keyguard_alpha);
-            mMatchStatusbarKeyguard = (CheckBox) layout.findViewById(R.id.statusbar_match_keyguard);
-            mMatchNavbarKeyguard = (CheckBox) layout.findViewById(R.id.navbar_match_keyguard);
-            mSeekBars[LOCKSCREEN_ALPHA] = (AlphaSeekBar) layout.findViewById(R.id.lockscreen_alpha);
-
-            try {
-                // restore any saved settings
-                int alphas[] = new int[2];
-                ContentResolver resolver = getActivity().getContentResolver();
-                int lockscreen_alpha = Settings.System.getInt(resolver,
-                        Settings.System.LOCKSCREEN_ALPHA_CONFIG, KEYGUARD_ALPHA);
-                mSeekBars[LOCKSCREEN_ALPHA].setCurrentAlpha(lockscreen_alpha);
-                String sbConfig = Settings.System.getString(resolver,
-                        Settings.System.STATUS_BAR_ALPHA_CONFIG);
-                if (sbConfig != null) {
-                    String split[] = sbConfig.split(";");
-                    alphas[0] = Integer.parseInt(split[0]);
-                    alphas[1] = Integer.parseInt(split[1]);
-                    mSeekBars[STATUSBAR_ALPHA].setCurrentAlpha(alphas[0]);
-                    mSeekBars[STATUSBAR_KG_ALPHA].setCurrentAlpha(alphas[1]);
-                    mMatchStatusbarKeyguard.setChecked(alphas[1] == lockscreen_alpha);
-                    if (linkTransparencies) {
-                        mSeekBars[NAVBAR_ALPHA].setCurrentAlpha(alphas[0]);
-                        mSeekBars[NAVBAR_KG_ALPHA].setCurrentAlpha(alphas[1]);
-                    } else {
-                        String navConfig = Settings.System.getString(resolver,
-                                Settings.System.NAVIGATION_BAR_ALPHA_CONFIG);
-                        if (navConfig != null) {
-                            split = navConfig.split(";");
-                            alphas[0] = Integer.parseInt(split[0]);
-                            alphas[1] = Integer.parseInt(split[1]);
-                            mSeekBars[NAVBAR_ALPHA].setCurrentAlpha(alphas[0]);
-                            mSeekBars[NAVBAR_KG_ALPHA].setCurrentAlpha(alphas[1]);
-                            mMatchNavbarKeyguard.setChecked(alphas[1] == lockscreen_alpha);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                resetSettings();
-            }
-
-            updateToggleState();
-            mMatchStatusbarKeyguard.setOnCheckedChangeListener(mUpdateStatesListener);
-            mMatchNavbarKeyguard.setOnCheckedChangeListener(mUpdateStatesListener);
-            mLinkCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    linkTransparencies = isChecked;
-                    saveSavedLinkedState(isChecked);
-                    updateToggleState();
-                }
-            });
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setView(layout);
-            builder.setTitle(getString(R.string.transparency_dialog_title));
-            builder.setNegativeButton(R.string.cancel, null);
-            builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Settings.System.putInt(mContentResolver,
-                            Settings.System.LOCKSCREEN_ALPHA_CONFIG,
-                            mSeekBars[LOCKSCREEN_ALPHA].getCurrentAlpha());
-                    // update keyguard alpha
-                    if (!mSeekBars[STATUSBAR_KG_ALPHA].isEnabled()) {
-                        mSeekBars[STATUSBAR_KG_ALPHA].setCurrentAlpha(
-                                mSeekBars[LOCKSCREEN_ALPHA].getCurrentAlpha());
-                    }
-                    if (!mSeekBars[NAVBAR_KG_ALPHA].isEnabled()) {
-                        mSeekBars[NAVBAR_KG_ALPHA].setCurrentAlpha(
-                                mSeekBars[LOCKSCREEN_ALPHA].getCurrentAlpha());
-                    }
-                    if (linkTransparencies) {
-                        String config = mSeekBars[STATUSBAR_ALPHA].getCurrentAlpha() + ";" +
-                                mSeekBars[STATUSBAR_KG_ALPHA].getCurrentAlpha();
-                        Settings.System.putString(mContentResolver,
-                                Settings.System.STATUS_BAR_ALPHA_CONFIG, config);
-                        Settings.System.putString(mContentResolver,
-                                Settings.System.NAVIGATION_BAR_ALPHA_CONFIG, config);
-                    } else {
-                        String sbConfig = mSeekBars[STATUSBAR_ALPHA].getCurrentAlpha() + ";" +
-                                mSeekBars[STATUSBAR_KG_ALPHA].getCurrentAlpha();
-                        Settings.System.putString(mContentResolver,
-                                Settings.System.STATUS_BAR_ALPHA_CONFIG, sbConfig);
-
-                        String nbConfig = mSeekBars[NAVBAR_ALPHA].getCurrentAlpha() + ";" +
-                                mSeekBars[NAVBAR_KG_ALPHA].getCurrentAlpha();
-                        Settings.System.putString(mContentResolver,
-                                Settings.System.NAVIGATION_BAR_ALPHA_CONFIG, nbConfig);
-                    }
-
-                }
-            });
-            return builder.create();
-        }
-
-        private void resetSettings() {
-            Settings.System.putString(getActivity().getContentResolver(),
-                    Settings.System.STATUS_BAR_ALPHA_CONFIG, null);
-            Settings.System.putString(getActivity().getContentResolver(),
-                    Settings.System.NAVIGATION_BAR_ALPHA_CONFIG, null);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.LOCKSCREEN_ALPHA_CONFIG, KEYGUARD_ALPHA);
-        }
-
-        private void updateToggleState() {
-            if (linkTransparencies) {
-                mSbLabel.setText(R.string.transparency_dialog_transparency_sb_and_nv);
-                mNavigationBarGroup.setVisibility(View.GONE);
-            } else {
-                mSbLabel.setText(R.string.transparency_dialog_statusbar);
-                mNavigationBarGroup.setVisibility(View.VISIBLE);
-            }
-
-            mSeekBars[STATUSBAR_KG_ALPHA]
-                    .setEnabled(!mMatchStatusbarKeyguard.isChecked());
-            mSeekBars[NAVBAR_KG_ALPHA]
-                    .setEnabled(!mMatchNavbarKeyguard.isChecked());
-
-            // update keyguard alpha
-            int lockscreen_alpha = Settings.System.getInt(getActivity().getContentResolver(),
-                        Settings.System.LOCKSCREEN_ALPHA_CONFIG, KEYGUARD_ALPHA);
-            if (!mSeekBars[STATUSBAR_KG_ALPHA].isEnabled()) {
-                mSeekBars[STATUSBAR_KG_ALPHA].setCurrentAlpha(lockscreen_alpha);
-            }
-            if (!mSeekBars[NAVBAR_KG_ALPHA].isEnabled()) {
-                mSeekBars[NAVBAR_KG_ALPHA].setCurrentAlpha(lockscreen_alpha);
-            }
-        }
-
-        @Override
-        public void onDestroyView() {
-            if (getDialog() != null && getRetainInstance())
-                getDialog().setDismissMessage(null);
-            super.onDestroyView();
-        }
-
-        private CompoundButton.OnCheckedChangeListener mUpdateStatesListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateToggleState();
-            }
-        };
-
-        private boolean getSavedLinkedState() {
-            return getActivity().getSharedPreferences("transparency", Context.MODE_PRIVATE)
-                    .getBoolean("link", true);
-        }
-
-        private void saveSavedLinkedState(boolean v) {
-            getActivity().getSharedPreferences("transparency", Context.MODE_PRIVATE).edit()
-                    .putBoolean("link", v).commit();
-        }
     }
 }

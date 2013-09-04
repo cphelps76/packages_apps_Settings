@@ -44,7 +44,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.android.internal.util.aokp.AwesomeConstants;
 import com.android.internal.util.aokp.AwesomeConstants.AwesomeConstant;
-import com.android.internal.util.aokp.BackgroundAlphaColorDrawable;
 import com.android.internal.util.aokp.NavBarHelpers;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.R;
@@ -65,7 +64,6 @@ public class Navbar extends SettingsPreferenceFragment implements
     // move these later
     private static final String PREF_MENU_UNLOCK = "pref_menu_display";
     private static final String PREF_NAVBAR_MENU_DISPLAY = "navbar_menu_display";
-    private static final String NAVIGATION_BAR_COLOR = "nav_bar_color";
     private static final String PREF_NAV_COLOR = "nav_button_color";
     private static final String NAVIGATION_BAR_ALLCOLOR = "navigation_bar_allcolor";
     private static final String PREF_NAV_GLOW_COLOR = "nav_button_glow_color";
@@ -89,7 +87,6 @@ public class Navbar extends SettingsPreferenceFragment implements
     public static final String PREFS_NAV_BAR = "navbar";
 
     // move these later
-    ColorPickerPreference mNavigationColor;
     ColorPickerPreference mNavigationBarColor;
     CheckBoxPreference mColorizeAllIcons;
     ColorPickerPreference mNavigationBarGlowColor;
@@ -198,9 +195,6 @@ public class Navbar extends SettingsPreferenceFragment implements
         mEnableNavigationBar = (CheckBoxPreference) findPreference(ENABLE_NAVIGATION_BAR);
         mEnableNavigationBar.setChecked(Settings.System.getBoolean(mContentRes,
                 Settings.System.NAVIGATION_BAR_SHOW, hasNavBarByDefault));
-
-        mNavigationColor = (ColorPickerPreference) findPreference(NAVIGATION_BAR_COLOR);
-        mNavigationColor.setOnPreferenceChangeListener(this);
 
         mNavigationBarColor = (ColorPickerPreference) findPreference(PREF_NAV_COLOR);
         mNavigationBarColor.setOnPreferenceChangeListener(this);
@@ -321,8 +315,6 @@ public class Navbar extends SettingsPreferenceFragment implements
         switch (item.getItemId()) {
             case R.id.reset:
                 Settings.System.putInt(mContentRes,
-                        Settings.System.NAVIGATION_BAR_COLOR, -1);
-                Settings.System.putInt(mContentRes,
                         Settings.System.NAVIGATION_BAR_TINT, -1);
                 Settings.System.putInt(mContentRes,
                         Settings.System.NAVIGATION_BAR_GLOW_TINT, -1);
@@ -440,15 +432,6 @@ public class Navbar extends SettingsPreferenceFragment implements
             Settings.System.putInt(mContentRes,
                     Settings.System.NAVIGATION_BAR_HEIGHT_LANDSCAPE,
                     height);
-            return true;
-        } else if (preference == mNavigationColor) {
-            String hex = ColorPickerPreference.convertToARGB(
-                    Integer.valueOf(String.valueOf(newValue)));
-            preference.setSummary(hex);
-            int intHex = ColorPickerPreference.convertToColorInt(hex) & 0x00FFFFFF;
-            Settings.System.putInt(mContentRes,
-                    Settings.System.NAVIGATION_BAR_COLOR, intHex);
-            refreshSettings();
             return true;
         } else if (preference == mNavigationBarColor) {
             String hex = ColorPickerPreference.convertToARGB(
@@ -620,8 +603,6 @@ public class Navbar extends SettingsPreferenceFragment implements
         if (mNumberofButtons == 0) {
             return;
         }
-        int navBarColor = Settings.System.getInt(mContentRes,
-                Settings.System.NAVIGATION_BAR_COLOR, -1);
         int navButtonColor = Settings.System.getInt(mContentRes,
                 Settings.System.NAVIGATION_BAR_TINT, -1);
         float navButtonAlpha = Settings.System.getFloat(mContentRes,
@@ -630,24 +611,6 @@ public class Navbar extends SettingsPreferenceFragment implements
                 Settings.System.NAVIGATION_BAR_GLOW_TINT, 0);
         float BarAlpha = 1.0f;
         String alphas[];
-        String settingValue = Settings.System.getString(mContentRes,
-                Settings.System.NAVIGATION_BAR_ALPHA_CONFIG);
-        if (!TextUtils.isEmpty(settingValue)) {
-            alphas = settingValue.split(";");
-            BarAlpha = Float.parseFloat(alphas[0]) / 255;
-        }
-        int a = Math.round(BarAlpha * 255);
-        Drawable mBackground = AwesomeConstants
-                .getSystemUIDrawable(mContext, "com.android.systemui:drawable/nav_bar_bg");
-        if (mBackground instanceof ColorDrawable) {
-            BackgroundAlphaColorDrawable bacd = new BackgroundAlphaColorDrawable(
-                    navBarColor > 0 ? navBarColor : ((ColorDrawable) mBackground).getColor());
-            bacd.setAlpha(a);
-            mNavBarContainer.setBackground(bacd);
-        } else {
-            mBackground.setAlpha(a);
-            mNavBarContainer.setBackground(mBackground);
-        }
         for (int i = 0; i < mNumberofButtons; i++) {
             ImageButton ib = mButtonViews.get(i);
             Drawable d = mButtons.get(i).getIcon();
