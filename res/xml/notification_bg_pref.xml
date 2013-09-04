@@ -40,8 +40,4 @@
              android:key="notification_alpha"
              android:title="@string/notif_alpha_title" />
 
-        <Preference
-            android:key="restart_sysui"
-            android:title="@string/restart_sysui_title" />
-
 </PreferenceScreen>
