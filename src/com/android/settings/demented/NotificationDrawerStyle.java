@@ -248,7 +248,6 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
