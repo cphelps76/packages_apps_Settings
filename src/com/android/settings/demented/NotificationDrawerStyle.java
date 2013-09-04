@@ -68,11 +68,13 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
     private static final String PREF_NOTIFICATION_WALLPAPER = "notification_wallpaper";
     private static final String PREF_NOTIFICATION_WALLPAPER_LANDSCAPE = "notification_wallpaper_landscape";
     private static final String PREF_NOTIFICATION_WALLPAPER_ALPHA = "notification_wallpaper_alpha";
+    private static final String PREF_NOTIFICATION_ALPHA = "notification_alpha";
     private static final String PREF_SET_NOTIFICATION_WALLPAPER_ALPHA = "restart_sysui";
 
     private ListPreference mNotificationWallpaper;
     private ListPreference mNotificationWallpaperLandscape;
     SeekBarPreference mWallpaperAlpha;
+    SeekBarPreference mNotifAlpha;
     Preference mSetAlpha;
 
     private File customnavTemp;
@@ -117,6 +119,18 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
         mWallpaperAlpha.setInitValue((int) (wallpaperTransparency * 100));
         mWallpaperAlpha.setProperty(Settings.System.NOTIF_WALLPAPER_ALPHA);
         mWallpaperAlpha.setOnPreferenceChangeListener(this);
+
+        float notifTransparency;
+        try{
+            notifTransparency = Settings.System.getFloat(getActivity().getContentResolver(), Settings.System.NOTIF_ALPHA);
+        }catch (Exception e) {
+            notifTransparency = 0;
+            Settings.System.putFloat(getActivity().getContentResolver(), Settings.System.NOTIF_ALPHA, 0);
+        }
+        mNotifAlpha = (SeekBarPreference) findPreference(PREF_NOTIFICATION_ALPHA);
+        mNotifAlpha.setInitValue((int) (notifTransparency * 100));
+        mNotifAlpha.setProperty(Settings.System.NOTIF_ALPHA);
+        mNotifAlpha.setOnPreferenceChangeListener(this);
 
         mSetAlpha = (Preference) findPreference(PREF_SET_NOTIFICATION_WALLPAPER_ALPHA);
         mSetAlpha.setOnPreferenceChangeListener(this);
@@ -252,6 +266,11 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
             float valNav = Float.parseFloat((String) newValue);
             Settings.System.putFloat(getActivity().getContentResolver(),
                     Settings.System.NOTIF_WALLPAPER_ALPHA, valNav / 100);
+            return true;
+        } else if (preference == mNotifAlpha) {
+            float valNav = Float.parseFloat((String) newValue);
+            Settings.System.putFloat(getActivity().getContentResolver(),
+                    Settings.System.NOTIF_ALPHA, valNav / 100);
             return true;
         }else if (preference == mNotificationWallpaper) {
             int indexOf = mNotificationWallpaper.findIndexOfValue(newValue.toString());
