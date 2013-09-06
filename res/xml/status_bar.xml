@@ -16,36 +16,49 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/status_bar_title">
 
     <!-- Status bar tweaks -->
     <PreferenceCategory
+        android:key="status_bar_style_title"
+        android:title="@string/status_bar_style_title">
+
+        <PreferenceScreen
+            android:key="status_bar_background_style"
+            android:fragment="com.android.settings.demented.StatusBarStyle"
+            android:title="@string/status_bar_background_style" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/status_bar_clock_title">
 
-    <ListPreference
-	android:entries="@array/clock_style_entries"
-	android:entryValues="@array/clock_style_values"
-	android:key="clock_style"
-	android:title="@string/clock_title_enable" />
+        <ListPreference
+	    android:entries="@array/clock_style_entries"
+	    android:entryValues="@array/clock_style_values"
+	    android:key="clock_style"
+	    android:title="@string/clock_title_enable" />
 
-    <ListPreference
-	android:entries="@array/clock_ampm_entries"
-	android:entryValues="@array/clock_ampm_values"
-	android:key="clock_am_pm_style"
-	android:title="@string/title_clock_ampm_entries" />
+        <ListPreference
+	    android:entries="@array/clock_ampm_entries"
+	    android:entryValues="@array/clock_ampm_values"
+	    android:key="clock_am_pm_style"
+	    android:title="@string/title_clock_ampm_entries" />
 
-    <ListPreference
-	android:key="clock_weekday"
-	android:title="@string/enable_clock_weekday"
-	android:summary="@string/enable_clock_weekday_summary"
-	android:entries="@array/clock_weekday_entries"
-	android:entryValues="@array/clock_weekday_values" />
+        <ListPreference
+	    android:key="clock_weekday"
+	    android:title="@string/enable_clock_weekday"
+	    android:summary="@string/enable_clock_weekday_summary"
+	    android:entries="@array/clock_weekday_entries"
+	    android:entryValues="@array/clock_weekday_values" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
 	    android:key="battery_category"
 	    android:title="BATTERY OPTIONS">
+
         <ListPreference
             android:key="status_bar_battery"
             android:dialogTitle="@string/status_bar_battery_title"
@@ -91,6 +104,7 @@
 	    android:title="@string/battery_bar_thickness_title"
 	    android:entries="@array/battery_bar_thickness_entries"
 	    android:entryValues="@array/battery_bar_thickness_values" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -108,6 +122,7 @@
             android:title="@string/mms_breath"
             android:summary="@string/mms_breath_summary"
             android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -126,6 +141,7 @@
             android:title="@string/status_bar_notif_count_title"
             android:summary="@string/status_bar_notif_count_summary"
             android:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -32,8 +32,10 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
-public class StatusBar extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
+public class StatusBar extends SettingsPreferenceFragment implements
+        Preference.OnPreferenceChangeListener {
 
+    private static final String KEY_STATUS_BAR_STYLE = "status_bar_background_style";
     private static final String PREF_ENABLE = "clock_style";
     private static final String PREF_AM_PM_STYLE = "clock_am_pm_style";
     private static final String PREF_CLOCK_WEEKDAY = "clock_weekday";
@@ -222,7 +224,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
-
         if (preference == mStatusBarNotifCount) {
             value = mStatusBarNotifCount.isChecked();
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
@@ -239,6 +240,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
         }
-        return false;
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }

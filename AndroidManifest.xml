@@ -1575,6 +1575,7 @@
         <activity android:name=".demented.widgets.SeekBarPreference" />
         <activity android:name=".demented.widgets.TouchInterceptor" />
         <activity android:name=".demented.NotificationDrawerStyle" />
+        <activity android:name=".demented.StatusBarStyle" />
         <!-- DEMENTED activities End -->
 
         <!-- Pseudo-activity used to provide an intent-filter entry point to encryption settings -->
@@ -1803,6 +1804,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".demented.StatusBar"
+            android:label="@string/status_bar_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
     </application>

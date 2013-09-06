@@ -1078,4 +1078,16 @@
     <string name="notification_drawer_custom_background_dialog_title">Choose color</string>
     <string name="notif_wallpaper_alpha_title">Notification background transparency</string>
     <string name="notif_alpha_title">Notification Rows transparency</string>
+
+    <!-- Status bar background style -->
+    <string name="status_bar_style_title">Status Bar Style</string>
+    <string name="status_bar_transparency_title">Status bar transparency</string>
+    <string name="status_bar_color_title">Status bar color</string>
+    <string name="status_bar_background_style">Background options</string>
+    <string name="status_bar_alpha_mode_dialog_text_title">Show status bar transparency</string>
+    <string name="status_bar_alpha_mode_text_title">Transparency mode</string>
+    <string name="status_bar_alpha_mode_home">on launcher</string>
+    <string name="status_bar_alpha_mode_default">on launcher and keyguard</string>
+    <string name="status_bar_alpha_mode_always">always</string>
+    <string name="status_bar_style_reset">Reset</string>
 </resources>
