@@ -53,6 +53,12 @@
 	    android:entries="@array/clock_weekday_entries"
 	    android:entryValues="@array/clock_weekday_values" />
 
+        <PreferenceScreen
+	    android:key="clock_clicks"
+	    android:title="@string/clock_clicks_title"
+	    android:fragment="com.android.settings.demented.ClockClicks"
+	    android:summary="@string/clock_clicks_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
