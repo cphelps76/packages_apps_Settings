@@ -262,7 +262,6 @@
     <string name="performance_settings_warning">These settings are included for experimentation and any changes made to them have the potential to cause instability, crashes, data loss or hardware failures.\n\nWe request you do not file bug reports if any of these settings have been changed from the defaults.</string>
 
     <!-- Performance Settings : Processor Settings -->
-    <!-- Performance Settings : Processor settings title -->
     <string name="processor_title">Processor</string>
     <!-- Performance Settings : Processor settings summary. -->
     <string name="processor_summary">Change CPU governor and clock speed</string>
@@ -509,6 +508,7 @@
 
     <!-- Power menu enable disable -->
     <string name="power_menu_title">Power menu</string>
+    <string name="power_menu_expanded_desktop">Expanded desktop</string>
     <string name="power_menu_reboot_title">Reboot menu</string>
     <string name="power_menu_screenshot_title">Screenshot</string>
     <string name="power_menu_profiles_title">Profile switcher</string>
@@ -1104,4 +1104,12 @@
     <string name="title_clock_doubleclick">Clock double click actions</string>
     <string name="title_clock_longclick">Clock long click actions</string>
     <string name="title_clock_shortclick">Clock short click actions</string>
+
+    <!-- Expanded Desktop -->
+    <string name="summary_expanded_desktop">%1$s</string>
+    <string name="expanded_desktop_summary">Show or change expanded desktop mode</string>
+    <string name="expanded_desktop_disabled">Off</string>
+    <string name="expanded_desktop_only_nav_bar">Hide navigation bar</string>
+    <string name="expanded_desktop_only_status_bar">Hide status bar</string>
+    <string name="expanded_desktop_both_hidden">Hide navigation and status bar</string>
 </resources>
