@@ -67,9 +67,13 @@ public class PowerMenu extends SettingsPreferenceFragment implements
         mExpandedDesktopPref = (ListPreference) prefSet.findPreference(KEY_EXPANDED_DESKTOP);
         mExpandedDesktopPref.setOnPreferenceChangeListener(this);
         int expandedDesktopValue = Settings.System.getInt(getContentResolver(),
-                        Settings.System.EXPANDED_DESKTOP_MODE, 0);
+                Settings.System.EXPANDED_DESKTOP_MODE, 0);
         mExpandedDesktopPref.setValue(String.valueOf(expandedDesktopValue));
         mExpandedDesktopPref.setSummary(mExpandedDesktopPref.getEntries()[expandedDesktopValue]);
+
+        mProfilesPref = (CheckBoxPreference) findPreference(KEY_PROFILES);
+        mProfilesPref.setChecked((Settings.System.getInt(getContentResolver(),
+                Settings.System.POWER_MENU_PROFILES_ENABLED, 1) == 1));
 
         // Only enable if System Profiles are also enabled
         boolean enabled = Settings.System.getInt(getContentResolver(),
