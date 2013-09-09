@@ -30,6 +30,13 @@
             android:fragment="com.android.settings.demented.NotificationDrawerStyle"
             android:title="@string/notification_style_title" />
 
+        <PreferenceScreen
+            android:id="@+id/demented_notification_shortcuts"
+            android:key="demented_shortcuts_settings"
+            android:fragment="com.android.settings.demented.notificationshortcuts.NotificationShortcuts"
+            android:title="@string/notification_shortcuts_settings_title"
+            android:summary="@string/notification_shortcuts_settings_summary" />
+
     </PreferenceCategory>
 
     <!-- Notification drawer Power Widget -->
