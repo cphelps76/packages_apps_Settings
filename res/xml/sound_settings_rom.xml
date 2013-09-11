@@ -19,29 +19,60 @@
     android:title="@string/sound_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <ListPreference
-        android:key="volume_overlay"
-        android:title="@string/volume_overlay_title"
-        android:entries="@array/volume_overlay_entries"
-        android:entryValues="@array/volume_overlay_values" />
+    <PreferenceCategory
+        android:key="general_settings"
+        android:title="@string/general_settings_title">
 
-    <com.android.settings.demented.IncreasingRingPreference
-        android:key="increasing_ring"
-        android:title="@string/increasing_ring_title"
-        android:dialogTitle="@string/increasing_ring_title"
-        android:persistent="false"
-        android:streamType="ring" />
+        <ListPreference
+            android:key="volume_overlay"
+            android:title="@string/volume_overlay_title"
+            android:entries="@array/volume_overlay_entries"
+            android:entryValues="@array/volume_overlay_values" />
 
-    <CheckBoxPreference
-        android:key="safe_headset_restore"
-        android:title="@string/safe_headset_restore_title"
-        android:summary="@string/safe_headset_restore_summary"
-        android:defaultValue="true" />
+        <com.android.settings.demented.IncreasingRingPreference
+            android:key="increasing_ring"
+            android:title="@string/increasing_ring_title"
+            android:dialogTitle="@string/increasing_ring_title"
+            android:persistent="false"
+            android:streamType="ring" />
 
-    <CheckBoxPreference
-        android:key="volbtn_music_controls"
-        android:title="@string/volbtn_music_controls_title"
-        android:summary="@string/volbtn_music_controls_summary"
-        android:persistent="false" />
+        <CheckBoxPreference
+            android:key="safe_headset_restore"
+            android:title="@string/safe_headset_restore_title"
+            android:summary="@string/safe_headset_restore_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="volbtn_music_controls"
+            android:title="@string/volbtn_music_controls_title"
+            android:summary="@string/volbtn_music_controls_summary"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="power_notifications"
+        android:title="@string/power_notifications_category_title">
+
+        <CheckBoxPreference
+            android:key="power_notifications"
+            android:title="@string/power_notifications_enable_title"
+            android:defaultValue="false"
+            android:persistent="false" />
+
+        <CheckBoxPreference
+            android:key="power_notifications_vibrate"
+            android:title="@string/power_notifications_vibrate_title"
+            android:defaultValue="false"
+            android:dependency="power_notifications"
+            android:persistent="false" />
+
+        <Preference
+            android:key="power_notifications_ringtone"
+            android:title="@string/power_notifications_ringtone_title"
+            android:dependency="power_notifications"
+            android:persistent="false" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

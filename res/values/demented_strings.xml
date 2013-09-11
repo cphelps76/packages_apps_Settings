@@ -1200,4 +1200,11 @@
     <string name="notification_shortcuts_icon_picker_tv">TV</string>
     <string name="notification_shortcuts_icon_picker_twitter">Twitter</string>
     <string name="notification_shortcuts_icon_picker_unlock">Unlock</string>
+
+    <!-- Power connect / disconnect notifications -->
+    <string name="power_notifications_category_title">Power sounds</string>
+    <string name="power_notifications_enable_title">Enable</string>
+    <string name="power_notifications_vibrate_title">Vibrate</string>
+    <string name="power_notifications_ringtone_title">Notification sound</string>
+    <string name="power_notifications_ringtone_silent">Silent</string>
 </resources>
