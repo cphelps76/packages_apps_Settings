@@ -51,7 +51,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="power_notifications"
+        android:key="power_notifications_title"
         android:title="@string/power_notifications_category_title">
 
         <CheckBoxPreference
