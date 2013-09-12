@@ -473,16 +473,14 @@
     <string name="increasing_ring_interval_3seconds">3 seconds</string>
     <string name="increasing_ring_interval_5seconds">5 seconds</string>
     <string name="increasing_ring_interval_10seconds">10 seconds</string>
-
     <string name="link_volume_ringtones">Link ringtone &amp; notifications volumes</string>
     <string name="link_volume_mutes">Silent mode affects notifications</string>
-
-    <!-- Sound settings screen -->
     <string name="volume_overlay_title">Volume panel style</string>
     <string name="volume_ring_only_description">Ringtone</string>
 
     <!-- Sound settings screen -->
     <string name="sound_title">Sound</string>
+    <string name="silent_mode_title">Silent mode</string>
     <string name="volbtn_music_controls_title">Volume rocker music controls</string>
     <string name="volbtn_music_controls_summary">When screen off, long-pressing the volume rockers will seek music tracks</string>
     <!-- Safe headset volume restore checkbox -->
