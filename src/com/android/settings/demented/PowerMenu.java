@@ -18,6 +18,8 @@ package com.android.settings.demented;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.UserHandle;
+import android.os.UserManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -37,6 +39,7 @@ public class PowerMenu extends SettingsPreferenceFragment implements
     private static final String KEY_EXPANDED_DESKTOP = "power_menu_expanded_desktop";
     private static final String KEY_PROFILES = "power_menu_profiles";
     private static final String KEY_AIRPLANE = "power_menu_airplane";
+    private static final String KEY_USER = "power_menu_user";
     private static final String KEY_SILENT = "power_menu_silent";
     private static final String PREF_NAVBAR_HIDE = "show_navbar_hide";
 
@@ -45,6 +48,7 @@ public class PowerMenu extends SettingsPreferenceFragment implements
     private ListPreference mExpandedDesktopPref;
     private CheckBoxPreference mProfilesPref;
     private CheckBoxPreference mAirplanePref;
+    private CheckBoxPreference mUserPref;
     private CheckBoxPreference mSilentPref;
     private CheckBoxPreference mShowNavBarHide;
 
@@ -83,6 +87,15 @@ public class PowerMenu extends SettingsPreferenceFragment implements
         mAirplanePref = (CheckBoxPreference) findPreference(KEY_AIRPLANE);
         mAirplanePref.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.POWER_MENU_AIRPLANE_ENABLED, 1) == 1));
+
+        mUserPref = (CheckBoxPreference) findPreference(KEY_USER);
+        if (!UserHandle.MU_ENABLED
+            || !UserManager.supportsMultipleUsers()) {
+            getPreferenceScreen().removePreference(mUserPref);
+        } else {
+            mUserPref.setChecked((Settings.System.getInt(getContentResolver(),
+                    Settings.System.POWER_MENU_USER_ENABLED, 0) == 1));
+        }
 
         mSilentPref = (CheckBoxPreference) findPreference(KEY_SILENT);
         mSilentPref.setChecked((Settings.System.getInt(getContentResolver(),
@@ -137,6 +150,11 @@ public class PowerMenu extends SettingsPreferenceFragment implements
             value = mAirplanePref.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.POWER_MENU_AIRPLANE_ENABLED,
+                    value ? 1 : 0);
+       } else if (preference == mUserPref) {
+            value = mUserPref.isChecked();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.POWER_MENU_USER_ENABLED,
                     value ? 1 : 0);
         } else if (preference == mSilentPref) {
             value = mSilentPref.isChecked();
