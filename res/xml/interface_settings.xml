@@ -64,6 +64,15 @@
         </PreferenceScreen>
 
         <PreferenceScreen
+            android:key="demented_app_ops"
+            android:title="@string/demented_app_ops_title"
+            android:summary="@string/demented_app_ops_summary">
+            <intent android:action="android.intent.action.MAIN"
+                    android:targetPackage="com.android.settings"
+                    android:targetClass="com.android.settings.Settings$AppOpsSummaryActivity" />
+        </PreferenceScreen>
+
+        <PreferenceScreen
             android:id="@+id/performance_settings"
             android:key="performance_settings"
             android:fragment="com.android.settings.demented.PerformanceSettings"
