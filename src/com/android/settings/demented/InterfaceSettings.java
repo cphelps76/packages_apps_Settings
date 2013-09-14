@@ -58,7 +58,6 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_BATTERY_LIGHT = "battery_light";
     private static final String KEY_LOCK_CLOCK = "lock_clock";
-    private static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
     private static final String KEY_POWER_CRT_MODE = "system_power_crt_mode";
     private static final String KEY_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off";
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
@@ -67,7 +66,6 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
-    private CheckBoxPreference mKillAppLongpressBack;
     private ListPreference mCrtMode;
     private CheckBoxPreference mCrtOff;
     private static ContentResolver mContentResolver;
@@ -134,8 +132,6 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
             }
         }
 
-        mKillAppLongpressBack = findAndInitCheckboxPref(KILL_APP_LONGPRESS_BACK);
-
         boolean isCrtOffChecked = (Settings.System.getBoolean(mContentResolver,
                         Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF, true));
         mCrtOff = (CheckBoxPreference) findPreference(KEY_POWER_CRT_SCREEN_OFF);
@@ -177,23 +173,11 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
         if (mBatteryPulse != null) {
             updateBatteryPulseDescription();
         }
-        updateKillAppLongpressBackOptions();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-    }
-
-    private void writeKillAppLongpressBackOptions() {
-        Settings.Global.putInt(getActivity().getContentResolver(),
-                Settings.Global.KILL_APP_LONGPRESS_BACK,
-                mKillAppLongpressBack.isChecked() ? 1 : 0);
-    }
-
-    private void updateKillAppLongpressBackOptions() {
-        mKillAppLongpressBack.setChecked(Settings.Global.getInt(
-            getActivity().getContentResolver(), Settings.Global.KILL_APP_LONGPRESS_BACK, 0) != 0);
     }
 
     private boolean removePreferenceIfPackageNotInstalled(Preference preference) {
@@ -234,9 +218,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mKillAppLongpressBack) {
-            writeKillAppLongpressBackOptions();
-        } else if (preference == mCrtOff) {
+        if (preference == mCrtOff) {
             Settings.System.putBoolean(mContentResolver,
                     Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF,
                     ((TwoStatePreference) preference).isChecked());
