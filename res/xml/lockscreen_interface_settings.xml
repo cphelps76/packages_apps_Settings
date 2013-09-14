@@ -93,6 +93,11 @@
             android:title="@string/lockscreen_camera_widget_title"
             android:summary="@string/lockscreen_camera_widget_summary" />
 
+        <CheckBoxPreference
+            android:key="lockscreen_use_widget_container_carousel"
+            android:title="@string/lockscreen_use_widget_container_carousel_title"
+            android:summary="@string/lockscreen_use_widget_container_carousel_summary" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -64,6 +64,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
     private static final String KEY_WIDGET_OPTIONS = "lockscreen_widgets_group";
     private static final String KEY_LOCKSCREEN_CAMERA_WIDGET = "lockscreen_camera_widget";
     private static final String KEY_LOCKSCREEN_ALL_WIDGETS = "lockscreen_all_widgets";
+    private static final String PREF_LOCKSCREEN_USE_CAROUSEL = "lockscreen_use_widget_container_carousel";
 
     private PreferenceScreen mLockscreenButtons;
     private PreferenceCategory mAdditionalOptions;
@@ -73,6 +74,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
     private CheckBoxPreference mLockscreenHints;
     private CheckBoxPreference mCameraWidget;
     private CheckBoxPreference mAllWidgets;
+    private CheckBoxPreference mLockscreenUseCarousel;
 
     private int mUnsecureUnlockMethod;
     private boolean mIsScreenLarge;
@@ -135,6 +137,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
         mAllWidgets = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_ALL_WIDGETS);
         mAllWidgets.setChecked(Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.KG_ALL_WIDGETS, 1) == 1);
+
+        mLockscreenUseCarousel = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_USE_CAROUSEL);
+        mLockscreenUseCarousel.setChecked(Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_USE_WIDGET_CONTAINER_CAROUSEL, 0) == 1);
 
         float bgAlpha;
         try{
@@ -203,6 +209,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
         } else if (preference == mAllWidgets) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.KG_ALL_WIDGETS, mAllWidgets.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mLockscreenUseCarousel) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.LOCKSCREEN_USE_WIDGET_CONTAINER_CAROUSEL, mLockscreenUseCarousel.isChecked() ? 1 : 0);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);

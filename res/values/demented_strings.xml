@@ -1216,4 +1216,6 @@
     <string name="lockscreen_enable_widgets_summary">Ability to add widgets on lockscreen</string>
     <string name="lockscreen_camera_widget_title">Enable camera widget</string>
     <string name="lockscreen_camera_widget_summary">Shows camera widget on lockscreen</string>
+    <string name="lockscreen_use_widget_container_carousel_title">Widget Carousel</string>
+    <string name="lockscreen_use_widget_container_carousel_summary">Use carousel animation when switching between lockscreen widgets.</string>
 </resources>
