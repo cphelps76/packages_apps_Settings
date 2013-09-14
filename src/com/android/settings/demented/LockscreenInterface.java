@@ -62,6 +62,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
     private static final String KEY_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
     private static final String KEY_LOCKSCREEN_DISABLE_HINTS = "lockscreen_disable_hints";
     private static final String KEY_WIDGET_OPTIONS = "lockscreen_widgets_group";
+    private static final String KEY_LOCKSCREEN_CAMERA_WIDGET = "lockscreen_camera_widget";
+    private static final String KEY_LOCKSCREEN_ALL_WIDGETS = "lockscreen_all_widgets";
 
     private PreferenceScreen mLockscreenButtons;
     private PreferenceCategory mAdditionalOptions;
@@ -69,6 +71,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
     private SeekBarPreference mBgAlpha;
     private CheckBoxPreference mMaximizeWidgets;
     private CheckBoxPreference mLockscreenHints;
+    private CheckBoxPreference mCameraWidget;
+    private CheckBoxPreference mAllWidgets;
 
     private int mUnsecureUnlockMethod;
     private boolean mIsScreenLarge;
@@ -123,6 +127,14 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
         mCustomBackground.setOnPreferenceChangeListener(this);
         wallpaperImage = new File(mActivity.getFilesDir()+"/lockwallpaper");
         wallpaperTemporary = new File(mActivity.getCacheDir()+"/lockwallpaper.tmp");
+
+        mCameraWidget = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_CAMERA_WIDGET);
+        mCameraWidget.setChecked(Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.KG_CAMERA_WIDGET, 0) == 1);
+
+        mAllWidgets = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_ALL_WIDGETS);
+        mAllWidgets.setChecked(Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.KG_ALL_WIDGETS, 1) == 1);
 
         float bgAlpha;
         try{
@@ -183,6 +195,14 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
         } else if (preference == mLockscreenHints) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.LOCKSCREEN_DISABLE_HINTS, mLockscreenHints.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mCameraWidget) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.KG_CAMERA_WIDGET, mCameraWidget.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mAllWidgets) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.KG_ALL_WIDGETS, mAllWidgets.isChecked() ? 1 : 0);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);

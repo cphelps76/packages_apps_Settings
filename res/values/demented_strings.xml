@@ -1210,4 +1210,10 @@
     <string name="power_notifications_vibrate_title">Vibrate</string>
     <string name="power_notifications_ringtone_title">Notification sound</string>
     <string name="power_notifications_ringtone_silent">Silent</string>
+
+    <!-- Keyguard Widgets -->
+    <string name="lockscreen_enable_widgets_title">Enable lock screen widgets</string>
+    <string name="lockscreen_enable_widgets_summary">Ability to add widgets on lockscreen</string>
+    <string name="lockscreen_camera_widget_title">Enable camera widget</string>
+    <string name="lockscreen_camera_widget_summary">Shows camera widget on lockscreen</string>
 </resources>
