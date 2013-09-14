@@ -30,6 +30,7 @@
     <string name="general_settings_title">General</string>
     <string name="notification_drawer_title">Notification Drawer</string>
     <string name="demented_navbar">Navbar / Ribbons</string>
+    <string name="toggle_setup">Toggle Setup</string>
 
     <!-- App Ops -->
     <string name="demented_app_ops_title">DEMENTED Permissions</string>

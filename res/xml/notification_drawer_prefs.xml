@@ -34,8 +34,7 @@
             android:id="@+id/demented_notification_shortcuts"
             android:key="demented_shortcuts_settings"
             android:fragment="com.android.settings.demented.notificationshortcuts.NotificationShortcuts"
-            android:title="@string/notification_shortcuts_settings_title"
-            android:summary="@string/notification_shortcuts_settings_summary" />
+            android:title="@string/notification_shortcuts_settings_title" />
 
     </PreferenceCategory>
 
@@ -51,7 +50,6 @@
         <PreferenceScreen
             android:key="widget_picker"
             android:title="@string/title_widget_picker"
-            android:summary="@string/summary_widget_picker"
             android:dependency="expanded_widget"
             android:fragment="com.android.settings.demented.PowerWidget$PowerWidgetChooser">
         </PreferenceScreen>
@@ -59,7 +57,6 @@
         <PreferenceScreen
             android:key="widget_order"
             android:title="@string/title_widget_order"
-            android:summary="@string/summary_widget_order"
             android:dependency="expanded_widget"
             android:fragment="com.android.settings.demented.PowerWidget$PowerWidgetOrder">
         </PreferenceScreen>

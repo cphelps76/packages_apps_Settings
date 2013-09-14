@@ -43,8 +43,7 @@
 
         <CheckBoxPreference
             android:key="statusbar_hidden"
-            android:title="@string/statusbar_hide_title"
-            android:summary="@string/statusbar_hide_summary" />
+            android:title="@string/statusbar_hide_title" />
 
     </PreferenceCategory>
 
@@ -55,8 +54,7 @@
         <PreferenceScreen
             android:key="advanced_settings"
             android:id="@+id/advanced_settings"
-            android:title="@string/advanced_device_settings_title"
-            android:summary="@string/advanced_device_settings_summary">
+            android:title="@string/advanced_device_settings_title">
         <intent
                 android:action="com.cyanogenmod.action.LAUNCH_DEVICE_SETTINGS"
                 android:targetPackage="com.cyanogenmod.settings.device"
@@ -65,8 +63,7 @@
 
         <PreferenceScreen
             android:key="demented_app_ops"
-            android:title="@string/demented_app_ops_title"
-            android:summary="@string/demented_app_ops_summary">
+            android:title="@string/demented_app_ops_title">
             <intent android:action="android.intent.action.MAIN"
                     android:targetPackage="com.android.settings"
                     android:targetClass="com.android.settings.Settings$AppOpsSummaryActivity" />
@@ -80,8 +77,7 @@
 
         <PreferenceScreen
             android:key="lock_clock"
-            android:title="@string/lock_clock_title"
-            android:summary="@string/lock_clock_summary">
+            android:title="@string/lock_clock_title">
             <intent android:action="android.intent.action.MAIN"
                     android:targetPackage="com.cyanogenmod.lockclock"
                     android:targetClass="com.cyanogenmod.lockclock.preference.Preferences" />
@@ -111,20 +107,17 @@
         <PreferenceScreen
             android:key="nav_bar"
             android:fragment="com.android.settings.demented.Navbar"
-            android:title="@string/title_navbar"
-            android:summary="@string/header_summary_navigation_bar" />
+            android:title="@string/title_navbar" />
 
         <PreferenceScreen
             android:key="nav_ring"
             android:fragment="com.android.settings.demented.NavRingTargets"
-            android:title="@string/interface_navring_settings_title"
-            android:summary="@string/interface_navring_settings_summary" />
+            android:title="@string/interface_navring_settings_title" />
 
         <PreferenceScreen
             android:key="ribbons"
             android:fragment="com.android.settings.demented.RibbonTargets"
-            android:title="@string/ribbon_settings_title"
-            android:summary="@string/ribbon_settings_summary" />
+            android:title="@string/ribbon_settings_title" />
 
     </PreferenceCategory>
 
@@ -134,7 +127,6 @@
 
         <CheckBoxPreference
             android:key="system_power_crt_screen_off"
-            android:summary="@string/system_power_crt_screen_off_summary"
             android:title="@string/system_power_crt_screen_off_title" />
 
         <ListPreference
@@ -148,7 +140,6 @@
         <CheckBoxPreference
             android:key="force_dualpanel"
             android:title="@string/multipane_ui"
-            android:summary="@string/multipane_ui_summary"
             android:defaultValue="false" />
 
         <PreferenceScreen
@@ -163,8 +154,7 @@
 
         <CheckBoxPreference
             android:key="kill_app_longpress_back"
-            android:title="@string/kill_app_longpress_back"
-            android:summary="@string/kill_app_longpress_back_summary"/>
+            android:title="@string/kill_app_longpress_back" />
 
     </PreferenceCategory>
 

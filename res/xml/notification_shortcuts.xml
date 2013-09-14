@@ -18,41 +18,52 @@
         android:title="@string/notification_shortcuts_settings_title"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <SwitchPreference android:key="pref_notification_shortcuts_toggle"
-        android:title="@string/notification_shortcuts_settings_title"
-        android:summary="@string/notification_shortcuts_settings_summary"
-        android:defaultValue="false">
-    </SwitchPreference>
+    <PreferenceCategory
+        android:key="notification_shortcuts"
+        android:title="@string/notification_shortcuts_settings_title">
 
-    <ListPreference android:key="pref_notification_shortcuts_quantity"
-        android:entries="@array/notification_shortcuts_quantity_entries"
-        android:title="@string/notification_shortcuts_quantity_title"
-        android:entryValues="@array/notification_shortcuts_quantity_values"
-        android:summary="@string/notification_shortcuts_quantity_summary"
-        android:dependency="pref_notification_shortcuts_toggle"
-        android:defaultValue="6" />
+        <SwitchPreference 
+            android:key="pref_notification_shortcuts_toggle"
+            android:title="@string/notification_shortcuts_settings_title"
+            android:defaultValue="false">
+        </SwitchPreference>
 
-    <net.margaritov.preference.colorpicker.ColorPickerPreference
-        android:key="pref_notification_shortcuts_color"
-        android:defaultValue="#DFE0E0"
-        android:title="@string/notification_shortcuts_color_title"
-        android:dependency="pref_notification_shortcuts_toggle"
-        android:summary="@string/notification_shortcuts_color_summary" />
+        <ListPreference 
+            android:key="pref_notification_shortcuts_quantity"
+            android:entries="@array/notification_shortcuts_quantity_entries"
+            android:title="@string/notification_shortcuts_quantity_title"
+            android:entryValues="@array/notification_shortcuts_quantity_values"
+            android:dependency="pref_notification_shortcuts_toggle"
+            android:defaultValue="6" />
 
-    <CheckBoxPreference android:key="pref_notification_shortcuts_colorize_toggle"
-        android:title="@string/notification_shortcuts_colorize_toggle_title"
-        android:summary="@string/notification_shortcuts_colorize_toggle_summary"
-        android:dependency="pref_notification_shortcuts_toggle" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="pref_notification_shortcuts_color"
+            android:defaultValue="#DFE0E0"
+            android:title="@string/notification_shortcuts_color_title"
+            android:dependency="pref_notification_shortcuts_toggle" />
 
-    <PreferenceCategory android:key="pref_notification_shortcuts_list"
-        android:title="@string/notification_shortcuts_title" />
+        <CheckBoxPreference 
+            android:key="pref_notification_shortcuts_colorize_toggle"
+            android:title="@string/notification_shortcuts_colorize_toggle_title"
+            android:dependency="pref_notification_shortcuts_toggle" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_notification_shortcuts_list"
+        android:title="@string/notification_shortcuts_title">
+
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:dependency="pref_notification_shortcuts_toggle"
-        android:title="@string/notification_shortcuts_category_reset_title" />
+        android:title="@string/notification_shortcuts_category_reset_title">
 
-    <Preference android:key="pref_notification_shortcuts_reset"
-        android:dependency="pref_notification_shortcuts_toggle"
-        android:title="@string/notification_shortcuts_reset_title">
-    </Preference>
+        <Preference 
+            android:key="pref_notification_shortcuts_reset"
+            android:dependency="pref_notification_shortcuts_toggle"
+            android:title="@string/notification_shortcuts_reset_title" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

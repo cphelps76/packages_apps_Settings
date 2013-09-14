@@ -49,15 +49,13 @@
         <ListPreference
 	    android:key="clock_weekday"
 	    android:title="@string/enable_clock_weekday"
-	    android:summary="@string/enable_clock_weekday_summary"
 	    android:entries="@array/clock_weekday_entries"
 	    android:entryValues="@array/clock_weekday_values" />
 
         <PreferenceScreen
 	    android:key="clock_clicks"
 	    android:title="@string/clock_clicks_title"
-	    android:fragment="com.android.settings.demented.ClockClicks"
-	    android:summary="@string/clock_clicks_summary" />
+	    android:fragment="com.android.settings.demented.ClockClicks" />
 
     </PreferenceCategory>
 
@@ -97,8 +95,7 @@
 
 	<CheckBoxPreference
 	    android:key="battery_bar_animate"
-            android:title="@string/battery_bar_animate_title"
-	    android:summary="@string/battery_bar_animate_summary" />
+            android:title="@string/battery_bar_animate_title" />
 
 	<net.margaritov.preference.colorpicker.ColorPickerPreference
 	    android:key="battery_bar_color"
@@ -120,13 +117,11 @@
         <CheckBoxPreference
             android:key="missed_call_breath"
             android:title="@string/missed_call_breath"
-            android:summary="@string/missed_call_breath_summary"
             android:defaultValue="false" />
 
         <CheckBoxPreference
             android:key="mms_breath"
             android:title="@string/mms_breath"
-            android:summary="@string/mms_breath_summary"
             android:defaultValue="false" />
 
     </PreferenceCategory>
@@ -145,7 +140,6 @@
         <CheckBoxPreference
             android:key="status_bar_notif_count"
             android:title="@string/status_bar_notif_count_title"
-            android:summary="@string/status_bar_notif_count_summary"
             android:defaultValue="false" />
 
     </PreferenceCategory>
