@@ -19,6 +19,11 @@
 			demented:twitterHandle="davros"
 			demented:donateLink="@string/donate_davros" />
 
+		<com.android.settings.demented.DeveloperPreference
+			android:title="EmericanX"
+			demented:twitterHandle="emericanx"
+			demented:donateLink="@string/donate_EmericanX" />
+
 	</PreferenceCategory>
 
 	<PreferenceCategory

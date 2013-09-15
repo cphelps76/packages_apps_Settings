@@ -499,6 +499,7 @@
     <!-- About DEMENTED Droid -->
     <string name="donate_cphelps76">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=8K47ZJGFZHES2</string>
     <string name="donate_davros">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=KS7YFYDCVY7HU</string>
+    <string name="donate_EmericanX">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=lifebeginsfriday@gmail.com&amp;lc=US&amp;currency_code=USD&amp;bn=PP-DonationsBF:btn_donate_SM.gif:NonHosted</string>
     <string name="devs">Developers</string>
     <string name="demented">DEMENTED Droid</string>
     <string name="dc_website_title">DC Website</string>
