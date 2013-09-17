@@ -49,9 +49,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="advanced_catagory"
+       android:key="advanced_catagory"
        android:title="@string/advanced_catagory_title">
-
 
          <PreferenceScreen
              android:fragment="com.android.settings.demented.LockscreenButtons"

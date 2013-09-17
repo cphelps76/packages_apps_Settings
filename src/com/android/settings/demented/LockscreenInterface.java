@@ -54,7 +54,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
 
     private static final int LOCKSCREEN_BACKGROUND = 1024;
 
-    private static final String KEY_ADDITIONAL_OPTIONS = "options_group";
+    private static final String KEY_ADVANCED_CATAGORY = "advanced_catagory";
     private static final String KEY_SLIDER_OPTIONS = "slider_group";
     private static final String KEY_LOCKSCREEN_BUTTONS = "lockscreen_buttons";
     private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
@@ -66,7 +66,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
     private static final String KEY_LOCKSCREEN_ALL_WIDGETS = "lockscreen_all_widgets";
     private static final String PREF_LOCKSCREEN_USE_CAROUSEL = "lockscreen_use_widget_container_carousel";
 
-    private PreferenceCategory mAdditionalOptions;
+    private PreferenceScreen mLockscreenButtons;
+    private PreferenceCategory mAdvancedCatagory;
     private ListPreference mCustomBackground;
     private SeekBarPreference mBgAlpha;
     private CheckBoxPreference mMaximizeWidgets;
@@ -82,6 +83,9 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
     private ContentResolver mResolver;
     private File wallpaperImage;
     private File wallpaperTemporary;
+    public boolean hasButtons() {
+        return !getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,7 +108,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
         prefs = getPreferenceScreen();
         Preference mPref;
 
-        mAdditionalOptions = (PreferenceCategory) prefs.findPreference(KEY_ADDITIONAL_OPTIONS);
+        mAdvancedCatagory = (PreferenceCategory) prefs.findPreference(KEY_ADVANCED_CATAGORY);
 
         mMaximizeWidgets = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS);
         if (!Utils.isPhone(getActivity())) {
@@ -154,9 +158,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
         mBgAlpha.setProperty(Settings.System.LOCKSCREEN_ALPHA);
         mBgAlpha.setOnPreferenceChangeListener(this);
 
-        // Remove lockscreen buttons if not supported.
-        removePreferenceIfBoolFalse(KEY_LOCKSCREEN_BUTTONS,
-                R.bool.config_hasbuttons);
+        mLockscreenButtons = (PreferenceScreen) findPreference(KEY_LOCKSCREEN_BUTTONS);
+        if (!hasButtons()) {
+            mAdvancedCatagory.removePreference(mLockscreenButtons);
+	}
 
         mUnsecureUnlockMethod = Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.LOCKSCREEN_UNSECURE_USED, 1);
@@ -168,15 +173,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements P
         }
         updateCustomBackgroundSummary();
         return prefs;
-    }
-
-    private void removePreferenceIfBoolFalse(String preference, int resId) {
-        if (!getResources().getBoolean(resId)) {
-            Preference pref = findPreference(preference);
-            if (pref != null) {
-                getPreferenceScreen().removePreference(pref);
-            }
-        }
     }
 
     @Override
