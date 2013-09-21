@@ -22,7 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
-import android.net.wifi.p2p.WifiP2pManager;
+import android.net.NetworkInfo;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.SystemProperties;
@@ -82,6 +82,93 @@ public class WirelessSettings extends SettingsPreferenceFragment
         }
         // Let the intents be launched by the Preference manager
         return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mNfcPollingMode) {
+            int newVal = Integer.parseInt((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.NFC_POLLING_MODE, newVal);
+            updateNfcPolling();
+            return true;
+        }
+        return false;
+    }
+
+    private String mManageMobilePlanMessage;
+    private static final String CONNECTED_TO_PROVISIONING_NETWORK_ACTION
+            = "com.android.server.connectivityservice.CONNECTED_TO_PROVISIONING_NETWORK_ACTION";
+    public void onManageMobilePlanClick() {
+        log("onManageMobilePlanClick:");
+        mManageMobilePlanMessage = null;
+        Resources resources = getActivity().getResources();
+
+        NetworkInfo ni = mCm.getProvisioningOrActiveNetworkInfo();
+        if (mTm.hasIccCard() && (ni != null)) {
+            // Get provisioning URL
+            String url = mCm.getMobileProvisioningUrl();
+            if (!TextUtils.isEmpty(url)) {
+                Intent intent = new Intent(CONNECTED_TO_PROVISIONING_NETWORK_ACTION);
+                intent.putExtra("EXTRA_URL", url);
+                Context context = getActivity().getBaseContext();
+                context.sendBroadcast(intent);
+                mManageMobilePlanMessage = null;
+            } else {
+                // No provisioning URL
+                String operatorName = mTm.getSimOperatorName();
+                if (TextUtils.isEmpty(operatorName)) {
+                    // Use NetworkOperatorName as second choice in case there is no
+                    // SPN (Service Provider Name on the SIM). Such as with T-mobile.
+                    operatorName = mTm.getNetworkOperatorName();
+                    if (TextUtils.isEmpty(operatorName)) {
+                        mManageMobilePlanMessage = resources.getString(
+                                R.string.mobile_unknown_sim_operator);
+                    } else {
+                        mManageMobilePlanMessage = resources.getString(
+                                R.string.mobile_no_provisioning_url, operatorName);
+                    }
+                } else {
+                    mManageMobilePlanMessage = resources.getString(
+                            R.string.mobile_no_provisioning_url, operatorName);
+                }
+            }
+        } else if (mTm.hasIccCard() == false) {
+            // No sim card
+            mManageMobilePlanMessage = resources.getString(R.string.mobile_insert_sim_card);
+        } else {
+            // NetworkInfo is null, there is no connection
+            mManageMobilePlanMessage = resources.getString(R.string.mobile_connect_to_internet);
+        }
+        if (!TextUtils.isEmpty(mManageMobilePlanMessage)) {
+            log("onManageMobilePlanClick: message=" + mManageMobilePlanMessage);
+            showDialog(MANAGE_MOBILE_PLAN_DIALOG_ID);
+        }
+    }
+
+    @Override
+    public Dialog onCreateDialog(int dialogId) {
+        log("onCreateDialog: dialogId=" + dialogId);
+        switch (dialogId) {
+            case MANAGE_MOBILE_PLAN_DIALOG_ID:
+                return new AlertDialog.Builder(getActivity())
+                            .setMessage(mManageMobilePlanMessage)
+                            .setCancelable(false)
+                            .setPositiveButton(com.android.internal.R.string.ok,
+                                    new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    log("MANAGE_MOBILE_PLAN_DIALOG.onClickListener id=" + id);
+                                    mManageMobilePlanMessage = null;
+                                }
+                            })
+                            .create();
+        }
+        return super.onCreateDialog(dialogId);
+    }
+
+    private void log(String s) {
+        Log.d(TAG, s);
     }
 
     public static boolean isRadioAllowed(Context context, String type) {
