@@ -107,6 +107,7 @@ public class InstalledAppDetails extends Fragment
     private AppWidgetManager mAppWidgetManager;
     private DevicePolicyManager mDpm;
     private ISms mSmsManager;
+    private INotificationManager mNotificationManager;
     private ApplicationsState mState;
     private ApplicationsState.Session mSession;
     private ApplicationsState.AppEntry mAppEntry;
@@ -414,6 +415,10 @@ public class InstalledAppDetails extends Fragment
         mDpm = (DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
         mSmsManager = ISms.Stub.asInterface(ServiceManager.getService("isms"));
 
+        mCanBeOnSdCardChecker = new CanBeOnSdCardChecker();
+
+        mNotificationManager = INotificationManager.Stub.asInterface(
+                ServiceManager.getService(Context.NOTIFICATION_SERVICE));
         mCanBeOnSdCardChecker = new CanBeOnSdCardChecker();
 
         // Need to make sure we have loaded applications at this point.
