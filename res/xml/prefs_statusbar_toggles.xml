@@ -17,6 +17,14 @@
             android:key="toggles_style"
             android:title="@string/toggles_style_title" />
 
+        <CheckBoxPreference
+            android:key="collapse_shade_all"
+            android:title="@string/toggle_collapse_generic_title" />
+
+        <CheckBoxPreference
+            android:key="quick_toggle_vibrate"
+            android:title="@string/toggle_vibrate_title" />
+
         <ListPreference
             android:entries="@array/toggles_per_row_entries"
             android:entryValues="@array/toggles_per_row_values"
