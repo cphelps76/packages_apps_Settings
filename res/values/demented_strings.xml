@@ -34,7 +34,7 @@
     <string name="reset_button">Reset</string>
 
     <!-- App Ops -->
-    <string name="demented_app_ops_title">DEMENTED Operations</string>
+    <string name="demented_app_ops_title">DEMENTED Permissions</string>
 
     <!-- Addition security options -->
     <string name="additional_security_options_title">Additonal Security</string>
