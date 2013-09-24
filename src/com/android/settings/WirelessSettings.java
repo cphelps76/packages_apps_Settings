@@ -17,10 +17,14 @@
 package com.android.settings;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.nfc.NfcAdapter;
@@ -28,13 +32,13 @@ import android.os.Bundle;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Switch;
-
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+import android.util.Log;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.settings.nfc.NfcEnabler;
@@ -53,8 +57,10 @@ public class WirelessSettings extends SettingsPreferenceFragment
     private static final String KEY_TETHER_SETTINGS = "tether_settings";
     private static final String KEY_PROXY_SETTINGS = "proxy_settings";
     private static final String KEY_MOBILE_NETWORK_SETTINGS = "mobile_network_settings";
+    private static final String KEY_MANAGE_MOBILE_PLAN = "manage_mobile_plan";
     private static final String KEY_TOGGLE_NSD = "toggle_nsd"; //network service discovery
     private static final String KEY_CELL_BROADCAST_SETTINGS = "cell_broadcast_settings";
+    private static final String KEY_NFC_POLLING_MODE = "nfc_polling_mode";
 
     public static final String EXIT_ECM_RESULT = "exit_ecm_result";
     public static final int REQUEST_CODE_EXIT_ECM = 1;
@@ -64,6 +70,13 @@ public class WirelessSettings extends SettingsPreferenceFragment
     private NfcEnabler mNfcEnabler;
     private NfcAdapter mNfcAdapter;
     private NsdEnabler mNsdEnabler;
+    private ListPreference mNfcPollingMode;
+
+    private ConnectivityManager mCm;
+    private TelephonyManager mTm;
+
+    private static final int MANAGE_MOBILE_PLAN_DIALOG_ID = 1;
+    private static final String SAVED_MANAGE_MOBILE_PLAN_MSG = "mManageMobilePlanMessage";
 
     /**
      * Invoked on each preference click in this hierarchy, overrides
@@ -72,6 +85,7 @@ public class WirelessSettings extends SettingsPreferenceFragment
      */
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        log("onPreferenceTreeClick: preference=" + preference);
         if (preference == mAirplaneModePreference && Boolean.parseBoolean(
                 SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE))) {
             // In ECM mode launch ECM app dialog
@@ -79,6 +93,8 @@ public class WirelessSettings extends SettingsPreferenceFragment
                 new Intent(TelephonyIntents.ACTION_SHOW_NOTICE_ECM_BLOCK_OTHERS, null),
                 REQUEST_CODE_EXIT_ECM);
             return true;
+        } else if (preference == findPreference(KEY_MANAGE_MOBILE_PLAN)) {
+            onManageMobilePlanClick();
         }
         // Let the intents be launched by the Preference manager
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -184,6 +200,13 @@ public class WirelessSettings extends SettingsPreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mManageMobilePlanMessage = savedInstanceState.getString(SAVED_MANAGE_MOBILE_PLAN_MSG);
+        }
+        log("onCreate: mManageMobilePlanMessage=" + mManageMobilePlanMessage);
+
+        mCm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        mTm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
         addPreferencesFromResource(R.xml.wireless_settings);
 
@@ -195,8 +218,14 @@ public class WirelessSettings extends SettingsPreferenceFragment
         PreferenceScreen androidBeam = (PreferenceScreen) findPreference(KEY_ANDROID_BEAM_SETTINGS);
         CheckBoxPreference nsd = (CheckBoxPreference) findPreference(KEY_TOGGLE_NSD);
 
+        mNfcPollingMode = (ListPreference) findPreference(KEY_NFC_POLLING_MODE);
+        mNfcPollingMode.setOnPreferenceChangeListener(this);
+        mNfcPollingMode.setValue(String.valueOf(Settings.System.getInt(activity.getContentResolver(), 
+                Settings.System.NFC_POLLING_MODE, 3)));
+        updateNfcPolling();
+
         mAirplaneModeEnabler = new AirplaneModeEnabler(activity, mAirplaneModePreference);
-        mNfcEnabler = new NfcEnabler(activity, nfc, androidBeam);
+        mNfcEnabler = new NfcEnabler(activity, nfc, androidBeam, mNfcPollingMode);
 
         // Remove NSD checkbox by default
         getPreferenceScreen().removePreference(nsd);
@@ -242,13 +271,15 @@ public class WirelessSettings extends SettingsPreferenceFragment
         mNfcAdapter = NfcAdapter.getDefaultAdapter(activity);
         if (mNfcAdapter == null) {
             getPreferenceScreen().removePreference(nfc);
+            getPreferenceScreen().removePreference(mNfcPollingMode);
             getPreferenceScreen().removePreference(androidBeam);
             mNfcEnabler = null;
         }
 
-        // Remove Mobile Network Settings if it's a wifi-only device.
+        // Remove Mobile Network Settings and Manage Mobile Plan if it's a wifi-only device.
         if (isSecondaryUser || Utils.isWifiOnly(getActivity())) {
             removePreference(KEY_MOBILE_NETWORK_SETTINGS);
+            removePreference(KEY_MANAGE_MOBILE_PLAN);
         }
 
         // Enable Proxy selector settings if allowed.
@@ -290,6 +321,25 @@ public class WirelessSettings extends SettingsPreferenceFragment
         }
     }
 
+    private void updateNfcPolling() {
+        int resId;
+        String value = Settings.System.getString(getContentResolver(),
+                Settings.System.NFC_POLLING_MODE);
+        String[] pollingArray = getResources().getStringArray(R.array.nfc_polling_mode_values);
+
+        if (pollingArray[0].equals(value)) {
+            resId = R.string.nfc_polling_mode_screen_off;
+            mNfcPollingMode.setValueIndex(0);
+        } else if (pollingArray[1].equals(value)) {
+            resId = R.string.nfc_polling_mode_screen_locked;
+            mNfcPollingMode.setValueIndex(1);
+        } else {
+            resId = R.string.nfc_polling_mode_screen_unlocked;
+            mNfcPollingMode.setValueIndex(2);
+        }
+        mNfcPollingMode.setSummary(getResources().getString(resId));
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -300,6 +350,15 @@ public class WirelessSettings extends SettingsPreferenceFragment
         }
         if (mNsdEnabler != null) {
             mNsdEnabler.resume();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (!TextUtils.isEmpty(mManageMobilePlanMessage)) {
+            outState.putString(SAVED_MANAGE_MOBILE_PLAN_MSG, mManageMobilePlanMessage);
         }
     }
 

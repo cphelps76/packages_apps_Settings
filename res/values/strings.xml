@@ -1274,6 +1274,10 @@
     <string name="android_beam_label">Android Beam</string>
     <!-- Explanation of the Android Beam feature in the Android Beam settings panel. The use of "beam" here is as a verb and not considered trademarked. [CHAR LIMIT=NONE] -->
     <string name="android_beam_explained">When this feature is turned on, you can beam app content to another NFC-capable device by holding the devices close together. For example, you can beam Browser pages, YouTube videos, People contacts, and more.\n\nJust bring the devices together (typically back to back) and then touch your screen. The app determines what gets beamed.</string>
+    <string name="nfc_polling_mode_title">NFC polling mode</string>
+    <string name="nfc_polling_mode_screen_off">Screen off</string>
+    <string name="nfc_polling_mode_screen_locked">Screen on, locked</string>
+    <string name="nfc_polling_mode_screen_unlocked">Screen on, unlocked (default)</string>
 
     <!-- Network service discovery settings -->
     <!-- Used in the 1st-level settings screen to turn on NSD -->
@@ -2341,6 +2345,21 @@
 
     <!-- Wireless controls, item title to go into the network settings -->
     <string name="network_settings_title">Mobile networks</string>
+
+    <!-- Manage mobile plan [CHAR LIMIT=35]-->
+    <string name="manage_mobile_plan_title" translatable="true">Manage mobile plan</string>
+
+    <!-- The SIM operator is not known [CHAR_ LIMIT=50]-->
+    <string name="mobile_unknown_sim_operator" translatable="true">Uknown SIM operator</string>
+
+    <!-- There is no mobile provisiong website for the operator which is the firat parameter [CHAR_ LIMIT=50]-->
+    <string name="mobile_no_provisioning_url" translatable="true">%1$s has no known provisioning website</string>
+
+    <!-- Ask user to insert a SIM card [CHAR_ LIMIT=50]-->
+    <string name="mobile_insert_sim_card" translatable="true">Please insert SIM card and restart</string>
+
+    <!-- Ask user to connect to the internet [CHAR_ LIMIT=50]-->
+    <string name="mobile_connect_to_internet" translatable="true">Please connect to the internet</string>
 
     <!-- Security & location settings screen, section header for settings relating to location -->
     <string name="location_title">My Location</string>
