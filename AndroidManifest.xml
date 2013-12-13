@@ -1674,6 +1674,10 @@
         </activity>
 
         <activity android:name=".cyanogenmod.AutoBrightnessSetup"
+        <!-- DEMENTED activities Start -->
+        <activity android:name=".cyanogenmod.BatteryBarStyle" />
+        <!-- Gummy activities End -->
+
                 android:excludeFromRecents="true"
                 android:theme="@*android:style/Theme.Holo.Dialog.Alert" />
 
