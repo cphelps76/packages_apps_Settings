@@ -99,11 +99,16 @@
                 style="?android:preferenceInformationStyle"
                 android:title="@string/model_number"
                 android:summary="@string/device_info_default"/>
-                
+
         <!-- Device firmware version -->
         <Preference android:key="firmware_version" 
                 style="?android:preferenceInformationStyle"
                 android:title="@string/firmware_version"
+                android:summary="@string/device_info_default"/>
+
+        <!-- Device hardware processor info -->
+        <Preference android:key="device_processor"
+                android:title="@string/processor_info"
                 android:summary="@string/device_info_default"/>
 
         <!-- Device FCC equipment id -->
