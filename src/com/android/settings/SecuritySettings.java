@@ -166,11 +166,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
                     break;
             }
         }
-
-        if(!( Utils.platformHasMbxUiMode() && mLockPatternUtils.isLockScreenDisabled())){
-			addPreferencesFromResource(resid);
-		}
-
+        addPreferencesFromResource(resid);
 
         // Add options for device encryption
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
