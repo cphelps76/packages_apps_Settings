@@ -96,7 +96,7 @@ public class DateTimeSettings extends SettingsPreferenceFragment
         mAutoTimeZonePref = (CheckBoxPreference) findPreference(KEY_AUTO_TIME_ZONE);
         // Override auto-timezone if it's a wifi-only device or if we're still in setup wizard.
         // TODO: Remove the wifiOnly test when auto-timezone is implemented based on wifi-location.
-        if (Utils.isWifiOnly(getActivity()) || isFirstRun) {
+        if (Utils.isWifiOnly(getActivity()) || isFirstRun || Utils.platformHasMbxUiMode()) {
             getPreferenceScreen().removePreference(mAutoTimeZonePref);
             autoTimeZoneEnabled = false;
         }

@@ -85,14 +85,7 @@ public class StorageMeasurement {
      * {@link StorageVolume}, or internal storage if {@code null}.
      */
     public static StorageMeasurement getInstance(Context context, StorageVolume volume) {
-        synchronized (sInstances) {
-            StorageMeasurement value = sInstances.get(volume);
-            if (value == null) {
-                value = new StorageMeasurement(context.getApplicationContext(), volume);
-                sInstances.put(volume, value);
-            }
-            return value;
-        }
+        return new StorageMeasurement(context.getApplicationContext(), volume);
     }
 
     public static class MeasurementDetails {
@@ -432,7 +425,11 @@ public class StorageMeasurement {
             // will be spliced in later
             for (UserInfo user : users) {
                 final UserEnvironment userEnv = new UserEnvironment(user.id);
-                final long size = getDirectorySize(imcs, userEnv.getExternalStorageDirectory());
+                long size = getDirectorySize(imcs, userEnv.getExternalStorageDirectory());
+                File extFile = new File(userEnv.getExternalStorageDirectory().toString()+"/external_storage");
+                final long extSize = getDirectorySize(imcs, extFile);
+                if(size >= extSize)
+                    size -= extSize;
                 addValue(details.usersSize, user.id, size);
             }
 
@@ -459,7 +456,7 @@ public class StorageMeasurement {
         }
     }
 
-    private static long getDirectorySize(IMediaContainerService imcs, File path) {
+    private long getDirectorySize(IMediaContainerService imcs, File path) {
         try {
             final long size = imcs.calculateDirectorySize(path.toString());
             Log.d(TAG, "getDirectorySize(" + path + ") returned " + size);
@@ -473,6 +470,7 @@ public class StorageMeasurement {
     private long measureMisc(IMediaContainerService imcs, File dir) {
         mFileInfoForMisc = new ArrayList<FileInfo>();
 
+        String extPath = dir.getAbsolutePath()+"/external_storage";
         final File[] files = dir.listFiles();
         if (files == null) return 0;
 
@@ -483,7 +481,12 @@ public class StorageMeasurement {
         for (File file : files) {
             final String path = file.getAbsolutePath();
             final String name = file.getName();
-            if (sMeasureMediaTypes.contains(name)) {
+            
+            /*if (sMeasureMediaTypes.contains(name)) {
+                continue;
+            }*/
+
+            if(path.startsWith(extPath)) {
                 continue;
             }
 

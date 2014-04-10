@@ -36,8 +36,10 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.provider.MediaStore;
 import android.text.format.Formatter;
+import android.util.Log;
 
 import com.android.settings.R;
+import com.android.settings.Utils;
 import com.android.settings.deviceinfo.StorageMeasurement.MeasurementDetails;
 import com.android.settings.deviceinfo.StorageMeasurement.MeasurementReceiver;
 import com.google.android.collect.Lists;
@@ -200,8 +202,28 @@ public class StorageVolumePreferenceCategory extends PreferenceCategory {
         // Always create the preference since many code rely on it existing
         mMountTogglePreference = new Preference(context);
         if (isRemovable) {
-            mMountTogglePreference.setTitle(R.string.sd_eject);
-            mMountTogglePreference.setSummary(R.string.sd_eject_summary);
+            mMountTogglePreference = new Preference(context);
+            if(mVolume != null)
+            {
+                String description = mVolume.getDescription(context);
+                Log.d(getClass().getName(), "description is: " + description);
+                if(description != null && (description.contains("SD") || description.contains("sd")))
+                {
+                    mMountTogglePreference.setTitle(R.string.sd_eject);
+                    mMountTogglePreference.setSummary(R.string.sd_eject_summary);
+                }
+                else if(description != null && (description.contains("USB") || description.contains("usb")
+                        || description.contains("Usb")))
+                {
+                    mMountTogglePreference.setTitle(R.string.usb_storage_eject);
+                    mMountTogglePreference.setSummary(R.string.usb_storage_eject_summary);
+                }
+            }
+            else
+            {
+                mMountTogglePreference.setTitle(R.string.sd_eject);
+                mMountTogglePreference.setSummary(R.string.sd_eject_summary);
+            }
             addPreference(mMountTogglePreference);
         }
 
@@ -215,7 +237,7 @@ public class StorageVolumePreferenceCategory extends PreferenceCategory {
 
         final IPackageManager pm = ActivityThread.getPackageManager();
         try {
-            if (pm.isStorageLow()) {
+            if (pm.isStorageLow() && mVolume==null) {
                 mStorageLow = new Preference(context);
                 mStorageLow.setOrder(ORDER_STORAGE_LOW);
                 mStorageLow.setTitle(R.string.storage_low_title);
@@ -236,6 +258,7 @@ public class StorageVolumePreferenceCategory extends PreferenceCategory {
     private void updatePreferencesFromState() {
         // Only update for physical volumes
         if (mVolume == null) return;
+        if (mMountTogglePreference == null) return;
 
         mMountTogglePreference.setEnabled(true);
 
@@ -243,6 +266,9 @@ public class StorageVolumePreferenceCategory extends PreferenceCategory {
 
         if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
             mItemAvailable.setTitle(R.string.memory_available_read_only);
+            if (mFormatPreference != null) {
+                removePreference(mFormatPreference);
+            }
         } else {
             mItemAvailable.setTitle(R.string.memory_available);
         }
@@ -250,18 +276,87 @@ public class StorageVolumePreferenceCategory extends PreferenceCategory {
         if (Environment.MEDIA_MOUNTED.equals(state)
                 || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
             mMountTogglePreference.setEnabled(true);
-            mMountTogglePreference.setTitle(mResources.getString(R.string.sd_eject));
-            mMountTogglePreference.setSummary(mResources.getString(R.string.sd_eject_summary));
+            // mMountTogglePreference.setTitle(mResources.getString(R.string.sd_eject));
+            // mMountTogglePreference.setSummary(mResources.getString(R.string.sd_eject_summary));
+            if(mVolume != null)
+            {
+                String description = mVolume.getDescription(getContext());
+                Log.d(getClass().getName(), "description is: " + description);
+                if(description != null && (description.contains("SD") || description.contains("sd")))
+                {
+                    mMountTogglePreference.setTitle(R.string.sd_eject);
+                    mMountTogglePreference.setSummary(R.string.sd_eject_summary);
+                }
+                
+                if(description != null && (description.contains("USB") || description.contains("usb")
+                        || description.contains("Usb")))
+                {
+                    mMountTogglePreference.setTitle(R.string.usb_storage_eject);
+                    mMountTogglePreference.setSummary(R.string.usb_storage_eject_summary);
+                }
+            }
+            else
+            {
+                mMountTogglePreference.setTitle(R.string.sd_eject);
+                mMountTogglePreference.setSummary(R.string.sd_eject_summary);
+            }
+            addPreference(mUsageBarPreference);
+            addPreference(mItemTotal);
+            addPreference(mItemAvailable);
         } else {
             if (Environment.MEDIA_UNMOUNTED.equals(state) || Environment.MEDIA_NOFS.equals(state)
                     || Environment.MEDIA_UNMOUNTABLE.equals(state)) {
                 mMountTogglePreference.setEnabled(true);
-                mMountTogglePreference.setTitle(mResources.getString(R.string.sd_mount));
-                mMountTogglePreference.setSummary(mResources.getString(R.string.sd_mount_summary));
+                
+                if(mVolume != null)
+                {
+                    String description = mVolume.getDescription(getContext());
+                    Log.d(getClass().getName(), "description is: " + description);
+                    if(description != null && (description.contains("SD") || description.contains("sd")))
+                    {
+                        mMountTogglePreference.setTitle(mResources.getString(R.string.sd_mount));
+                        mMountTogglePreference.setSummary(mResources.getString(R.string.sd_mount_summary));
+                    }
+                    
+                    if(description != null && (description.contains("USB") || description.contains("usb")
+                            || description.contains("Usb")))
+                    {
+                        mMountTogglePreference.setTitle(mResources.getString(R.string.usb_storage_mount));
+                        mMountTogglePreference.setSummary(
+                                mResources.getString(R.string.usb_storage_mount_summary));
+                    }
+                }
+                else
+                {
+                    mMountTogglePreference.setTitle(mResources.getString(R.string.sd_mount));
+                    mMountTogglePreference.setSummary(mResources.getString(R.string.sd_mount_summary));
+                }
             } else {
                 mMountTogglePreference.setEnabled(false);
-                mMountTogglePreference.setTitle(mResources.getString(R.string.sd_mount));
-                mMountTogglePreference.setSummary(mResources.getString(R.string.sd_insert_summary));
+                
+                if(mVolume != null)
+                {
+                    String description = mVolume.getDescription(getContext());
+                    Log.d(getClass().getName(), "description is: " + description);
+                    if(description != null && (description.contains("SD") || description.contains("sd")))
+                    {
+                        mMountTogglePreference.setTitle(mResources.getString(R.string.sd_mount));
+                        mMountTogglePreference.setSummary(mResources.getString(R.string.sd_insert_summary));
+                    }
+                    
+                    if(description != null && (description.contains("USB") || description.contains("usb")
+                            || description.contains("Usb")))
+                    {
+                        mMountTogglePreference.setTitle(mResources.getString(R.string.usb_storage_mount));
+                        mMountTogglePreference.setSummary(
+                                mResources.getString(R.string.usb_storage_insert_summary));
+                    }
+                }
+                else
+                {
+                    mMountTogglePreference.setTitle(mResources.getString(R.string.sd_mount));
+                    mMountTogglePreference.setSummary(mResources.getString(R.string.sd_insert_summary));
+                }
             }
 
             removePreference(mUsageBarPreference);
