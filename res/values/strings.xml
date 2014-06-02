@@ -5079,7 +5079,9 @@
     <string name="hdmi_auto_switch">Enable auto switch</string>
     <string name="hdmi_auto_switch_on">Auto switch ON</string>
     <string name="hdmi_auto_switch_off">Auto switch OFF</string>     
-    
+
+    <string name="gbox_launcher_settings_title">G-BoxLauncher</string>
+
     <string name="drc_mode_title">DRC Mode</string>
     <string name="drc_mode_summary">DRC Mode</string>
     <string name="drc_title">DRC</string>
