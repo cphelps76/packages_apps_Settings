@@ -173,8 +173,7 @@ public class Settings extends PreferenceActivity
             R.id.about_settings,
             R.id.accessibility_settings,
             R.id.print_settings,
-            R.id.nfc_payment_settings,
-            R.id.home_settings
+            R.id.nfc_payment_settings
     };
 
     private SharedPreferences mDevelopmentPreferences;
@@ -600,10 +599,6 @@ public class Settings extends PreferenceActivity
             } else if (id == R.id.account_settings) {
                 int headerIndex = i + 1;
                 i = insertAccountsHeaders(target, headerIndex);
-            } else if (id == R.id.home_settings) {
-                if (!updateHomeSettingHeaders(header)) {
-                    target.remove(i);
-                }
             } else if (id == R.id.user_settings) {
                 if (!UserHandle.MU_ENABLED
                         || !UserManager.supportsMultipleUsers()
