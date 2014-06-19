@@ -426,10 +426,6 @@ public class StorageMeasurement {
             for (UserInfo user : users) {
                 final UserEnvironment userEnv = new UserEnvironment(user.id);
                 long size = getDirectorySize(imcs, userEnv.getExternalStorageDirectory());
-                File extFile = new File(userEnv.getExternalStorageDirectory().toString()+"/external_storage");
-                final long extSize = getDirectorySize(imcs, extFile);
-                if(size >= extSize)
-                    size -= extSize;
                 addValue(details.usersSize, user.id, size);
             }
 
@@ -470,7 +466,6 @@ public class StorageMeasurement {
     private long measureMisc(IMediaContainerService imcs, File dir) {
         mFileInfoForMisc = new ArrayList<FileInfo>();
 
-        String extPath = dir.getAbsolutePath()+"/external_storage";
         final File[] files = dir.listFiles();
         if (files == null) return 0;
 
@@ -481,12 +476,7 @@ public class StorageMeasurement {
         for (File file : files) {
             final String path = file.getAbsolutePath();
             final String name = file.getName();
-            
-            /*if (sMeasureMediaTypes.contains(name)) {
-                continue;
-            }*/
-
-            if(path.startsWith(extPath)) {
+            if(sMeasureMediaTypes.contains(name)) {
                 continue;
             }
 

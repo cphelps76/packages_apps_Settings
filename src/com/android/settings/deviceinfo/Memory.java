@@ -65,6 +65,9 @@ public class Memory extends SettingsPreferenceFragment {
 
     private static final String TAG_CONFIRM_CLEAR_CACHE = "confirmClearCache";
 
+    private static final String SD_PATH = "/storage/sdcard1";
+    private static final String USB_PATH ="/storage/usb";
+
     private static final int DLG_CONFIRM_UNMOUNT = 1;
     private static final int DLG_ERROR_UNMOUNT = 2;
     private static final int DLG_CONFIRM_UNMOUNT_USB_STORAGE = 3;
@@ -102,14 +105,7 @@ public class Memory extends SettingsPreferenceFragment {
         final StorageVolume[] storageVolumes = mStorageManager.getVolumeList();
         for (StorageVolume volume : storageVolumes) {
             if (!volume.isEmulated()) {
-                String path = volume.getPath(); 
-                String state = mStorageManager.getVolumeState(path);
-                if(((!path.equals(SD_PATH))&&path.startsWith(USB_PATH+"/sd"))&&(!(Environment.MEDIA_MOUNTED.equals(state)))) {
-                    continue;
-                }
-                else {
-                    addCategory(StorageVolumePreferenceCategory.buildForPhysical(context, volume));
-                }
+                addCategory(StorageVolumePreferenceCategory.buildForPhysical(context, volume));
             }
         }
 
@@ -158,43 +154,17 @@ public class Memory extends SettingsPreferenceFragment {
         }
     }
 
-    private static final String SD_PATH = "/storage/external_storage/sdcard1";
-    private static final String USB_PATH ="/storage/external_storage";
     StorageEventListener mStorageListener = new StorageEventListener() {
         @Override
         public void onStorageStateChanged(String path, String oldState, String newState) {
             Log.i(TAG, "Received storage state changed notification that " + path +
                     " changed state from " + oldState + " to " + newState);
-            if(Environment.MEDIA_REMOVED.equals(newState)){
-                if(path.startsWith(USB_PATH+"/sd")){
-                    if(!path.equals(SD_PATH)){
-                        for (StorageVolumePreferenceCategory category : mCategories) {
-                            StorageVolume volume = category.getStorageVolume();
-                            if(volume != null && path.equals(volume.getPath())){
-                                mIsUsbCategoryAdded = false ;
-                                delCategory(category);
-                                category.onResume();
-                                break ;
-                            }
-                        }
-                    }
-                }
-            }else if( Environment.MEDIA_MOUNTED.equals(newState)){
-                if(path.startsWith(USB_PATH+"/sd")){
-                    if(!path.equals(SD_PATH)){                      
-                        StorageVolume[] mVolumes = mStorageManager.getVolumeList();
-                        for (StorageVolume volume : mVolumes) {
-                            if(volume != null&& path.equals(volume.getPath())&&!mIsUsbCategoryAdded){
-                                StorageVolumePreferenceCategory category = StorageVolumePreferenceCategory.buildForPhysical(mContext, volume);
-                                mIsUsbCategoryAdded = true ;
-                                addCategory(category);
-                            }
-                        }
-                    }
-                }
-            }
             for (StorageVolumePreferenceCategory category : mCategories) {
-                category.onResume();
+                final StorageVolume volume = category.getStorageVolume();
+                if (volume != null && path.equals(volume.getPath())){
+                    category.onResume();
+                    break ;
+                }
             }
         }
     };
