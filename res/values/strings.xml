@@ -809,7 +809,7 @@
     <!-- Title of the progress screen while encrypting the device -->
     <string name="crypt_keeper_setup_title">Encrypting</string>
     <!-- Informational text on the progress screen while encrypting the device -->
-    <string name="crypt_keeper_setup_description" product="mbx">Wait while your mbx
+    <string name="crypt_keeper_setup_description" product="mbx">Wait while your G-Box
     is being encrypted. <xliff:g id="percent" example="50">^1</xliff:g>% complete.</string>
     <!-- Informational text on the progress screen while encrypting the device -->
     <string name="crypt_keeper_setup_description" product="tablet">Wait while your tablet
@@ -2900,7 +2900,7 @@
     <!-- [CHAR_LIMIT=NONE] Manage applications, individual application info screen, text that appears under the "Permissions" heading.
          This describes the permissions that the application has.  It is used when multiple packages are contributing
          to the permissions and need to be listed here. -->
-    <string name="security_settings_desc_multi" product="mbx">This app can access the following on your mbx.
+    <string name="security_settings_desc_multi" product="mbx">This app can access the following on your G-Box.
          In order to improve performance and reduce memory usage, some of these permissions
          are available to <xliff:g id="base_app_name">%1$s</xliff:g>
          because it runs in the same process as <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
@@ -3535,7 +3535,7 @@
     <string name="accessibility_service_security_warning_summary" product="mbx">
             <xliff:g id="accessibility_service_name">%1$s</xliff:g> can
             collect all of the text you type, except passwords. This includes personal data such as credit card
-            numbers. It can also collect data about your interactions with the mbx.</string>
+            numbers. It can also collect data about your interactions with the G-Box.</string>
     <!-- Summary for a warning message about security implications of enabling an accessibility service,
          displayed as a dialog message when the user selects to enable an accessibility service (tablet). [CHAR LIMIT=NONE] -->
     <string name="accessibility_service_security_warning_summary" product="tablet">
