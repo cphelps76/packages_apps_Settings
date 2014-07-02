@@ -1387,7 +1387,6 @@
     <string name="accessibility_toggle_screen_magnification_preference_title" msgid="2472285215737820469">"स्क्रीन आवर्धन"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_title" msgid="7218498768415430963">"स्क्रीन आवर्धन का नई जानकारी अपने आप पाएं"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_summary" msgid="4392059334816220155">"ऐप्स  संक्रमणों पर स्क्रीन आवर्धन का नई जानकारी पाएं"</string>
-    <string name="accessibility_power_button_ends_call_prerefence_title" msgid="6673851944175874235">"पावर बटन कॉल बंद करता है"</string>
     <string name="accessibility_toggle_speak_password_preference_title" msgid="5986628515113204844">"पासवर्ड बोलें"</string>
     <string name="accessibility_long_press_timeout_preference_title" msgid="6708467774619266508">"स्‍पर्श करके रखने का विलंब"</string>
     <string name="accessibility_menu_item_settings" msgid="3344942964710773365">"सेटिंग"</string>

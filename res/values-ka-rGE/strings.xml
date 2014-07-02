@@ -1387,7 +1387,6 @@
     <string name="accessibility_toggle_screen_magnification_preference_title" msgid="2472285215737820469">"მასშტაბი"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_title" msgid="7218498768415430963">"ეკრანის მასშტაბის ავტომატური განახლება"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_summary" msgid="4392059334816220155">"ეკრანის მასშტაბის განახლება ერთი აპიდან მეორეზე გადასვლისას"</string>
-    <string name="accessibility_power_button_ends_call_prerefence_title" msgid="6673851944175874235">"ზარი შეწყდება ჩართვის ღილაკზე დაჭერით"</string>
     <string name="accessibility_toggle_speak_password_preference_title" msgid="5986628515113204844">"პაროლების წარმოთქმა"</string>
     <string name="accessibility_long_press_timeout_preference_title" msgid="6708467774619266508">"შეხება და დაყოვნება"</string>
     <string name="accessibility_menu_item_settings" msgid="3344942964710773365">"პარამეტრები"</string>

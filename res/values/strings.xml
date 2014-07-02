@@ -3446,8 +3446,6 @@
     <!-- Summary for the accessibility preference to auto update screen magnification. [CHAR LIMIT=50] -->
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_summary">Update
         screen magnification on app transitions</string>
-    <!-- Title for the accessibility preference to power button to end a call. [CHAR LIMIT=35] -->
-    <string name="accessibility_power_button_ends_call_prerefence_title">Power button ends call</string>
     <!-- Title for the accessibility preference to speak passwords. [CHAR LIMIT=35] -->
     <string name="accessibility_toggle_speak_password_preference_title">Speak passwords</string>
     <!-- Title for accessibility preference to choose long-press delay i.e. timeout before it is detected. [CHAR LIMIT=35] -->

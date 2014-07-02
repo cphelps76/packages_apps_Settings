@@ -1387,7 +1387,6 @@
     <string name="accessibility_toggle_screen_magnification_preference_title" msgid="2472285215737820469">"ការពង្រីក​អេក្រង់"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_title" msgid="7218498768415430963">"ធ្វើ​បច្ចុប្បន្នភាព​ការ​ពង្រីក​អេក្រង់​ស្វ័យប្រវត្តិ"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_summary" msgid="4392059334816220155">"ធ្វើ​បច្ចុប្បន្ន​ភាព​ការ​ពង្រីក​អេក្រង់​ពេល​មាន​ដំណើរ​ផ្លាស់​ប្ដូរ​កម្មវិធី"</string>
-    <string name="accessibility_power_button_ends_call_prerefence_title" msgid="6673851944175874235">"ប៊ូតុង​បិទ/បើក​បញ្ចប់​ការ​ហៅ"</string>
     <string name="accessibility_toggle_speak_password_preference_title" msgid="5986628515113204844">"និយាយ​ពាក្យ​សម្ងាត់"</string>
     <string name="accessibility_long_press_timeout_preference_title" msgid="6708467774619266508">"ប៉ះ &amp; សង្កត់​ឲ្យ​យូរ"</string>
     <string name="accessibility_menu_item_settings" msgid="3344942964710773365">"ការ​កំណត់"</string>

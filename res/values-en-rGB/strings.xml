@@ -1387,7 +1387,6 @@
     <string name="accessibility_toggle_screen_magnification_preference_title" msgid="2472285215737820469">"Screen magnification"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_title" msgid="7218498768415430963">"Auto update screen magnification"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_summary" msgid="4392059334816220155">"Update screen magnification on app transitions"</string>
-    <string name="accessibility_power_button_ends_call_prerefence_title" msgid="6673851944175874235">"Power button ends call"</string>
     <string name="accessibility_toggle_speak_password_preference_title" msgid="5986628515113204844">"Speak passwords"</string>
     <string name="accessibility_long_press_timeout_preference_title" msgid="6708467774619266508">"Touch &amp; hold delay"</string>
     <string name="accessibility_menu_item_settings" msgid="3344942964710773365">"Settings"</string>

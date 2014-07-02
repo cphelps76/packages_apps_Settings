@@ -1387,7 +1387,6 @@
     <string name="accessibility_toggle_screen_magnification_preference_title" msgid="2472285215737820469">"Ekraanisuurendus"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_title" msgid="7218498768415430963">"Ekraanisuurenduse värskendus"</string>
     <string name="accessibility_toggle_screen_magnification_auto_update_preference_summary" msgid="4392059334816220155">"Ekraanisuurenduse kasutus rakenduste vahetamisel"</string>
-    <string name="accessibility_power_button_ends_call_prerefence_title" msgid="6673851944175874235">"Toitenupp lõpetab kõne"</string>
     <string name="accessibility_toggle_speak_password_preference_title" msgid="5986628515113204844">"Paroolide ettelugemine"</string>
     <string name="accessibility_long_press_timeout_preference_title" msgid="6708467774619266508">"Puudutage ja hoidke viivitust"</string>
     <string name="accessibility_menu_item_settings" msgid="3344942964710773365">"Seaded"</string>
