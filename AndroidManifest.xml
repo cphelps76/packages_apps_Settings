@@ -1952,5 +1952,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name="net.margaritov.preference.colorpicker" />
+
     </application>
 </manifest>
