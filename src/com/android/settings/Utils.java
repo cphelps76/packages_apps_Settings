@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.SystemWriteManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -76,6 +77,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class Utils {
+
+    public static final String TAG = Utils.class.getSimpleName();
 
     /**
      * Set the preference's title to the matching activity's label.
@@ -749,5 +752,13 @@ public class Utils {
             // when the process for whatever reason can't be killed
         }
         return value;
+    }
+
+    public static void writeSysfs(SystemWriteManager sw, String path, String value) {
+        if (sw == null || path == null || value == null) {
+            Log.d(TAG, "Condition of writeSysfs is null");
+            return;
+        }
+        sw.writeSysfs(path, value);
     }
 }

@@ -18,18 +18,19 @@ package com.android.settings;
 
 import static android.provider.Settings.System.SCREEN_OFF_TIMEOUT;
 
+import android.app.Activity;
 import android.app.ActivityManagerNative;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.SystemWriteManager;
 import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+import android.content.*;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.hardware.display.HdmiManager;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -38,24 +39,25 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
-import android.app.SystemWriteManager;
+import android.view.*;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.android.internal.view.RotationPolicy;
 import com.android.settings.DreamSettings;
 
 import java.util.ArrayList;
 
-import android.os.SystemProperties;
-import android.app.Activity;
 public class DisplaySettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener, OnPreferenceClickListener {
+
     private static final String TAG = "DisplaySettings";
-	private ListPreference  mDisplayOutputmode;
+    private ListPreference  mDisplayOutputmode;
     private CharSequence[] mEntryValues;
     private int sel_index;
-	private int index_entry;
-	private static final int GET_USER_OPERATION=1;
-	private int index_cvbs;
+    private int index_entry;
+    private static final int GET_USER_OPERATION=1;
+    private int index_cvbs;
     private int select_cvbs;
     /** If there is no setting in the provider, use this. */
     private static final int FALLBACK_SCREEN_TIMEOUT_VALUE = 30000;
@@ -69,23 +71,44 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_SCREEN_SAVER = "screensaver";
     private static final String KEY_WALLPAPER = "wallpaper";
     private static final String KEY_AUTOBRIGHTNESS = "auto_brightness";
-
+    private static final String KEY_OUTPUT_MODE = "output_mode";
+    private static final String KEY_AUTO_ADJUST = "auto_adjust";
+    private static final String KEY_POSITION = "position";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
+    private static final int DLG_POSITION_CHANGE = 2;
+
     public static SystemWriteManager sw;
+    private static HdmiManager mHdmiManager;
 
     private CheckBoxPreference mAccelerometer;
     private WarnedListPreference mFontSizePref;
     private CheckBoxPreference mNotificationPulse;
+    private ListPreference mOutputModePref;
+    private CheckBoxPreference mAutoAdjustPref;
+    private Preference mPositionPref;
 
     private final Configuration mCurConfig = new Configuration();
-    
+
     private ListPreference mScreenTimeoutPreference;
     private Preference mScreenSaverPreference;
 
     private ListPreference  mDefaultFrequency;
     private static final String STR_DEFAULT_FREQUENCY_VAR="ubootenv.var.defaulttvfrequency";
     private CharSequence[] mDefaultFrequencyEntries;
+
+    private static float zoomStep = 4.0f; // defaulted to 1080p
+    private static float zoomStepWidth = 1.78f; //defaulted to 1080p
+
+    private static final int MAX_HEIGHT = 100;
+    private static final int MAX_WIDTH = 100;
+
+    private int mLeft, mTop, mWidth, mHeight, mRight, mBottom;
+    private int mNewLeft, mNewTop, mNewRight, mNewBottom;
+
+    private boolean mOriginWindowSet = false;
+
+    private static final int MENU_ID_HDMI_RESET = Menu.FIRST;
 
     private final RotationPolicy.RotationPolicyListener mRotationPolicyListener =
             new RotationPolicy.RotationPolicyListener() {
@@ -94,11 +117,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             updateAccelerometerRotationCheckbox();
         }
     };
-    
-    public void onDestroy(){
-        super.onDestroy();
-    }
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,16 +125,39 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         ContentResolver resolver = getActivity().getContentResolver();
 
         addPreferencesFromResource(R.xml.display_settings);
-		
+
+        sw = (SystemWriteManager)getSystemService("system_write");
+        mHdmiManager = (HdmiManager) getSystemService(Context.HDMI_SERVICE);
+
+        mOutputModePref = (ListPreference) findPreference(KEY_OUTPUT_MODE);
+        mOutputModePref.setOnPreferenceChangeListener(this);
+        mOutputModePref.setValue(mHdmiManager.getResolution());
+        mOutputModePref.setEntries(mHdmiManager.getAvailableResolutions());
+        mOutputModePref.setEntryValues(mHdmiManager.getAvailableResolutions());
+        mOutputModePref.setSummary(mHdmiManager.getResolution());
+
+        mPositionPref = findPreference(KEY_POSITION);
+        mPositionPref.setOnPreferenceClickListener(this);
+
+        mAutoAdjustPref = (CheckBoxPreference) findPreference(KEY_AUTO_ADJUST);
+        mAutoAdjustPref.setChecked(Settings.Secure.getInt(getContentResolver(),
+                Settings.Secure.HDMI_AUTO_ADJUST, 0) != 0);
+
+        if (!mHdmiManager.isHdmiPlugged()) {
+            // If user is using CVBS hide this preference, since all they will have is cvbs
+            getPreferenceScreen().removePreference(mOutputModePref);
+            // Using cvbs only usually provides one resolution, so remove auto adjust
+            getPreferenceScreen().removePreference(mAutoAdjustPref);
+        }
+
         String autoBrightness = SystemProperties.get("prop.sp.brightness","on");
         if(autoBrightness.equals("off")) {
-            getActivity().getSharedPreferences(AutoBrightnessSwitch.AUTO_PREF_NAME, 
+            getActivity().getSharedPreferences(AutoBrightnessSwitch.AUTO_PREF_NAME,
                             Context.MODE_PRIVATE).edit()
                        .putBoolean(AutoBrightnessSwitch.AUTO_PREF_ON_OFF, false).commit();
             getPreferenceScreen().removePreference(findPreference(KEY_AUTOBRIGHTNESS));
         }
-		
-        sw = (SystemWriteManager)getSystemService("system_write"); 
+
         mAccelerometer = (CheckBoxPreference) findPreference(KEY_ACCELEROMETER);
         mAccelerometer.setPersistent(false);
         if (!RotationPolicy.isRotationSupported(getActivity())
@@ -129,7 +171,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if ((mScreenSaverPreference != null
                 && getResources().getBoolean(
-                        com.android.internal.R.bool.config_dreamsSupported) == false) 
+                        com.android.internal.R.bool.config_dreamsSupported) == false)
 			|| (Utils.platformHasMbxUiMode())) {
             getPreferenceScreen().removePreference(mScreenSaverPreference);
         }
@@ -159,22 +201,23 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 Log.e(TAG, Settings.System.NOTIFICATION_LIGHT_PULSE + " not found");
             }
         }
-        
-        if(Utils.platformHasMbxUiMode()){
-        	getPreferenceScreen().removePreference(findPreference(KEY_WALLPAPER));
+
+        if (Utils.platformHasMbxUiMode()) {
+            getPreferenceScreen().removePreference(findPreference(KEY_WALLPAPER));
         }
 
-        if(!Utils.platformHasScreenBrightness()){
-        	getPreferenceScreen().removePreference(findPreference(KEY_Brightness));
-        }
-        
-        if(!Utils.platformHasScreenTimeout()){
-        	getPreferenceScreen().removePreference(mScreenTimeoutPreference);
+        if (!Utils.platformHasScreenBrightness()) {
+            getPreferenceScreen().removePreference(findPreference(KEY_Brightness));
         }
 
-        if(!Utils.platformHasScreenFontSize()){
-        	getPreferenceScreen().removePreference(mFontSizePref);
+        if (!Utils.platformHasScreenTimeout()) {
+            getPreferenceScreen().removePreference(mScreenTimeoutPreference);
         }
+
+        if (!Utils.platformHasScreenFontSize()) {
+            getPreferenceScreen().removePreference(mFontSizePref);
+        }
+
         if(Utils.platformHasDefaultTVFreq()){
     	    mDefaultFrequency = (ListPreference) findPreference(KEY_DEFAULT_FREQUENCY);
     	    mDefaultFrequency.setOnPreferenceChangeListener(this);
@@ -185,12 +228,30 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     	    }
     	    int index_DF = findIndexOfEntry(valDefaultFrequency, mDefaultFrequencyEntries);
     	    mDefaultFrequency.setValueIndex(index_DF);
-			mDefaultFrequency.setSummary(valDefaultFrequency);
-        }
-        else{
-        	getPreferenceScreen().removePreference(findPreference(KEY_DEFAULT_FREQUENCY));
+            mDefaultFrequency.setSummary(valDefaultFrequency);
+        } else {
+            getPreferenceScreen().removePreference(findPreference(KEY_DEFAULT_FREQUENCY));
         }
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(Menu.NONE, MENU_ID_HDMI_RESET, 0, R.string.hdmi_menu_reset)
+                .setEnabled(true)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_ID_HDMI_RESET:
+                reset();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void updateTimeoutPreferenceDescription(long currentTimeout) {
         ListPreference preference = mScreenTimeoutPreference;
         String summary;
@@ -275,7 +336,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         }
         return indices.length-1;
     }
-    
+
     public void readFontSizePreference(ListPreference pref) {
         try {
             mCurConfig.updateFrom(ActivityManagerNative.getDefault().getConfiguration());
@@ -293,10 +354,10 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         pref.setSummary(String.format(res.getString(R.string.summary_font_size),
                 fontSizeNames[index]));
     }
-    
+
     @Override
     public void onResume() {
-        super.onResume();       
+        super.onResume();
         updateState();
 
         RotationPolicy.registerRotationPolicyListener(getActivity(),
@@ -325,6 +386,91 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     });
         }
         return null;
+    }
+
+    private void reset() {
+        mHdmiManager.resetPosition();
+        mLeft = 0;
+        mRight = 0;
+        mWidth = mHdmiManager.getFullWidthPosition();
+        mHeight = mHdmiManager.getFullHeightPosition();
+    }
+
+    private void initPosition() {
+        final int[] position = mHdmiManager.getPosition(mHdmiManager.getResolution());
+        mLeft = position[0];
+        mTop = position[1];
+        mWidth = position[2];
+        mHeight = position[3];
+        mRight = mWidth;// + mLeft;
+        mBottom = mHeight;// + mTop;
+        Log.d(TAG, "left=" + mLeft + " top=" + mTop + " width=" + mWidth + " height=" + mHeight + " right=" + mRight + " bottom=" + mBottom);
+        mNewLeft = mLeft;
+        mNewTop = mTop;
+        mNewRight = mRight;
+        mNewBottom = mBottom;
+        if (!mHdmiManager.isRealOutputMode()) {
+            sw.writeSysfs(mHdmiManager.FREESCALE_FB0, "1");
+            sw.writeSysfs(mHdmiManager.FREESCALE_FB1, "1");
+        } else if (mHdmiManager.getResolution().contains("720")
+                || mHdmiManager.getResolution().contains("1080")) {
+            if (mLeft == 0 && mTop == 0) {
+                setOriginWindowForFreescale();
+            }
+        }
+    }
+
+    private void setOriginWindowForFreescale() {
+        if (!mOriginWindowSet) {
+            mOriginWindowSet = true;
+
+            sw.writeSysfs(mHdmiManager.FREESCALE_MODE, "1");
+            sw.writeSysfs(mHdmiManager.FREESCALE_AXIS, "0 0 " + mWidth + " " + mHeight);
+            sw.writeSysfs(mHdmiManager.FREESCALE_FB0, "0x10001");
+        }
+    }
+
+    private void initSteps() {
+        String resolution = mHdmiManager.getResolution();
+        if (resolution.contains("480")) {
+            zoomStep = 2.0f;
+            zoomStepWidth = 1.50f;
+        } else if (resolution.contains("576")) {
+            zoomStep = 2.0f;
+            zoomStepWidth = 1.25f;
+        } else if (resolution.contains("720")) {
+            zoomStep = 3.0f;
+            zoomStepWidth = 1.78f;
+        } else {
+            zoomStep = 4.0f;
+            zoomStepWidth = 1.78f;
+        }
+    }
+
+    private int getCurrentWidthRate() {
+        Log.d(TAG, "mLeft is " + mLeft);
+        int savedValue = Settings.Secure.getInt(getContentResolver(),
+                Settings.Secure.HDMI_OVERSCAN_WIDTH, 100);
+        if (savedValue == 100) {
+            float offset = mLeft / (zoomStep * zoomStepWidth);
+            float curVal = MAX_WIDTH - offset;
+            Log.d(TAG, "currentWidthRate=" + (int) curVal);
+            return ((int) curVal);
+        }
+        return savedValue;
+    }
+
+    private int getCurrentHeightRate() {
+        Log.d(TAG, "mTop is " + mTop);
+        int savedValue = Settings.Secure.getInt(getContentResolver(),
+                Settings.Secure.HDMI_OVERSCAN_HEIGHT, 100);
+        if (savedValue == 100) {
+            float offset = mTop / zoomStep;
+            float curVal = MAX_HEIGHT - offset;
+            Log.d(TAG, "currentHeightRate=" + (int) curVal);
+            return ((int) curVal);
+        }
+        return savedValue;
     }
 
     private void updateState() {
@@ -360,25 +506,148 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         }
     }
 
+    private void showPositionDialog(Context context) {
+        initPosition();
+        initSteps();
+        // sysfs are written as progress is changed for real-time effect
+        // cancel obviously reverts back to previous values
+        final int[] width_rate = {getCurrentWidthRate()};
+        final int[] height_rate = {getCurrentHeightRate()};
+        //final int[] newWidth = new int[1], newHeight = new int[1];
+        LayoutInflater inflater = this.getActivity().getLayoutInflater();
+        View dialog = inflater.inflate(R.layout.overscan_dialog, null);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(dialog);
+        builder.setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mHdmiManager.setPosition(mLeft, mTop, mRight, mBottom);
+                mHdmiManager.savePosition(mLeft, mTop, mRight, mBottom);
+            }
+        });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mHdmiManager.setPosition(mLeft, mTop, mRight, mBottom);
+                mHdmiManager.savePosition(mLeft, mTop, mRight, mBottom);
+            }
+        });
+        builder.setPositiveButton(R.string.dlg_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mHdmiManager.savePosition(mNewLeft, mNewTop, mNewRight, mNewBottom);
+                mLeft = mNewLeft;
+                mTop = mNewTop;
+                mRight = mNewRight;
+                mBottom = mNewBottom;
+                Settings.Secure.putInt(getActivity().getContentResolver(),
+                        Settings.Secure.HDMI_OVERSCAN_WIDTH, width_rate[0]);
+                Settings.Secure.putInt(getActivity().getContentResolver(),
+                        Settings.Secure.HDMI_OVERSCAN_HEIGHT, height_rate[0]);
+            }
+        });
+        builder.setTitle(R.string.hdmi_overscan_title);
+        builder.setMessage(R.string.hdmi_overscan_help);
+        AlertDialog alert = builder.show();
+
+        TextView mMessage = (TextView) alert.findViewById(android.R.id.message);
+        mMessage.setGravity(Gravity.CENTER_HORIZONTAL);
+        NumberPicker mWidthPicker = (NumberPicker) dialog.findViewById(R.id.width_picker);
+        mWidthPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        mWidthPicker.setMinValue(0);
+        mWidthPicker.setMaxValue(100);
+        mWidthPicker.setValue(width_rate[0]);
+        mWidthPicker.setWrapSelectorWheel(false);
+        mWidthPicker.requestFocus();
+        mWidthPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if (oldVal > newVal) {
+                    //zoom out
+                    zoomOutWidth();
+                } else {
+                    // zoom in
+                    zoomInWidth();
+                }
+                width_rate[0] = newVal;
+
+            }
+        });
+        NumberPicker mHeightPicker = (NumberPicker) dialog.findViewById(R.id.height_picker);
+        mHeightPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        mHeightPicker.setMinValue(0);
+        mHeightPicker.setMaxValue(100);
+        mHeightPicker.setValue(height_rate[0]);
+        mHeightPicker.setWrapSelectorWheel(false);
+        mHeightPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if (oldVal > newVal) {
+                    //zoom out
+                    zoomOutHeight();
+                } else {
+                    // zoom in
+                    zoomInHeight();
+                }
+                height_rate[0] = newVal;
+            }
+        });
+    }
+
+    private void zoomOutWidth() {
+        mNewLeft += (int)(zoomStep * zoomStepWidth);
+        mNewRight -= (int)(zoomStep * zoomStepWidth);
+        Log.d(TAG, "left=" + mNewLeft + " top=" + mNewTop + " right=" + mNewRight + " bottom=" + mNewBottom);
+        mHdmiManager.setPosition(mNewLeft, mNewTop, mNewRight, mNewBottom);
+    }
+
+    private void zoomOutHeight() {
+        mNewTop += zoomStep;
+        mNewBottom -= zoomStep;
+        Log.d(TAG, "left=" + mNewLeft + " top=" + mNewTop + " right=" + mNewRight + " bottom=" + mNewBottom);
+        mHdmiManager.setPosition(mNewLeft, mNewTop, mNewRight, mNewBottom);
+    }
+
+    private void zoomInWidth() {
+        mNewLeft -= (int)(zoomStep * zoomStepWidth);
+        mNewRight += (int)(zoomStep * zoomStepWidth);
+        Log.d(TAG, "left=" + mNewLeft + " top=" + mNewTop + " right=" + mNewRight + " bottom=" + mNewBottom);
+        mHdmiManager.setPosition(mNewLeft, mNewTop, mNewRight, mNewBottom);
+    }
+
+    private void zoomInHeight() {
+        mNewTop -= zoomStep;
+        mNewBottom += zoomStep;
+        Log.d(TAG, "left=" + mNewLeft + " top=" + mNewTop + " right=" + mNewRight + " bottom=" + mNewBottom);
+        mHdmiManager.setPosition(mNewLeft, mNewTop, mNewRight, mNewBottom);
+    }
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mAccelerometer) {
             RotationPolicy.setRotationLockForAccessibility(
                     getActivity(), !mAccelerometer.isChecked());
+            return true;
         } else if (preference == mNotificationPulse) {
             boolean value = mNotificationPulse.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_LIGHT_PULSE,
                     value ? 1 : 0);
             return true;
-        
-        }    
+        } else if (preference == mAutoAdjustPref) {
+            Log.d(TAG, "auto adjust is " + mAutoAdjustPref.isChecked());
+            int enabled = mAutoAdjustPref.isChecked() ? 1 : 0;
+            Log.d(TAG, "setting HDMI_AUTO_ADJUST to " + enabled);
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.HDMI_AUTO_ADJUST, enabled);
+            return true;
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object objValue) {
         final String key = preference.getKey();
-        if (KEY_SCREEN_TIMEOUT.equals(key)) {
+        if (key.equals(KEY_SCREEN_TIMEOUT)) {
             int value = Integer.parseInt((String) objValue);
             try {
                 Settings.System.putInt(getContentResolver(), SCREEN_OFF_TIMEOUT, value);
@@ -386,21 +655,37 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             } catch (NumberFormatException e) {
                 Log.e(TAG, "could not persist screen timeout setting", e);
             }
-        }
-        if (KEY_FONT_SIZE.equals(key)) {
+            return true;
+        } else if (key.equals(KEY_FONT_SIZE)) {
             writeFontSizePreference(objValue);
-        }
-        if(KEY_DEFAULT_FREQUENCY.equals(key)){
+            return true;
+        } else if(key.equals(KEY_DEFAULT_FREQUENCY)){
             try {
-				int frequency_index = Integer.parseInt((String) objValue);
-				mDefaultFrequency.setSummary(mDefaultFrequencyEntries[frequency_index]);
-				SystemProperties.set(STR_DEFAULT_FREQUENCY_VAR,mDefaultFrequencyEntries[frequency_index].toString());
+                int frequency_index = Integer.parseInt((String) objValue);
+                mDefaultFrequency.setSummary(mDefaultFrequencyEntries[frequency_index]);
+                SystemProperties.set(STR_DEFAULT_FREQUENCY_VAR,mDefaultFrequencyEntries[frequency_index].toString());
             }catch(NumberFormatException e){
-				Log.e(TAG, "could not persist default TV frequency setting", e);
+                Log.e(TAG, "could not persist default TV frequency setting", e);
             }
+            return true;
+        } else if (key.equals(KEY_OUTPUT_MODE)) {
+            String newMode = objValue.toString();
+            sw.writeSysfs(mHdmiManager.HDMI_PLUGGED, "vdac");
+            if (mHdmiManager.isFreescaleClosed()) {
+                mHdmiManager.setOutputWithoutFreescale(newMode);
+            } else {
+                mHdmiManager.setOutputMode(newMode);
+            }
+            sw.writeSysfs(mHdmiManager.BLANK_DISPLAY, "0");
+            Settings.Secure.putString(getActivity().getContentResolver(),
+                    Settings.Secure.HDMI_RESOLUTION, newMode);
+            mOutputModePref.setSummary(newMode);
+            // reset position after resolution change
+            reset();
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -408,28 +693,23 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (preference == mFontSizePref) {
             if (Utils.hasMultipleUsers(getActivity())) {
                 showDialog(DLG_GLOBAL_CHANGE_WARNING);
-                return true;
             } else {
                 mFontSizePref.click();
             }
+            return true;
+        } else if (preference == mPositionPref) {
+            showPositionDialog(getActivity());
+            return true;
         }
         return false;
     }
-    
-	private int findIndexOfEntry(String value, CharSequence[] entry) 
-	{
-                if (value != null && entry != null) 
-                {
-                    for (int i = entry.length - 1; i >= 0; i--) 
-                    {
-                        if (entry[i].equals(value)) 
-                        {
-                            return i;
-                        }
-                    }
-                }
 
-		
-		return getResources().getInteger(R.integer.outputmode_default_values);  //set 720p as default
+    private int findIndexOfEntry(String value, CharSequence[] entry) {
+        if (value != null && entry != null) {
+            for (int i = entry.length - 1; i >= 0; i--) {
+                if (entry[i].equals(value)) return i;
+            }
+        }
+        return getResources().getInteger(R.integer.outputmode_default_values);  //set 720p as default
     }
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/overscan_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                style="@android:style/Theme.DeviceDefault.Dialog">
+
+    <NumberPicker
+            android:id="@+id/height_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusLeft="@+id/width_picker"
+            android:layout_below="@+id/heightText"
+            android:layout_toRightOf="@+id/widthText"
+            android:layout_marginLeft="92dp"
+            android:layout_marginTop="21dp"
+            android:nextFocusRight="@android:id/button1"/>
+    <TextView
+            android:id="@+id/heightText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/overscan_seekbar_height_text"
+            android:layout_alignLeft="@id/height_picker"
+            android:layout_alignRight="@id/height_picker"
+            android:gravity="center_horizontal"/>
+    <TextView
+            android:id="@+id/widthText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/overscan_seekbar_width_text"
+            android:layout_alignRight="@+id/width_picker"
+            android:gravity="center_horizontal"
+            android:layout_alignBottom="@+id/heightText"
+            android:layout_alignLeft="@+id/width_picker"/>
+    <NumberPicker
+            android:id="@+id/width_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusRight="@+id/height_picker"
+            android:layout_alignTop="@id/height_picker"/>
+
+
+</RelativeLayout>
