@@ -34,6 +34,13 @@
     <string name="hdmi_menu_reset">Reset position</string>
     <string name="overscan_seekbar_width_text">Width</string>
     <string name="overscan_seekbar_height_text">Height</string>
+    <string name="hdmi_spdif">Set SPDIF</string>
+    <string name="hdmi_dual_disp">Dual display</string>
+    <string name="hdmi_dual_disp_on">Dual display is enabled</string>
+    <string name="hdmi_dual_disp_off">Dual display is disabled</string>
+    <string name="hdmi_auto_switch">Automatic switching</string>
+    <string name="hdmi_auto_switch_on">Automatic switching is enabled</string>
+    <string name="hdmi_auto_switch_off">Automatic switching is disabled</string>
 
     <!-- GBOX Launcher entry point -->
     <string name="gbox_launcher_settings_title">G-BoxLauncher</string>
