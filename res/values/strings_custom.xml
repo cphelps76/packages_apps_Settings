@@ -42,7 +42,7 @@
     <string name="hdmi_auto_switch_on">Automatic switching is enabled</string>
     <string name="hdmi_auto_switch_off">Automatic switching is disabled</string>
 
-    <!-- GBOX Launcher entry point -->
-    <string name="gbox_launcher_settings_title">G-BoxLauncher</string>
+    <!-- Launcher settings  -->
+    <string name="launcher_settings_title">Launcher Settings</string>
 
 </resources>

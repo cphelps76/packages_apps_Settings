@@ -75,16 +75,11 @@
         android:fragment="com.android.settings.HomeSettings"
         android:title="@string/home_settings" />
 
-    <!-- G-BoxLauncher Settings -->
-    <header android:title="@string/gbox_launcher_settings_title"
-            android:icon="@drawable/ic_settings_home"
-            android:action="android.intent.action.MAIN">
-            <intent
-                android:action="android.intent.action.MAIN"
-                android:targetClass="com.amlogic.mediaboxlauncher.SettingsActivity"
-                android:targetPackage="com.amlogic.mediaboxlauncher" />
-    </header>
-            
+    <header
+        android:id="@+id/launcher_settings"
+        android:title="@string/launcher_settings_title"
+        android:icon="@drawable/ic_settings_home" />
+
     <!-- Sound -->
     <header
         android:id="@+id/sound_settings"
