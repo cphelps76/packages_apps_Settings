@@ -72,6 +72,8 @@ public class EthernetSettingsAML extends SettingsPreferenceFragment {
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
         mEthConfigPref = preferenceScreen.findPreference(KEY_ETH_CONF);
         mEthInfoPref = preferenceScreen.findPreference(KEY_ETH_INFO);
+        mEthConfigDialog = new EthernetConfigDialog(getActivity(),
+                (EthernetManager) getSystemService(Context.ETH_SERVICE));
     }
 
     @Override
@@ -105,11 +107,11 @@ public class EthernetSettingsAML extends SettingsPreferenceFragment {
 	        activity.getActionBar().setCustomView(null);
         }
     }
-    
+
     private void initToggles() {
         // For MultiPane preference, the switch is on the left column header.
         // Other layouts unsupported for now.
-        
+
         final Activity activity = getActivity();
         Switch actionBarSwitch = new Switch(activity);
         if (activity instanceof PreferenceActivity) {
@@ -139,14 +141,6 @@ public class EthernetSettingsAML extends SettingsPreferenceFragment {
             mEthEnabler = new EthernetEnabler(
                     (EthernetManager)getSystemService(Context.ETH_SERVICE),
                     actionBarSwitch);
-            mEthConfigDialog = new EthernetConfigDialog(
-                    getActivity(),
-                    (EthernetManager)getSystemService(Context.ETH_SERVICE));
-            mEthEnabler.setConfigDialog(mEthConfigDialog);
         }
-        if (!Utils.platformHasMbxUiMode()) {
-            mEthConfigDialog = new EthernetConfigDialog(getActivity(),
-                    (EthernetManager) getSystemService(Context.ETH_SERVICE));
-        }    
     }
 }
