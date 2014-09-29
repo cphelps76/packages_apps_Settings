@@ -47,4 +47,26 @@
     <!-- Launcher settings  -->
     <string name="launcher_settings_title">Launcher Settings</string>
 
+    <!-- Ethernet configuration dialog -->
+    <string name="ethernet_info_title">Ethernet info</string>
+    <string name="ethernet_info_summary">Information about the connected ethernet device</string>
+
+    <!-- Custom NTP server -->
+    <!-- Menu item on Select custom NTP server. Default value is taken from frameworks/base/core/res/res/values/config.xml-->
+    <item name="ntp_server_def" format="string" type="string">2.pool.ntp.org</item>
+    <string name="ntp_server_key" translate="false">ntp_server_custom</string>
+    <string name="ntp_server">Custom NTP server</string>
+    <string name="ntp_server_summary">Choose custom NTP server</string>
+
+    <!-- About device screen, Cpu info. -->
+    <string name="cpu_info">CPU</string>
+    <!-- About phone screen, Free memory info -->
+    <string name="mem_info">Memory</string>
+    <!-- About phone screen, status item label-->
+    <string name="processor_info">Processor info</string>
+
+    <!-- About phone screen, build date of firmware -->
+    <string name="build_date">Build date</string>
+    <string name="build_date_default">2012-01-01-0000</string>
+
 </resources>

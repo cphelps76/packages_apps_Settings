@@ -667,11 +667,6 @@
     <string name="zone_list_menu_sort_alphabetically">Sort alphabetically</string>
     <!-- Menu item on Select time zone screen -->
     <string name="zone_list_menu_sort_by_timezone">Sort by time zone</string>
-    <!-- Menu item on Select custom NTP server. Default value is taken from frameworks/base/core/res/res/values/config.xml-->
-    <item name="ntp_server_def" format="string" type="string">2.pool.ntp.org</item>
-    <string name="ntp_server_key" translate="false">ntp_server_custom</string>
-    <string name="ntp_server">Custom NTP server</string>
-    <string name="ntp_server_summary">Choose custom NTP server</string>
     <!-- Title string shown above DatePicker, letting a user select system date
          [CHAR LIMIT=20] -->
     <string name="date_picker_title">Date</string>
@@ -1336,8 +1331,6 @@
 
     <!-- Ethernet configuration dialog -->        
     <string name="eth_config_title">Configure Ethernet device</string>
-    <string name="ethernet_info_title">Ethernet info</string>
-    <string name="ethernet_info_summary">Information about the connected ethernet device</string>
     <string name="eth_setting">Ethernet</string>        
     <string name="eth_dev_list">Ethernet Devices:</string>        
     <string name="eth_con_type">Connection Type</string>        
@@ -2052,15 +2045,7 @@
     <string name="firmware_version">Android version</string>
     <!-- About phone screen, status item label-->
     <string name="model_number">Model number</string>
-    <!-- About phone screen, build date of ROM -->
-    <string name="build_date">Build date</string>
-    <string name="build_date_default">2012-01-01-0000</string>
-    <!-- About device screen, Cpu info. -->
-    <string name="cpu_info">CPU</string>
-    <!-- About phone screen, Free memory info -->
-    <string name="mem_info">Memory</string>
-    <!-- About phone screen, status item label-->
-    <string name="processor_info">Processor info</string>
+
     <!-- About phone screen, fcc equipment id label-->
     <string name="fcc_equipment_id">Equipment ID</string>
     <!-- About phone screen,  setting option name-->
