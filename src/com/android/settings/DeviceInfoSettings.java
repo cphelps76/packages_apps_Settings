@@ -72,8 +72,10 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
 
     private static final String KEY_MOD_BUILD_DATE = "build_date";
     private static final String KEY_DEVICE_CPU = "device_cpu";
-    private static final String KEY_DEVICE_MEMORY = "device_memory";
+    private static final String KEY_DEVICE_GPU = "device_gpu";
+    private static final String KEY_DEVICE_SOC = "device_soc";
     private static final String KEY_DEVICE_PROCESSOR = "device_processor";
+    private static final String KEY_DEVICE_MEMORY = "device_memory";
 
     long[] mHits = new long[3];
     int mDevHitCountdown;
@@ -95,9 +97,8 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
 
         setStringSummary(KEY_FIRMWARE_VERSION, Build.VERSION.RELEASE);
         findPreference(KEY_FIRMWARE_VERSION).setEnabled(true);
-        if(!Utils.platformHasMbxUiMode())
-        {
-        setValueSummary(KEY_BASEBAND_VERSION, "gsm.version.baseband");
+        if(!Utils.platformHasMbxUiMode()) {
+            setValueSummary(KEY_BASEBAND_VERSION, "gsm.version.baseband");
         }
         setStringSummary(KEY_DEVICE_MODEL, Build.MODEL + getMsvSuffix());
         setStringSummary(KEY_DEVICE_PROCESSOR, getDeviceProcessorInfo());
@@ -122,20 +123,13 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
         removePreferenceIfPropertyMissing(getPreferenceScreen(), KEY_SELINUX_STATUS,
                 PROPERTY_SELINUX_STATUS);
 
-        String cpuInfo = getCPUInfo();
-        String memInfo = getMemInfo();
-
-        if (cpuInfo != null) {
-            setStringSummary(KEY_DEVICE_CPU, cpuInfo);
-        } else {
-            getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_CPU));
-        }
-
-        if (memInfo != null) {
-            setStringSummary(KEY_DEVICE_MEMORY, memInfo);
-        } else {
-            getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_MEMORY));
-        }
+        addStringPreference(KEY_DEVICE_CPU,
+                SystemProperties.get("ro.device.cpu", getCpuInfo()));
+        addStringPreference(KEY_DEVICE_GPU,
+                SystemProperties.get("ro.device.gpu", null)); // no fall back method
+        addStringPreference(KEY_DEVICE_SOC,
+                SystemProperties.get("ro.device.soc", null)); // no fall back method
+        addStringPreference(KEY_DEVICE_MEMORY, getMemInfo());
 
         // Remove Safety information preference if PROPERTY_URL_SAFETYLEGAL is not set
         removePreferenceIfPropertyMissing(getPreferenceScreen(), "safetylegal",
@@ -423,7 +417,7 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
         return result;
     }
 
-    private String getCPUInfo() {
+    private String getCpuInfo() {
         String result = null;
 
         try {
@@ -471,6 +465,14 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
                 e);
 
             return "Unknown";
+        }
+    }
+
+    public void addStringPreference(String key, String value) {
+        if (value != null) {
+            setStringSummary(key, value);
+        } else {
+            getPreferenceScreen().removePreference(findPreference(key));
         }
     }
 }

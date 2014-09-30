@@ -128,14 +128,24 @@
                 android:title="@string/cpu_info"
                 android:summary="@string/device_info_default"/>
 
-        <!-- Device mem info -->
-        <Preference android:key="device_memory"
-                android:title="@string/mem_info"
-                android:summary="@string/device_info_default"/>
+        <!-- Device gpu info -->
+        <Preference android:key="device_gpu"
+                android:title="@string/gpu_info"
+                android:summary="@string/device_info_default" />
+
+        <!-- Device soc info -->
+        <Preference android:key="device_soc"
+                android:title="@string/soc_info"
+                android:summary="@string/device_info_default" />
 
         <!-- Device hardware processor info -->
         <Preference android:key="device_processor"
                 android:title="@string/processor_info"
+                android:summary="@string/device_info_default"/>
+
+        <!-- Device mem info -->
+        <Preference android:key="device_memory"
+                android:title="@string/mem_info"
                 android:summary="@string/device_info_default"/>
 
         <!-- Mod build date -->

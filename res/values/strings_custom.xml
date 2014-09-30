@@ -60,6 +60,10 @@
 
     <!-- About device screen, Cpu info. -->
     <string name="cpu_info">CPU</string>
+    <!-- About device screen, Gpu info. -->
+    <string name="gpu_info">GPU</string>
+    <!-- About device screen, SOC info -->
+    <string name="soc_info">SoC</string>
     <!-- About phone screen, Free memory info -->
     <string name="mem_info">Memory</string>
     <!-- About phone screen, status item label-->
