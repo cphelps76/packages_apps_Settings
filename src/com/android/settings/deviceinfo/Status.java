@@ -16,6 +16,7 @@
 
 package com.android.settings.deviceinfo;
 
+import android.app.ActionBar;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -42,6 +43,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.view.MenuItem;
 
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneConstants;
@@ -211,6 +213,11 @@ public class Status extends PreferenceActivity {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         mHandler = new MyHandler(this);
 
         mTelephonyManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
@@ -242,16 +249,13 @@ public class Status extends PreferenceActivity {
         }
         // Note - missing in zaku build, be careful later...
         mSignalStrength = findPreference(KEY_SIGNAL_STRENGTH);
-        if(Utils.platformHasMbxUiMode())
-        {
+        if(Utils.platformHasMbxUiMode()) {
             removePreferenceFromScreen(KEY_SIGNAL_STRENGTH);
             mSignalStrength = null;
         }
-        
-        
+
         mUptime = findPreference("up_time");
-        if(Utils.platformHasMbxUiMode())
-        {
+        if(Utils.platformHasMbxUiMode()) {
             removePreferenceFromScreen("up_time");
         }
 
@@ -273,7 +277,7 @@ public class Status extends PreferenceActivity {
                 {
                 removePreferenceFromScreen(KEY_IMEI_SV);
                 }
-                
+
                 if (mPhone.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE) {
                     // Show ICC ID and IMEI for LTE device
                     setSummaryText(KEY_ICC_ID, mPhone.getIccSerialNumber());
@@ -293,7 +297,7 @@ public class Status extends PreferenceActivity {
                         ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
                             .getDeviceSoftwareVersion());
                 }
-                
+
                 // device is not CDMA, do not display CDMA features
                 // check Null in case no specified preference in overlay xml
                 removePreferenceFromScreen(KEY_PRL_VERSION);
@@ -312,11 +316,9 @@ public class Status extends PreferenceActivity {
             if (!TextUtils.isEmpty(rawNumber)) {
                 formattedNumber = PhoneNumberUtils.formatNumber(rawNumber);
             }
-            
-            if(!Utils.platformHasMbxUiMode())
-            {
-            // If formattedNumber is null or empty, it'll display as "Unknown".
-            setSummaryText(KEY_PHONE_NUMBER, formattedNumber);
+            if(!Utils.platformHasMbxUiMode()) {
+                // If formattedNumber is null or empty, it'll display as "Unknown".
+                setSummaryText(KEY_PHONE_NUMBER, formattedNumber);
             }
 
             mPhoneStateReceiver = new PhoneStateIntentReceiver(this, mHandler);
@@ -362,9 +364,9 @@ public class Status extends PreferenceActivity {
                         CB_AREA_INFO_SENDER_PERMISSION);
             }
         }
-	if (!Utils.platformHasMbxUiMode()){
-        registerReceiver(mBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        mHandler.sendEmptyMessage(EVENT_UPDATE_STATS);
+	if (!Utils.platformHasMbxUiMode()) {
+            registerReceiver(mBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+            mHandler.sendEmptyMessage(EVENT_UPDATE_STATS);
 	}
     }
 
@@ -376,11 +378,11 @@ public class Status extends PreferenceActivity {
             mPhoneStateReceiver.unregisterIntent();
             mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
         }
-	if (!Utils.platformHasMbxUiMode()){
-        if (mShowLatestAreaInfo) {
-            unregisterReceiver(mAreaInfoReceiver);
-        }
-        unregisterReceiver(mBatteryInfoReceiver);
+	if (!Utils.platformHasMbxUiMode()) {
+            if (mShowLatestAreaInfo) {
+                unregisterReceiver(mAreaInfoReceiver);
+            }
+            unregisterReceiver(mBatteryInfoReceiver);
 	}
         mHandler.removeMessages(EVENT_UPDATE_STATS);
     }
@@ -470,19 +472,15 @@ public class Status extends PreferenceActivity {
                 break;
         }
 
-        if(!Utils.platformHasMbxUiMode())
-        {
+        if (!Utils.platformHasMbxUiMode()) {
             setSummaryText(KEY_SERVICE_STATE, display);
         }
-        
         if (serviceState.getRoaming()) {
-            if(!Utils.platformHasMbxUiMode())
-            {
+            if (!Utils.platformHasMbxUiMode()) {
                 setSummaryText(KEY_ROAMING_STATE, mRes.getString(R.string.radioInfo_roaming_in));
             }
         } else {
-            if(!Utils.platformHasMbxUiMode())
-            {
+            if (!Utils.platformHasMbxUiMode()) {
                 setSummaryText(KEY_ROAMING_STATE, mRes.getString(R.string.radioInfo_roaming_not));
             }
         }
@@ -600,5 +598,14 @@ public class Status extends PreferenceActivity {
         int h = (int)((t / 3600));
 
         return h + ":" + pad(m) + ":" + pad(s);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

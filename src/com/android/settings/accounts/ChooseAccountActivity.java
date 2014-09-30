@@ -31,6 +31,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.util.Log;
+import android.view.MenuItem;
+
 import com.android.internal.util.CharSequences;
 import com.android.settings.R;
 import com.google.android.collect.Maps;
@@ -55,7 +57,7 @@ public class ChooseAccountActivity extends PreferenceActivity {
     private HashMap<String, ArrayList<String>> mAccountTypeToAuthorities = null;
     private Map<String, AuthenticatorDescription> mTypeToAuthDescription
             = new HashMap<String, AuthenticatorDescription>();
-    
+
     private static class ProviderEntry implements Comparable<ProviderEntry> {
         private final CharSequence name;
         private final String type;
@@ -93,6 +95,8 @@ public class ChooseAccountActivity extends PreferenceActivity {
         }
         mAddAccountGroup = getPreferenceScreen();
         updateAuthDescriptions();
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -247,5 +251,14 @@ public class ChooseAccountActivity extends PreferenceActivity {
         intent.putExtra(AddAccountSettings.EXTRA_SELECTED_ACCOUNT, accountType);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -16,6 +16,7 @@
 
 package com.android.settings;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -25,6 +26,7 @@ import android.os.SystemProperties;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.android.internal.app.AlertActivity;
@@ -45,6 +47,11 @@ public class SettingsSafetyLegalActivity extends AlertActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         String userSafetylegalUrl = SystemProperties.get(PROPERTY_LSAFETYLEGAL_URL);
 
@@ -138,5 +145,14 @@ public class SettingsSafetyLegalActivity extends AlertActivity
     public void onSaveInstanceState(Bundle icicle) {
         mWebView.saveState(icicle);
         super.onSaveInstanceState(icicle);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
