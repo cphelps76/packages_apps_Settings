@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2014 Matricom
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +17,10 @@
 
 package com.android.settings.ethernet;
 
-import android.app.ActionBar;
-import android.app.Activity;
+import android.content.Context;
+import android.net.ethernet.EthernetManager;
+import android.net.ethernet.EthernetDevInfo;
 import android.os.Bundle;
-import android.os.SystemProperties;
 import android.preference.PreferenceFragment;
 import android.preference.Preference;
 
@@ -28,11 +29,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.android.settings.R;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.FileReader;
-import android.util.Log;
 
 public class EthernetInfo extends PreferenceFragment {
     private static final String TAG = "DeviceInfoSettingEthInfo";
@@ -45,19 +41,22 @@ public class EthernetInfo extends PreferenceFragment {
 
     private static final int MENU_REFRESH = Menu.FIRST;
 
-    private static final String CONFIG_PATH = "/sys/class/efuse/mac";
+    private Preference mIpAddress;
+    private Preference mDns;
+    private Preference mGateway;
+    private Preference mMacAddress;
+    private Preference mMask;
 
-    Preference mIpAddress;
-    Preference mDns;
-    Preference mGateway;
-    Preference mMacAddress;
-    Preference mMask;
+    private EthernetManager mEthManager;
+    private EthernetDevInfo mEthInfo;
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         addPreferencesFromResource(R.xml.ethernet_info);
+
+        mEthManager = (EthernetManager) getActivity().getSystemService(Context.ETH_SERVICE);
 
         mIpAddress = findPreference(KEY_IP_ADDRESS);
         mDns = findPreference(KEY_DNS);
@@ -70,6 +69,7 @@ public class EthernetInfo extends PreferenceFragment {
     @Override
     public void onResume() {
         super.onResume();
+        mEthInfo = mEthManager.getSavedEthConfig();
         updateSummaries();
     }
 
@@ -95,49 +95,12 @@ public class EthernetInfo extends PreferenceFragment {
     }
 
     private void updateSummaries() {
-        mIpAddress.setSummary(getIpAddress());
-        mDns.setSummary(getDns());
-        mGateway.setSummary(getGateway());
-        mMacAddress.setSummary((getMacfromEfuse()));
-        mMask.setSummary(getMask());
-    }
-
-    private String getMacfromEfuse() {
-        String sn = null;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(CONFIG_PATH), 12);
-            try {
-                sn = reader.readLine();
-            } finally {
-                reader.close();
-            }
-            Log.d(TAG, "/sys/class/efuse/mac: " + sn);
-
-            if(sn.equals("00:00:00:00:00:00")) {
-                sn = SystemProperties.get("ubootenv.var.ethaddr",getString(R.string.status_unavailable));
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "IO Exception when getting serial number for Device Info screen", e);
-            sn = SystemProperties.get("ubootenv.var.ethaddr", getString(R.string.status_unavailable));
+        if (mEthInfo != null) {
+            mIpAddress.setSummary(mEthInfo.getIpAddress());
+            mDns.setSummary(mEthInfo.getDnsAddress());
+            mGateway.setSummary(mEthInfo.getRouteAddress());
+            mMacAddress.setSummary(mEthInfo.getMacAddress());
+            mMask.setSummary(mEthInfo.getNetMask());
         }
-        return sn;
     }
-
-    private String getIpAddress() {
-        return SystemProperties.get("dhcp.eth0.ipaddress", getString(R.string.status_unavailable));
-    }
-
-    private String getDns() {
-        return SystemProperties.get("dhcp.eth0.dns1", getString(R.string.status_unavailable));
-    }
-
-    private String getMask()   {
-        return SystemProperties.get("dhcp.eth0.mask", getString(R.string.status_unavailable));
-    }
-
-    private String getGateway()   {
-        return SystemProperties.get("dhcp.eth0.gateway", getString(R.string.status_unavailable));
-    }
-
-
 }
