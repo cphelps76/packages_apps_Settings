@@ -5145,7 +5145,11 @@
     <string name="regulatory_info_text"></string>
     <string name="auto_brightness">Brightness Save Power Mode</string>
     <string name="auto_brightness_summary">Auto set brightness in low power state to conserve battery power</string>
+
     <string name="custom_gsensor">Gravity Direction Manual Configuration</string>
     <string name="custom_gsensor_summary">Support gravity direction manual configuration when playing Game</string>
     <string name="accessibility_toggle_quick_boot_preference_title">Quick boot</string>
+
+    <string name="ethernet_refresh">Refresh</string>
+
 </resources>
