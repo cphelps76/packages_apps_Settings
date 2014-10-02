@@ -5132,5 +5132,6 @@
     <string name="regulatory_info_text"></string>
     <string name="auto_brightness">Brightness Save Power Mode</string>
     <string name="auto_brightness_summary">Auto set brightness in low power state to conserve battery power</string>
+    <string name="ethernet_refresh">Refresh</string>
 
 </resources>
