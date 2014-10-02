@@ -368,8 +368,8 @@ public class EthernetConfigDialog extends AlertDialog implements
                     Slog.d(TAG, "dns2:" + getAddress(dhcpInfo.dns2));
                 }*/
                 mIpaddr.setText(mEthInfo.getIpAddress());
-                mGw.setText(mEthInfo.getRouteAddr());
-                mDns.setText(mEthInfo.getDnsAddr());
+                mGw.setText(mEthInfo.getRouteAddress());
+                mDns.setText(mEthInfo.getDnsAddress());
                 mMask.setText(mEthInfo.getNetMask());
                 if (mEthInfo.getConnectMode().equals(EthernetDevInfo.ETH_CONN_MODE_DHCP)) {
                     mView.findViewById(R.id.eth_static_fields).setVisibility(View.GONE);
@@ -413,8 +413,8 @@ public class EthernetConfigDialog extends AlertDialog implements
         if (mConTypeDhcp.isChecked()) {
             info.setConnectMode(EthernetDevInfo.ETH_CONN_MODE_DHCP);
             info.setIpAddress(null);
-            info.setRouteAddr(null);
-            info.setDnsAddr(null);
+            info.setRouteAddress(null);
+            info.setDnsAddress(null);
             info.setNetMask(null);
         } else {
             Slog.i(TAG,"mode manual");
@@ -424,8 +424,8 @@ public class EthernetConfigDialog extends AlertDialog implements
                     && isIpAddress(mMask.getText().toString())) {
                 info.setConnectMode(EthernetDevInfo.ETH_CONN_MODE_MANUAL);
                 info.setIpAddress(mIpaddr.getText().toString());
-                info.setRouteAddr(mGw.getText().toString());
-                info.setDnsAddr(mDns.getText().toString());
+                info.setRouteAddress(mGw.getText().toString());
+                info.setDnsAddress(mDns.getText().toString());
                 info.setNetMask(mMask.getText().toString());
             } else {
                 Toast.makeText(mContext, R.string.eth_settings_error, Toast.LENGTH_LONG).show();
