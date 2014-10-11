@@ -894,7 +894,7 @@ public class Settings extends PreferenceActivity
             if (Utils.hwHasEthernet()) {
                 mEthernetEnabler = new EthernetEnabler(
                         (EthernetManager)context.getSystemService(Context.ETH_SERVICE),
-                        new Switch(context));
+                        new Switch(context), context);
             } else
                 mEthernetEnabler = null;
 

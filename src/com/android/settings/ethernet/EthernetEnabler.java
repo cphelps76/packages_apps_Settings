@@ -46,14 +46,16 @@ public class EthernetEnabler implements CompoundButton.OnCheckedChangeListener  
     private Switch mSwitch;
     private boolean mStateMachineEvent;
     private EthernetConfigDialog mEthConfigDialog = null;
+    private Context mContext;
 
     public void setConfigDialog(EthernetConfigDialog Dialog) {
         mEthConfigDialog = Dialog;
     }
 
-    public EthernetEnabler(EthernetManager ethernetManager, Switch _switch) {
+    public EthernetEnabler(EthernetManager ethernetManager, Switch _switch, Context context) {
         mEthManager = ethernetManager;
         mSwitch = _switch;
+        mContext = context;
 		Slog.d(TAG, "EthernetEnabler: "+mEthManager.getEthState());
         if (mEthManager.getEthState() == ETH_STATE_ENABLED) {
             setSwitchChecked(true);
@@ -124,5 +126,7 @@ public class EthernetEnabler implements CompoundButton.OnCheckedChangeListener  
         if (LOCAL_LOGD) Slog.d(TAG, "setEthEnabled " + enable);
 
         mEthManager.setEthEnabled(enable);
+        final Intent intent = new Intent(EthernetManager.ETH_STATE_CHANGED_ACTION);
+        mContext.sendBroadcast(intent);
     }
 }
