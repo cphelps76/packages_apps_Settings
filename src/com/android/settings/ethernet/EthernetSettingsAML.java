@@ -113,6 +113,7 @@ public class EthernetSettingsAML extends SettingsPreferenceFragment {
         // Other layouts unsupported for now.
 
         final Activity activity = getActivity();
+        Context mContext = activity.getApplicationContext();
         Switch actionBarSwitch = new Switch(activity);
         if (activity instanceof PreferenceActivity) {
             PreferenceActivity preferenceActivity = (PreferenceActivity) activity;
@@ -140,7 +141,7 @@ public class EthernetSettingsAML extends SettingsPreferenceFragment {
             }
             mEthEnabler = new EthernetEnabler(
                     (EthernetManager)getSystemService(Context.ETH_SERVICE),
-                    actionBarSwitch);
+                    actionBarSwitch, mContext);
         }
     }
 }
