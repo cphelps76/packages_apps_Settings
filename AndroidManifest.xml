@@ -1728,7 +1728,22 @@
             android:theme="@style/CryptKeeperBlankTheme"
         />
 
+        <!-- Heads Up -->
+
+        <activity android:name="Settings$HeadsUpSettingsActivity"
+                  android:label="@string/category_heads_up"
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                       android:value="com.android.settings.headsup.HeadsUpSettings" />
+        </activity>
+
         <!-- Pseudo-activity used to provide an intent-filter entry point to encryption settings -->
+
         <activity android:name="Settings$CryptKeeperSettingsActivity"
                 android:label="@string/crypt_keeper_encrypt_title">
             <intent-filter>
