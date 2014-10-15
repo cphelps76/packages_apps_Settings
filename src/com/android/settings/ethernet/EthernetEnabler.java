@@ -26,12 +26,17 @@ import static android.net.ethernet.EthernetManager.ETH_STATE_UNKNOWN;
 import com.android.settings.R;
 
 import android.content.BroadcastReceiver;
+import android.database.ContentObserver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.NetworkInfo;
 import android.net.ethernet.EthernetManager;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.UserHandle;
 import android.preference.Preference;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Config;
 import android.util.Slog;
@@ -47,6 +52,18 @@ public class EthernetEnabler implements CompoundButton.OnCheckedChangeListener  
     private boolean mStateMachineEvent;
     private EthernetConfigDialog mEthConfigDialog = null;
     private Context mContext;
+
+    private boolean isEnabled() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.ETHERNET_STATE, 0, UserHandle.USER_CURRENT) != 0;
+    }
+
+    private ContentObserver mSettingsObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            setSwitchChecked(isEnabled());
+        }
+    };
 
     public void setConfigDialog(EthernetConfigDialog Dialog) {
         mEthConfigDialog = Dialog;
@@ -67,6 +84,9 @@ public class EthernetEnabler implements CompoundButton.OnCheckedChangeListener  
     }
 
     public void resume() {
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.ETHERNET_STATE),
+                true, mSettingsObserver);
         mSwitch.setOnCheckedChangeListener(this);
         final int state = mEthManager.getEthState();
         Slog.d(TAG, "resume: " + state);
@@ -74,9 +94,11 @@ public class EthernetEnabler implements CompoundButton.OnCheckedChangeListener  
         boolean isDisabled = state == ETH_STATE_DISABLED;
         mSwitch.setChecked(isEnabled);
         mSwitch.setEnabled(isEnabled || isDisabled);
+        setSwitchChecked(isEnabled());
     }
 
     public void pause() {
+        mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
         mSwitch.setOnCheckedChangeListener(null);
     }
 
