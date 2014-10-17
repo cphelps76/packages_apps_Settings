@@ -32,6 +32,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.UserHandle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
@@ -60,10 +62,12 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class HeadsUpSettings extends SettingsPreferenceFragment
-        implements AdapterView.OnItemLongClickListener, Preference.OnPreferenceClickListener {
+        implements AdapterView.OnItemLongClickListener, Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
     private static final int DIALOG_DND_APPS = 0;
     private static final int DIALOG_BLACKLIST_APPS = 1;
+
+    private static final String PREF_HEADS_UP_GRAVITY = "heads_up_gravity";
 
     private PackageAdapter mPackageAdapter;
     private PackageManager mPackageManager;
@@ -71,6 +75,7 @@ public class HeadsUpSettings extends SettingsPreferenceFragment
     private PreferenceGroup mBlacklistPrefList;
     private Preference mAddDndPref;
     private Preference mAddBlacklistPref;
+    private CheckBoxPreference mHeadsUpGravity;
 
     private String mDndPackageList;
     private String mBlacklistPackageList;
@@ -112,6 +117,11 @@ public class HeadsUpSettings extends SettingsPreferenceFragment
 
         mAddDndPref.setOnPreferenceClickListener(this);
         mAddBlacklistPref.setOnPreferenceClickListener(this);
+
+        mHeadsUpGravity = (CheckBoxPreference) findPreference(PREF_HEADS_UP_GRAVITY);
+        mHeadsUpGravity.setChecked(Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.HEADS_UP_GRAVITY_BOTTOM, 0, UserHandle.USER_CURRENT) == 1);
+        mHeadsUpGravity.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -436,6 +446,17 @@ public class HeadsUpSettings extends SettingsPreferenceFragment
         // Add 'add' options
         mDndPrefList.addPreference(mAddDndPref);
         mBlacklistPrefList.addPreference(mAddBlacklistPref);
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mHeadsUpGravity) {
+            Settings.System.putIntForUser(getContentResolver(),
+                    Settings.System.HEADS_UP_GRAVITY_BOTTOM,
+                    (Boolean) newValue ? 1 : 0, UserHandle.USER_CURRENT);
+            return true;
+        }
+        return false;
     }
 
     @Override
