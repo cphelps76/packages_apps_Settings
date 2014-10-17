@@ -34,6 +34,7 @@
 
     <!-- Heads Up -->
     <string name="category_heads_up">Heads up</string>
+    <string name="heads_up_options">Options</string>
     <string name="summary_heads_up_enabled">Pop-up notifications are enabled</string>
     <string name="summary_heads_up_disabled">Pop-up notifications are disabled</string>
     <string name="add_heads_up_package">Add app</string>
@@ -45,5 +46,7 @@
     <string name="heads_up_choose_app">Choose app</string>
     <string name="dialog_delete_title">Delete</string>
     <string name="dialog_delete_message">Remove selected item?</string>
+    <string name="heads_up_gravity_title">Show at the bottom</string>
+    <string name="heads_up_gravity_summary">Show heads up notification at the bottom of the screen</string>
 
 </resources>
