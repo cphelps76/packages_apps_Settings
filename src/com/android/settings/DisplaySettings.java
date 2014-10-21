@@ -450,7 +450,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private int getCurrentLeftRate() {
         Log.d(TAG, "mLeft is " + mLeft);
         int savedValue = Settings.Secure.getInt(getContentResolver(),
-                Settings.Secure.HDMI_OVERSCAN_LEFT, 100);        
+                Settings.Secure.HDMI_OVERSCAN_LEFT, 100);
         return savedValue;
     }
 
@@ -511,6 +511,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private void showPositionDialog(Context context) {
         initPosition();
         initSteps();
+        mHdmiManager.setMinScalingFrequency(408000);
         // sysfs are written as progress is changed for real-time effect
         // cancel obviously reverts back to previous values
         final int[] left_rate = {getCurrentLeftRate()};
@@ -726,12 +727,20 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             }
             return true;
         } else if (key.equals(KEY_OUTPUT_MODE)) {
+            String oldMode = mHdmiManager.getResolution();
             String newMode = objValue.toString();
-            sw.writeSysfs(mHdmiManager.HDMI_PLUGGED, "vdac");
-            if (mHdmiManager.isFreescaleClosed()) {
-                mHdmiManager.setOutputWithoutFreescale(newMode);
-            } else {
-                mHdmiManager.setOutputMode(newMode);
+            if (mHdmiManager.isHdmiPlugged()) {
+                mHdmiManager.closeVdac(newMode);
+                if (mHdmiManager.isRealOutputMode() &&
+                        mHdmiManager.isHdmiOnly()) {
+                    mHdmiManager.setOutputMode(newMode);
+                } else if (mHdmiManager.isHdmiOnly()) {
+                    if (mHdmiManager.isFreescaleClosed()) {
+                        mHdmiManager.setOutputWithoutFreescale(newMode);
+                    } else {
+                        mHdmiManager.setOutputMode(newMode);
+                    }
+                }
             }
             sw.writeSysfs(mHdmiManager.BLANK_DISPLAY, "0");
             Settings.Secure.putString(getActivity().getContentResolver(),
