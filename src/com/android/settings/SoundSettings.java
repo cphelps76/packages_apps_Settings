@@ -229,6 +229,9 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         mDtmfTone.setPersistent(false);
         mDtmfTone.setChecked(Settings.System.getInt(resolver,
                 Settings.System.DTMF_TONE_WHEN_DIALING, 1) != 0);
+        if(Utils.platformHasMbxUiMode()) {
+            removePreference(KEY_DTMF_TONE);
+        }
         mSoundEffects = (CheckBoxPreference) findPreference(KEY_SOUND_EFFECTS);
         mSoundEffects.setPersistent(false);
         mSoundEffects.setChecked(Settings.System.getInt(resolver,
@@ -248,6 +251,10 @@ public class SoundSettings extends SettingsPreferenceFragment implements
 		}
 
         mRingtonePreference = findPreference(KEY_RINGTONE);
+        if (Utils.platformHasMbxUiMode()) {
+            removePreference(KEY_RINGTONE);
+            removePreference(KEY_CATEGORY_CALLS);
+        }
         mNotificationPreference = findPreference(KEY_NOTIFICATION_SOUND);
 
         // DOLBY_DAP_GUI
