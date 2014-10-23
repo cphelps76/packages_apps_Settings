@@ -130,8 +130,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if ((mScreenSaverPreference != null
                 && getResources().getBoolean(
-                        com.android.internal.R.bool.config_dreamsSupported) == false) 
-			|| (Utils.platformHasMbxUiMode())) {
+                        com.android.internal.R.bool.config_dreamsSupported) == false)) {
             getPreferenceScreen().removePreference(mScreenSaverPreference);
         }
 
@@ -177,10 +176,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         if(!Utils.platformHasScreenBrightness()){
         	getPreferenceScreen().removePreference(findPreference(KEY_Brightness));
-        }
-        
-        if(!Utils.platformHasScreenTimeout()){
-        	getPreferenceScreen().removePreference(mScreenTimeoutPreference);
         }
 
         if(!Utils.platformHasScreenFontSize()){
