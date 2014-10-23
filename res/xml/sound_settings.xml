@@ -122,6 +122,12 @@
             android:entries="@array/emergency_tone_entries"
             android:entryValues="@array/emergency_tone_values" />
 
+    <ListPreference
+            android:key="spdif"
+            android:title="@string/hdmi_audio_output"
+            android:entries="@array/hdmi_audio_output_entries"
+            android:entryValues="@array/hdmi_audio_output_values" />
+
     <!-- Dock -->
     <PreferenceCategory
         android:key="dock_category"

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Hdmi settings for SPDIF. -->
+    <string-array name="hdmi_audio_output_entries">
+        <item>@string/hdmi_audio_output_pcm</item>
+        <item>@string/hdmi_audio_output_raw</item>
+        <item>@string/hdmi_audio_output_spdif_passthrough</item>
+        <item>@string/hdmi_audio_output_hdmi_passthrough</item>
+    </string-array>
+
+    <!-- Do not translate. -->
+    <string-array name="hdmi_audio_output_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+</resources>

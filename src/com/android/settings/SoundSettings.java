@@ -30,6 +30,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
+import android.hardware.display.HdmiManager;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.media.audiofx.AudioEffect;
@@ -89,6 +90,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private static final String KEY_DOCK_AUDIO_SETTINGS = "dock_audio";
     private static final String KEY_DOCK_SOUNDS = "dock_sounds";
     private static final String KEY_DOCK_AUDIO_MEDIA_ENABLED = "dock_audio_media_enabled";
+    private static final String KEY_DIGITAL_AUDIO = "spdif";
     private static final String STR_DIGIT_AUDIO_OUTPUT = "ubootenv.var.digitaudiooutput";
     private static String DigitalRawFile = "/sys/class/audiodsp/digital_raw";
 
@@ -115,6 +117,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mLockSounds;
     private Preference mRingtonePreference;
     private Preference mNotificationPreference;
+    private ListPreference mDigitalAudioPreference;
     // DOLBY_DAP_GUI
     private DsClient mDsClient;
     private boolean mDsClientConnected;
@@ -172,6 +175,8 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private int index_entry;
     private int sel_index;
 
+    private static HdmiManager mHdmiManager;
+
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -203,6 +208,8 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         int activePhoneType = TelephonyManager.getDefault().getCurrentPhoneType();
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        mHdmiManager = (HdmiManager) getSystemService(Context.HDMI_SERVICE);
 
         addPreferencesFromResource(R.xml.sound_settings);
 
@@ -256,6 +263,10 @@ public class SoundSettings extends SettingsPreferenceFragment implements
             removePreference(KEY_CATEGORY_CALLS);
         }
         mNotificationPreference = findPreference(KEY_NOTIFICATION_SOUND);
+
+        mDigitalAudioPreference = (ListPreference) findPreference(KEY_DIGITAL_AUDIO);
+        mDigitalAudioPreference.setSummary(mDigitalAudioPreference.getEntry());
+        mDigitalAudioPreference.setOnPreferenceChangeListener(this);
 
         // DOLBY_DAP_GUI
         mDolbyLaunchTitle = findPreference(KEY_DOLBY_TITLE);
@@ -343,7 +354,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
                             MSG_UPDATE_NOTIFICATION_SUMMARY);
                 }
             }
-        };		
+        };
         initDockSettings();
     }
 
@@ -536,6 +547,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
                 int value = Integer.parseInt((String) objValue);
                 Settings.Global.putInt(getContentResolver(),
                         Settings.Global.EMERGENCY_TONE, value);
+                return true;
             } catch (NumberFormatException e) {
                 Log.e(TAG, "could not persist emergency tone setting", e);
             }
@@ -545,6 +557,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
                 try {
                     mDsClient.setDsOn((Boolean) objValue);
                     updateDolbyStateUI();
+                    return true;
                 } catch (Exception e) {
                     e.printStackTrace();
                     unbindDsClient();
@@ -553,10 +566,17 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         } else if (preference == mDolbyDSProfile) {
             if (mDsClientConnected) {
                 updateDolbyStateUI();
+                return true;
             }
             // DOLBY_DAP_GUI END
+        } else if (preference == mDigitalAudioPreference) {
+            int value = Integer.parseInt((String) objValue);
+            CharSequence[] mAudioEntries = getResources().getStringArray(R.array.hdmi_audio_output_entries);
+            mHdmiManager.setDigitalAudioValue((String)mAudioEntries[value]);
+            mDigitalAudioPreference.setSummary(mAudioEntries[value]);
+            return true;
         }
-        return true;
+        return false;
     }
 
 	private int findIndexOfEntry(String value, CharSequence[] entry) {
