@@ -652,7 +652,7 @@ public class Settings extends PreferenceActivity
             		target.remove(i);
             	}
             } else if (id == R.id.superuser) {
-                if (!mUnofficialBuild) {
+                if (!mUnofficialBuild || !DevelopmentSettings.isRootForAppsEnabled()) {
                     target.remove(i);
                 }
             }

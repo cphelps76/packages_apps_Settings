@@ -601,6 +601,11 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
                 .getStringArray(R.array.root_access_entries)[Integer.valueOf(value)]);
     }
 
+    static boolean isRootForAppsEnabled() {
+        int value = SystemProperties.getInt(ROOT_ACCESS_PROPERTY, 1);
+        return value == 1 || value == 3;
+    }
+
     private void writeRootAccessOptions(Object newValue) {
         String oldValue = SystemProperties.get(ROOT_ACCESS_PROPERTY, mUnofficialBuild ? "1" : "0");
         SystemProperties.set(ROOT_ACCESS_PROPERTY, newValue.toString());
