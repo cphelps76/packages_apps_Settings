@@ -150,6 +150,7 @@ public class Settings extends PreferenceActivity
     private Header mCurrentHeader;
     private Header mParentHeader;
     private boolean mInLocalHeaderSwitch;
+    private boolean mUnofficialBuild;
 
     // Show only these settings for restricted users
     private int[] SETTINGS_FOR_RESTRICTED = {
@@ -220,6 +221,8 @@ public class Settings extends PreferenceActivity
 
         mDevelopmentPreferences = getSharedPreferences(DevelopmentSettings.PREF_FILE,
                 Context.MODE_PRIVATE);
+
+        mUnofficialBuild = android.os.Build.VERSION.CODENAME.equals("UNOFFICIAL");
 
         getMetaData();
         mInLocalHeaderSwitch = true;
@@ -657,6 +660,10 @@ public class Settings extends PreferenceActivity
             }else if(id == R.id.appops_settings){
                 String opsEnble = SystemProperties.get("ro.permissions.settings", "false");
                 if(opsEnble.equals("false")){
+                    target.remove(i);
+                }
+            } else if (id == R.id.superuser) {
+                if (!mUnofficialBuild) {
                     target.remove(i);
                 }
             }
