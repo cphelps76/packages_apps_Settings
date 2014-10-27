@@ -5133,5 +5133,14 @@
     <string name="auto_brightness">Brightness Save Power Mode</string>
     <string name="auto_brightness_summary">Auto set brightness in low power state to conserve battery power</string>
     <string name="ethernet_refresh">Refresh</string>
+    <string name="hardware_settings">Hardware</string>
+    <string name="hardware_buttons_category_title">Buttons</string>
+    <string name="hardware_buttons_custom_title">User customizable button</string>
+    <string name="hardware_buttons_custom_description">Choose the function for the custom button located on the IR
+        remote
+    </string>
+    <string name="custom_function_dialog_title">Select the function that is desired for the custom button on the IR
+        remote.
+    </string>
 
 </resources>

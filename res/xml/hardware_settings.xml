@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/hardware_settings"
+    android:key="hardware_settings">
+
+    <PreferenceCategory
+        android:key="buttons_category"
+        android:title="@string/hardware_buttons_category_title"/>
+
+    <Preference
+        android:key="custom_button"
+        android:title="@string/hardware_buttons_custom_title"
+        android:summary="@string/hardware_buttons_custom_description" />
+
+</PreferenceScreen>
