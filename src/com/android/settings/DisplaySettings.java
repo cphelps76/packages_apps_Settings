@@ -743,13 +743,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                         }
                     }
                 }
+                sw.writeSysfs(mHdmiManager.BLANK_DISPLAY, "0");
+                Settings.Secure.putString(getActivity().getContentResolver(),
+                        Settings.Secure.HDMI_RESOLUTION, newMode);
+                mOutputModePref.setSummary(newMode);
+                // reset position after resolution change
+                reset();
             }
-            sw.writeSysfs(mHdmiManager.BLANK_DISPLAY, "0");
-            Settings.Secure.putString(getActivity().getContentResolver(),
-                    Settings.Secure.HDMI_RESOLUTION, newMode);
-            mOutputModePref.setSummary(newMode);
-            // reset position after resolution change
-            reset();
             return true;
         }
 
