@@ -729,16 +729,18 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         } else if (key.equals(KEY_OUTPUT_MODE)) {
             String oldMode = mHdmiManager.getResolution();
             String newMode = objValue.toString();
-            if (mHdmiManager.isHdmiPlugged()) {
-                mHdmiManager.closeVdac(newMode);
-                if (mHdmiManager.isRealOutputMode() &&
-                        mHdmiManager.isHdmiOnly()) {
-                    mHdmiManager.setOutputMode(newMode);
-                } else if (mHdmiManager.isHdmiOnly()) {
-                    if (mHdmiManager.isFreescaleClosed()) {
-                        mHdmiManager.setOutputWithoutFreescale(newMode);
-                    } else {
+            if (!oldMode.equals(newMode)) {
+                if (mHdmiManager.isHdmiPlugged()) {
+                    mHdmiManager.closeVdac(newMode);
+                    if (mHdmiManager.isRealOutputMode() &&
+                            mHdmiManager.isHdmiOnly()) {
                         mHdmiManager.setOutputMode(newMode);
+                    } else if (mHdmiManager.isHdmiOnly()) {
+                        if (mHdmiManager.isFreescaleClosed()) {
+                            mHdmiManager.setOutputWithoutFreescale(newMode);
+                        } else {
+                            mHdmiManager.setOutputMode(newMode);
+                        }
                     }
                 }
             }
