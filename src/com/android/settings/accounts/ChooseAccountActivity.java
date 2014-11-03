@@ -18,6 +18,7 @@ package com.android.settings.accounts;
 
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorDescription;
+import android.app.ActionBar;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -96,7 +97,10 @@ public class ChooseAccountActivity extends PreferenceActivity {
         mAddAccountGroup = getPreferenceScreen();
         updateAuthDescriptions();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar mActionBar = getActionBar();
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     /**
