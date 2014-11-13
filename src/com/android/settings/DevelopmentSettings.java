@@ -24,11 +24,13 @@ import android.app.Dialog;
 import android.app.admin.DevicePolicyManager;
 import android.app.backup.IBackupManager;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -140,6 +142,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private static final String TAG_CONFIRM_ENFORCE = "confirm_enforce";
     private static final String PACKAGE_MIME_TYPE = "application/vnd.android.package-archive";
     private static final String TERMINAL_APP_PACKAGE = "com.android.terminal";
+    private static final String THIRD_PARTY_LAUNCHERS = "third_party_launchers";
     private static final int RESULT_DEBUG_APP = 1000;
 
     private IWindowManager mWindowManager;
@@ -193,6 +196,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private ListPreference mAppProcessLimit;
 
     private CheckBoxPreference mShowAllANRs;
+
+    private CheckBoxPreference mThirdPartyLaunchers;
 
     private ListPreference mRootAccess;
     private Object mSelectedRootValue;
@@ -307,6 +312,10 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
 
         mShowAllANRs = (CheckBoxPreference) findPreference(
                 SHOW_ALL_ANRS_KEY);
+
+        mThirdPartyLaunchers = (CheckBoxPreference) findPreference(
+                THIRD_PARTY_LAUNCHERS);
+
         mAllPrefs.add(mShowAllANRs);
         mResetCbPrefs.add(mShowAllANRs);
 
@@ -523,6 +532,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         updateForceRtlOptions();
         updateWifiDisplayCertificationOptions();
         updateRootAccessOptions();
+        updateThirdPartyLauncherSupport();
     }
 
     private void resetDangerousOptions() {
@@ -599,6 +609,61 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         mRootAccess.setValue(value);
         mRootAccess.setSummary(getResources()
                 .getStringArray(R.array.root_access_entries)[Integer.valueOf(value)]);
+    }
+
+    private void updateThirdPartyLauncherSupport() {
+        final ContentResolver cr = getActivity().getContentResolver();
+        boolean currentlyAllowed = Settings.Secure.getInt(cr, Settings.Secure.THIRD_PARTY_LAUNCHERS_ENABLED, 0) != 0;
+        updateCheckBox(mThirdPartyLaunchers, currentlyAllowed);
+    }
+
+    private void removeDefaultLauncher() {
+        getActivity().getPackageManager()
+                .clearPackagePreferredActivities("net.matricom.launcher");
+    }
+
+    private List<ResolveInfo> getLaunchers(PackageManager mPm) {
+        final Intent homeIntent = new Intent(Intent.ACTION_MAIN, null);
+        homeIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        return mPm.queryIntentActivities(homeIntent, 0);
+    }
+
+    private void setLauncherAsDefault() {
+        try {
+            PackageManager mPm = getActivity().getPackageManager();
+
+            Intent intent = mPm.getLaunchIntentForPackage("net.matricom.launcher");
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            final IntentFilter mHomeFilter = new IntentFilter(Intent.ACTION_MAIN);
+            mHomeFilter.addCategory(Intent.CATEGORY_HOME);
+            mHomeFilter.addCategory(Intent.CATEGORY_DEFAULT);
+
+            List<ResolveInfo> launchers = getLaunchers(mPm);
+            final int N = launchers.size();
+            ComponentName[] set = new ComponentName[N];
+            int bestMatch = 0;
+            for (int i = 0; i < N; i++) {
+                ResolveInfo r = launchers.get(i);
+                set[i] = new ComponentName(r.activityInfo.packageName,
+                        r.activityInfo.name);
+                if (r.match > bestMatch) bestMatch = r.match;
+            }
+
+            mPm.addPreferredActivity(mHomeFilter, bestMatch, set, intent.getComponent());
+        } catch (Exception e) { Log.d(TAG, "Failed to set Matricom Launcher as default. :("); }
+    }
+
+    private void writeThirdPartyLauncherSupport() {
+        final ContentResolver cr = getActivity().getContentResolver();
+        Settings.Secure.putInt(cr, Settings.Secure.THIRD_PARTY_LAUNCHERS_ENABLED, mThirdPartyLaunchers.isChecked() ? 1 : 0);
+        if (mThirdPartyLaunchers.isChecked()) {
+            removeDefaultLauncher();
+        } else {
+            setLauncherAsDefault();
+        }
     }
 
     /* package */ static boolean isRootForAppsEnabled() {
@@ -1301,6 +1366,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             writeImmediatelyDestroyActivitiesOptions();
         } else if (preference == mShowAllANRs) {
             writeShowAllANRsOptions();
+        } else if (preference == mThirdPartyLaunchers) {
+            writeThirdPartyLauncherSupport();
         } else if (preference == mForceHardwareUi) {
             writeHardwareUiOptions();
         } else if (preference == mForceMsaa) {

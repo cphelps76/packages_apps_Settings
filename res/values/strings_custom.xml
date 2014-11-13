@@ -100,4 +100,8 @@
     <string name="root_access_adb">ADB only</string>
     <string name="root_access_all">Apps and ADB</string>
 
+    <!-- Checkbox strings to enable third party launcher support -->
+    <string name="third_party_launchers_title">Third party launchers</string>
+    <string name="third_party_launchers_summary">If enabled, third party launchers will show up in resolver</string>
+
 </resources>

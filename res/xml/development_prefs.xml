@@ -254,6 +254,11 @@
             android:title="@string/debug_applications_category">
 
         <CheckBoxPreference
+            android:key="third_party_launchers"
+            android:title="@string/third_party_launchers_title"
+            android:summary="@string/third_party_launchers_summary" />
+
+        <CheckBoxPreference
             android:key="immediately_destroy_activities"
             android:title="@string/immediately_destroy_activities"
             android:summary="@string/immediately_destroy_activities_summary"/>
