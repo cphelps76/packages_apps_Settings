@@ -563,6 +563,7 @@ public class Settings extends PreferenceActivity
                 DevelopmentSettings.PREF_SHOW,
                 android.os.Build.TYPE.equals("eng")) || android.os.Build.TYPE.equals("userdebug");
         int i = 0;
+        boolean allowThirdPartyLaunchers = android.provider.Settings.Secure.getInt(getContentResolver(), android.provider.Settings.Secure.THIRD_PARTY_LAUNCHERS_ENABLED, 0) != 0;
 
         final UserManager um = (UserManager) getSystemService(Context.USER_SERVICE);
         mHeaderIndexMap.clear();
@@ -572,6 +573,10 @@ public class Settings extends PreferenceActivity
             int id = (int) header.id;
             if (id == R.id.operator_settings || id == R.id.manufacturer_settings) {
                 Utils.updateHeaderToSpecificActivityFromMetaDataOrRemove(this, target, header);
+            } else if (id == R.id.home_settings) {
+                if (!allowThirdPartyLaunchers) {
+                    target.remove(header);
+                }
             } else if (id == R.id.launcher_settings) {
                 Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
                 launcherIntent.addCategory(Intent.CATEGORY_HOME);
@@ -586,12 +591,12 @@ public class Settings extends PreferenceActivity
 
                 launcherPrefsIntent.setPackage(defaultLauncher.packageName);
                 ResolveInfo launcherPrefs = pm.resolveActivity(launcherPrefsIntent, 0);
-                if (launcherPrefs != null) {
-                    header.intent = new Intent().setClassName(
-                            launcherPrefs.activityInfo.packageName,
-                            launcherPrefs.activityInfo.name);
+                if (launcherPrefs == null) {
+                     target.remove(header);
                 } else {
-                    target.remove(header);
+                     header.intent = new Intent().setClassName(
+                             launcherPrefs.activityInfo.packageName,
+                             launcherPrefs.activityInfo.name);
                 }
             } else if (id == R.id.wifi_settings) {
                 // Remove WiFi Settings if WiFi service is not available.
