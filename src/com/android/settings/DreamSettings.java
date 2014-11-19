@@ -66,7 +66,6 @@ import java.util.List;
 public class DreamSettings extends SettingsPreferenceFragment {
     private static final String TAG = DreamSettings.class.getSimpleName();
     static final boolean DEBUG = false;
-    private static final int DIALOG_WHEN_TO_DREAM = 1;
     private static final String PACKAGE_SCHEME = "package";
 
     private final PackageReceiver mPackageReceiver = new PackageReceiver();
@@ -126,7 +125,7 @@ public class DreamSettings extends SettingsPreferenceFragment {
         getActivity().getActionBar().setCustomView(null);
         super.onDestroyView();
     }
-	
+
 	public static boolean isScreenSaverEnabled(Context context) {
         return 0 != Settings.Secure.getInt(
                     context.getContentResolver(), SCREENSAVER_ENABLED, 1);
@@ -164,21 +163,10 @@ public class DreamSettings extends SettingsPreferenceFragment {
                         mBackend.startDreaming();
                     }});
 
-        // create "when to dream" overflow menu item
-        MenuItem whenToDream = createMenuItem(menu,
-                R.string.screensaver_settings_when_to_dream,
-                MenuItem.SHOW_AS_ACTION_IF_ROOM,
-                isEnabled,
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        showDialog(DIALOG_WHEN_TO_DREAM);
-                    }});
-
         // create "help" overflow menu item (make sure it appears last)
         super.onCreateOptionsMenu(menu, inflater);
 
-        mMenuItemsWhenEnabled = new MenuItem[] { start, whenToDream };
+        mMenuItemsWhenEnabled = new MenuItem[] { start };
     }
 
     private MenuItem createMenuItem(Menu menu,
@@ -194,37 +182,6 @@ public class DreamSettings extends SettingsPreferenceFragment {
             }
         });
         return item;
-    }
-
-    @Override
-    public Dialog onCreateDialog(int dialogId) {
-        logd("onCreateDialog(%s)", dialogId);
-        if (dialogId == DIALOG_WHEN_TO_DREAM)
-            return createWhenToDreamDialog();
-        return super.onCreateDialog(dialogId);
-    }
-
-    private Dialog createWhenToDreamDialog() {
-        final CharSequence[] items = {
-                mContext.getString(R.string.screensaver_settings_summary_dock),
-                mContext.getString(R.string.screensaver_settings_summary_sleep),
-                mContext.getString(R.string.screensaver_settings_summary_either_short)
-        };
-
-        int initialSelection = mBackend.isActivatedOnDock() && mBackend.isActivatedOnSleep() ? 2
-                : mBackend.isActivatedOnDock() ? 0
-                : mBackend.isActivatedOnSleep() ? 1
-                : -1;
-
-        return new AlertDialog.Builder(mContext)
-                .setTitle(R.string.screensaver_settings_when_to_dream)
-                .setSingleChoiceItems(items, initialSelection, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        mBackend.setActivatedOnDock(item == 0 || item == 2);
-                        mBackend.setActivatedOnSleep(item == 1 || item == 2);
-                    }
-                })
-                .create();
     }
 
     @Override
