@@ -617,9 +617,19 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         updateCheckBox(mThirdPartyLaunchers, currentlyAllowed);
     }
 
+    private String getLauncherPackageName(){       
+        final Intent intent = new Intent(Intent.ACTION_MAIN); 
+        intent.addCategory(Intent.CATEGORY_HOME); 
+        final ResolveInfo res = getPackageManager().resolveActivity(intent, 0); 
+        Log.e(TAG, String.format("getLauncherPackageName()%s",res.activityInfo.packageName));
+        return res.activityInfo.packageName;
+    }
+
     private void removeDefaultLauncher() {
-        getActivity().getPackageManager()
-                .clearPackagePreferredActivities("net.matricom.launcher");
+        if (getLauncherPackageName() != null) {
+            getActivity().getPackageManager()
+                    .clearPackagePreferredActivities(getLauncherPackageName());
+        }
     }
 
     private List<ResolveInfo> getLaunchers(PackageManager mPm) {
