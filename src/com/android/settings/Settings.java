@@ -348,6 +348,9 @@ public class Settings extends PreferenceActivity
             resolver.registerContentObserver(
                     android.provider.Settings.Secure.getUriFor(android.provider.Settings.Secure.THIRD_PARTY_LAUNCHERS_ENABLED),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    android.provider.Settings.Secure.getUriFor(android.provider.Settings.Global.DEVELOPMENT_SETTINGS_ENABLED),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
