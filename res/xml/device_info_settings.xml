@@ -68,6 +68,13 @@
                 <intent android:action="android.settings.LICENSE" />
             </PreferenceScreen>
 
+            <!-- User manual -->
+            <PreferenceScreen
+                    android:key="manual"
+                    android:title="@string/manual_title">
+                <intent android:action="android.settings.USERMANUAL" />
+            </PreferenceScreen>
+
             <!-- Terms and conditions -->
             <PreferenceScreen
                     android:key="terms"

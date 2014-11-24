@@ -706,6 +706,17 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="SettingsUserManualActivity"
+                  android:label="@string/settings_manual_activity_title"
+                  android:theme="@android:style/Theme.Holo.Panel"
+                  android:configChanges="orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.settings.USERMANUAL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
         <activity android:name="SettingsSafetyLegalActivity"
                 android:label="@string/settings_safetylegal_activity_title"
                 android:theme="@*android:style/Theme.Holo.Dialog.Alert">
