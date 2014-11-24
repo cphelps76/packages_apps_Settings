@@ -104,4 +104,8 @@
     <string name="third_party_launchers_title">Third party launchers</string>
     <string name="third_party_launchers_summary">If enabled, third party launchers will show up in resolver</string>
 
+    <string name="manual_title">User manual</string>
+    <string name="settings_manual_activity_title">User manual</string>
+    <string name="settings_manual_activity_unreachable">You don\'t have a data connection. To view this information now, go to %s from any computer connected to the Internet.</string>
+
 </resources>
