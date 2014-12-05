@@ -72,6 +72,10 @@
                 android:entryValues="@array/long_press_timeout_selector_values"
                 android:persistent="false"/>
 
+	<CheckBoxPreference
+                android:key="toggle_quick_boot_preference"
+                android:title="@string/accessibility_toggle_quick_boot_preference_title"
+                android:persistent="false"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

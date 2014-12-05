@@ -12,6 +12,23 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
+     @@DOLBY_BANNER
+
+     This file was modified by Dolby Laboratories, Inc. The portions of the
+     code that are surrounded by "DOLBY..." are copyrighted and 
+     licensed separately, as follows:
+
+     (C) 2011-2012 Dolby Laboratories, Inc.
+     All rights reserved.
+
+     This program is protected under international and U.S. Copyright laws as
+     an unpublished work. This program is confidential and proprietary to the
+     copyright owners. Reproduction or disclosure, in whole or in part, or the
+     production of derivative works therefrom without the express permission of
+     the copyright owners is prohibited.
+
+     @@DOLBY_FILE_M
+     @@DOLBY_BANNER_END
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,6 +50,23 @@
                 android:targetClass="com.android.musicfx.ControlPanelPicker" />
     </Preference>
 
+<!-- DOLBY_DAP_GUI -->
+    <PreferenceCategory
+            android:key="sound_dolby_title"
+            android:title="@string/sound_dolby_category_title"/>
+
+    <Preference
+            android:key="sound_dolby_ddp"
+            android:title="@string/sound_dolby_ds_launch_app"
+            android:persistent="false"
+            android:defaultValue="false"
+            android:widgetLayout="@layout/settings_dolby_launch_app_widget" />
+
+    <com.android.settings.SoundDolbyProfilePreference
+            android:key="sound_dolby_ds_profile"
+            android:title="@string/sound_dolby_ds_profile"
+            android:persistent="false" />
+<!-- DOLBY_DAP_GUI END -->
     <PreferenceCategory
             android:key="category_calls_and_notification"
             android:title="@string/sound_category_call_ringtone_vibrate_title"/>

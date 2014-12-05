@@ -103,6 +103,8 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
             "captioning_preference_screen";
     private static final String DISPLAY_MAGNIFICATION_PREFERENCE_SCREEN =
             "screen_magnification_preference_screen";
+    private static final String TOGGLE_QUICK_BOOT_PREFERENCE =
+            "toggle_quick_boot_preference";
 
     // Extras passed to sub-fragments.
     static final String EXTRA_PREFERENCE_KEY = "preference_key";
@@ -193,6 +195,7 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mTogglePowerButtonEndsCallPreference;
     private CheckBoxPreference mToggleLockScreenRotationPreference;
     private CheckBoxPreference mToggleSpeakPasswordPreference;
+    private CheckBoxPreference mToggleQuickBootPreference;
     private ListPreference mSelectLongPressTimeoutPreference;
     private Preference mNoServicesMessagePreference;
     private PreferenceScreen mCaptioningPreferenceScreen;
@@ -200,6 +203,8 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
     private PreferenceScreen mGlobalGesturePreferenceScreen;
 
     private int mLongPressTimeoutDefault;
+
+    private static final String QB_ENABLE_PROPERTY = "ro.quickboot.enable";
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -268,6 +273,9 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
         } else if (mDisplayMagnificationPreferenceScreen == preference) {
             handleDisplayMagnificationPreferenceScreenClick();
             return true;
+        } else if (mToggleQuickBootPreference == preference) {
+            handleToggleQuickBootPreferenceClick();
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -298,6 +306,12 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
         Settings.Secure.putInt(getContentResolver(),
                 Settings.Secure.ACCESSIBILITY_SPEAK_PASSWORD,
                 mToggleSpeakPasswordPreference.isChecked() ? 1 : 0);
+    }
+
+    private void handleToggleQuickBootPreferenceClick() {
+        //Log.i("qbtest", "isChecked:" + mToggleQuickBootPreference.isChecked());
+        Settings.Secure.putInt(getContentResolver(), Settings.Secure.ACCESSIBILITY_QUICK_BOOT,
+                mToggleQuickBootPreference.isChecked() ? 1 : 0);
     }
 
     private void handleTogglEnableAccessibilityGesturePreferenceClick() {
@@ -351,6 +365,14 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
         mToggleSpeakPasswordPreference =
                 (CheckBoxPreference) findPreference(TOGGLE_SPEAK_PASSWORD_PREFERENCE);
 
+	// Quick boot
+        mToggleQuickBootPreference =
+                (CheckBoxPreference) findPreference(TOGGLE_QUICK_BOOT_PREFERENCE);
+	
+	if(!SystemProperties.getBoolean(QB_ENABLE_PROPERTY, true)) {
+	    mSystemsCategory.removePreference(mToggleQuickBootPreference);	
+	}
+
         // Long press timeout.
         mSelectLongPressTimeoutPreference =
                 (ListPreference) findPreference(SELECT_LONG_PRESS_TIMEOUT_PREFERENCE);
@@ -387,6 +409,23 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
             // nor long press power does not show global actions menu.
             mSystemsCategory.removePreference(mGlobalGesturePreferenceScreen);
         }
+        if(Utils.platformHasTvUiMode()){
+        	initPreferencesForTV();
+        }
+    }
+    
+    private void initPreferencesForTV(){
+    	PreferenceScreen caption = (PreferenceScreen) findPreference("captioning_preference_screen");
+    	mSystemsCategory.removePreference(caption);
+    	
+    	mSystemsCategory.removePreference(mDisplayMagnificationPreferenceScreen);
+    	
+    	mSystemsCategory.removePreference(mToggleSpeakPasswordPreference);
+    	
+    	PreferenceScreen text2speech = (PreferenceScreen) findPreference("tts_settings_preference");
+    	mSystemsCategory.removePreference(text2speech);
+    	
+    	mSystemsCategory.removePreference(mSelectLongPressTimeoutPreference);
     }
 
     private void updateAllPreferences() {
@@ -510,6 +549,11 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
         final boolean speakPasswordEnabled = Settings.Secure.getInt(getContentResolver(),
                 Settings.Secure.ACCESSIBILITY_SPEAK_PASSWORD, 0) != 0;
         mToggleSpeakPasswordPreference.setChecked(speakPasswordEnabled);
+
+	//Quick boot
+        final boolean quickBootEnabled = Settings.Secure.getInt(getContentResolver(),
+                Settings.Secure.ACCESSIBILITY_QUICK_BOOT, 0) != 0;
+        mToggleQuickBootPreference.setChecked(quickBootEnabled);
 
         // Long press timeout.
         final int longPressTimeout = Settings.Secure.getInt(getContentResolver(),

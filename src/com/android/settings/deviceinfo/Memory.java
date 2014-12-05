@@ -34,6 +34,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.os.UserManager;
 import android.os.storage.IMountService;
 import android.os.storage.StorageEventListener;
@@ -67,6 +68,7 @@ public class Memory extends SettingsPreferenceFragment {
 
     private static final int DLG_CONFIRM_UNMOUNT = 1;
     private static final int DLG_ERROR_UNMOUNT = 2;
+    private static final int DLG_CONFIRM_UNMOUNT_USB_STORAGE = 3;
 
     // The mountToggle Preference that has last been clicked.
     // Assumes no two successive unmount event on 2 different volumes are performed before the first
@@ -78,7 +80,8 @@ public class Memory extends SettingsPreferenceFragment {
     private IMountService mMountService;
     private StorageManager mStorageManager;
     private UsbManager mUsbManager;
-
+    private boolean mIsUsbCategoryAdded = false ;
+    private Context mContext ;
     private ArrayList<StorageVolumePreferenceCategory> mCategories = Lists.newArrayList();
 
     @Override
@@ -86,7 +89,7 @@ public class Memory extends SettingsPreferenceFragment {
         super.onCreate(icicle);
 
         final Context context = getActivity();
-
+        mContext = context;
         mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
 
         mStorageManager = StorageManager.from(context);
@@ -94,12 +97,20 @@ public class Memory extends SettingsPreferenceFragment {
 
         addPreferencesFromResource(R.xml.device_info_memory);
 
-        addCategory(StorageVolumePreferenceCategory.buildForInternal(context));
+        if(isEmulate())
+            addCategory(StorageVolumePreferenceCategory.buildForInternal(context));
 
         final StorageVolume[] storageVolumes = mStorageManager.getVolumeList();
         for (StorageVolume volume : storageVolumes) {
             if (!volume.isEmulated()) {
-                addCategory(StorageVolumePreferenceCategory.buildForPhysical(context, volume));
+                String path = volume.getPath(); 
+                String state = mStorageManager.getVolumeState(path);
+                if(((!path.equals(SD_PATH))&&path.startsWith(USB_PATH+"/sd"))&&(!(Environment.MEDIA_MOUNTED.equals(state)))) {
+                    continue;
+                }
+                else {
+                    addCategory(StorageVolumePreferenceCategory.buildForPhysical(context, volume));
+                }
             }
         }
 
@@ -112,11 +123,23 @@ public class Memory extends SettingsPreferenceFragment {
         category.init();
     }
 
+    private void delCategory(StorageVolumePreferenceCategory category) {
+        mCategories.remove(category);
+        getPreferenceScreen().removePreference(category);
+        category.init();
+    }
+
     private boolean isMassStorageEnabled() {
         // Mass storage is enabled if primary volume supports it
         final StorageVolume[] volumes = mStorageManager.getVolumeList();
         final StorageVolume primary = StorageManager.getPrimaryVolume(volumes);
         return primary != null && primary.allowMassStorage();
+    }
+
+    private boolean isEmulate(){
+        final StorageVolume[] volumes = mStorageManager.getVolumeList();
+        final StorageVolume primary = StorageManager.getPrimaryVolume(volumes);
+        return primary.isEmulated();
     }
 
     @Override
@@ -136,17 +159,43 @@ public class Memory extends SettingsPreferenceFragment {
         }
     }
 
+    private static final String SD_PATH = "/storage/external_storage/sdcard1";
+    private static final String USB_PATH ="/storage/external_storage";
     StorageEventListener mStorageListener = new StorageEventListener() {
         @Override
         public void onStorageStateChanged(String path, String oldState, String newState) {
             Log.i(TAG, "Received storage state changed notification that " + path +
                     " changed state from " + oldState + " to " + newState);
-            for (StorageVolumePreferenceCategory category : mCategories) {
-                final StorageVolume volume = category.getStorageVolume();
-                if (volume != null && path.equals(volume.getPath())) {
-                    category.onStorageStateChanged();
-                    break;
+            if(Environment.MEDIA_REMOVED.equals(newState)){
+                if(path.startsWith(USB_PATH+"/sd")){
+                    if(!path.equals(SD_PATH)){
+                        for (StorageVolumePreferenceCategory category : mCategories) {
+                            StorageVolume volume = category.getStorageVolume();
+                            if(volume != null && path.equals(volume.getPath())){
+                                mIsUsbCategoryAdded = false ;
+                                delCategory(category);
+                                category.onResume();
+                                break ;
+                            }
+                        }
+                    }
                 }
+            }else if( Environment.MEDIA_MOUNTED.equals(newState)){
+                if(path.startsWith(USB_PATH+"/sd")){
+                    if(!path.equals(SD_PATH)){                      
+                        StorageVolume[] mVolumes = mStorageManager.getVolumeList();
+                        for (StorageVolume volume : mVolumes) {
+                            if(volume != null&& path.equals(volume.getPath())&&!mIsUsbCategoryAdded){
+                                StorageVolumePreferenceCategory category = StorageVolumePreferenceCategory.buildForPhysical(mContext, volume);
+                                mIsUsbCategoryAdded = true ;
+                                addCategory(category);
+                            }
+                        }
+                    }
+                }
+            }
+            for (StorageVolumePreferenceCategory category : mCategories) {
+                category.onResume();
             }
         }
     };
@@ -179,7 +228,8 @@ public class Memory extends SettingsPreferenceFragment {
         UserManager um = (UserManager)getActivity().getSystemService(Context.USER_SERVICE);
         boolean usbItemVisible = !isMassStorageEnabled()
                 && !um.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER);
-        usb.setVisible(usbItemVisible);
+        Boolean hasMassStorage = SystemProperties.getBoolean("ro.has.mass.storage",false);
+        usb.setVisible((usbItemVisible||hasMassStorage));
     }
 
     @Override
@@ -240,7 +290,7 @@ public class Memory extends SettingsPreferenceFragment {
                 String state = mStorageManager.getVolumeState(volume.getPath());
                 if (Environment.MEDIA_MOUNTED.equals(state) ||
                         Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-                    unmount();
+                    unmount(volume);
                 } else {
                     mount();
                 }
@@ -282,6 +332,19 @@ public class Memory extends SettingsPreferenceFragment {
                     .setNegativeButton(R.string.cancel, null)
                     .setMessage(R.string.dlg_confirm_unmount_text)
                     .create();
+                
+        case DLG_CONFIRM_UNMOUNT_USB_STORAGE:
+            return new AlertDialog.Builder(getActivity())
+            .setTitle(R.string.dlg_confirm_unmount_title_usb_storage)
+            .setPositiveButton(R.string.dlg_ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    doUnmountUSBStorage();
+                    mIsUsbCategoryAdded = true;
+                }})
+            .setNegativeButton(R.string.cancel, null)
+            .setMessage(R.string.dlg_confirm_unmount_text_usb_storage)
+            .create();
+            
         case DLG_ERROR_UNMOUNT:
                 return new AlertDialog.Builder(getActivity())
             .setTitle(R.string.dlg_error_unmount_title)
@@ -295,6 +358,21 @@ public class Memory extends SettingsPreferenceFragment {
     private void doUnmount() {
         // Present a toast here
         Toast.makeText(getActivity(), R.string.unmount_inform_text, Toast.LENGTH_SHORT).show();
+        IMountService mountService = getMountService();
+        try {
+            sLastClickedMountToggle.setEnabled(false);
+            sLastClickedMountToggle.setTitle(getString(R.string.sd_ejecting_title));
+            sLastClickedMountToggle.setSummary(getString(R.string.sd_ejecting_summary));
+            mountService.unmountVolume(sClickedMountPoint, true, false);
+        } catch (RemoteException e) {
+            // Informative dialog to user that unmount failed.
+            showDialogInner(DLG_ERROR_UNMOUNT);
+        }
+    }
+    
+    private void doUnmountUSBStorage() {
+        // Present a toast here
+        Toast.makeText(getActivity(), R.string.unmount_inform_text_usb_storage, Toast.LENGTH_SHORT).show();
         IMountService mountService = getMountService();
         try {
             sLastClickedMountToggle.setEnabled(false);
@@ -332,14 +410,31 @@ public class Memory extends SettingsPreferenceFragment {
         return true;
     }
 
-    private void unmount() {
+    private void unmount(StorageVolume volume) {
         // Check if external media is in use.
         try {
            if (hasAppsAccessingStorage()) {
-               // Present dialog to user
-               showDialogInner(DLG_CONFIRM_UNMOUNT);
+                   String description = volume != null ? volume.getDescription(getActivity()) : null;
+                   if(description != null && (description.contains("usb") || description.contains("USB")))
+                   {
+                       showDialogInner(DLG_CONFIRM_UNMOUNT_USB_STORAGE);
+                   }
+                   else
+                   {
+                       // Present dialog to user
+                       showDialogInner(DLG_CONFIRM_UNMOUNT);
+                   }
            } else {
-               doUnmount();
+               // doUnmount();
+                   String description = volume != null ? volume.getDescription(getActivity()) : null;
+                   if(description != null && (description.contains("usb") || description.contains("USB")))
+                   {
+                       doUnmountUSBStorage();
+                   }
+                   else
+                   {
+                       doUnmount();
+                   }
            }
         } catch (RemoteException e) {
             // Very unlikely. But present an error dialog anyway

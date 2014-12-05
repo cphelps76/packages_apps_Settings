@@ -27,6 +27,9 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.util.Log;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
+
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -41,11 +44,14 @@ public class UsbSettings extends SettingsPreferenceFragment {
 
     private static final String KEY_MTP = "usb_mtp";
     private static final String KEY_PTP = "usb_ptp";
+    private static final String KEY_MASS_STORAGE = "usb_mass_storage";
 
     private UsbManager mUsbManager;
     private CheckBoxPreference mMtp;
     private CheckBoxPreference mPtp;
     private boolean mUsbAccessoryMode;
+    private CheckBoxPreference mMass_storage;
+    private StorageManager mStorageManager;
 
     private final BroadcastReceiver mStateReceiver = new BroadcastReceiver() {
         public void onReceive(Context content, Intent intent) {
@@ -68,14 +74,23 @@ public class UsbSettings extends SettingsPreferenceFragment {
 
         mMtp = (CheckBoxPreference)root.findPreference(KEY_MTP);
         mPtp = (CheckBoxPreference)root.findPreference(KEY_PTP);
-
         UserManager um = (UserManager) getActivity().getSystemService(Context.USER_SERVICE);
         if (um.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
             mMtp.setEnabled(false);
             mPtp.setEnabled(false);
         }
 
+        mMass_storage = (CheckBoxPreference)root.findPreference(KEY_MASS_STORAGE);
+        mStorageManager = StorageManager.from(getActivity());
+        if(isEmulate())
+            root.removePreference(mMass_storage);
         return root;
+    }
+
+    private boolean isEmulate(){
+        final StorageVolume[] volumes = mStorageManager.getVolumeList();
+        final StorageVolume primary = StorageManager.getPrimaryVolume(volumes);
+        return primary.isEmulated();
     }
 
     @Override
@@ -107,10 +122,16 @@ public class UsbSettings extends SettingsPreferenceFragment {
         if (UsbManager.USB_FUNCTION_MTP.equals(function)) {
             mMtp.setChecked(true);
             mPtp.setChecked(false);
+            mMass_storage.setChecked(false);
         } else if (UsbManager.USB_FUNCTION_PTP.equals(function)) {
             mMtp.setChecked(false);
             mPtp.setChecked(true);
-        } else  {
+	     mMass_storage.setChecked(false);
+        } else if (UsbManager.USB_FUNCTION_MASS_STORAGE.equals(function)) {
+            mMtp.setChecked(false);
+            mPtp.setChecked(false);
+            mMass_storage.setChecked(true);
+        }else{
             mMtp.setChecked(false);
             mPtp.setChecked(false);
         }
@@ -124,10 +145,12 @@ public class UsbSettings extends SettingsPreferenceFragment {
             Log.e(TAG, "USB Normal Mode");
             mMtp.setEnabled(true);
             mPtp.setEnabled(true);
-        } else {
+            mMass_storage.setEnabled(true);
+        }else {
             Log.e(TAG, "USB Accessory Mode");
             mMtp.setEnabled(false);
             mPtp.setEnabled(false);
+            mMass_storage.setEnabled(false);
         }
     }
 
@@ -151,6 +174,8 @@ public class UsbSettings extends SettingsPreferenceFragment {
             function = UsbManager.USB_FUNCTION_MTP;
         } else if (preference == mPtp && mPtp.isChecked()) {
             function = UsbManager.USB_FUNCTION_PTP;
+        }else if (preference == mMass_storage) {
+            function = UsbManager.USB_FUNCTION_MASS_STORAGE;
         }
 
         mUsbManager.setCurrentFunction(function, true);
