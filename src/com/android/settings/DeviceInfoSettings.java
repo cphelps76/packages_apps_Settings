@@ -28,6 +28,7 @@ import android.os.UserHandle;
 import android.preference.Preference;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -197,6 +198,8 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
                     getActivity().getSharedPreferences(DevelopmentSettings.PREF_FILE,
                             Context.MODE_PRIVATE).edit().putBoolean(
                                     DevelopmentSettings.PREF_SHOW, true).apply();
+                    Settings.Global.putInt(getActivity().getContentResolver(),
+                            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 1);
                     if (mDevHitToast != null) {
                         mDevHitToast.cancel();
                     }
