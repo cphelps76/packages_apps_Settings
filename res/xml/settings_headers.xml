@@ -75,6 +75,11 @@
         android:fragment="com.android.settings.HomeSettings"
         android:title="@string/home_settings" />
 
+    <header
+        android:id="@+id/launcher_settings"
+        android:title="@string/launcher_settings_title"
+        android:icon="@drawable/ic_settings_home" />
+
     <!-- Sound -->
     <header
         android:id="@+id/sound_settings"

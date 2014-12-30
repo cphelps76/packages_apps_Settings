@@ -180,7 +180,8 @@ public class Settings extends PreferenceActivity
             R.id.accessibility_settings,
             R.id.print_settings,
             R.id.nfc_payment_settings,
-            R.id.home_settings
+            R.id.home_settings,
+            R.id.launcher_settings
     };
 
     private SharedPreferences mDevelopmentPreferences;
@@ -600,6 +601,27 @@ public class Settings extends PreferenceActivity
             int id = (int) header.id;
             if (id == R.id.operator_settings || id == R.id.manufacturer_settings) {
                 Utils.updateHeaderToSpecificActivityFromMetaDataOrRemove(this, target, header);
+            } else if (id == R.id.launcher_settings) {
+                Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
+                launcherIntent.addCategory(Intent.CATEGORY_HOME);
+                launcherIntent.addCategory(Intent.CATEGORY_DEFAULT);
+
+                Intent launcherPrefsIntent = new Intent(Intent.ACTION_MAIN);
+                launcherPrefsIntent.addCategory("com.cyanogenmod.category.LAUNCHER_PREFERENCES");
+
+                final PackageManager pm = getPackageManager();
+                ActivityInfo defaultLauncher = pm.resolveActivity(launcherIntent,
+                        PackageManager.MATCH_DEFAULT_ONLY).activityInfo;
+
+                launcherPrefsIntent.setPackage(defaultLauncher.packageName);
+                ResolveInfo launcherPrefs = pm.resolveActivity(launcherPrefsIntent, 0);
+                if (launcherPrefs == null) {
+                     target.remove(header);
+                } else {
+                     header.intent = new Intent().setClassName(
+                             launcherPrefs.activityInfo.packageName,
+                             launcherPrefs.activityInfo.name);
+                }
             } else if (id == R.id.wifi_settings) {
                 // Remove WiFi Settings if WiFi service is not available.
                 if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
