@@ -89,7 +89,6 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
     private static final String KEY_SAFETY_LEGAL = "safetylegal";
     private static final String KEY_MOD_VERSION = "mod_version";
     private static final String KEY_MOD_BUILD_DATE = "build_date";
-    private static final String KEY_CM_LICENSE = "cmlicense";
     private static final String FILENAME_PROC_CPUINFO = "/proc/cpuinfo";
     private static final String KEY_DEVICE_PROCESSOR = "device_processor";
 
@@ -289,16 +288,6 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
                 } catch (Exception e) {
                     Log.e(LOG_TAG, "Unable to start activity " + intent.toString());
                 }
-            }
-        } else if (preference.getKey().equals(KEY_CM_LICENSE)) {
-            String userCMLicenseUrl = SystemProperties.get(PROPERTY_CMLICENSE_URL);
-            final Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
-            intent.setData(Uri.parse(userCMLicenseUrl));
-            try {
-                startActivity(intent);
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Unable to start activity " + intent.toString());
             }
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
