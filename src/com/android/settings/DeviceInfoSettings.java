@@ -88,6 +88,8 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
     private static final String KEY_MOD_VERSION = "mod_version";
     private static final String KEY_MOD_BUILD_DATE = "build_date";
     private static final String KEY_MOD_API_LEVEL = "mod_api_level";
+    private static final String FILENAME_PROC_CPUINFO = "/proc/cpuinfo";
+    private static final String KEY_DEVICE_PROCESSOR = "device_processor";
 
     static final int TAPS_TO_BE_A_DEVELOPER = 7;
 
@@ -140,6 +142,7 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
         setExplicitValueSummary(KEY_MOD_API_LEVEL, constructApiLevelString());
         findPreference(KEY_MOD_API_LEVEL).setEnabled(true);
         findPreference(KEY_MOD_BUILD_DATE).setEnabled(true);
+        setStringSummary(KEY_DEVICE_PROCESSOR, getDeviceProcessorInfo());
 
         if (!SELinux.isSELinuxEnabled()) {
             String status = getResources().getString(R.string.selinux_status_disabled);
@@ -529,6 +532,40 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
             }
         }
         return null;
+    }
+
+    /**
+     * Returns the Hardware value in /proc/cpuinfo, else returns "Unknown".
+     * @return a string that describes the processor
+     */
+    private static String getDeviceProcessorInfo() {
+        // Hardware : XYZ
+        final String PROC_HARDWARE_REGEX = "Hardware\\s*:\\s*(.*)$"; /* hardware string */
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(FILENAME_PROC_CPUINFO));
+            String cpuinfo;
+
+            try {
+                while (null != (cpuinfo = reader.readLine())) {
+                    if (cpuinfo.startsWith("Hardware")) {
+                        Matcher m = Pattern.compile(PROC_HARDWARE_REGEX).matcher(cpuinfo);
+                        if (m.matches()) {
+                            return m.group(1);
+                        }
+                    }
+                }
+                return "Unknown";
+            } finally {
+                reader.close();
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG,
+                "IO Exception when getting cpuinfo for Device Info screen",
+                e);
+
+            return "Unknown";
+        }
     }
 
     /**
