@@ -307,6 +307,8 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private Dialog mRootDialog;
     private Dialog mUpdateRecoveryDialog;
 
+    private boolean mUnofficialBuild;
+
     @Override
     protected int getMetricsCategory() {
         return MetricsLogger.DEVELOPMENT;
@@ -315,6 +317,8 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+
+        mUnofficialBuild = android.os.Build.VERSION.CODENAME.equals("UNOFFICIAL");
 
         mWindowManager = IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
         mBackupManager = IBackupManager.Stub.asInterface(
@@ -656,7 +660,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         final ContentResolver cr = context.getContentResolver();
         mHaveDebugSettings = false;
         updateSwitchPreference(mEnableAdb, Settings.Global.getInt(cr,
-                Settings.Global.ADB_ENABLED, 0) != 0);
+                Settings.Global.ADB_ENABLED, mUnofficialBuild ? 1 : 0) != 0);
 
         mAdbNotify.setChecked(CMSettings.Secure.getInt(cr,
                 CMSettings.Secure.ADB_NOTIFY, 1) != 0);
@@ -1090,7 +1094,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         if ("user".equals(Build.TYPE)) {
             final ContentResolver resolver = getActivity().getContentResolver();
             final boolean adbEnabled = Settings.Global.getInt(
-                    resolver, Settings.Global.ADB_ENABLED, 0) != 0;
+                    resolver, Settings.Global.ADB_ENABLED, mUnofficialBuild ? 1 : 0) != 0;
             if (adbEnabled) {
                 mBugreport.setEnabled(true);
                 mBugreportInPower.setEnabled(true);
