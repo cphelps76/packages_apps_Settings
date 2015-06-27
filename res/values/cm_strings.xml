@@ -291,6 +291,9 @@
     <string name="mod_version">DEMENTED version</string>
     <string name="mod_version_default">Unknown</string>
 
+    <!-- About phone screen, status item label-->
+    <string name="processor_info">Processor info</string>
+
     <!-- About phone screen, Device model -->
     <string name="device_model">Device model</string>
     <!-- About phone screen, Device name -->
