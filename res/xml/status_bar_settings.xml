@@ -58,4 +58,10 @@
         android:summary="@string/status_bar_notif_count_summary"
         android:defaultValue="false" />
 
+    <SwitchPreference
+        android:key="show_4G_for_LTE"
+        android:title="@string/show_4G_for_LTE_title"
+        android:summary="@string/show_4G_for_LTE_summary"
+        android:defaultValue="false" />
+
 </PreferenceScreen>
