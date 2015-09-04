@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -45,6 +46,7 @@ import android.os.Handler;
 import android.os.UserManager;
 import android.preference.Preference;
 import android.preference.PreferenceGroup;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -186,34 +188,45 @@ public class HomeSettings extends SettingsPreferenceFragment implements Indexabl
                 getActivity().getIntent().getBooleanExtra(EXTRA_SUPPORT_MANAGED_PROFILES, false);
         boolean mustSupportManagedProfile = hasManagedProfile()
                 || supportManagedProfilesExtra;
-        for (int i = 0; i < homeActivities.size(); i++) {
-            final ResolveInfo candidate = homeActivities.get(i);
-            final ActivityInfo info = candidate.activityInfo;
-            ComponentName activityName = new ComponentName(info.packageName, info.name);
-            mHomeComponentSet[i] = activityName;
+	boolean isDefaultForced = Settings.System.getInt(context.getContentResolver(),
+		Settings.System.SET_DEFAULT_LAUNCHER, 0) != 0;
+
+        if (!isDefaultForced) {
             try {
-                Drawable icon = info.loadIcon(mPm);
-                CharSequence name = info.loadLabel(mPm);
-                HomeAppPreference pref;
+                for (int i = 0; i < homeActivities.size(); i++) {
+                    final ResolveInfo candidate = homeActivities.get(i);
+                    final ActivityInfo info = candidate.activityInfo;
+                    ComponentName activityName = new ComponentName(info.packageName, info.name);
+                    mHomeComponentSet[i] = activityName;
+                    try {
+                        Drawable icon = info.loadIcon(mPm);
+                        CharSequence name = info.loadLabel(mPm);
+                        HomeAppPreference pref;
 
-                if (mustSupportManagedProfile && !launcherHasManagedProfilesFeature(candidate)) {
-                    pref = new HomeAppPreference(context, activityName, prefIndex,
-                            icon, name, this, info, false /* not enabled */,
-                            getResources().getString(R.string.home_work_profile_not_supported));
-                } else  {
-                    pref = new HomeAppPreference(context, activityName, prefIndex,
-                            icon, name, this, info, true /* enabled */, null);
-                }
+                        if (mustSupportManagedProfile && !launcherHasManagedProfilesFeature(candidate)) {
+                            pref = new HomeAppPreference(context, activityName, prefIndex,
+                                    icon, name, this, info, false /* not enabled */,
+                                    getResources().getString(R.string.home_work_profile_not_supported));
+                        } else  {
+                            pref = new HomeAppPreference(context, activityName, prefIndex,
+                                    icon, name, this, info, true /* enabled */, null);
+                        }
 
-                mPrefs.add(pref);
-                mPrefGroup.addPreference(pref);
-                if (activityName.equals(currentDefaultHome)) {
-                    mCurrentHome = pref;
+                        mPrefs.add(pref);
+                        mPrefGroup.addPreference(pref);
+                        if (activityName.equals(currentDefaultHome)) {
+                            mCurrentHome = pref;
+                        }
+                        prefIndex++;
+                    } catch (Exception e) {
+                        Log.v(TAG, "Problem dealing with activity " + activityName, e);
+                    }
                 }
-                prefIndex++;
             } catch (Exception e) {
-                Log.v(TAG, "Problem dealing with activity " + activityName, e);
+                Log.v(TAG, "So much fail......");
             }
+        } else {
+            Log.v(TAG, "DEMENTEDHome is forced as default");
         }
 
         if (mCurrentHome != null) {
