@@ -17,6 +17,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/development_settings_title">
 
+    <SwitchPreference
+        android:key="force_default_launcher"
+        android:title="@string/force_default_launcher_title"
+        android:summary="@string/force_default_launcher_summary" />
+
     <PreferenceScreen
             android:key="development_tools"
             android:title="@string/development_tools_title"

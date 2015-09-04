@@ -192,6 +192,8 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
 
     private static String DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES = "262144"; // 256K
 
+    private static final String HOME_PREFS_FORCE_DEFAULT = "force_default_launcher";
+
     private IWindowManager mWindowManager;
     private IBackupManager mBackupManager;
     private DevicePolicyManager mDpm;
@@ -288,6 +290,8 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private Dialog mRootDialog;
 
     private boolean mUnofficialBuild;
+
+    private SwitchPreference mForceDefault;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -446,6 +450,10 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
 
         mDevelopmentTools = (PreferenceScreen) findPreference(DEVELOPMENT_TOOLS);
         mAllPrefs.add(mDevelopmentTools);
+
+        mForceDefault = (SwitchPreference) findPreference(HOME_PREFS_FORCE_DEFAULT);
+        mForceDefault.setChecked(Settings.System.getInt(this.getContentResolver(),
+                Settings.System.SET_DEFAULT_LAUNCHER, 0) != 0);
     }
 
     private ListPreference addListPreference(String prefKey) {
@@ -1735,6 +1743,10 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             writeKillAppLongpressBackOptions();
         } else if (preference == mForceHighEndGfx) {
             writeHighEndGfxOptions();
+        } else if (preference == mForceDefault) {
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.SET_DEFAULT_LAUNCHER,
+                    mForceDefault.isChecked() ? 1 : 0);
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
