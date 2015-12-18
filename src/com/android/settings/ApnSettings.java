@@ -26,6 +26,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -97,6 +98,7 @@ public class ApnSettings extends SettingsPreferenceFragment implements
     private RestoreApnUiHandler mRestoreApnUiHandler;
     private RestoreApnProcessHandler mRestoreApnProcessHandler;
     private HandlerThread mRestoreDefaultApnThread;
+    private ApnObserver mApnObserver;
 
     private UserManager mUm;
     private int mSubId;
@@ -107,6 +109,7 @@ public class ApnSettings extends SettingsPreferenceFragment implements
             "persist.radio.use_nv_for_ehrpd", false);
 
     private IntentFilter mMobileStateFilter;
+    private ProgressDialog mDialog;
 
     private boolean mUnavailable;
 
@@ -118,14 +121,39 @@ public class ApnSettings extends SettingsPreferenceFragment implements
                 PhoneConstants.DataState state = getMobileDataState(intent);
                 switch (state) {
                 case CONNECTED:
-                    if (!mRestoreDefaultApnMode) {
-                        fillList();
-                    } else {
-                        showDialog(DIALOG_RESTORE_DEFAULTAPN);
-                    }
+                    handleResetOrFill();
                     break;
                 }
             }
+        }
+    };
+
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void dispatchMessage(Message msg) {
+            handleResetOrFill();
+        }
+    };
+
+    /** ContentObserver to watch apn switch **/
+    private final class ApnObserver extends ContentObserver {
+        public ApnObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            Log.i(TAG, "apnObserver: preferred apn changed.");
+            handleResetOrFill();
+        }
+
+        public void startObserving() {
+            final ContentResolver cr = getActivity().getContentResolver();
+            cr.registerContentObserver(PREFERAPN_URI, false, this);
+        }
+
+        public void endObserving() {
+            getActivity().getContentResolver().unregisterContentObserver(this);
         }
     };
 
@@ -146,6 +174,7 @@ public class ApnSettings extends SettingsPreferenceFragment implements
 
         mMobileStateFilter = new IntentFilter(
                 TelephonyIntents.ACTION_ANY_DATA_CONNECTION_STATE_CHANGED);
+        mApnObserver = new ApnObserver(mHandler);
 
         if (!mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS)) {
             setHasOptionsMenu(true);
@@ -187,6 +216,10 @@ public class ApnSettings extends SettingsPreferenceFragment implements
 
         getActivity().registerReceiver(mMobileStateReceiver, mMobileStateFilter);
 
+        if (mApnObserver != null) {
+            mApnObserver.startObserving();
+        }
+
         if (!mRestoreDefaultApnMode) {
             fillList();
         }
@@ -196,6 +229,13 @@ public class ApnSettings extends SettingsPreferenceFragment implements
         return Uri.withAppendedPath(uri, "/subId/" + mSubId);
     }
 
+    private void handleResetOrFill() {
+        if (!mRestoreDefaultApnMode) {
+            fillList();
+        } else if (mDialog == null || !mDialog.isShowing()) {
+            showDialog(DIALOG_RESTORE_DEFAULTAPN);
+        }
+    }
 
     @Override
     public void onPause() {
@@ -203,6 +243,10 @@ public class ApnSettings extends SettingsPreferenceFragment implements
 
         if (mUnavailable) {
             return;
+        }
+
+        if (mApnObserver != null) {
+            mApnObserver.endObserving();
         }
 
         getActivity().unregisterReceiver(mMobileStateReceiver);
@@ -240,9 +284,9 @@ public class ApnSettings extends SettingsPreferenceFragment implements
 
             ArrayList<Preference> mmsApnList = new ArrayList<Preference>();
 
-            ArrayList<ApnInfo> mvnoSpnList = new ArrayList<ApnInfo>();
-            ArrayList<ApnInfo> mvnoGid1List = new ArrayList<ApnInfo>();
-            ArrayList<ApnInfo> mvnoImsiList = new ArrayList<ApnInfo>();
+            ArrayList<Preference> mvnoSpnList = new ArrayList<Preference>();
+            ArrayList<Preference> mvnoGid1List = new ArrayList<Preference>();
+            ArrayList<Preference> mvnoImsiList = new ArrayList<Preference>();
 
             mSelectedKey = getSelectedApnKey();
             while (cursor.moveToNext()) {
@@ -255,21 +299,6 @@ public class ApnSettings extends SettingsPreferenceFragment implements
                 String mvnoData = cursor.getString(MVNODATA_INDEX);
                 boolean isMvno = !TextUtils.isEmpty(mvnoType) && !TextUtils.isEmpty(mvnoData);
 
-                if (isMvno) {
-                    if (!mvnoMatches(mvnoType, mvnoData, simOperatorName, imsiSIM, gid1)) {
-                    } else {
-                        ApnInfo apnInfo = new ApnInfo(name, apn, key, type, mvnoType, readOnly);
-                        if ("spn".equals(mvnoType)) {
-                            mvnoSpnList.add(apnInfo);
-                        } else if ("gid".equals(mvnoType)) {
-                            mvnoGid1List.add(apnInfo);
-                        } else if ("imsi".equals(mvnoType)) {
-                            mvnoImsiList.add(apnInfo);
-                        }
-                    }
-                    continue;
-                }
-
                 ApnPreference pref = createApnPreference(name, key, apn, type, readOnly);
 
                 if (pref.getSelectable()) {
@@ -281,30 +310,34 @@ public class ApnSettings extends SettingsPreferenceFragment implements
                 } else {
                     mmsApnList.add(pref);
                 }
+
+                if (isMvno) {
+                    if (!mvnoMatches(mvnoType, mvnoData, simOperatorName, imsiSIM, gid1)) {
+                        apnList.removePreference(pref);
+                    } else {
+                        ApnInfo apnInfo = new ApnInfo(name, apn, key, type, mvnoType, readOnly);
+                        if ("spn".equals(mvnoType)) {
+                            mvnoSpnList.add(pref);
+                        } else if ("gid".equals(mvnoType)) {
+                            mvnoGid1List.add(pref);
+                        } else if ("imsi".equals(mvnoType)) {
+                            mvnoImsiList.add(pref);
+                        }
+                    }
+                }
+
             }
             cursor.close();
 
-            ArrayList<ApnInfo> mvnoList = null;
-            if (mvnoImsiList.size() > 0) {
-                mvnoList = mvnoImsiList;
-            } else if (mvnoGid1List.size() > 0) {
-                mvnoList = mvnoGid1List;
-            } else if (mvnoSpnList.size() > 0) {
-                mvnoList = mvnoSpnList;
-            }
-            if (mvnoList != null) {
-                for (ApnInfo apnInfo : mvnoList) {
-                    ApnPreference pref = createApnPreference(apnInfo.name, apnInfo.key, apnInfo.apn,
-                            apnInfo.type, apnInfo.readOnly);
-                    if (apnInfo.selectable) {
-                        if ((mSelectedKey != null) && mSelectedKey.equals(apnInfo.key)) {
-                            pref.setChecked();
-                            Log.d(TAG, "find select key = " + mSelectedKey);
-                        }
-                        apnList.addPreference(pref);
-                    } else {
-                        mmsApnList.add(pref);
+            // remove preferences for mvnos that should not be shown
+            if (mvnoImsiList.size() > 0 || mvnoGid1List.size() > 0) {
+                if (mvnoImsiList.size() > 0) {
+                    for (Preference pref : mvnoGid1List) {
+                        apnList.removePreference(pref);
                     }
+                }
+                for (Preference pref : mvnoSpnList) {
+                    apnList.removePreference(pref);
                 }
             }
 
@@ -537,12 +570,21 @@ public class ApnSettings extends SettingsPreferenceFragment implements
     }
 
     @Override
+    public void removeDialog(int id) {
+        super.removeDialog(id);
+        mDialog = null;
+    }
+
+    @Override
     public Dialog onCreateDialog(int id) {
         if (id == DIALOG_RESTORE_DEFAULTAPN) {
-            ProgressDialog dialog = new ProgressDialog(getActivity());
-            dialog.setMessage(getResources().getString(R.string.restore_default_apn));
-            dialog.setCancelable(false);
-            return dialog;
+            if (mDialog != null) {
+                mDialog.dismiss();
+            }
+            mDialog = new ProgressDialog(getActivity());
+            mDialog.setMessage(getResources().getString(R.string.restore_default_apn));
+            mDialog.setCancelable(false);
+            return mDialog;
         }
         return null;
     }

@@ -130,8 +130,9 @@
   <string name="volbtn_cursor_control_on_reverse">زدن کلید بالا/پایین صدا باعث رفتن مکان‌نما به راست/چپ می‌شود</string>
   <string name="swap_volume_buttons_title">جهت‌گیری مجدد</string>
   <string name="swap_volume_buttons_summary">هنگام چرخش صفحه، عملکرد کلیدهای صدا برعکس شود</string>
-  <string name="volume_keys_control_ring_stream_title">کلیدهای صدا، میزان صدای زنگ را کنترل می‌کنند</string>
-  <string name="volume_keys_control_ring_stream_summary">در صورت روشن بودن، کلیدهای صدا میزان صدای زنگ را کنترل می‌کنند. در صورت خاموش بودن، کلیدهای صدا میزان صدای رسانه را کنترل می‌کنند.</string>
+  <string name="volume_keys_control_ring_stream_title">کنترل میزان صدای زنگ</string>
+  <string name="volume_keys_control_ring_stream_summary_on">کلیدهای صدا میزان صدای زنگ را کنترل می‌کنند</string>
+  <string name="volume_keys_control_ring_stream_summary_off">کلیدهای صدا میزان صدای رسانه را کنترل می‌کنند</string>
   <string name="power_end_call_title">پایان دادن به تماس</string>
   <string name="power_end_call_summary">با زدن کلید پاور تماس فعلی پایان می‌یابد</string>
   <string name="button_wake_title">بیدار کردن دستگاه</string>
@@ -248,6 +249,7 @@
   <string name="privacy_guard_reset_text">مجوزها مجددا تنظیم شوند؟</string>
   <string name="privacy_guard_help_text">در این صفحه می‌توانید انتخاب کنید که محافظ حریم خصوصی برای کدامیک از برنامه‌ها فعال باشد، فقط کافی است که روی آنها ضربه بزنید. برنامه‌های انتخاب‌شده نمی‌توانند به اطلاعات شخصی شما مانند مخاطبین، پیام‌ها یا گزارش‌های تماس دسترسی داشته باشند. لمس طولانی یک برنامه، صفحه جزئیات آن را باز می‌کند.\n\nبرنامه‌های اصلی دستگاه به صورت پیش‌فرض نمایش داده نمی‌شوند ولی می‌توان به وسیله انتخاب گزینه منوی مربوطه آن‌ها را نمایش داد.</string>
   <string name="privacy_guard_manager_show_system_apps">نمایش برنامه‌های اصلی</string>
+  <string name="privacy_guard_notification_title">نمایش اعلان</string>
   <string name="app_ops_btn_text">ویرایش</string>
   <string name="increasing_ring_volume_option_title">صدای صعودی زنگ</string>
   <string name="increasing_ring_min_volume_title">میزان صدا هنگام شروع</string>
@@ -342,6 +344,7 @@
   <string name="notification_light_missed_call_title">تماس از دست رفته</string>
   <string name="notification_light_voicemail_title">پست صوتی</string>
   <string name="notification_light_screen_on">چراغ‌ها هنگام روشن شدن صفحه</string>
+  <string name="notification_light_use_multiple_leds">چند ال‌ای‌دی</string>
   <string name="keywords_lights_brightness_level">کم کردن نور ال‌ای‌دی‌ها</string>
   <string name="notification_ringtone_title_cm">صدای اعلان</string>
   <string name="headset_connect_player_title">اجرای برنامه موسیقی</string>
@@ -684,6 +687,9 @@
   <string name="settings_cmlicense_activity_title">موارد حقوقی سایانوژن‌مود</string>
   <string name="lockpattern_settings_enable_error_path_title">نمایش الگوی نادرست</string>
   <string name="lockpattern_settings_enable_dots_title">نمایش نقطه‌های الگو</string>
+  <string name="lock_directly_show_password">نمایش بی‌واسطه گذرواژه</string>
+  <string name="lock_directly_show_pattern">نمایش بی‌واسطه نمای الگو</string>
+  <string name="lock_directly_show_pin">نمایش بی‌واسطه پین</string>
   <string name="unlock_quick_unlock_control_title">باز شدن سریع</string>
   <string name="unlock_quick_unlock_control_summary">باز شدن قفل به محض وارد کردن پین/گذرواژه درست</string>
   <string name="unlock_scramble_pin_layout_title">چینش درهم</string>
@@ -702,6 +708,7 @@
   <string name="status_bar_show_weather_summary">نمایش آب و هوا در بالای پنل تنظیمات سریع</string>
   <string name="qs_category_title">پنل تنظیمات سریع</string>
   <string name="qs_brightness_slider_title">نمایش اسلایدر روشنایی</string>
+  <string name="qs_hide_tiles_with_sensitive_data">پنهان کردن کاشی‌های حساس در قفل</string>
   <string name="qs_order_title">انتخاب و منظم کردن کاشی‌ها</string>
   <string name="add_qs">افزودن کاشی جدید</string>
   <string name="qs_action_delete">حذف</string>
@@ -730,6 +737,7 @@
   <string name="qs_tile_heads_up">اعلان فوری</string>
   <string name="qs_tile_ambient_display">نمایش حساس به محیط</string>
   <string name="qs_tile_sync">همگام‌‌سازی</string>
+  <string name="qs_tile_battery_saver">بهینه‌ساز باتری</string>
   <string name="qs_dynamic_tile_next_alarm">هشدار بعدی</string>
   <string name="qs_dynamic_tile_ime_selector">انتخابگر تغییر روش ورودی</string>
   <string name="qs_dynamic_tile_su">دسترسی روت</string>
@@ -769,6 +777,7 @@
   <string name="lockscreen_message">برای تخصیص مجدد میانبر قفل صفحه، بر روی آیکون سمت چپ یا راست ضربه بزنید.</string>
   <string name="lockscreen_choose_action_title">انتخاب عملیات</string>
   <string name="lockscreen_visualizer_title">نمایش رقص نور موسیقی</string>
+  <string name="nfc_title_category">ان‌اف‌سی</string>
   <string name="whisperpush_title">WhisperPush</string>
   <string name="whisperpush_summary">مدیریت تنظیمات پیامک ایمن</string>
   <string name="navigation_ring_title">اهداف حلقه پیمایش</string>
@@ -819,7 +828,8 @@
   <string name="interruptions_ignore_while_media_title">جلوگیری از کم کردن صدای منبع ثانویه</string>
   <string name="interruptions_ignore_while_media_summary">میزان صدای رسانه هنگام دریافت اعلان کم نشود</string>
   <string name="none_is_silent_title">هشدارها هرگز قطع نشوند</string>
-  <string name="none_is_silent_summary">صداهای هشدار همواره در حالت بی‌صدا پخش شود</string>
+  <string name="none_is_silent_summary_on">هشدارها در حالت بیصدا نادیده گرفته نمی‌شوند</string>
+  <string name="none_is_silent_summary_off">هشدارها در حالت هیچ نادیده گرفته می‌شوند</string>
   <string name="allow_lights_title">چراغ‌های اعلان مجاز باشند</string>
   <string name="live_display_summary">بهینه کردن صفحه بر اساس ساعات روز و شرایط محیطی برای افزایش خوانایی و کاهش خستگی چشم</string>
   <string name="live_display_mode">حالت نمایش</string>
@@ -889,6 +899,11 @@
   <string name="factory_reset_erase_sd_card_summary">پاک کردن تمام داده‌های کارت حافظه از جمله موسیقی و تصاویر</string>
   <string name="factory_reset_warning_text_reset_now">اکنون مجددا تنظیم شود</string>
   <string name="factory_reset_warning_text_message">تمام حساب‌ها، برنامه‌ها، داده‌های برنامه‌ها و تنظیمات سیستمی موجود بر روی این دستگاه پاک می‌شوند. این عمل برگشت‌ناپذیر است.</string>
+  <string name="wifi_show_all">نمایش همه</string>
+  <string name="wifi_show_protected">نمایش شبکه‌های محافظت‌شده</string>
+  <string name="wifi_show_open">نمایش شبکه‌های آزاد</string>
+  <string name="wifi_empty_list_protected">شبکه وای‌فای محافظت‌شده‌ای وجود ندارد</string>
+  <string name="wifi_empty_list_open">شبکه وای‌فای آزادی وجود ندارد</string>
   <string name="wifi_setting_countrycode_title">کد منطقه‌ای وای‌فای</string>
   <string name="wifi_setting_countrycode_summary">تعیین کد منطقه‌ای برای وای‌فای</string>
   <string name="wifi_setting_countrycode_error">مشکلی در تنظیم کد منطقه‌ای وجود داشت.</string>
@@ -914,8 +929,8 @@
   <string name="fingerprint_dialog_title_rename">ویرایش اثر انگشت</string>
   <string name="fingerprint_dialog_name_label">نام اثر انگشت</string>
   <string name="fingerprint_dialog_title_max_fingers_reached">تعداد مجاز اثر انگشت به حداکثر رسیده است</string>
-  <string name="fingerprint_dialog_msg_max_fingers_reached">شما تنها می‌توانید <xliff:g id="finger" example="5 fingerprints">%d</xliff:g> اثر انگشت ثبت کنید. یکی از اثرهای انگشت موجود را حذف کنید.</string>
-  <string name="fingerprint_title_manage_fingerprints">مدیریت اثرهای انگشت <xliff:g id="finger">%d</xliff:g>/<xliff:g id="max">%d</xliff:g></string>
+  <string name="fingerprint_dialog_msg_max_fingers_reached">شما مجاز به ثبت <xliff:g id="finger" example="5">%d</xliff:g> اثر انگشت هستید. یکی از اثر انگشت‌های موجود را حذف کنید.</string>
+  <string name="fingerprint_title_manage_fingerprints"><xliff:g id="finger">%d</xliff:g> از <xliff:g id="max">%d</xliff:g> اثر انگشت ثبت شد</string>
   <string name="manage_fingerprints_description">اثر انگشت به شما اجازه می‌دهد فورا قفل گوشی خود را باز کرده و عکس بگیرید.</string>
   <string name="fingerprint_enrollment_introduction_title">حسگر خود را بیابید</string>
   <string name="fingerprint_enrollment_introduction_instructions">حسگر اثر انگشت در قسمت جلو یا پشت گوشی شما قرار دارد.</string>

@@ -23,8 +23,8 @@
   <string name="show_dev_on_cm">Ativou as opções de programador!</string>
   <string name="show_dev_already_cm">Não é necessário, já ativou as opções de programador.</string>
   <string name="development_tools_title">Ferramentas avançadas</string>
-  <string name="root_access">Acesso ROOT</string>
-  <string name="root_access_warning_title">Permitir acesso ROOT?</string>
+  <string name="root_access">Acesso root</string>
+  <string name="root_access_warning_title">Permitir acesso root?</string>
   <string name="root_access_warning_message">Permitir que as aplicações solicitem acesso root é muito perigoso e pode comprometer a segurança do seu sistema!</string>
   <string name="root_access_none">Desativado</string>
   <string name="root_access_apps">Só aplicações</string>
@@ -131,8 +131,9 @@
   <string name="volbtn_cursor_control_on_reverse">Volume para cima/baixo move o cursor para a direita/esquerda</string>
   <string name="swap_volume_buttons_title">Reorientar</string>
   <string name="swap_volume_buttons_summary">Trocar os botões de volume quando o ecrã é rodado</string>
-  <string name="volume_keys_control_ring_stream_title">As teclas de volume controlam o volume do toque de chamada</string>
-  <string name="volume_keys_control_ring_stream_summary">Se estiver ligado, os botões de volume controlam o volume do toque. Se estiver desligado, os botões de volume controlam o volume multimédia.</string>
+  <string name="volume_keys_control_ring_stream_title">Controle do volume do toque</string>
+  <string name="volume_keys_control_ring_stream_summary_on">As teclas de volume controlam o volume do toque de chamada</string>
+  <string name="volume_keys_control_ring_stream_summary_off">As teclas de volume controlam o volume multimédia</string>
   <string name="power_end_call_title">Termina chamada</string>
   <string name="power_end_call_summary">Pressionar o botão de energia terminará a chamada atual</string>
   <string name="button_wake_title">Ligar o dispositivo</string>
@@ -249,6 +250,7 @@
   <string name="privacy_guard_reset_text">Repor permissões?</string>
   <string name="privacy_guard_help_text">Neste ecrã você pode escolher quais as aplicações que devem ter ativa a Proteção de Privacidade simplesmente tocando nelas. As aplicações selecionadas não serão capazes de aceder aos seus dados pessoais, como contactos, mensagens ou registos de chamadas. Pressionar continuamente uma aplicação abre o ecrã de detalhes para essa aplicação.\n\nAplicações de sistema não são exibidas por defeito, mas podem ser mostradas, ao selecionar a opção no respetivo menu.</string>
   <string name="privacy_guard_manager_show_system_apps">Mostrar aplicações de sistema</string>
+  <string name="privacy_guard_notification_title">Mostrar notificação</string>
   <string name="app_ops_btn_text">Modificar</string>
   <string name="increasing_ring_volume_option_title">Toque crescente</string>
   <string name="increasing_ring_min_volume_title">Volume inicial</string>
@@ -343,6 +345,7 @@
   <string name="notification_light_missed_call_title">Chamada perdida</string>
   <string name="notification_light_voicemail_title">Correio de voz</string>
   <string name="notification_light_screen_on">Luzes com o ecrã ligado</string>
+  <string name="notification_light_use_multiple_leds">LEDs múltiplos</string>
   <string name="keywords_lights_brightness_level">escurecer o brilho do led</string>
   <string name="notification_ringtone_title_cm">Toque de notificação</string>
   <string name="headset_connect_player_title">Iniciar a aplicação de música</string>
@@ -685,6 +688,9 @@
   <string name="settings_cmlicense_activity_title">Licença CyanogenMod</string>
   <string name="lockpattern_settings_enable_error_path_title">Mostrar erro padrão</string>
   <string name="lockpattern_settings_enable_dots_title">Mostrar pontos padrão</string>
+  <string name="lock_directly_show_password">Mostrar diretamente a entrada de palavra-passe</string>
+  <string name="lock_directly_show_pattern">Mostrar diretamente a entrada padrão</string>
+  <string name="lock_directly_show_pin">Mostrar diretamente a entrada do código PIN</string>
   <string name="unlock_quick_unlock_control_title">Desbloqueio rápido</string>
   <string name="unlock_quick_unlock_control_summary">Desbloquear automaticamente quando o PIN/palavra-passe correto é inserido</string>
   <string name="unlock_scramble_pin_layout_title">Disposição aleatória</string>
@@ -732,6 +738,7 @@
   <string name="qs_tile_heads_up">Notificações pop-up</string>
   <string name="qs_tile_ambient_display">Visualização de ambiente</string>
   <string name="qs_tile_sync">Sincronização</string>
+  <string name="qs_tile_battery_saver">Economizador de bateria</string>
   <string name="qs_dynamic_tile_next_alarm">Próximo alarme</string>
   <string name="qs_dynamic_tile_ime_selector">Seletor de IME</string>
   <string name="qs_dynamic_tile_su">Acesso ROOT</string>
@@ -771,6 +778,7 @@
   <string name="lockscreen_message">Toque num ícone da esquerda ou da direita para atribuir um atalho no ecrã de bloqueio.</string>
   <string name="lockscreen_choose_action_title">Selecionar ação</string>
   <string name="lockscreen_visualizer_title">Mostrar o visualizador de música</string>
+  <string name="nfc_title_category">NFC</string>
   <string name="whisperpush_title">WhisperPush</string>
   <string name="whisperpush_summary">Gerir as definições de SMS seguras</string>
   <string name="navigation_ring_title">Atalhos do anel de navegação</string>
@@ -821,7 +829,8 @@
   <string name="interruptions_ignore_while_media_title">Prevenir a redução do áudio</string>
   <string name="interruptions_ignore_while_media_summary">Não reduzir o volume de reprodução de multimédia quando chega uma notificação</string>
   <string name="none_is_silent_title">Nunca silenciar alarmes</string>
-  <string name="none_is_silent_summary">Modo silencioso sempre toca alarmes</string>
+  <string name="none_is_silent_summary_on">Alarmes não serão ignorados no modo silencioso</string>
+  <string name="none_is_silent_summary_off">Alarmes serão ignorados no modo nenhum</string>
   <string name="allow_lights_title">Permitir notificação de luzes</string>
   <string name="live_display_summary">Otimiza o ecrã com base na hora do dia e condições do ambiente para melhorar a legibilidade e reduzir a fadiga ocular</string>
   <string name="live_display_mode">Modo de exibição</string>
@@ -889,6 +898,11 @@
   <string name="factory_reset_erase_sd_card_summary">Apagar todos os dados no cartão SD, incluindo músicas e fotos</string>
   <string name="factory_reset_warning_text_reset_now">RESTAURAR AGORA</string>
   <string name="factory_reset_warning_text_message">Todas as suas contas, aplicações, dados das aplicações e definições do sistema serão removidas deste dispositivo. Isto não pode ser revertido.</string>
+  <string name="wifi_show_all">Mostrar tudo</string>
+  <string name="wifi_show_protected">Mostrar redes protegidas</string>
+  <string name="wifi_show_open">Mostrar redes abertas</string>
+  <string name="wifi_empty_list_protected">Não há redes Wi\u2011Fi protegidas</string>
+  <string name="wifi_empty_list_open">Não há redes Wi\u2011Fi abertas</string>
   <string name="wifi_setting_countrycode_title">Código de região Wi\u2011Fi</string>
   <string name="wifi_setting_countrycode_summary">Especificar o código de região para Wi\u2011Fi</string>
   <string name="wifi_setting_countrycode_error">Ocorreu um problema a definir o código de região.</string>
@@ -914,8 +928,8 @@
   <string name="fingerprint_dialog_title_rename">Editar a impressão digital</string>
   <string name="fingerprint_dialog_name_label">Nome da impressão digital</string>
   <string name="fingerprint_dialog_title_max_fingers_reached">Número máximo de impressões digitais alcançado</string>
-  <string name="fingerprint_dialog_msg_max_fingers_reached">Só pode registar <xliff:g id="finger" example="5 fingerprints">%d</xliff:g> impressões digitais. Elimine uma impressão digital existente.</string>
-  <string name="fingerprint_title_manage_fingerprints">Gerir impressões digitais <xliff:g id="finger">%d</xliff:g>/<xliff:g id="max">%d</xliff:g></string>
+  <string name="fingerprint_dialog_msg_max_fingers_reached">Só pode registar <xliff:g id="finger" example="5">%d</xliff:g> impressões digitais. Elimine uma impressão digital existente.</string>
+  <string name="fingerprint_title_manage_fingerprints"><xliff:g id="finger">%d</xliff:g> de <xliff:g id="max">%d</xliff:g> impressões digitais registadas</string>
   <string name="manage_fingerprints_description">Impressões digitais permitem-lhe desbloquear rapidamente o seu telefone e tirar fotos.</string>
   <string name="fingerprint_enrollment_introduction_title">Encontre o sensor</string>
   <string name="fingerprint_enrollment_introduction_instructions">O sensor de impressão digital está localizado na parte da frente ou parte de trás do seu telefone.</string>

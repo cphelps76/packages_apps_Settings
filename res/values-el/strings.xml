@@ -875,6 +875,7 @@
     <string name="system_update_settings_list_item_title" msgid="3342887311059985961">"Ενημερώσεις συστήματος"</string>
     <string name="system_update_settings_list_item_summary" msgid="3853057315907710747"></string>
     <string name="firmware_version" msgid="4801135784886859972">"Έκδοση Android"</string>
+    <string name="security_patch" msgid="8438384045870296634">"Επίπεδο ενημέρωσης κώδικα ασφαλείας Android"</string>
     <string name="model_number" msgid="3765737700545384794">"Αριθμός μοντέλου"</string>
     <string name="fcc_equipment_id" msgid="149114368246356737">"Αναγνωριστικό εξοπλισμού"</string>
     <string name="baseband_version" msgid="1848990160763524801">"Έκδοση βασικού φάσματος"</string>
@@ -1695,7 +1696,7 @@
     <string name="menu_stats_refresh" msgid="1676215433344981075">"Ανανέωση"</string>
     <string name="process_kernel_label" msgid="3916858646836739323">"Λειτουργικό σύστημα Android"</string>
     <string name="process_mediaserver_label" msgid="6500382062945689285">"Mediaserver"</string>
-    <string name="battery_saver" msgid="1426682272004907982">"Εξοικονόμησης μπαταρίας"</string>
+    <string name="battery_saver" msgid="1426682272004907982">"Εξοικονόμηση μπαταρίας"</string>
     <string name="battery_saver_turn_on_automatically_title" msgid="9023847300114669426">"Αυτόματη ενεργοποίηση"</string>
     <string name="battery_saver_turn_on_automatically_never" msgid="6610846456314373">"Ποτέ"</string>
     <string name="battery_saver_turn_on_automatically_pct" msgid="7536784431655058267">"Μπαταρία %1$s"</string>

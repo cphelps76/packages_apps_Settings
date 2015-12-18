@@ -34,7 +34,7 @@
         </PreferenceScreen>
 
         <!-- Advanced mode -->
-        <com.android.settings.cyanogenmod.SecureSettingSwitchPreference
+        <com.android.settings.cyanogenmod.CMSecureSettingSwitchPreference
             android:key="advanced_mode"
             android:title="@string/advanced_mode_title"
             android:summary="@string/advanced_mode_summary" />
@@ -131,6 +131,12 @@
         <!-- Device hardware processor info -->
         <Preference android:key="device_processor"
                 android:title="@string/processor_info"
+                android:summary="@string/device_info_default"/>
+
+        <!-- Security patch level -->
+        <Preference android:key="security_patch"
+                style="?android:preferenceInformationStyle"
+                android:title="@string/security_patch"
                 android:summary="@string/device_info_default"/>
 
         <!-- Device FCC equipment id -->
