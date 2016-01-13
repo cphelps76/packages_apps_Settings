@@ -1982,7 +1982,6 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             writeDevelopmentShortcutOptions();
         } else if (preference == mKillAppLongpressBack) {
             writeKillAppLongpressBackOptions();
-            }
         } else if (preference == mForceDefault) {
             Settings.System.putInt(getContentResolver(),
                     Settings.System.SET_DEFAULT_LAUNCHER,
@@ -2164,6 +2163,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         } else if (dialog == mRootDialog) {
             updateRootAccessOptions();
             mRootDialog = null;
+        }
     }
 
     @Override
