@@ -23,6 +23,8 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -55,10 +57,14 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     private static final int STATUS_BAR_BATTERY_STYLE_HIDDEN = 4;
     private static final int STATUS_BAR_BATTERY_STYLE_TEXT = 6;
 
+    private static final String KEY_SHOW_4G = "show_4G_for_LTE";
+
     private ListPreference mStatusBarClock;
     private ListPreference mStatusBarAmPm;
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarBatteryShowPercent;
+
+    private SwitchPreference mShow4g;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -102,6 +108,10 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mStatusBarBatteryShowPercent.setSummary(mStatusBarBatteryShowPercent.getEntry());
         enableStatusBarBatteryDependents(batteryStyle);
         mStatusBarBatteryShowPercent.setOnPreferenceChangeListener(this);
+
+        mShow4g = (SwitchPreference) findPreference(KEY_SHOW_4G);
+        mShow4g.setChecked(Settings.System.getInt(resolver,
+                Settings.System.SHOW_4G_FOR_LTE, 0) != 0);
     }
 
     @Override
@@ -157,6 +167,18 @@ public class StatusBarSettings extends SettingsPreferenceFragment
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mShow4g) {
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.SHOW_4G_FOR_LTE,
+                    mShow4g.isChecked() ? 1 : 0);
+        } else {
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+        return true;
     }
 
     private void enableStatusBarBatteryDependents(int batteryIconStyle) {

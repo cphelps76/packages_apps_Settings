@@ -74,4 +74,10 @@
         android:summary="@string/status_bar_quick_qs_pulldown_summary"
         android:defaultValue="true" />
 
+    <SwitchPreference
+        android:key="show_4G_for_LTE"
+        android:title="@string/show_4G_for_LTE_title"
+        android:summary="@string/show_4G_for_LTE_summary"
+        android:defaultValue="false" />
+
 </PreferenceScreen>
