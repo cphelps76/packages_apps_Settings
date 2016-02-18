@@ -62,6 +62,9 @@ import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Index;
 import com.android.settings.search.Indexable;
 import com.android.settings.search.SearchIndexableRaw;
+
+import org.cyanogenmod.internal.util.CmLockPatternUtils;
+
 import cyanogenmod.providers.CMSettings;
 
 import java.util.ArrayList;
@@ -81,12 +84,13 @@ public class SecuritySettings extends SettingsPreferenceFragment
             new Intent(TrustAgentService.SERVICE_INTERFACE);
 
     // Fitler types for this panel
-    private static final String FILTER_TYPE_EXTRA = "filter_type";
-    private static final int TYPE_LOCKSCREEN_EXTRA = 0;
+    protected static final String FILTER_TYPE_EXTRA = "filter_type";
+    protected static final int TYPE_LOCKSCREEN_EXTRA = 0;
     private static final int TYPE_SECURITY_EXTRA = 1;
 
     // Lock Settings
     private static final String KEY_UNLOCK_SET_OR_CHANGE = "unlock_set_or_change";
+    private static final String KEY_DIRECTLY_SHOW = "directlyshow";
     private static final String KEY_VISIBLE_PATTERN = "visiblepattern";
     private static final String KEY_VISIBLE_ERROR_PATTERN = "visible_error_pattern";
     private static final String KEY_VISIBLE_DOTS = "visibledots";
@@ -122,15 +126,15 @@ public class SecuritySettings extends SettingsPreferenceFragment
 
     // These switch preferences need special handling since they're not all stored in Settings.
     private static final String SWITCH_PREFERENCE_KEYS[] = { KEY_LOCK_AFTER_TIMEOUT,
-            KEY_VISIBLE_PATTERN, KEY_VISIBLE_ERROR_PATTERN, KEY_VISIBLE_DOTS,
+            KEY_VISIBLE_PATTERN, KEY_VISIBLE_ERROR_PATTERN, KEY_VISIBLE_DOTS, KEY_DIRECTLY_SHOW,
             KEY_POWER_INSTANTLY_LOCKS, KEY_SHOW_PASSWORD, KEY_TOGGLE_INSTALL_APPLICATIONS };
 
     // Only allow one trust agent on the platform.
     private static final boolean ONLY_ONE_TRUST_AGENT = true;
 
-    private static final int MY_USER_ID = UserHandle.myUserId();
+    protected static final int MY_USER_ID = UserHandle.myUserId();
 
-    private static final String LIVE_LOCK_SCREEN_FEATURE = "org.cyanogenmod.livelockscreen";
+    protected static final String LIVE_LOCK_SCREEN_FEATURE = "org.cyanogenmod.livelockscreen";
 
     private PackageManager mPM;
     private DevicePolicyManager mDPM;
@@ -140,6 +144,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private LockPatternUtils mLockPatternUtils;
     private ListPreference mLockAfter;
 
+    private SwitchPreference mDirectlyShow;
     private SwitchPreference mVisiblePattern;
     private SwitchPreference mVisibleErrorPattern;
     private SwitchPreference mVisibleDots;
@@ -200,7 +205,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
         }
     }
 
-    private static int getResIdForLockUnlockScreen(Context context,
+    protected static int getResIdForLockUnlockScreen(Context context,
             LockPatternUtils lockPatternUtils) {
         int resid = 0;
         if (!lockPatternUtils.isSecure(MY_USER_ID)) {
@@ -300,6 +305,9 @@ public class SecuritySettings extends SettingsPreferenceFragment
                 setupLockAfterPreference();
                 updateLockAfterPreferenceSummary();
             }
+
+            // directly show
+            mDirectlyShow = (SwitchPreference) root.findPreference(KEY_DIRECTLY_SHOW);
 
             // visible pattern
             mVisiblePattern = (SwitchPreference) root.findPreference(KEY_VISIBLE_PATTERN);
@@ -532,7 +540,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
         }
     }
 
-    private static ArrayList<TrustAgentComponentInfo> getActiveTrustAgents(
+    protected static ArrayList<TrustAgentComponentInfo> getActiveTrustAgents(
             PackageManager pm, LockPatternUtils utils, DevicePolicyManager dpm) {
         ArrayList<TrustAgentComponentInfo> result = new ArrayList<TrustAgentComponentInfo>();
         List<ResolveInfo> resolveInfos = pm.queryIntentServices(TRUST_AGENT_INTENT,
@@ -707,6 +715,10 @@ public class SecuritySettings extends SettingsPreferenceFragment
         createPreferenceHierarchy();
 
         final LockPatternUtils lockPatternUtils = mChooseLockSettingsHelper.utils();
+        final CmLockPatternUtils cmLockPatternUtils = mChooseLockSettingsHelper.cmUtils();
+        if (mDirectlyShow != null) {
+            mDirectlyShow.setChecked(cmLockPatternUtils.shouldPassToSecurityView(MY_USER_ID));
+        }
         if (mVisiblePattern != null) {
             mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled(MY_USER_ID));
         }
@@ -793,6 +805,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
         boolean result = true;
         final String key = preference.getKey();
         final LockPatternUtils lockPatternUtils = mChooseLockSettingsHelper.utils();
+        final CmLockPatternUtils cmLockPatternUtils = mChooseLockSettingsHelper.cmUtils();
         if (KEY_LOCK_AFTER_TIMEOUT.equals(key)) {
             int timeout = Integer.parseInt((String) value);
             try {
@@ -802,6 +815,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
                 Log.e("SecuritySettings", "could not persist lockAfter timeout setting", e);
             }
             updateLockAfterPreferenceSummary();
+        } else if (KEY_DIRECTLY_SHOW.equals(key)) {
+            cmLockPatternUtils.setPassToSecurityView((Boolean) value, MY_USER_ID);
         } else if (KEY_VISIBLE_PATTERN.equals(key)) {
             lockPatternUtils.setVisiblePatternEnabled((Boolean) value, MY_USER_ID);
         } else if (KEY_VISIBLE_ERROR_PATTERN.equals(key)) {
@@ -859,14 +874,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
 
             List<SearchIndexableResource> result = new ArrayList<SearchIndexableResource>();
 
-            LockPatternUtils lockPatternUtils = new LockPatternUtils(context);
-            // Add options for lock/unlock screen
-            int resId = getResIdForLockUnlockScreen(context, lockPatternUtils);
-
-            SearchIndexableResource sir = new SearchIndexableResource(context);
-            sir.xmlResId = resId;
-            result.add(sir);
-
+            int resId = 0;
+            SearchIndexableResource sir;
             if (mIsPrimary) {
                 DevicePolicyManager dpm = (DevicePolicyManager)
                         context.getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -913,22 +922,6 @@ public class SecuritySettings extends SettingsPreferenceFragment
 
                 data = new SearchIndexableRaw(context);
                 data.title = res.getString(resId);
-                data.screenTitle = screenTitle;
-                result.add(data);
-            }
-
-            // Fingerprint
-            FingerprintManager fpm =
-                    (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
-            if (fpm.isHardwareDetected()) {
-                // This catches the title which can be overloaded in an overlay
-                data = new SearchIndexableRaw(context);
-                data.title = res.getString(R.string.security_settings_fingerprint_preference_title);
-                data.screenTitle = screenTitle;
-                result.add(data);
-                // Fallback for when the above doesn't contain "fingerprint"
-                data = new SearchIndexableRaw(context);
-                data.title = res.getString(R.string.fingerprint_manage_category_title);
                 data.screenTitle = screenTitle;
                 result.add(data);
             }
