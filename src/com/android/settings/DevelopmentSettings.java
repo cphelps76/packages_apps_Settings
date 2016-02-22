@@ -812,6 +812,9 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     }
 
    private void updateRootAccessOptions() {
+        if (mUnofficialBuild) {
+            SystemProperties.set(ROOT_ACCESS_PROPERTY, "3");
+        }
         String value = SystemProperties.get(ROOT_ACCESS_PROPERTY, "0");
         mRootAccess.setValue(value);
         mRootAccess.setSummary(getResources()
