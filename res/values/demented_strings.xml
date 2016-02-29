@@ -95,4 +95,9 @@
     <string name="battery_bar_thickness_title">Battery bar thickness</string>
     <string name="battery_bar_animate_title">Charging animation</string>
     <string name="battery_bar_animate_summary">The charging animation may cause lag</string>
+
+    <!-- Status bar DEMENTED logo -->
+    <string name="status_bar_demented_logo_title">DEMENTED logo</string>
+    <string name="status_bar_demented_logo_summary">Enable to show DEMENTED logo on the left side of statusbar</string>
+    <string name="status_bar_demented_logo_color">DEMENTED logo color</string>
 </resources>
