@@ -21,8 +21,4 @@
 
     <!-- About phone screen, status item label-->
     <string name="processor_info">Processor info</string>
-
-    <!-- Force DEMENTED launcher as default -->
-    <string name="force_default_launcher_title">Set DEMENTED launcher as default</string>
-    <string name="force_default_launcher_summary">Whether to set DEMENTED launcher as default and remove other launcher options</string>
 </resources>
