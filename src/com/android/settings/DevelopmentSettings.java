@@ -76,6 +76,7 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.settings.fuelgauge.InactiveApps;
@@ -204,6 +205,9 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private static final int[] MOCK_LOCATION_APP_OPS = new int[] {AppOpsManager.OP_MOCK_LOCATION};
 
     private static final String MULTI_WINDOW_SYSTEM_PROPERTY = "persist.sys.debug.multi_window";
+
+    private static final String HOME_PREFS_FORCE_DEFAULT = "force_default_launcher";
+
     private IWindowManager mWindowManager;
     private IBackupManager mBackupManager;
     private DevicePolicyManager mDpm;
@@ -302,6 +306,8 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private Dialog mRootDialog;
 
     private boolean mUnofficialBuild;
+
+    private SwitchPreference mForceDefault;
 
     @Override
     protected int getMetricsCategory() {
@@ -480,6 +486,10 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             removePreference(KEY_COLOR_MODE);
             mColorModePreference = null;
         }
+
+        mForceDefault = (SwitchPreference) findPreference(HOME_PREFS_FORCE_DEFAULT);
+        mForceDefault.setChecked(Settings.System.getInt(this.getContentResolver(),
+                Settings.System.SET_DEFAULT_LAUNCHER, 0) != 0);
     }
 
     private ListPreference addListPreference(String prefKey) {
@@ -1976,12 +1986,36 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             writeDevelopmentShortcutOptions();
         } else if (preference == mKillAppLongpressBack) {
             writeKillAppLongpressBackOptions();
+        } else if (preference == mForceDefault) {
+            Context context = getActivity();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.SET_DEFAULT_LAUNCHER,
+                    mForceDefault.isChecked() ? 1 : 0);
+            makePrefered(context);
+            if (!mForceDefault.isChecked()) {
+                Toast.makeText(context, getString(com.android.internal.R.string.default_launcher_unset),
+                    Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context, getString(com.android.internal.R.string.default_launcher_set),
+                    Toast.LENGTH_LONG).show();
+            }
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
-
         return false;
     }
+
+    private static void makePrefered(Context context) {
+       PackageManager pM = context.getPackageManager();
+       ComponentName cN = new ComponentName(context, NoClass.class);
+       pM.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+
+       Intent intent = new Intent(Intent.ACTION_MAIN);
+       intent.addCategory(Intent.CATEGORY_HOME);            
+       context.startActivity(intent);
+
+       pM.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+   }
 
     private void startInactiveAppsFragment() {
         ((SettingsActivity) getActivity()).startPreferencePanel(
