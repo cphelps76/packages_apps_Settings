@@ -2041,7 +2041,8 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
        pM.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 
        Intent intent = new Intent(Intent.ACTION_MAIN);
-       intent.addCategory(Intent.CATEGORY_HOME);            
+       intent.addCategory(Intent.CATEGORY_HOME);
+       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
        context.startActivity(intent);
 
        pM.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
