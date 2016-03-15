@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod project
+ * Copyright (C) 2016 DEMENTED
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-package com.android.settings.cyanogenmod;
+package com.android.settings.demented;
 
 import android.content.Context;
 import android.preference.SwitchPreference;
+import android.provider.Settings;
 import android.util.AttributeSet;
 
-import cyanogenmod.providers.CMSettings;
-
-public class CMGlobalSettingSwitchPreference extends SwitchPreference {
-    public CMGlobalSettingSwitchPreference(Context context, AttributeSet attrs, int defStyle) {
+public class GlobalSettingSwitchPreference extends SwitchPreference {
+    public GlobalSettingSwitchPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public CMGlobalSettingSwitchPreference(Context context, AttributeSet attrs) {
+    public GlobalSettingSwitchPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CMGlobalSettingSwitchPreference(Context context) {
+    public GlobalSettingSwitchPreference(Context context) {
         super(context, null);
     }
 
@@ -42,7 +41,7 @@ public class CMGlobalSettingSwitchPreference extends SwitchPreference {
                 // It's already there, so the same as persisting
                 return true;
             }
-            CMSettings.Global.putInt(getContext().getContentResolver(), getKey(), value ? 1 : 0);
+            Settings.Global.putInt(getContext().getContentResolver(), getKey(), value ? 1 : 0);
             return true;
         }
         return false;
@@ -53,7 +52,7 @@ public class CMGlobalSettingSwitchPreference extends SwitchPreference {
         if (!shouldPersist()) {
             return defaultReturnValue;
         }
-        return CMSettings.Global.getInt(getContext().getContentResolver(),
+        return Settings.Global.getInt(getContext().getContentResolver(),
                 getKey(), defaultReturnValue ? 1 : 0) != 0;
     }
 
@@ -61,6 +60,6 @@ public class CMGlobalSettingSwitchPreference extends SwitchPreference {
     protected boolean isPersisted() {
         // Using getString instead of getInt so we can simply check for null
         // instead of catching an exception. (All values are stored as strings.)
-        return CMSettings.Global.getString(getContext().getContentResolver(), getKey()) != null;
+        return Settings.Global.getString(getContext().getContentResolver(), getKey()) != null;
     }
 }

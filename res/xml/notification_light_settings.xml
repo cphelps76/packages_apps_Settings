@@ -21,11 +21,11 @@
         android:key="general_section"
         android:title="@string/notification_light_general_title">
 
-        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+        <com.android.settings.demented.SystemSettingSwitchPreference
             android:key="notification_light_pulse"
             android:title="@string/notification_light_title" />
 
-        <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
+        <com.android.settings.demented.CMSystemSettingSwitchPreference
             android:key="notification_light_color_auto"
             android:title="@string/notification_light_automagic"
             android:dependency="notification_light_pulse"
@@ -51,23 +51,23 @@
             <intent android:action="android.intent.action.SHOW_NOTIFICATION_BRIGHTNESS_DIALOG" />
         </PreferenceScreen>
 
-        <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
+        <com.android.settings.demented.CMSystemSettingSwitchPreference
             android:key="notification_light_multiple_leds_enable"
             android:title="@string/notification_light_use_multiple_leds"
             android:dependency="notification_light_pulse" />
 
-        <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
+        <com.android.settings.demented.CMSystemSettingSwitchPreference
             android:key="notification_light_screen_on_enable"
             android:title="@string/notification_light_screen_on"
             android:dependency="notification_light_pulse" />
 
-        <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
+        <com.android.settings.demented.CMSystemSettingSwitchPreference
             android:key="allow_lights"
             android:title="@string/notification_light_zen_mode"
             android:dependency="notification_light_pulse"
             android:defaultValue="true" />
 
-        <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
+        <com.android.settings.demented.CMSystemSettingSwitchPreference
             android:key="notification_light_pulse_custom_enable"
             android:title="@string/notification_light_use_custom"
             android:dependency="notification_light_pulse" />

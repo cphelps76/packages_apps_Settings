@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The CyanogenMod project
+ * Copyright (C) 2016 DEMENTED
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.WindowManagerGlobal;
 
-import com.android.settings.cyanogenmod.ButtonBacklightBrightness;
+import com.android.settings.demented.ButtonBacklightBrightness;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;

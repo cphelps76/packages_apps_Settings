@@ -64,7 +64,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.android.settings.cyanogenmod.ProtectedAppsReceiver;
+import com.android.settings.demented.ProtectedAppsReceiver;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.os.BatterySipper;

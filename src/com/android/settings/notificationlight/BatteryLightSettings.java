@@ -29,7 +29,7 @@ import android.view.MenuItem;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference;
+import com.android.settings.demented.CMSystemSettingSwitchPreference;
 
 import cyanogenmod.providers.CMSettings;
 

@@ -1,4 +1,4 @@
-package com.android.settings.cyanogenmod;
+package com.android.settings.demented;
 
 import java.util.ArrayList;
 import java.util.List;

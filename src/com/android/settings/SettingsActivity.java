@@ -81,7 +81,7 @@ import com.android.settings.applications.UsageAccessDetails;
 import com.android.settings.applications.WriteSettingsDetails;
 import com.android.settings.blacklist.BlacklistSettings;
 import com.android.settings.bluetooth.BluetoothSettings;
-import com.android.settings.cyanogenmod.DisplayRotation;
+import com.android.settings.demented.DisplayRotation;
 import com.android.settings.dashboard.DashboardCategory;
 import com.android.settings.dashboard.DashboardSummary;
 import com.android.settings.dashboard.DashboardTile;
@@ -369,8 +369,8 @@ public class SettingsActivity extends Activity
             DrawOverlayDetails.class.getName(),
             WriteSettingsDetails.class.getName(),
             LiveDisplay.class.getName(),
-            com.android.settings.cyanogenmod.DisplayRotation.class.getName(),
-            com.android.settings.cyanogenmod.PrivacySettings.class.getName(),
+            com.android.settings.demented.DisplayRotation.class.getName(),
+            com.android.settings.demented.PrivacySettings.class.getName(),
             BlacklistSettings.class.getName(),
             ProfilesSettings.class.getName(),
             NotificationManagerSettings.class.getName()

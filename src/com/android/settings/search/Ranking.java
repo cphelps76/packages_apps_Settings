@@ -54,7 +54,7 @@ import com.android.settings.wifi.SavedAccessPointsWifiSettings;
 import com.android.settings.wifi.WifiSettings;
 
 import com.android.settings.ButtonSettings;
-import com.android.settings.cyanogenmod.StatusBarSettings;
+import com.android.settings.demented.StatusBarSettings;
 
 import java.util.HashMap;
 
@@ -161,7 +161,7 @@ public final class Ranking {
 
         // Privacy
         sRankMap.put(PrivacySettings.class.getName(), RANK_PRIVACY);
-        sRankMap.put(com.android.settings.cyanogenmod.PrivacySettings.class.getName(), RANK_PRIVACY);
+        sRankMap.put(com.android.settings.demented.PrivacySettings.class.getName(), RANK_PRIVACY);
 
         // Date / Time
         sRankMap.put(DateTimeSettings.class.getName(), RANK_DATE_TIME);

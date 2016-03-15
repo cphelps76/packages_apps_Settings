@@ -41,7 +41,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.android.settings.R;
-import com.android.settings.cyanogenmod.ProtectedAppsReceiver;
+import com.android.settings.demented.ProtectedAppsReceiver;
 
 import cyanogenmod.providers.CMSettings;
 

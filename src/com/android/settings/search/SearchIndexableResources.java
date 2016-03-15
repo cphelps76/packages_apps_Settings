@@ -55,7 +55,7 @@ import com.android.settings.wifi.SavedAccessPointsWifiSettings;
 import com.android.settings.wifi.WifiSettings;
 
 import com.android.settings.ButtonSettings;
-import com.android.settings.cyanogenmod.StatusBarSettings;
+import com.android.settings.demented.StatusBarSettings;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -328,20 +328,20 @@ public final class SearchIndexableResources {
                         StatusBarSettings.class.getName(),
                         R.drawable.ic_settings_statusbar));
 
-        sResMap.put(com.android.settings.cyanogenmod.PrivacySettings.class.getName(),
+        sResMap.put(com.android.settings.demented.PrivacySettings.class.getName(),
                 new SearchIndexableResource(
                         Ranking.getRankForClassName(
-                                com.android.settings.cyanogenmod.PrivacySettings.class.getName()),
+                                com.android.settings.demented.PrivacySettings.class.getName()),
                         R.xml.privacy_settings_cyanogenmod,
-                        com.android.settings.cyanogenmod.PrivacySettings.class.getName(),
+                        com.android.settings.demented.PrivacySettings.class.getName(),
                         R.drawable.ic_settings_privacy));
 
-        sResMap.put(com.android.settings.cyanogenmod.LockscreenSettingsAlias.class.getName(),
+        sResMap.put(com.android.settings.demented.LockscreenSettingsAlias.class.getName(),
                 new SearchIndexableResource(
                         Ranking.getRankForClassName(
-                                com.android.settings.cyanogenmod.LockscreenSettingsAlias.class.getName()),
+                                com.android.settings.demented.LockscreenSettingsAlias.class.getName()),
                         NO_DATA_RES_ID,
-                        com.android.settings.cyanogenmod.LockscreenSettingsAlias.class.getName(),
+                        com.android.settings.demented.LockscreenSettingsAlias.class.getName(),
                         R.drawable.ic_settings_lockscreen));
     }
 

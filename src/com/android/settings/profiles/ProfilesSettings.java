@@ -46,7 +46,7 @@ import cyanogenmod.providers.CMSettings;
 import com.android.settings.R;
 import com.android.settings.SettingsActivity;
 import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.cyanogenmod.CMBaseSystemSettingSwitchBar;
+import com.android.settings.demented.CMBaseSystemSettingSwitchBar;
 import org.cyanogenmod.internal.logging.CMMetricsLogger;
 
 import java.util.UUID;

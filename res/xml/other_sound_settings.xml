@@ -44,7 +44,7 @@
             android:persistent="false" />
 
     <!-- Volume adjust sound -->
-    <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
+    <com.android.settings.demented.CMSystemSettingSwitchPreference
             android:key="volume_adjust_sounds_enabled"
             android:title="@string/volume_adjust_sounds_title"
             android:defaultValue="true" />

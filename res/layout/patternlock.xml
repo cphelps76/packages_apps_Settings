@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 **
-** Copyright 2014, 2014 The CyanogenMod Project
+** Copyright 2014, 2016 DEMENTED
 **
 ** Licensed under the Apache License, Version 2.0 (the "License")
 ** you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@
         android:layout_gravity="center"
         android:layout_weight="4" />
 
-    <com.android.settings.cyanogenmod.ProtectedAccountView
+    <com.android.settings.demented.ProtectedAccountView
         android:id="@+id/lock_account_view"
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -63,7 +63,7 @@
         android:layout_weight="4"
         android:visibility="gone" >
             <include layout="@layout/protected_account_view" />
-    </com.android.settings.cyanogenmod.ProtectedAccountView>
+    </com.android.settings.demented.ProtectedAccountView>
 
     <Space
         android:layout_width="1dp"

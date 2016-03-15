@@ -43,10 +43,10 @@ import android.widget.ListView;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference;
-import com.android.settings.cyanogenmod.PackageListAdapter;
-import com.android.settings.cyanogenmod.PackageListAdapter.PackageItem;
-import com.android.settings.cyanogenmod.SystemSettingSwitchPreference;
+import com.android.settings.demented.CMSystemSettingSwitchPreference;
+import com.android.settings.demented.PackageListAdapter;
+import com.android.settings.demented.PackageListAdapter.PackageItem;
+import com.android.settings.demented.SystemSettingSwitchPreference;
 
 import org.cyanogenmod.internal.logging.CMMetricsLogger;
 

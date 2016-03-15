@@ -46,8 +46,8 @@ import cyanogenmod.app.ProfileManager;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.cyanogenmod.PackageListAdapter;
-import com.android.settings.cyanogenmod.PackageListAdapter.PackageItem;
+import com.android.settings.demented.PackageListAdapter;
+import com.android.settings.demented.PackageListAdapter.PackageItem;
 
 import org.cyanogenmod.internal.logging.CMMetricsLogger;
 

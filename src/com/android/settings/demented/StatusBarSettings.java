@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2015 The CyanogenMod Project
+ * Copyright (C) 2014-2016 DEMENTED
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.settings.cyanogenmod;
+package com.android.settings.demented;
 
 import android.content.ContentResolver;
 import android.content.Context;

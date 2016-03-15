@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The CyanogenMod Project
+ * Copyright (C) 2016 DEMENTED
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,8 +33,8 @@ import android.widget.Toast;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.LockPatternView;
 import com.android.settings.R;
-import com.android.settings.cyanogenmod.ProtectedAccountView;
-import com.android.settings.cyanogenmod.ProtectedAccountView.OnNotifyAccountReset;
+import com.android.settings.demented.ProtectedAccountView;
+import com.android.settings.demented.ProtectedAccountView.OnNotifyAccountReset;
 import com.android.settings.fingerprint.FingerprintUiHelper;
 
 import java.security.MessageDigest;

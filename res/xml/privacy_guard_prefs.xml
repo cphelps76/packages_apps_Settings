@@ -23,7 +23,7 @@
         android:summary="@string/privacy_guard_default_summary"
         android:persistent="false" />
 
-    <com.android.settings.cyanogenmod.CMSecureSettingSwitchPreference
+    <com.android.settings.demented.CMSecureSettingSwitchPreference
         android:key="privacy_guard_notification"
         android:title="@string/privacy_guard_notification_title"
         android:defaultValue="true" />

@@ -16,9 +16,9 @@
 -keep class com.android.settings.users.*
 -keep class com.android.settings.nfc.*
 -keep class com.android.settings.notification.*
--keep class com.android.settings.cyanogenmod.*
+-keep class com.android.settings.demented.*
 
--keep class com.android.settings.cyanogenmod.*Settings
+-keep class com.android.settings.demented.*Settings
 -keep class com.android.settings.privacyguard.*
 
 # These would be stripped out since they are being created with reflection

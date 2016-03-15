@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2016 DEMENTED
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.settings.R;
 import com.android.settings.SettingsActivity;
 import com.android.settings.Utils;
-import com.android.settings.cyanogenmod.LtoService;
+import com.android.settings.demented.LtoService;
 import com.android.settings.widget.SwitchBar;
 
 import cyanogenmod.hardware.CMHardwareManager;

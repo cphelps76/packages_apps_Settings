@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2015 The CyanogenMod Project
+     Copyright (C) 2016 DEMENTED
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@
                 android:title="@string/alarm_volume_option_title" />
 
         <!-- Link Volume Notification -->
-        <com.android.settings.cyanogenmod.SecureSettingSwitchPreference
+        <com.android.settings.demented.SecureSettingSwitchPreference
                 android:key="volume_link_notification"
                 android:title="@string/link_volume_option_title" />
 
@@ -73,7 +73,7 @@
                 android:ringtoneType="notification" />
 
         <!-- Increasing ring -->
-        <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
+        <com.android.settings.demented.CMSystemSettingSwitchPreference
                 android:key="increasing_ring"
                 android:title="@string/increasing_ring_volume_option_title" />
 
@@ -84,7 +84,7 @@
                 android:dependency="increasing_ring"/>
 
         <!-- Headset -->
-        <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
+        <com.android.settings.demented.CMSystemSettingSwitchPreference
                 android:key="headset_connect_player"
                 android:title="@string/headset_connect_player_title"
                 android:summary="@string/headset_connect_player_summary"
@@ -109,7 +109,7 @@
                 android:persistent="false" />
 
         <!-- Vibrate on touch -->
-        <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+        <com.android.settings.demented.SystemSettingSwitchPreference
                 android:key="haptic_feedback_enabled"
                 android:title="@string/vibrate_on_touch_title"
                 android:defaultValue="true" />

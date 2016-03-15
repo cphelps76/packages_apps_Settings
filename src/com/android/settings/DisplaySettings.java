@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2010 The Android Open Source Project
- * Copyright (C) 2014 The CyanogenMod Project
+ * Copyright (C) 2016 DEMENTED
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,7 +83,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import com.android.settings.Utils;
-import com.android.settings.cyanogenmod.DisplayRotation;
+import com.android.settings.demented.DisplayRotation;
 import cyanogenmod.providers.CMSettings;
 
 public class DisplaySettings extends SettingsPreferenceFragment implements
