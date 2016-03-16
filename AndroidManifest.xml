@@ -2280,7 +2280,7 @@
         </activity-alias>
 
 
-        <activity android:name=".cyanogenmod.SpamList" />
+        <activity android:name=".demented.SpamList" />
 
         <!-- "Blacklist settings" UI, used only on voice-capable phone devices. -->
         <activity android:name="Settings$BlacklistSettingsActivity"
@@ -2636,7 +2636,7 @@
         <activity android:name=".notificationlight.NotificationLightSettings" />
         <activity android:name=".notificationlight.BatteryLightSettings" />
 
-        <activity android:name=".cyanogenmod.PrivacySettings" />
+        <activity android:name=".demented.PrivacySettings" />
 
         <activity android:name=".applications.ProtectedAppsActivity"
                   android:label="@string/protected_apps"
@@ -2680,7 +2680,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".cyanogenmod.BootReceiver" android:enabled="true">$
+        <receiver android:name=".demented.BootReceiver" android:enabled="true">$
             <intent-filter android:priority="2147483647">$
                 <action android:name="android.intent.action.BOOT_COMPLETED" />$
             </intent-filter>$
@@ -2858,7 +2858,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".cyanogenmod.BootReceiver" android:enabled="true">
+        <receiver android:name=".demented.BootReceiver" android:enabled="true">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -2867,11 +2867,11 @@
         <service android:label="LtoService"
             android:enabled="true"
             android:exported="false"
-            android:name=".cyanogenmod.LtoService">
+            android:name=".demented.LtoService">
         </service>
 
         <receiver
-            android:name=".cyanogenmod.ProtectedAppsReceiver"
+            android:name=".demented.ProtectedAppsReceiver"
             android:permission="cyanogenmod.permission.PROTECTED_APP">
             <intent-filter>
                 <action android:name="cyanogenmod.intent.action.PACKAGE_PROTECTED" />
