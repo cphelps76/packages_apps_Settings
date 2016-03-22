@@ -18,6 +18,7 @@ package com.android.settings.demented;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -122,6 +123,17 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mQuickPulldown.setValue(String.valueOf(quickPulldown));
         updatePulldownSummary(quickPulldown);
         mQuickPulldown.setOnPreferenceChangeListener(this);
+
+        isTelephony();
+    }
+
+    private void isTelephony() {
+        // Determine options based on device telephony support
+        PackageManager pm = getPackageManager();
+        if (!pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
+            // No telephony, remove dependent options
+            getPreferenceScreen().removePreference(findPreference(KEY_SHOW_4G));
+        }
     }
 
     @Override
