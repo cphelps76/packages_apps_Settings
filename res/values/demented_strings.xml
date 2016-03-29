@@ -15,6 +15,26 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- DEMENTED Interface -->
+    <string name="header_category_custom">DEMENTED</string>
+    <string name="demented_interface_title">DEMENTED Interface</string>
+    <string name="notification_manager">Notifications</string>
+    <string name="notification_manager_summary">Manage system and app notifications</string>
+    <string name="lockscreen_settings">Lock screen</string>
+    <string name="lockscreen_settings_summary">Lock screen security and shortcut settings</string>
+    <string name="button_settings">Buttons</string>
+    <string name="button_settings_summary">Hardware key and navigation bar settings</string>
+    <string name="gesture_settings">Gestures</string>
+    <string name="gesture_settings_summary">Advanced device gesture settings</string>
+    <string name="home_settings">Home</string>
+    <string name="home_settings_summary">Shows a list of available launchers, hidden when DEMENTEDHome is set as default</string>
+    <string name="profiles_settings">System profiles</string>
+    <string name="profiles_settings_summary">Displays system profile options</string>
+    <string name="status_bar_settings">Status bar</string>
+    <string name="status_bar_settings_summary">Status bar custom options</string>
+    <string name="google_settings">Google</string>
+    <string name="google_settings_summary">Google account options</string>
+
     <!-- Show 4G for LTE -->
     <string name="show_4G_for_LTE_title">Show 4G for LTE</string>
     <string name="show_4G_for_LTE_summary">Whether to show the 4G icon in statusbar when in LTE</string>

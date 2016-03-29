@@ -274,8 +274,6 @@ public class SettingsActivity extends Activity
             R.id.device_section,
             R.id.sound_settings,
             R.id.display_and_lights_settings,
-            R.id.lockscreen_settings,
-            R.id.notification_manager,
             R.id.storage_settings,
             R.id.application_settings,
             R.id.battery_settings,
@@ -290,10 +288,9 @@ public class SettingsActivity extends Activity
             R.id.about_settings,
             R.id.accessibility_settings,
             R.id.print_settings,
-            R.id.home_settings,
             R.id.dashboard,
             R.id.privacy_settings_cyanogenmod,
-            R.id.button_settings
+            R.id.demented_interface
     };
 
     private static final String[] ENTRY_FRAGMENTS = {
@@ -373,7 +370,8 @@ public class SettingsActivity extends Activity
             com.android.settings.demented.PrivacySettings.class.getName(),
             BlacklistSettings.class.getName(),
             ProfilesSettings.class.getName(),
-            NotificationManagerSettings.class.getName()
+            NotificationManagerSettings.class.getName(),
+            DEMENTED.class.getName()
     };
 
 
@@ -1218,8 +1216,6 @@ public class SettingsActivity extends Activity
 
                             category.addTile(tile);
 
-                        } else if (innerNodeName.equals("external-tiles")) {
-                            category.externalIndex = category.getTilesCount();
                         } else {
                             XmlUtils.skipCurrentTag(parser);
                         }
@@ -1294,10 +1290,6 @@ public class SettingsActivity extends Activity
                     if (!mBatteryPresent) {
                         removeTile = true;
                     }
-                } else if (id == R.id.home_settings) {
-                    if (!updateHomeSettingTiles(tile)) {
-                        removeTile = true;
-                    }
                 } else if (id == R.id.user_settings) {
                     boolean hasMultipleUsers =
                             ((UserManager) getSystemService(Context.USER_SERVICE))
@@ -1318,12 +1310,6 @@ public class SettingsActivity extends Activity
                             UserManager.DISALLOW_DEBUGGING_FEATURES)) {
                         removeTile = true;
                     }
-                } else if (id == R.id.button_settings) {
-                    boolean hasDeviceKeys = getResources().getInteger(
-                            com.android.internal.R.integer.config_deviceHardwareKeys) != 0;
-                    if (!hasDeviceKeys) {
-                        removeTile = true;
-                    }
                 }
 
                 if (UserHandle.MU_ENABLED && UserHandle.myUserId() != 0
@@ -1336,65 +1322,6 @@ public class SettingsActivity extends Activity
                 }
                 n--;
             }
-        }
-        addExternalTiles(target);
-    }
-
-    private void addExternalTiles(List<DashboardCategory> target) {
-        Map<Pair<String, String>, DashboardTile> addedCache =
-                new ArrayMap<Pair<String, String>, DashboardTile>();
-        UserManager userManager = UserManager.get(this);
-        for (UserHandle user : userManager.getUserProfiles()) {
-            addExternalTiles(target, user, addedCache);
-        }
-    }
-
-    private void addExternalTiles(List<DashboardCategory> target, UserHandle user,
-            Map<Pair<String, String>, DashboardTile> addedCache) {
-        PackageManager pm = getPackageManager();
-        Intent intent = new Intent(EXTRA_SETTINGS_ACTION);
-        List<ResolveInfo> results = pm.queryIntentActivitiesAsUser(intent,
-                PackageManager.GET_META_DATA, user.getIdentifier());
-        for (ResolveInfo resolved : results) {
-            if (!resolved.system) {
-                // Do not allow any app to add to settings, only system ones.
-                continue;
-            }
-            ActivityInfo activityInfo = resolved.activityInfo;
-            Bundle metaData = activityInfo.metaData;
-            if ((metaData == null) || !metaData.containsKey(EXTRA_CATEGORY_KEY)) {
-                Log.w(LOG_TAG, "Found " + resolved.activityInfo.name + " for action "
-                        + EXTRA_SETTINGS_ACTION + " missing metadata " +
-                        (metaData == null ? "" : EXTRA_CATEGORY_KEY));
-                continue;
-            }
-            String categoryKey = metaData.getString(EXTRA_CATEGORY_KEY);
-            DashboardCategory category = getCategory(target, categoryKey);
-            if (category == null) {
-                Log.w(LOG_TAG, "Activity " + resolved.activityInfo.name + " has unknown "
-                        + "category key " + categoryKey);
-                continue;
-            }
-            Pair<String, String> key = new Pair<String, String>(activityInfo.packageName,
-                    activityInfo.name);
-            DashboardTile tile = addedCache.get(key);
-            if (tile == null) {
-                tile = new DashboardTile();
-                tile.intent = new Intent().setClassName(
-                        activityInfo.packageName, activityInfo.name);
-                Utils.updateTileToSpecificActivityFromMetaDataOrRemove(this, tile);
-
-                if (category.externalIndex == -1
-                        || category.externalIndex > category.getTilesCount()) {
-                    // If no location for external tiles has been specified for this category,
-                    // then just put them at the end.
-                    category.addTile(tile);
-                } else {
-                    category.addTile(category.externalIndex, tile);
-                }
-                addedCache.put(key, tile);
-            }
-            tile.userHandle.add(user);
         }
     }
 

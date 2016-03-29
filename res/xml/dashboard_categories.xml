@@ -93,6 +93,33 @@
         </dashboard-tile>
     </dashboard-category>
 
+    <!-- DEMENTED -->
+    <dashboard-category
+            android:id="@+id/customization_section"
+            android:key="@string/category_key_customization"
+            android:title="@string/header_category_custom" >
+
+        <!-- DEMENTED Interface -->
+        <dashboard-tile
+                android:id="@+id/demented_interface"
+                android:title="@string/demented_interface_title"
+                android:fragment="com.android.settings.DEMENTED"
+                android:icon="@drawable/ic_settings_demented"
+                />
+
+        <!-- Themes -->
+        <!-- NOTE: Intent.parseIntent looks for "categories" tag and not "category" -->
+        <dashboard-tile
+                android:id="@+id/theme_settings"
+                android:title="@string/themes_settings_title"
+                android:icon="@drawable/ic_settings_themes">
+            <intent
+                    android:action="android.intent.action.MAIN" >
+                <categories android:name="cyanogenmod.intent.category.APP_THEMES" />
+            </intent>
+        </dashboard-tile>
+    </dashboard-category>
+
     <!-- DEVICE -->
     <dashboard-category
             android:id="@+id/device_section"
@@ -114,45 +141,6 @@
                 android:fragment="com.android.settings.DisplaySettings"
                 android:icon="@drawable/ic_settings_display"
                 />
-
-        <!-- Themes -->
-        <!-- NOTE: Intent.parseIntent looks for "categories" tag and not "category" -->
-        <dashboard-tile
-                android:id="@+id/theme_settings"
-                android:title="@string/themes_settings_title"
-                android:icon="@drawable/ic_settings_themes">
-            <intent
-                    android:action="android.intent.action.MAIN" >
-                <categories android:name="cyanogenmod.intent.category.APP_THEMES" />
-            </intent>
-        </dashboard-tile>
-
-        <!-- Notification manager -->
-        <dashboard-tile
-                android:id="@+id/notification_manager"
-                android:title="@string/notification_manager"
-                android:fragment="com.android.settings.notification.NotificationManagerSettings"
-                android:icon="@drawable/ic_settings_notifications"
-                />
-
-        <!-- Lock screen -->
-        <dashboard-tile
-                android:id="@+id/lockscreen_settings"
-                android:title="@string/lockscreen_settings"
-                android:fragment="com.android.settings.SecuritySettings"
-                android:icon="@drawable/ic_settings_lockscreen">
-                <extra android:name="filter_type" android:value="0" />
-        </dashboard-tile>
-
-        <!-- Buttons -->
-        <dashboard-tile
-                android:id="@+id/button_settings"
-                android:title="@string/button_pref_title"
-                android:fragment="com.android.settings.ButtonSettings"
-                android:icon="@drawable/ic_settings_buttons"
-                />
-
-        <external-tiles />
 
         <!-- Battery -->
         <dashboard-tile
@@ -194,30 +182,6 @@
             android:key="@string/category_key_personal"
             android:title="@string/header_category_personal" >
 
-        <!-- Home -->
-        <dashboard-tile
-                android:id="@+id/home_settings"
-                android:title="@string/home_settings"
-                android:fragment="com.android.settings.HomeSettings"
-                android:icon="@drawable/ic_settings_home"
-                />
-
-        <!-- Profiles -->
-        <dashboard-tile
-                android:id="@+id/profile_settings"
-                android:fragment="com.android.settings.profiles.ProfilesSettings"
-                android:title="@string/profiles_settings_title"
-                android:icon="@drawable/ic_settings_profiles"
-                />
-
-        <!-- Status bar -->
-        <dashboard-tile
-                android:id="@+id/status_bar_settings"
-                android:title="@string/status_bar_title"
-                android:fragment="com.android.settings.demented.StatusBarSettings"
-                android:icon="@drawable/ic_settings_statusbar"
-                />
-
         <!-- Application Settings -->
         <dashboard-tile
                 android:id="@+id/application_settings"
@@ -233,9 +197,6 @@
                 android:fragment="com.android.settings.accounts.AccountSettings"
                 android:icon="@drawable/ic_settings_accounts"
                 />
-
-        <!-- Marker for where to place external tiles in this category -->
-        <external-tiles />
 
         <!-- CyanogenMod Privacy Settings -->
         <!-- This is the 'real' Privacy items and includes Privacy Guard, Blacklist & WhisperPush -->

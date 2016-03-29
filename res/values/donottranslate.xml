@@ -35,6 +35,7 @@
     </string-array>
     <string name="category_key_wireless">com.android.settings.category.wireless</string>
     <string name="category_key_device">com.android.settings.category.device</string>
+    <string name="category_key_customization">com.android.settings.category.customization</string>
     <string name="category_key_personal">com.android.settings.category.personal</string>
     <string name="category_key_system">com.android.settings.category.system</string>
 </resources>
