@@ -44,12 +44,15 @@ public class DEMENTED extends SettingsPreferenceFragment implements
     private static final String KEY_HARDWARE_KEYS = "prefs_buttons";
 
     private ImageView mLogoView;
+    private Preference mGesture;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.demented_interface_settings);
+
+        mGesture = findPreference(KEY_GESTURE_SETTINGS);
         removePreferences();
     }
 
@@ -70,9 +73,17 @@ public class DEMENTED extends SettingsPreferenceFragment implements
         getPreferenceScreen().removePreference(preference);
     }
 
+    private boolean gesturePrefAvailable() {
+        return Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
+                getPreferenceScreen(), KEY_GESTURE_SETTINGS);
+    }
+
     private void removePreferences() {
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
             getPreferenceScreen(), KEY_GESTURE_SETTINGS);
+        if (gesturePrefAvailable()) {
+            mGesture.setSummary(R.string.gesture_settings_summary);
+        }
         if (!hasButtons()) {
             removePreference(KEY_HARDWARE_KEYS);
         }

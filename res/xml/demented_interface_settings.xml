@@ -49,8 +49,7 @@
 
     <PreferenceScreen
         android:key="prefs_gesture"
-        android:title="@string/gesture_settings"
-        android:summary="@string/gesture_settings_summary" >
+        android:title="@string/gesture_settings" >
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.cyanogenmod.settings.device"
