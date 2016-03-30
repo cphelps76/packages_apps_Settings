@@ -188,45 +188,34 @@ public class HomeSettings extends SettingsPreferenceFragment implements Indexabl
                 getActivity().getIntent().getBooleanExtra(EXTRA_SUPPORT_MANAGED_PROFILES, false);
         boolean mustSupportManagedProfile = hasManagedProfile()
                 || supportManagedProfilesExtra;
-	boolean isDefaultForced = Settings.System.getInt(context.getContentResolver(),
-		Settings.System.SET_DEFAULT_LAUNCHER, 0) != 0;
-
-        if (!isDefaultForced) {
+        for (int i = 0; i < homeActivities.size(); i++) {
+            final ResolveInfo candidate = homeActivities.get(i);
+            final ActivityInfo info = candidate.activityInfo;
+            ComponentName activityName = new ComponentName(info.packageName, info.name);
+            mHomeComponentSet[i] = activityName;
             try {
-                for (int i = 0; i < homeActivities.size(); i++) {
-                    final ResolveInfo candidate = homeActivities.get(i);
-                    final ActivityInfo info = candidate.activityInfo;
-                    ComponentName activityName = new ComponentName(info.packageName, info.name);
-                    mHomeComponentSet[i] = activityName;
-                    try {
-                        Drawable icon = info.loadIcon(mPm);
-                        CharSequence name = info.loadLabel(mPm);
-                        HomeAppPreference pref;
+                Drawable icon = info.loadIcon(mPm);
+                CharSequence name = info.loadLabel(mPm);
+                HomeAppPreference pref;
 
-                        if (mustSupportManagedProfile && !launcherHasManagedProfilesFeature(candidate)) {
-                            pref = new HomeAppPreference(context, activityName, prefIndex,
-                                    icon, name, this, info, false /* not enabled */,
-                                    getResources().getString(R.string.home_work_profile_not_supported));
-                        } else  {
-                            pref = new HomeAppPreference(context, activityName, prefIndex,
-                                    icon, name, this, info, true /* enabled */, null);
-                        }
-
-                        mPrefs.add(pref);
-                        mPrefGroup.addPreference(pref);
-                        if (activityName.equals(currentDefaultHome)) {
-                            mCurrentHome = pref;
-                        }
-                        prefIndex++;
-                    } catch (Exception e) {
-                        Log.v(TAG, "Problem dealing with activity " + activityName, e);
-                    }
+                if (mustSupportManagedProfile && !launcherHasManagedProfilesFeature(candidate)) {
+                    pref = new HomeAppPreference(context, activityName, prefIndex,
+                            icon, name, this, info, false /* not enabled */,
+                            getResources().getString(R.string.home_work_profile_not_supported));
+                } else  {
+                    pref = new HomeAppPreference(context, activityName, prefIndex,
+                            icon, name, this, info, true /* enabled */, null);
                 }
+
+                mPrefs.add(pref);
+                mPrefGroup.addPreference(pref);
+                if (activityName.equals(currentDefaultHome)) {
+                    mCurrentHome = pref;
+                }
+                prefIndex++;
             } catch (Exception e) {
-                Log.v(TAG, "So much fail......");
+                Log.v(TAG, "Problem dealing with activity " + activityName, e);
             }
-        } else {
-            Log.v(TAG, "DEMENTEDHome is forced as default");
         }
 
         if (mCurrentHome != null) {
