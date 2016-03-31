@@ -46,15 +46,17 @@ public class DEMENTED extends SettingsPreferenceFragment implements
 
     private static final String TAG = "DEMENTED";
     private static final String KEY_DEMENTED_GITHUB = "https://github.com/cphelps76";
-    private static final String KEY_GESTURE_SETTINGS = "prefs_gesture";
-    private static final String KEY_HARDWARE_KEYS = "prefs_buttons";
-    private static final String HOME_PREFS_FORCE_DEFAULT = "force_default_launcher";
-    private static final String HOME_PREFS = "prefs_home";
+    private static final String KEY_GESTURE_PREFS = "prefs_gesture";
+    private static final String KEY_BUTTON_PREFS = "prefs_buttons";
+    private static final String KEY_HOME_FORCE_DEFAULT = "force_default_launcher";
+    private static final String KEY_HOME_PREFS = "prefs_home";
 
     private SwitchPreference mForceDefault;
     private ImageView mLogoView;
     private Preference mGesture;
     private Preference mHomePrefs;
+
+    private static Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,13 +64,15 @@ public class DEMENTED extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.demented_interface_settings);
 
-        mGesture = findPreference(KEY_GESTURE_SETTINGS);
+        mContext = getActivity();
 
-        mForceDefault = (SwitchPreference) findPreference(HOME_PREFS_FORCE_DEFAULT);
-        mForceDefault.setChecked(Settings.System.getInt(this.getContentResolver(),
+        mGesture = findPreference(KEY_GESTURE_PREFS);
+
+        mForceDefault = (SwitchPreference) findPreference(KEY_HOME_FORCE_DEFAULT);
+        mForceDefault.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SET_DEFAULT_LAUNCHER, 0) != 0);
 
-        mHomePrefs = findPreference(HOME_PREFS_FORCE_DEFAULT);
+        mHomePrefs = findPreference(KEY_HOME_FORCE_DEFAULT);
 
         removePreferences();
     }
@@ -91,21 +95,21 @@ public class DEMENTED extends SettingsPreferenceFragment implements
     }
 
     private boolean gesturePrefAvailable() {
-        return Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
-                getPreferenceScreen(), KEY_GESTURE_SETTINGS);
+        return Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(mContext,
+                getPreferenceScreen(), KEY_GESTURE_PREFS);
     }
 
     private void removePreferences() {
-        Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
-            getPreferenceScreen(), KEY_GESTURE_SETTINGS);
+        Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(mContext,
+            getPreferenceScreen(), KEY_GESTURE_PREFS);
         if (gesturePrefAvailable()) {
             mGesture.setSummary(R.string.gesture_settings_summary);
         }
         if (!hasButtons()) {
-            removePreference(KEY_HARDWARE_KEYS);
+            removePreference(KEY_BUTTON_PREFS);
         }
         if (mForceDefault.isChecked()) {
-            removePreference(HOME_PREFS);
+            removePreference(KEY_HOME_PREFS);
         }
     }
 
@@ -137,16 +141,15 @@ public class DEMENTED extends SettingsPreferenceFragment implements
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mForceDefault) {
-            Context context = getActivity();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.SET_DEFAULT_LAUNCHER,
                     mForceDefault.isChecked() ? 1 : 0);
-            makePrefered(context);
+            makePrefered();
             if (!mForceDefault.isChecked()) {
-                Toast.makeText(context, getString(com.android.internal.R.string.default_launcher_unset),
+                Toast.makeText(mContext, getString(com.android.internal.R.string.default_launcher_unset),
                     Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(context, getString(com.android.internal.R.string.default_launcher_set),
+                Toast.makeText(mContext, getString(com.android.internal.R.string.default_launcher_set),
                     Toast.LENGTH_LONG).show();
             }
         } else {
@@ -158,18 +161,18 @@ public class DEMENTED extends SettingsPreferenceFragment implements
     private void launchUrl(String url) {
         Uri uriUrl = Uri.parse(url);
         Intent demented = new Intent(Intent.ACTION_VIEW, uriUrl);
-        getActivity().startActivity(demented);
+        mContext.startActivity(demented);
     }
 
-    private static void makePrefered(Context context) {
-       PackageManager pM = context.getPackageManager();
-       ComponentName cN = new ComponentName(context, NoClass.class);
+    private static void makePrefered() {
+       PackageManager pM = mContext.getPackageManager();
+       ComponentName cN = new ComponentName(mContext, NoClass.class);
        pM.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 
        Intent intent = new Intent(Intent.ACTION_MAIN);
        intent.addCategory(Intent.CATEGORY_HOME);
        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-       context.startActivity(intent);
+       mContext.startActivity(intent);
 
        pM.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
     }
