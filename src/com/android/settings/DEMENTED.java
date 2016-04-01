@@ -54,7 +54,6 @@ public class DEMENTED extends SettingsPreferenceFragment implements
     private SwitchPreference mForceDefault;
     private ImageView mLogoView;
     private Preference mGesture;
-    private Preference mHomePrefs;
 
     private static Context mContext;
 
@@ -71,8 +70,6 @@ public class DEMENTED extends SettingsPreferenceFragment implements
         mForceDefault = (SwitchPreference) findPreference(KEY_HOME_FORCE_DEFAULT);
         mForceDefault.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SET_DEFAULT_LAUNCHER, 0) != 0);
-
-        mHomePrefs = findPreference(KEY_HOME_FORCE_DEFAULT);
 
         removePreferences();
     }

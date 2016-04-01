@@ -24,12 +24,10 @@
       android:layout_height="match_parent"
       android:background="@color/background_color_transparent">
 
-    <ImageView
-            android:id="@+id/logo"
-            android:layout_width="match_parent"
+    <include
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:src="@drawable/dementedheader" />
+            layout="@layout/logo_row" />
 
     <FrameLayout android:id="@+id/pinned_header"
                  android:layout_width="match_parent"
