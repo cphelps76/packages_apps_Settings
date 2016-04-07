@@ -25,6 +25,12 @@
         android:summary="@string/force_default_launcher_summary" />
 
     <PreferenceScreen
+        android:key="prefs_weather"
+        android:fragment="com.android.settings.demented.WeatherServiceSettings"
+        android:title="@string/weather_settings"
+        android:summary="@string/weather_settings_summary" />
+
+    <PreferenceScreen
         android:key="prefs_home"
         android:fragment="com.android.settings.HomeSettings"
         android:title="@string/home_settings"

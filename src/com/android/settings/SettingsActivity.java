@@ -82,6 +82,9 @@ import com.android.settings.applications.WriteSettingsDetails;
 import com.android.settings.blacklist.BlacklistSettings;
 import com.android.settings.bluetooth.BluetoothSettings;
 import com.android.settings.demented.DisplayRotation;
+import com.android.settings.demented.DisplayRotation;
+import com.android.settings.demented.LiveLockScreenSettings;
+import com.android.settings.demented.WeatherServiceSettings;
 import com.android.settings.dashboard.DashboardCategory;
 import com.android.settings.dashboard.DashboardSummary;
 import com.android.settings.dashboard.DashboardTile;
@@ -135,6 +138,7 @@ import com.android.settings.wifi.SavedAccessPointsWifiSettings;
 import com.android.settings.wifi.WifiSettings;
 import com.android.settings.wifi.p2p.WifiP2pSettings;
 
+import cyanogenmod.app.CMContextConstants;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -371,7 +375,10 @@ public class SettingsActivity extends Activity
             BlacklistSettings.class.getName(),
             ProfilesSettings.class.getName(),
             NotificationManagerSettings.class.getName(),
-            DEMENTED.class.getName()
+            DEMENTED.class.getName(),
+            NotificationManagerSettings.class.getName(),
+            LiveLockScreenSettings.class.getName(),
+            WeatherServiceSettings.class.getName()
     };
 
 

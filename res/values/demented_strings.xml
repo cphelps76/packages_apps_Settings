@@ -34,6 +34,8 @@
     <string name="status_bar_settings_summary">Status bar custom options</string>
     <string name="google_settings">Google</string>
     <string name="google_settings_summary">Google account options</string>
+    <string name="weather_settings">Weather</string>
+    <string name="weather_settings_summary">Configure weather options</string>
 
     <!-- Show 4G for LTE -->
     <string name="show_4G_for_LTE_title">Show 4G for LTE</string>
@@ -45,4 +47,9 @@
     <!-- Force DEMENTED launcher as default -->
     <string name="force_default_launcher_title">Set DEMENTED launcher as default</string>
     <string name="force_default_launcher_summary">Whether to set DEMENTED launcher as default and remove other launcher options</string>
+
+    <!-- Weather -->
+    <string name="weather_settings">Weather</string>
+    <string name="weather_settings_no_services_prompt">No weather provider services installed</string>
+    <string name="weather_settings_button">Provider settings</string>
 </resources>
