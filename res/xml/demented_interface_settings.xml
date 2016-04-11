@@ -44,7 +44,6 @@
 
     <PreferenceScreen
         android:key="prefs_lock_screen"
-        android:fragment="com.android.settings.SecuritySettings"
         android:title="@string/lockscreen_settings"
         android:summary="@string/lockscreen_settings_summary" />
 
@@ -84,7 +83,5 @@
         android:fragment="com.android.settings.demented.StatusBarSettings"
         android:title="@string/status_bar_settings"
         android:summary="@string/status_bar_settings_summary" />
-
-
 
 </PreferenceScreen>

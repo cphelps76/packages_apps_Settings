@@ -50,10 +50,15 @@ public class DEMENTED extends SettingsPreferenceFragment implements
     private static final String KEY_BUTTON_PREFS = "prefs_buttons";
     private static final String KEY_HOME_FORCE_DEFAULT = "force_default_launcher";
     private static final String KEY_HOME_PREFS = "prefs_home";
+    private static final String KEY_LOCKSCREEN_PREFS = "prefs_lock_screen";
+    private static final String SETTINGS_APP = "com.android.settings";
+    private static final String LOCK_SETTINGS =
+            "com.android.settings.Settings$LockScreenSettingsActivity";
 
     private SwitchPreference mForceDefault;
     private ImageView mLogoView;
     private Preference mGesture;
+    private Preference mLockscreen;
 
     private static Context mContext;
 
@@ -66,6 +71,8 @@ public class DEMENTED extends SettingsPreferenceFragment implements
         mContext = getActivity();
 
         mGesture = findPreference(KEY_GESTURE_PREFS);
+
+        mLockscreen = findPreference(KEY_LOCKSCREEN_PREFS);
 
         mForceDefault = (SwitchPreference) findPreference(KEY_HOME_FORCE_DEFAULT);
         mForceDefault.setChecked(Settings.System.getInt(mContext.getContentResolver(),
@@ -149,10 +156,18 @@ public class DEMENTED extends SettingsPreferenceFragment implements
                 Toast.makeText(mContext, getString(com.android.internal.R.string.default_launcher_set),
                     Toast.LENGTH_LONG).show();
             }
+        } else if (preference == mLockscreen) {
+            launchLockSettings();
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
         return false;
+    }
+
+    private void launchLockSettings() {
+        Intent lockSettings = new Intent();
+        lockSettings.setComponent(new ComponentName(SETTINGS_APP, LOCK_SETTINGS));
+        mContext.startActivity(lockSettings);
     }
 
     private void launchUrl(String url) {

@@ -21,7 +21,7 @@
     <string name="notification_manager">Notifications</string>
     <string name="notification_manager_summary">Manage system and app notifications</string>
     <string name="lockscreen_settings">Lock screen</string>
-    <string name="lockscreen_settings_summary">Lock screen security and shortcut settings</string>
+    <string name="lockscreen_settings_summary">Set My Location, lock screen options, SIM card lock, credential storage lock</string>
     <string name="button_settings">Buttons</string>
     <string name="button_settings_summary">Hardware key and navigation bar settings</string>
     <string name="gesture_settings">Gestures</string>
