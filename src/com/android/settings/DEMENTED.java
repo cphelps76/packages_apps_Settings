@@ -18,18 +18,22 @@ package com.android.settings;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.ContentObserver;
 import android.os.Bundle;
+import android.os.Handler;
 import android.net.Uri;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -55,12 +59,25 @@ public class DEMENTED extends SettingsPreferenceFragment implements
     private static final String LOCK_SETTINGS =
             "com.android.settings.Settings$LockScreenSettingsActivity";
 
-    private SwitchPreference mForceDefault;
+    private View mView;
     private ImageView mLogoView;
+    private ViewGroup mViewGroup;
+    private int mLayoutResId = R.layout.preference_list_fragment;
+
+    private Activity mActivity;
+    private Bundle mBundle;
+    private static Context mContext;
+    private ContentResolver mResolver;
+    private Handler mHandler;
+    private PreferenceScreen mPrefScreen;
+    private SettingsObserver mObserver;
+
+    private SwitchPreference mForceDefault;
     private Preference mGesture;
     private Preference mLockscreen;
 
-    private static Context mContext;
+    private boolean mHasChanged;
+    private boolean mReset;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,25 +85,73 @@ public class DEMENTED extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.demented_interface_settings);
 
-        mContext = getActivity();
+        mActivity = getActivity();
+        mBundle = savedInstanceState;
+        mContext = getContext();
+        mHandler = new Handler();
+        mResolver = getContentResolver();
+
+        mHasChanged = false;
+        mReset = false;
 
         mGesture = findPreference(KEY_GESTURE_PREFS);
 
         mLockscreen = findPreference(KEY_LOCKSCREEN_PREFS);
 
         mForceDefault = (SwitchPreference) findPreference(KEY_HOME_FORCE_DEFAULT);
-        mForceDefault.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+        mForceDefault.setChecked(Settings.System.getInt(mResolver,
                 Settings.System.SET_DEFAULT_LAUNCHER, 0) != 0);
 
         removePreferences();
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mObserver = new SettingsObserver(mContext, mHandler);
+        mObserver.observe();
+        if (mHasChanged) {
+            reLoadView();
+        }
+    }
+
+    private void reLoadView() {
+        final View tmpView = mView;
+        try {
+            if (mView != null) {
+                if (mViewGroup != null) {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override 
+                        public void run() {
+                            mViewGroup.removeView(mView);
+                            mView.requestLayout();
+                            mView.forceLayout();
+                            mViewGroup.addView(tmpView);
+                            onCreate(mBundle);
+                            setPreferenceScreen(mPrefScreen);
+                        } 
+                    });
+                } 
+            }
+        } catch (Exception e) {
+        }
+        Settings.System.putBoolean(getContentResolver(),
+                Settings.System.SYSTEM_PREF_STYLE_CHANGED, false);
+        mReset = true;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.preference_list_fragment, parent, false);
-        mLogoView = (ImageView)rootView.findViewById(R.id.logo);
-        updateView();
+        View rootView = inflater.inflate(mLayoutResId, parent, false);
+        mViewGroup = parent;
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        mView = view;
+        mLogoView = (ImageView) mView.findViewById(R.id.logo);
+        updateView();
     }
 
     private boolean hasButtons() {
@@ -132,18 +197,14 @@ public class DEMENTED extends SettingsPreferenceFragment implements
         }
     }
 
-    @Override
-    protected int getMetricsCategory() {
-        return MetricsLogger.DEMENTED_INTERFACE;
-    }
-
-    public boolean onPreferenceChange(Preference preference, Object objValue) {
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
         final String key = preference.getKey();
         return true;
     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        mPrefScreen = preferenceScreen;
         if (preference == mForceDefault) {
             Settings.System.putInt(getContentResolver(),
                     Settings.System.SET_DEFAULT_LAUNCHER,
@@ -187,5 +248,44 @@ public class DEMENTED extends SettingsPreferenceFragment implements
        mContext.startActivity(intent);
 
        pM.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+    }
+
+    private final class SettingsObserver extends ContentObserver {
+        private boolean mRegistered;
+
+        private final Uri HAS_PREF_STYLE_CHANGED =
+                Settings.System.getUriFor(Settings.System.SYSTEM_PREF_STYLE_CHANGED);
+
+        public SettingsObserver(Context context, Handler handler) {
+            super(handler);
+        }
+
+        public void observe() {
+            if (mRegistered) {
+                mResolver.unregisterContentObserver(this);
+            }
+
+            mResolver.registerContentObserver(HAS_PREF_STYLE_CHANGED, false, this);
+            mRegistered = true;
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            updateSettings();
+        }
+
+        private void updateSettings() {
+            if (mReset) {
+                mHasChanged = false;
+                mReset = false;
+            } else {
+                mHasChanged = true;
+            }
+        }
+    }
+
+    @Override
+    protected int getMetricsCategory() {
+        return MetricsLogger.DEMENTED_INTERFACE;
     }
 }

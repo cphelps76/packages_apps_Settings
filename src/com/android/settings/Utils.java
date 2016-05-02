@@ -81,12 +81,15 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.TtsSpan;
 import android.util.ArraySet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Surface;
+import android.view.DisplayInfo;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -100,6 +103,11 @@ import com.android.settings.dashboard.DashboardTile;
 import com.android.settingslib.applications.ApplicationsState;
 import com.android.settingslib.drawable.CircleFramedDrawable;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -112,7 +120,7 @@ import java.util.Locale;
 import static android.content.Intent.EXTRA_USER;
 
 public final class Utils {
-    private static final String TAG = "Settings";
+    private static final String TAG = "Utils";
 
     /**
      * Set the preference's title to the matching activity's label.
@@ -150,6 +158,14 @@ public final class Utils {
      * to specify the summary text that should be displayed for the preference.
      */
     public static final String META_DATA_PREFERENCE_SUMMARY = "com.android.settings.summary";
+
+    // Device types
+    private static final int DEVICE_PHONE = 0;
+    private static final int DEVICE_HYBRID = 1;
+    private static final int DEVICE_TABLET = 2;
+
+    // Device type reference
+    private static int mDeviceType = -1;
 
     private static final String SETTINGS_PACKAGE_NAME = "com.android.settings";
 
@@ -594,6 +610,51 @@ public final class Utils {
         }
     }
 
+    public static boolean fileExists(String filename) {
+        return new File(filename).exists();
+    }
+
+    public static boolean fileIsReadable(String fname) {
+        return new File(fname).canRead();
+    }
+
+    public static boolean fileIsWritable(String fname) {
+        return new File(fname).canWrite();
+    }
+
+    public static String fileReadOneLine(String fname) {
+        BufferedReader br;
+        String line = null;
+
+        try {
+            br = new BufferedReader(new FileReader(fname), 512);
+            try {
+                line = br.readLine();
+            } finally {
+                br.close();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "IO Exception when reading /sys/ file", e);
+        }
+        return line;
+    }
+
+    public static boolean fileWriteOneLine(String fname, String value) {
+        try {
+            FileWriter fw = new FileWriter(fname);
+            try {
+                fw.write(value);
+            } finally {
+                fw.close();
+            }
+        } catch (IOException e) {
+            String Error = "Error writing to " + fname + ". Exception: ";
+            Log.e(TAG, Error, e);
+            return false;
+        }
+        return true;
+    }
+
     public static void forceCustomPadding(View view, boolean additive) {
         final Resources res = view.getResources();
         final int paddingSide = res.getDimensionPixelSize(R.dimen.settings_side_margin);
@@ -721,6 +782,39 @@ public final class Utils {
     public static boolean hasMultipleUsers(Context context) {
         return ((UserManager) context.getSystemService(Context.USER_SERVICE))
                 .getUsers().size() > 1;
+    }
+
+    private static int getScreenType(Context con) {
+        if (mDeviceType == -1) {
+            WindowManager wm = (WindowManager)con.getSystemService(Context.WINDOW_SERVICE);
+            DisplayInfo outDisplayInfo = new DisplayInfo();
+            wm.getDefaultDisplay().getDisplayInfo(outDisplayInfo);
+            int shortSize = Math.min(outDisplayInfo.logicalHeight, outDisplayInfo.logicalWidth);
+            int shortSizeDp = shortSize * DisplayMetrics.DENSITY_DEFAULT / outDisplayInfo.logicalDensityDpi;
+            if (shortSizeDp < 600) {
+                // 0-599dp: "phone" UI with a separate status & navigation bar
+                mDeviceType =  DEVICE_PHONE;
+            } else if (shortSizeDp < 720) {
+                // 600-719dp: "phone" UI with modifications for larger screens
+                mDeviceType = DEVICE_HYBRID;
+            } else {
+                // 720dp: "tablet" UI with a single combined status & navigation bar
+                mDeviceType = DEVICE_TABLET;
+            }
+        }
+        return mDeviceType;
+    }
+
+    public static boolean isPhone(Context con) {
+        return getScreenType(con) == DEVICE_PHONE;
+    }
+
+    public static boolean isHybrid(Context con) {
+        return getScreenType(con) == DEVICE_HYBRID;
+    }
+
+    public static boolean isTablet(Context con) {
+        return getScreenType(con) == DEVICE_TABLET;
     }
 
     public static boolean isRestrictedProfile(Context context) {

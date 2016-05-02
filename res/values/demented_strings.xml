@@ -36,6 +36,24 @@
     <string name="google_settings_summary">Google account options</string>
     <string name="weather_settings">Weather</string>
     <string name="weather_settings_summary">Configure weather options</string>
+    <string name="preference_settings">Preference style</string>
+    <string name="preference_settings_summary">Preference text color and style</string>
+
+    <!-- Custom DEMENTED categories -->
+    <string name="title_style_label">Title Style</string>
+
+    <!-- System preference text -->
+    <string name="confirm_reset_style_title">Reset all preference style options to default?</string>
+    <string name="confirm_reset_style_text">WARNING: This will reset all custom text options back to stock defaults, so don\'t be a lil\' bitch about it</string>
+    <string name="reset_text">Reset</string>
+    <string name="prefs_reset_style_title">Reset style</string>
+    <string name="text_color_title">System preference title text color</string>
+    <string name="text_color_default">Default</string>
+    <string name="text_style_title">System preference title text style</string>
+    <string name="pref_text_style_normal">Normal</string>
+    <string name="pref_text_style_bold">Bold</string>
+    <string name="pref_text_style_italic">Italic</string>
+    <string name="pref_text_style_bold_italic">Bold Italic</string>
 
     <!-- Show 4G for LTE -->
     <string name="show_4G_for_LTE_title">Show 4G for LTE</string>
@@ -52,4 +70,18 @@
     <string name="weather_settings">Weather</string>
     <string name="weather_settings_no_services_prompt">No weather provider services installed</string>
     <string name="weather_settings_button">Provider settings</string>
+
+    <!-- OK! -->
+    <string name="ok">OK</string>
+    <string name="reset">Reset</string>
+
+    <!-- Color Picker -->
+    <string name="dialog_color_picker">Color Picker</string>
+    <string name="press_color_to_apply">Press on color below to apply</string>
+    <string name="arrow_right">→</string>
+    <string name="arrow_down">↓</string>
+    <string name="hex">Hex:</string>
+    <string name="hex_hint">#ff000000</string>
+    <string name="set">Set</string>
+    <string name="color_default">Default</string>
 </resources>
