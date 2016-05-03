@@ -86,6 +86,7 @@
     <uses-permission android:name="cyanogenmod.permission.MODIFY_PROFILES" />
     <uses-permission android:name="cyanogenmod.permission.PROTECTED_APP" />
     <uses-permission android:name="cyanogenmod.permission.PERFORMANCE_ACCESS" />
+    <uses-permission android:name="cyanogenmod.permission.MANAGE_LIVEDISPLAY" />
 
     <application android:label="@string/settings_label"
             android:icon="@mipmap/ic_launcher_settings"
@@ -2235,8 +2236,7 @@
                 android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.settings.LIVEDISPLAY_SETTINGS" />
-                <action android:name="com.android.settings.LIVEDISPLAY_SETTINGS" />
+                <action android:name="cyanogenmod.settings.LIVEDISPLAY_SETTINGS" />
                 <category android:name="android.intent.category.VOICE_LAUNCH" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.SHORTCUT" />
@@ -2932,6 +2932,15 @@
             </intent-filter>
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
                        android:value="com.android.settings.demented.WeatherServiceSettings" />
+        </activity>
+
+        <activity android:name=".CarrierSelection"
+                  android:label="@string/shortcut_carrier_title"
+                  android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
         </activity>
 
     </application>
