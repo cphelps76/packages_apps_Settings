@@ -65,7 +65,6 @@ public class PreferenceStyle extends SettingsPreferenceFragment implements
 
     private View mView;
     private ViewGroup mViewGroup;
-    private int mLayoutResId = R.layout.preference_list_fragment;
 
     private Activity mActivity;
     private static Context mContext;
@@ -142,7 +141,7 @@ public class PreferenceStyle extends SettingsPreferenceFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(mLayoutResId, parent, false);
+        View rootView = super.onCreateView(inflater, parent, savedInstanceState);
         mViewGroup = parent;
         return rootView;
     }
