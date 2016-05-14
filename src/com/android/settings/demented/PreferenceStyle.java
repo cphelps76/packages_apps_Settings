@@ -19,6 +19,9 @@ package com.android.settings.demented;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -40,9 +43,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.android.internal.logging.MetricsLogger;
 
@@ -63,23 +63,16 @@ public class PreferenceStyle extends SettingsPreferenceFragment implements
     private static final String KEY_TITLE_COLOR_PICKER = "prefs_title_text_color";
     private static final String KEY_TITLE_TEXT_STYLE = "prefs_title_text_style";
 
-    private View mView;
-    private ViewGroup mViewGroup;
-
     private Activity mActivity;
     private static Context mContext;
     private ContentResolver mResolver;
     private Handler mHandler;
     private SettingsObserver mObserver;
     private PreferenceScreen mPrefScreen;
-    private boolean mReset;
-    public static boolean mChanged;
 
     private PreferenceCategory mTitleOptions;
     private ColorPickerPreference mTitleTextColor;
-    private String mHexColor;
     private ListPreference mTitleTextStyle;
-    private boolean mUiMode;
     private int mIntColor;
     private int mDefaultColor;
 
@@ -89,29 +82,15 @@ public class PreferenceStyle extends SettingsPreferenceFragment implements
         setHasOptionsMenu(true);
 
         addPreferencesFromResource(R.xml.preference_style);
-        mPrefScreen = getPreferenceScreen();
-
-        if (mUiMode) {
-            mDefaultColor = getResources().getColor(
-                    com.android.internal.R.color.primary_text_default_material_light);
-        } else {
-            mDefaultColor = getResources().getColor(
-                    com.android.internal.R.color.primary_text_default_material_dark);
-        }
 
         mActivity = getActivity();
         mContext = getContext();
-        mResolver = getContentResolver();
         mHandler = new Handler();
+        mPrefScreen = getPreferenceScreen();
+        mResolver = getContentResolver();
 
         mObserver = new SettingsObserver(mContext, mHandler);
         mObserver.observe();
-
-        mUiMode = Settings.System.getInt(mResolver,
-                Settings.Secure.ACCESSIBILITY_DISPLAY_INVERSION_ENABLED, 0) == 1;
-
-        mReset = Settings.System.getInt(mResolver,
-                Settings.System.SYSTEM_PREF_RESET, 0) == 1;
 
         mTitleOptions = (PreferenceCategory) mPrefScreen.findPreference(KEY_TITLE_STYLE);
 
@@ -119,59 +98,68 @@ public class PreferenceStyle extends SettingsPreferenceFragment implements
         mTitleTextColor.setOnPreferenceChangeListener(this);
         mIntColor = Settings.System.getInt(mResolver,
                     Settings.System.SYSTEM_PREF_TEXT_COLOR, -2);
-        if (mReset) {
-            mTitleTextColor.setSummary(getResources().getString(R.string.text_color_default));
-        } else {
-            mHexColor = String.format("#%08x", (0xffffffff & mIntColor));
-            mTitleTextColor.setSummary(mHexColor);
-        }
-        mTitleTextColor.setNewPreviewColor(mIntColor);
+        setTextColorSummary();
 
         mTitleTextStyle = (ListPreference) mPrefScreen.findPreference(KEY_TITLE_TEXT_STYLE);
         mTitleTextStyle.setOnPreferenceChangeListener(this);
-        mTitleTextStyle.setValue(Integer.toString(Settings.System.getInt(mContext
-                .getContentResolver(), Settings.System.SYSTEM_PREF_TEXT_STYLE,
-                0)));
+        mTitleTextStyle.setValue(Integer.toString(Settings.System.getInt(mResolver,
+                Settings.System.SYSTEM_PREF_TEXT_STYLE, 0)));
         mTitleTextStyle.setSummary(mTitleTextStyle.getEntry());
 
-        Settings.System.putBoolean(getContentResolver(),
+        Settings.System.putBoolean(mResolver,
                 Settings.System.SYSTEM_PREF_STYLE_CHANGED, false);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View rootView = super.onCreateView(inflater, parent, savedInstanceState);
-        mViewGroup = parent;
-        return rootView;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        mView = view;
     }
 
     private void setReset(int i) {
+        Settings.System.putInt(mResolver,
+                Settings.System.SYSTEM_PREF_RESET, i);
         if (i == 1) {
-            Settings.System.putInt(mResolver,
-                    Settings.System.SYSTEM_PREF_RESET, i);
             reset();
-        } else {
-            Settings.System.putInt(mResolver,
-                    Settings.System.SYSTEM_PREF_RESET, i);
         }
+        setTextColorSummary();
+    }
+
+    private void setTextColorSummary() {
+        mIntColor = Settings.System.getInt(mResolver,
+                    Settings.System.SYSTEM_PREF_TEXT_COLOR, -2);
+        if (inversionModeEnabled()) {
+            mDefaultColor = getResources().getColor(
+                    com.android.internal.R.color.primary_text_default_material_light);
+        } else {
+            mDefaultColor = getResources().getColor(
+                    com.android.internal.R.color.primary_text_default_material_dark);
+        }
+        if (!isReset()) {
+            String hexColor = String.format("#%08x", (0xffffffff & mIntColor));
+            mTitleTextColor.setSummary(hexColor);
+        } else {
+            mIntColor = mDefaultColor;
+            mTitleTextColor.setSummary(R.string.text_color_default);
+        }
+        mTitleTextColor.setNewPreviewColor(mIntColor);
+    }
+
+    private boolean inversionModeEnabled() {
+        return Settings.Secure.getInt(mResolver,
+                Settings.Secure.ACCESSIBILITY_DISPLAY_INVERSION_ENABLED, 0) !=0;
+    }
+
+    private boolean isReset() {
+        return Settings.System.getInt(mResolver,
+                Settings.System.SYSTEM_PREF_RESET, 0) == 1;
     }
 
     private void reset() {
         Settings.System.putInt(mResolver,
-                Settings.System.SYSTEM_PREF_TEXT_COLOR, mDefaultColor);
-        mTitleTextColor.setSummary(getResources().getString(R.string.text_color_default));
-        mTitleTextColor.setNewPreviewColor(mDefaultColor);
+                Settings.System.SYSTEM_PREF_TEXT_COLOR, -2);
         mTitleTextStyle.setValue(Integer.toString(Settings.System.getInt(mResolver,
                 Settings.System.SYSTEM_PREF_TEXT_STYLE, 0)));
         Settings.System.putInt(mResolver,
                 Settings.System.SYSTEM_PREF_TEXT_STYLE, 0);
+        mTitleTextStyle.setValue(Integer.toString(Settings.System.getInt(mResolver,
+                Settings.System.SYSTEM_PREF_TEXT_STYLE, 0)));
         mTitleTextStyle.setSummary(mTitleTextStyle.getEntry());
+        setTextColorSummary();
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -179,10 +167,8 @@ public class PreferenceStyle extends SettingsPreferenceFragment implements
         if (preference == mTitleTextColor) {
             String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String
                     .valueOf(newValue)));
-            mHexColor = hex;
-            mTitleTextColor.setSummary(hex);
             int intHex = ColorPickerPreference.convertToColorInt(hex);
-            Settings.System.putInt(getActivity().getContentResolver(),
+            Settings.System.putInt(mResolver,
                     Settings.System.SYSTEM_PREF_TEXT_COLOR, intHex);
             return true;
         } else if (preference == mTitleTextStyle) {
@@ -198,13 +184,7 @@ public class PreferenceStyle extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mTitleTextColor) {
-            setReset(0);
-        } else if (preference == mTitleTextStyle) {
-            setReset(0);
-        } else {
-            return super.onPreferenceTreeClick(preferenceScreen, preference);
-        }
+        setReset(0);
         return false;
     }
 
@@ -271,32 +251,25 @@ public class PreferenceStyle extends SettingsPreferenceFragment implements
         }
 
         private void updateSettings() {
-            Settings.System.putBoolean(getContentResolver(),
+            Settings.System.putBoolean(mResolver,
                     Settings.System.SYSTEM_PREF_STYLE_CHANGED, true);
-            reLoadView();
+            reLoadFragment();
         }
     }
 
-    private void reLoadView() {
-        final View tmpView = mView;
+    private void reLoadFragment() {
         try {
-            setReset(0);
-            if (mView != null) {
-                if (mViewGroup != null) {
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override 
-                        public void run() {
-                            mViewGroup.removeView(mView);
-                            mView.requestLayout();
-                            mView.forceLayout();
-                            mViewGroup.addView(tmpView);
-                            onCreate(new Bundle());
-                        } 
-                    });
-                }
-            }
+            FragmentManager manager = getFragmentManager();
+            Fragment currentFragment = manager.findFragmentById(R.id.main_content);
+            Log.i(TAG, "Current Fragment is : " + currentFragment);
+            FragmentTransaction fragmentTransaction = manager.beginTransaction();
+            fragmentTransaction.detach(currentFragment);
+            fragmentTransaction.attach(currentFragment);
+            fragmentTransaction.commit();
+            manager.executePendingTransactions();
         } catch (Exception e) {
         }
+        setTextColorSummary();
     }
 
     @Override
