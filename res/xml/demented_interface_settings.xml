@@ -25,6 +25,12 @@
         android:summary="@string/force_default_launcher_summary" />
 
     <PreferenceScreen
+        android:key="prefs_status_bar"
+        android:fragment="com.android.settings.demented.StatusBarSettings"
+        android:title="@string/status_bar_settings"
+        android:summary="@string/status_bar_settings_summary" />
+
+    <PreferenceScreen
         android:key="prefs_preference"
         android:fragment="com.android.settings.demented.PreferenceStyle"
         android:title="@string/preference_settings"
@@ -83,11 +89,4 @@
         android:fragment="com.android.settings.profiles.ProfilesSettings"
         android:title="@string/profiles_settings"
         android:summary="@string/profiles_settings_summary" />
-
-    <PreferenceScreen
-        android:key="prefs_status_bar"
-        android:fragment="com.android.settings.demented.StatusBarSettings"
-        android:title="@string/status_bar_settings"
-        android:summary="@string/status_bar_settings_summary" />
-
 </PreferenceScreen>

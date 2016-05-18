@@ -44,7 +44,7 @@
 
     <!-- System preference text -->
     <string name="confirm_reset_style_title">Reset all preference style options to default?</string>
-    <string name="confirm_reset_style_text">WARNING: This will reset all custom text options back to stock defaults, so don\'t be a lil\' bitch about it</string>
+    <string name="confirm_reset_style_text">WARNING: This will reset all custom text options back to stock defaults</string>
     <string name="reset_text">Reset</string>
     <string name="prefs_reset_style_title">Reset style</string>
     <string name="text_color_title">System preference title text color</string>
@@ -87,6 +87,7 @@
 
     <!-- Battery Bar -->
     <string name="battery_bar_title">Battery bar</string>
+    <string name="battery_bar_summary">Battery bar location, thickness, alignment, and color options</string>
     <string name="battery_bar">Battery bar location</string>
     <string name="battery_bar_color">Battery bar color</string>
     <string name="battery_bar_cat">Battery bar style</string>

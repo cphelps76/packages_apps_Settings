@@ -59,6 +59,7 @@
     <PreferenceScreen
         android:fragment="com.android.settings.demented.BatteryBarStyle"
         android:key="battery_bar"
+        android:summary="@string/battery_bar_summary"
         android:title="@string/battery_bar_title" />
 
     <com.android.settings.demented.CMSystemSettingSwitchPreference
