@@ -281,8 +281,17 @@ public abstract class SettingsPreferenceFragment extends InstrumentedPreferenceF
 
     protected void removePreference(String key) {
         Preference pref = findPreference(key);
+        Log.i(TAG, "pref is " + pref);
         if (pref != null) {
             getPreferenceScreen().removePreference(pref);
+        }
+    }
+
+    protected void addPreference(String key) {
+        Preference pref = findPreference(key);
+        Log.i(TAG, "pref is " + pref);
+        if (pref != null) {
+            getPreferenceScreen().addPreference(pref);
         }
     }
 

@@ -15,6 +15,9 @@
  */
 package com.android.settings.demented;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +34,7 @@ import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 
 import com.android.internal.logging.MetricsLogger;
@@ -171,17 +175,13 @@ public class StatusBarSettings extends SettingsPreferenceFragment
                         R.array.status_bar_clock_style_entries_rtl));
                 mStatusBarClock.setSummary(mStatusBarClock.getEntry());
         }
-        enableLogoColorPref();
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
 
-        if (preference == mDEMENTEDLogo) {
-            enableLogoColorPref();
-            return true;
-        } else if (preference == mDEMENTEDLogoColor) {
+        if (preference == mDEMENTEDLogoColor) {
             String hex = ColorPickerPreference.convertToARGB(
                     Integer.valueOf(String.valueOf(newValue)));
             preference.setSummary(hex);
@@ -236,6 +236,8 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         if (preference == mDEMENTEDLogo) {
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_DEMENTED_LOGO,
                     mDEMENTEDLogo.isChecked() ? 1 : 0);
+            reloadFragment();
+            enableLogoColorPref();
         } else if (preference == mShow4g) {
             Settings.System.putInt(resolver, Settings.System.SHOW_4G_FOR_LTE,
                     mShow4g.isChecked() ? 1 : 0);
@@ -245,16 +247,13 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         return true;
     }
 
-    private boolean isDementedLogoEnabled() {
-        return Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_DEMENTED_LOGO, 0) != 0;
-    }
-
     private void enableLogoColorPref() {
-        if (!isDementedLogoEnabled()) {
-            mDEMENTEDLogoColor.setEnabled(false);
+        boolean enabled = Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_DEMENTED_LOGO, 0) != 0;
+        if (!enabled) {
+            removePreference(KEY_DEMENTED_LOGO_COLOR);
         } else {
-            mDEMENTEDLogoColor.setEnabled(true);
+            addPreference(KEY_DEMENTED_LOGO_COLOR);
         }
     }
 
@@ -302,4 +301,22 @@ public class StatusBarSettings extends SettingsPreferenceFragment
                     return result;
                 }
             };
+
+    private void reloadFragment() {
+        try {
+            setPreferenceScreen(null);
+            onCreate(null);
+            addPreferencesFromResource(R.xml.status_bar_settings);
+            FragmentManager manager = getFragmentManager();
+            Fragment currentFragment = manager.findFragmentById(R.id.main_content);
+            Log.i(TAG, "Current Fragment is : " + currentFragment);
+            FragmentTransaction fragmentTransaction = manager.beginTransaction();
+            fragmentTransaction.detach(currentFragment);
+            fragmentTransaction.attach(currentFragment);
+            fragmentTransaction.commit();
+            manager.executePendingTransactions();
+            setPreferenceScreen(getPreferenceScreen());
+        } catch (Exception e) {
+        }
+    }
 }
