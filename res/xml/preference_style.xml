@@ -19,9 +19,13 @@
     android:title="@string/preference_settings"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+    <SwitchPreference
+        android:key="enable_custom_text" />
+
     <PreferenceCategory
         android:key="title_style"
-        android:title="@string/title_style_label">
+        android:title="@string/title_style_label"
+        android:dependency="enable_custom_text">
 
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="prefs_title_text_color"

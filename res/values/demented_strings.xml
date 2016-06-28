@@ -43,6 +43,9 @@
     <string name="title_style_label">Title Style</string>
 
     <!-- System preference text -->
+    <string name="enable_custom_text_styles_title">Enable custom text styles</string>
+    <string name="custom_text_styles_enabled">Custom text styles enabled</string>
+    <string name="custom_text_styles_disabled">Custom text styles disabled</string>
     <string name="confirm_reset_style_title">Reset all preference style options to default?</string>
     <string name="confirm_reset_style_text">WARNING: This will reset all custom text options back to stock defaults</string>
     <string name="reset_text">Reset</string>
