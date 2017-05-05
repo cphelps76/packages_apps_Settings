@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">Du bass <xliff:g id="step_count">%1$d</xliff:g> Schrëtt dovun ewech, d\'Entwéckleroptiounen z\'aktivéieren.</item>
@@ -38,6 +42,7 @@
   <string name="root_access_apps">Just Appen</string>
   <string name="root_access_adb">Just ADB</string>
   <string name="root_access_all">Appen an ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -515,7 +520,6 @@
   <string name="double_tap_to_sleep_summary">Zweemol drécken op der Statusläischt mécht de Schierm aus</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Onbeofsiichtegt waakreg maache verhënneren</string>
-  <string name="proximity_wake_summary">Virum waakreg maachen de Proximitéitssensor iwwerpréiwen</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Beim Astieche waakreg maachen</string>
   <string name="wake_when_plugged_or_unplugged_summary">De Schierm uschalte wann eng Stroumquell ugeschloss oder getrennt gëtt</string>
@@ -526,7 +530,6 @@
   <string name="volume_adjust_sounds_title">Lautstäerktännerungstoun</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Vibratiounsintensitéit</string>
-  <string name="vibrator_warning">Wäerter méi héich wéI %1$d sinn net recommandéiert</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Faarfkalibréierung</string>
   <string name="color_calibration_summary">Schiermfaarwe kalibréieren</string>
@@ -549,23 +552,6 @@
   <string name="display_rotation_90_title">90 Grad</string>
   <string name="display_rotation_180_title">180 Grad</string>
   <string name="display_rotation_270_title">270 Grad</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Schiermfaarf</string>
-  <string name="screencolor_summary">Faarftoun, Faarfsättegung, Kontrast an Intensitéit vum Schierm veränneren</string>
-  <string name="custom_screencolor">Benotzerdefinéiert Schiermfaarf</string>
-  <string name="screencolor_save">Späicheren</string>
-  <string name="screencolor_cancel">Ofbriechen</string>
-  <string name="restore_preview">Standard-Bild uweisen</string>
-  <string name="selectnewfile_menu">Neit Bild aus der Galerie uweisen</string>
-  <string name="selectfile_menu">Bild aus der Galerie uweisen</string>
-  <string name="restore_default_str">Zrécksetzen</string>
-  <string name="hue_str">Faarftoun: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Sättegung: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Kontrast: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Intensitéit: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">Standard</string>
-  <string name="screen_color_vivid">Lieweg</string>
-  <string name="screen_color_custom">Ugepasst</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">Optiméiert däi Schierm andeem s e sech op der Dageszäit an den Ëmgéigendskonditioune baséiert, fir d\'Liesbarkeet ze verbesseren an d\'Ermiddung vun den Aen ze reduzéieren</string>
   <string name="live_display_mode">Schiermmodus</string>
@@ -591,6 +577,9 @@
   <string name="live_display_color_profile_astronomy_title">Astronomie</string>
   <string name="live_display_color_profile_astronomy_summary">Déif Routtéin fir d\'Nuetsvisioun ze halen</string>
   <string name="live_display_color_profile_basic_title">Einfach</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">Faarfsättegung</string>
+  <string name="adj_contrast_title">Kontrast</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Auswielsymbol</string>
   <string name="ime_switcher_notify_summary">Symbol fir de Wiessel vun der Agabmethod uweisen</string>
@@ -884,6 +873,7 @@
   <!-- [CHAR LIMIT=50] Like zen_mode_events, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_callers, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Kapp: %1$s W/kg</string>
@@ -944,9 +934,11 @@
   <string name="app_notification_show_on_keyguard_summary">Notifikatioune vun dëser App op dem Spärschierm uweisen</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Dauerhaft Notifikatiounen op de Spärschierm desaktivéieren</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">Ni dauerhaft Notifikatiounen op de Spärschierm uweisen</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

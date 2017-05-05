@@ -16,12 +16,17 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Confirmation that developer settings are enabled -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Okay we get it, stop pressing, you already have it on -->
   <!-- Launch Dev Tools -->
   <!-- Development shortcut -->
   <!-- Setting checkbox title for root access -->
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <!-- About phone screen, CyanogenMod version -->
   <!-- About phone screen, Device model -->
@@ -95,9 +100,9 @@
   <!-- Launch music player when headset is connected -->
   <!-- WiFi auto-configure priorities -->
   <!-- Display : Rotation  -->
-  <!-- Display settings.  Screen color. -->
   <!-- LiveDisplay -->
   <string name="live_display_summary">Optimise your screen based on time of day and ambient conditions to improve readability and reduce eyestrain</string>
+  <!-- LiveDisplay : Picture Adjustment -->
   <!-- Whether to display IME switcher notifcation -->
   <!-- Heads up -->
   <!-- Bluetooth settings.  A checkbox to set if we should accept all the file types regardless of their presence in MIME type whitelist -->
@@ -161,6 +166,7 @@
   <!-- [CHAR LIMIT=50] Like zen_mode_events, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_callers, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <!-- IC Codes -->
@@ -196,9 +202,11 @@
   <!-- title for lock screen blur preference -->
   <!-- title for lock screen weather preference -->
   <!-- Per app controls for LP keyguard notifications -->
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

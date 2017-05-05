@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="other">ھازىر ئىجاتكارلار تاللانمىسىنى قوزغىتىشىڭىز ئۈچۈن <xliff:g id="step_count">%1$d</xliff:g> قەدەم قالدى.</item>
@@ -37,6 +41,7 @@
   <string name="root_access_apps">ئەپلەرلا</string>
   <string name="root_access_adb">ADB لا</string>
   <string name="root_access_all">Apps ۋە ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -535,7 +540,6 @@
   <string name="double_tap_to_sleep_summary">ئېكراننى تاقاش ئۈچۈن ھالەت بالداقنى قوش چېكىڭ</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">تاسادىپىي ئويغىتىشنىڭ ئالدىنى ئېلىش</string>
-  <string name="proximity_wake_summary">ئېكراننى قوزغىتىشتىن ئىلگىرى ئارىلىق سەزگۈچنى تەكشۈرىدۇ</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">چېتىلغاندا ئويغات</string>
   <string name="wake_when_plugged_or_unplugged_summary">توكقا چېتىلغان ياكى ئۈزۈلگەندە ئېكراننى ئاچىدۇ</string>
@@ -546,7 +550,6 @@
   <string name="volume_adjust_sounds_title">ئاۋاز مىقدارىنى تەڭشەش ئەسكەرتىش ئاۋازى</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">تىترەتكۈچ كۈچلۈكلۈكى</string>
-  <string name="vibrator_warning">قىممىتى %1$d دىن يۇقىرى بولۇشى تەۋسىيە قىلىنمايدۇ</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">رەڭ توغرىلاش</string>
   <string name="color_calibration_summary">ئېكراندىكى رەڭلەرنى توغرىلايدۇ</string>
@@ -569,23 +572,6 @@
   <string name="display_rotation_90_title">90 گرادۇس</string>
   <string name="display_rotation_180_title">180 گرادۇس</string>
   <string name="display_rotation_270_title">270 گرادۇس</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">ئېكران رەڭگى</string>
-  <string name="screencolor_summary">رەڭ تۈسى، تويۇنۇشچانلىقى، ئاق-قارىلىقى ياكى يورۇقلۇقىنى تەڭشەيدۇ</string>
-  <string name="custom_screencolor">ئىختىيارىي ئېكران رەڭگى</string>
-  <string name="screencolor_save">ساقلا</string>
-  <string name="screencolor_cancel">ۋاز كەچ</string>
-  <string name="restore_preview">كۆڭۈلدىكى رەسىمنى كۆرسىتىدۇ</string>
-  <string name="selectnewfile_menu">رەسىم توپلىمىدىن يېڭى رەسىمنى كۆرسىتىدۇ</string>
-  <string name="selectfile_menu">رەسىم توپلىمىدىن رەسىمنى كۆرسىتىدۇ</string>
-  <string name="restore_default_str">ئەسلىگە قايتۇر</string>
-  <string name="hue_str">رەڭ تۈسى: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">تويۇنۇشچانلىقى: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">ئاق-قارىلىقى: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">يورۇقلۇقى: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">ئۆلچەملىك</string>
-  <string name="screen_color_vivid">جانلىق</string>
-  <string name="screen_color_custom">ئىختىيارىي</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">ۋاقىت ۋە مۇھىت شەرتى ئاساسىدا ئېكرانىڭىزنى ئەلالاشتۇرۇپ ئوقۇشچانلىقنى ياخشىلاپ كۆز چارچاشنى تۆۋەنلىتىدۇ</string>
   <string name="live_display_mode">كۆرسىتىش ھالىتى</string>
@@ -615,6 +601,9 @@
   <string name="live_display_color_profile_photography_summary">رەسىمنىڭ مۇكەممەل رەڭ بىلەن قايتا نامايەن بۇلۇشى</string>
   <string name="live_display_color_profile_basic_title">ئاساسىي</string>
   <string name="live_display_color_profile_basic_summary">تەڭشەلمىگەن ئېكران ئىشلىتىش</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">تويۇنۇش</string>
+  <string name="adj_contrast_title">ئاق-قارىلىقى</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">تاللىغۇچ سىنبەلگىسى</string>
   <string name="ime_switcher_notify_summary">كىرگۈزگۈچ تاللىغۇچ سىنبەلگىسىنى كۆرسىتىدۇ</string>
@@ -893,6 +882,11 @@
         <![CDATA[<b>تۆھپىلارلار سانى:</b> <xliff:g id="total_contributors">%1$s</xliff:g><br/><br/>
                  <b>تاپشۇرۇش سانى:</b> <xliff:g id="total_commits">%2$s</xliff:g><br/><br/>
                  <b>ئەڭ ئاخىرى يېڭىلاش:</b> <xliff:g id="date">%3$s</xliff:g>]]></string>
+  <string name="contributions_info_menu">تۆھپە ئۇچۇرى</string>
+  <string name="contributions_info_msg">
+        <![CDATA[<b>تۆھپىلارلار سانى:</b> <xliff:g id="total_contributors">%1$s</xliff:g><br/><br/>
+                 <b>تاپشۇرۇش سانى:</b> <xliff:g id="total_commits">%2$s</xliff:g><br/><br/>
+                 <b>ئەڭ ئاخىرى يېڭىلاش:</b> <xliff:g id="date">%3$s</xliff:g>]]></string>
   <string name="category_sounds">ئاۋازلار</string>
   <string name="notification_manager">ئۇقتۇرۇشلار</string>
   <string name="lockscreen_settings">قۇلۇپ ئېكرانى</string>
@@ -941,6 +935,7 @@
   <string name="zen_mode_summary_selected_callers">تاللانغان كىشىدىن كەلگەن تېلېفون</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">تاللانغان ئۇچۇر</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">باش: %1$s W/kg</string>
@@ -1022,9 +1017,11 @@
   <string name="app_notification_show_on_keyguard_summary">قۇلۇپ ئېكراندا بۇ ئەپنىڭ ئۇقتۇرۇشلىرىنى كۆرسىتىدۇ</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">قۇلۇپ ئېكراندا دائىملىق ئۇقتۇرۇشنى چەكلەيدۇ</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">قۇلۇپ ئېكراندا بۇ ئەپنىڭ دائىملىق ئۇقتۇرۇشىنى مەڭگۈ كۆرسەتمەيدۇ</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

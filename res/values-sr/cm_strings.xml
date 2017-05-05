@@ -16,6 +16,18 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <plurals name="show_device_id_countdown_cm">
+    <item quantity="one">Сада си <xliff:g id="step_count">%1$d</xliff:g> корак далеко од добијања ИД уређаја.</item>
+    <item quantity="few">Сада си <xliff:g id="step_count">%1$d</xliff:g> корака далеко од добијања ИД уређаја.</item>
+    <item quantity="other">Сада си <xliff:g id="step_count">%1$d</xliff:g> корака далеко од добијања ИД уређаја.</item>
+  </plurals>
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <string name="show_device_id_copied_cm">ИД уређаја:[<xliff:g id="device_id">%1$s</xliff:g>] копиран у оставу</string>
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <string name="show_device_id_failed_cm">Идентификација уређаја није доступна на овој верзији</string>
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
+  <string name="show_device_id_clipboard_label">Идентификација уређаја</string>
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">Сада си <xliff:g id="step_count">%1$d</xliff:g> корак далеко од омогућавања развојних опција.</item>
@@ -39,6 +51,9 @@
   <string name="root_access_apps">Само апликације</string>
   <string name="root_access_adb">Само ADB</string>
   <string name="root_access_all">Апликације и ADB</string>
+  <!-- Preference link for root appops -->
+  <string name="root_appops_title">Управљај приступом руту</string>
+  <string name="root_appops_summary">Види и контролиши правила рута</string>
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -539,7 +554,6 @@
   <string name="double_tap_to_sleep_summary">Двапут додирни статусну траку да искључиш дисплеј</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Спречи случајно буђење</string>
-  <string name="proximity_wake_summary">Провери растојање сензора пре буђења екрана</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Пробуди на утикачу</string>
   <string name="wake_when_plugged_or_unplugged_summary">Укључи екран код повезивања или искључивања са извора напајања</string>
@@ -550,7 +564,7 @@
   <string name="volume_adjust_sounds_title">Регулисање јачине звука</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Интензитет вибрације</string>
-  <string name="vibrator_warning">Вредност већа од %1$d није препоручена</string>
+  <string name="vibrator_warning">Вредности веће од %1$d%% нису препоручене</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Калибрација боје</string>
   <string name="color_calibration_summary">Калибрација боја на екрану</string>
@@ -573,23 +587,6 @@
   <string name="display_rotation_90_title">90 степени</string>
   <string name="display_rotation_180_title">180 степени</string>
   <string name="display_rotation_270_title">270 степени</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Боја екрана</string>
-  <string name="screencolor_summary">Подеси нијансу, засићење, контраст и интензитет</string>
-  <string name="custom_screencolor">Прилагођена боја екрана</string>
-  <string name="screencolor_save">Сачувај</string>
-  <string name="screencolor_cancel">Откажи</string>
-  <string name="restore_preview">Погледај подразумевану слику</string>
-  <string name="selectnewfile_menu">Погледај нову слику из Галерије</string>
-  <string name="selectfile_menu">Погледај слику из Галерије</string>
-  <string name="restore_default_str">Ресетуј</string>
-  <string name="hue_str">Нијанса: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Засићење: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Контраст: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Интензитет: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">Стандардно</string>
-  <string name="screen_color_vivid">Живописно</string>
-  <string name="screen_color_custom">Прилагођено</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">Оптимизуј екран у складу са дневним и просторним приликама да побољшаш читљивост и умањиш замарање очију</string>
   <string name="live_display_mode">Режим екрана</string>
@@ -619,6 +616,15 @@
   <string name="live_display_color_profile_photography_summary">Савршена репродукција боје за фотографије</string>
   <string name="live_display_color_profile_basic_title">Основно</string>
   <string name="live_display_color_profile_basic_summary">Користи дисплеј неподешен</string>
+  <string name="live_display_color_profile_adaptive_title">Прилагодљиво</string>
+  <string name="live_display_color_profile_adaptive_summary">Боје прилагођене амбиенталним условима</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="picture_adjustment_title">Корекција слике</string>
+  <string name="picture_adjustment_summary">Прилагоди нијансе, засићеност, интензитет и контраст</string>
+  <string name="adj_hue_title">Нијанса</string>
+  <string name="adj_saturation_title">Засићење</string>
+  <string name="adj_intensity_title">Интензитет</string>
+  <string name="adj_contrast_title">Контраст</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Селектор икона</string>
   <string name="ime_switcher_notify_summary">Прикажи улазни метод селектора икона</string>
@@ -945,6 +951,7 @@
   <string name="zen_mode_summary_selected_callers">одабрани позиваоци</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">одабране поруке</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Глава: %1$s W/kg</string>
@@ -1050,6 +1057,7 @@
   <string name="app_notification_show_on_keyguard_summary">Прикажи обавештење ове апликације на закључаном екрану</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Онемогућити трајна обавештења на закључаном екрану</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">Никад не приказуј трајна обавештења ове апликације на закључаном екрану</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <string name="cm_radio_info_label">Проширена радио контрола</string>
   <!-- Radio Control (IMS/MBN etc.) -->
@@ -1075,4 +1083,6 @@
   <string name="security_settings_fingerprint_sensor_location_front">испред</string>
   <string name="security_settings_fingerprint_sensor_location_left">на левој страни</string>
   <string name="security_settings_fingerprint_sensor_location_right">на десној страни</string>
+  <!-- SIM status format string -->
+  <string name="sim_status_format_string">Глас: <xliff:g id="voice_status">%1$s</xliff:g> / Податак: <xliff:g id="data_status">%2$s</xliff:g></string>
 </resources>

@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Confirmation that developer settings are enabled -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Okay we get it, stop pressing, you already have it on -->
@@ -30,6 +34,7 @@
   <string name="root_access_apps">යෙදුම් පමණි</string>
   <string name="root_access_adb">ADB පමණි</string>
   <string name="root_access_all">යෙදුම් සහ ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <!-- About phone screen, CyanogenMod version -->
   <string name="mod_version">CyanogenMod අනුවාදය</string>
@@ -348,7 +353,6 @@
   <string name="double_tap_to_sleep_title">දෙවරක් තට්ටුකර නිදිකරවන්න</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">අහඹු අවදි වීම් වළක්වන්න</string>
-  <string name="proximity_wake_summary">තිරය අවදි කිරීමට පෙර සන්නිකර්ෂණ සංවේදකය පරීක්ෂා කරන්න</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">පේණුගත කලවිට ඇහැරවන්න</string>
   <string name="wake_when_plugged_or_unplugged_summary">බල මූලාශ්‍රය සම්බන්ධ කිරීමේදී හෝ විසන්ධි කිරීමේදී තිරය ඇහැරවන්න</string>
@@ -358,7 +362,6 @@
   <!-- Volume settings - Volume adjustment sound -->
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">කම්පකයේ තීව්‍රතාව</string>
-  <string name="vibrator_warning">%1$d ට වඩා වැඩි අගයන් නිර්දේශ නොකරයි</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">වර්ණ ප්‍රමාණ ශෝධනය</string>
   <string name="color_calibration_summary">තිරයේ වර්ණ ප්‍රමාණ ශෝධනය කරන්න</string>
@@ -378,21 +381,8 @@
   <string name="display_rotation_90_title">අංශක 90</string>
   <string name="display_rotation_180_title">අංශක 180</string>
   <string name="display_rotation_270_title">අංශක 270</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">තිරයේ පැහැය</string>
-  <string name="custom_screencolor">රිසිවූ තිර පැහැය</string>
-  <string name="screencolor_save">සුරකින්න</string>
-  <string name="screencolor_cancel">එපා</string>
-  <string name="restore_preview">පෙරනිමි පින්තූරය බලන්න</string>
-  <string name="selectnewfile_menu">ගැලරියෙන් නව පින්තූරයක් බලන්න</string>
-  <string name="selectfile_menu">ගැලරියෙන් පින්තූරය බලන්න</string>
-  <string name="restore_default_str">යලි පිහිටුවන්න</string>
-  <string name="hue_str">කෑගැසීම: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">සන්තෘප්තිය: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">ප්‍රභේදනය: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">තීව්‍රතාව: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_custom">රිසිවූ</string>
   <!-- LiveDisplay -->
+  <!-- LiveDisplay : Picture Adjustment -->
   <!-- Whether to display IME switcher notifcation -->
   <!-- Heads up -->
   <!-- Bluetooth settings.  A checkbox to set if we should accept all the file types regardless of their presence in MIME type whitelist -->
@@ -530,6 +520,7 @@
   <!-- [CHAR LIMIT=50] Like zen_mode_events, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_callers, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">හිස: %1$s W/kg</string>
@@ -562,9 +553,11 @@
   <!-- title for lock screen blur preference -->
   <!-- title for lock screen weather preference -->
   <!-- Per app controls for LP keyguard notifications -->
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

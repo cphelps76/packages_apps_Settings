@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="other">คุณเหลืออีก <xliff:g id="step_count">%1$d</xliff:g> ขั้นก่อนจะสามารถเปิดใช้งานการตั้งค่าการพัฒนา</item>
@@ -37,6 +41,7 @@
   <string name="root_access_apps">แอปเท่านั้น</string>
   <string name="root_access_adb">ADB เท่านั้น</string>
   <string name="root_access_all">แอปและ ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -537,7 +542,6 @@
   <string name="double_tap_to_sleep_summary">แตะสองครั้งที่แถบสถานะเพื่อปิดหน้าจอ</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">ป้องกันการเปิดหน้าจอโดยไม่เจตนา</string>
-  <string name="proximity_wake_summary">ตรวจสอบเซนเซอร์แนบหน้าจอก่อนเปิดหน้าจอ</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">ตื่นเมื่อเสียบปลั๊ก</string>
   <string name="wake_when_plugged_or_unplugged_summary">เปิดหน้าจอเมื่อเชื่อมต่อหรือตัดการเชื่อมต่อกับแหล่งจ่ายไฟ</string>
@@ -548,7 +552,6 @@
   <string name="volume_adjust_sounds_title">เสียงปรับความดัง</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">ความแรงการสั่น</string>
-  <string name="vibrator_warning">ไม่แนะนำให้ใช้ค่ามากกว่า %1$d</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">การปรับเทียบสี</string>
   <string name="color_calibration_summary">ปรับเทียบสีบนจอ</string>
@@ -571,23 +574,6 @@
   <string name="display_rotation_90_title">90 องศา</string>
   <string name="display_rotation_180_title">180 องศา</string>
   <string name="display_rotation_270_title">270 องศา</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">สีหน้าจอ</string>
-  <string name="screencolor_summary">ปรับแต่งสี ความอิ่มต้ว ความคมชัด หรือความเข้มของหน้าจอ</string>
-  <string name="custom_screencolor">สีหน้าจอกำหนดเอง</string>
-  <string name="screencolor_save">บันทึก</string>
-  <string name="screencolor_cancel">ยกเลิก</string>
-  <string name="restore_preview">ดูรูปภาพเริ่มต้น</string>
-  <string name="selectnewfile_menu">ดูรูปภาพใหม่จากแกลเลอรี</string>
-  <string name="selectfile_menu">ดูรูปภาพจากแกลลอรี</string>
-  <string name="restore_default_str">รีเซ็ต</string>
-  <string name="hue_str">สี: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">ความอิ่มตัว: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">ความเข้มจาง: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">ความเข้มข้น: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">มาตราฐาน</string>
-  <string name="screen_color_vivid">สดใส</string>
-  <string name="screen_color_custom">กำหนดเอง</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">ปรับหน้าความสว่างหน้าจอตามเวลาและแสงโดยรอบเพื่อทำให้อ่านได้ง่ายขึ้นและลดอาการปวดตา</string>
   <string name="live_display_mode">รูปแบบการแสดงผล</string>
@@ -617,6 +603,9 @@
   <string name="live_display_color_profile_photography_summary">แต่งสีสมบูรณ์แบบสำหรับการถ่ายภาพ</string>
   <string name="live_display_color_profile_basic_title">พื้นฐาน</string>
   <string name="live_display_color_profile_basic_summary">ใช้การแสดงผลที่ไม่ตั้งค่า</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">ความอิ่มตัว</string>
+  <string name="adj_contrast_title">สีตัด</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">ไอคอนตัวเลือก</string>
   <string name="ime_switcher_notify_summary">แสดงไอคอนตัวเลือกวิธีป้อนข้อมูล</string>
@@ -943,6 +932,7 @@
   <string name="zen_mode_summary_selected_callers">ผู้โทรที่เลือก</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">ข้อความที่เลือก</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">หัว: %1$s W/kg</string>
@@ -1047,9 +1037,11 @@
   <string name="app_notification_show_on_keyguard_summary">แสดงการแจ้งเตือนจากแอปนี้บนหน้าจอล็อค</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">ปิดใช้งานการแจ้งเตือนแบบถาวรบนหน้าจอล็อค</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">ไม่ต้องแสดงการแจ้งเตือนแบบถาวรจากแอปนี้บนหน้าจอล็อค</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

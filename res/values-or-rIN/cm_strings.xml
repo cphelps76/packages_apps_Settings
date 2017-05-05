@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">ଉନ୍ନତି ସେଟିଂସମୂହ‍ ସଷମ କରାଯିବା ଠାରୁ ଆପଣ ବର୍ତ୍ତମାନ <xliff:g id="step_count">%1$d</xliff:g> ପର୍ଯ୍ୟାୟ ଦୂରରେ ଅଛନ୍ତି।</item>
@@ -38,6 +42,7 @@
   <string name="root_access_apps">କେବଳ ଆପ୍ଲିକେସନ୍‍ଗୁଡିକ</string>
   <string name="root_access_adb">କେବଳ ADB</string>
   <string name="root_access_all">ଆପ୍ଲିକେସନ୍‍ଗୁଡିକ ଓ ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -535,7 +540,6 @@
   <string name="double_tap_to_sleep_summary">ଡିସ୍‍ପ୍ଲେ ଅଫ୍‍ କରିବା ପାଇଁ ଷ୍ଟାଟସ୍‍ ବାର୍‍ରେ ଦୁଇଥର ଟ୍ୟାପ୍‍ କରନ୍ତୁ</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">ର୍ଆକ୍ସିଡେଂଟାଲ୍‍ ୱେକ୍‍-ଅପ୍‍ ପ୍ରତିରୋଧ କରନ୍ତୁ</string>
-  <string name="proximity_wake_summary">ସ୍କ୍ରିନ୍‍କୁ ଜଗାଇବା ପୂର୍ବରୁ ନିକଟ ସେନସର୍ ପରୀକ୍ଷିତ କରନ୍ତୁ</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">ପ୍ଲଗ୍‍କୁ ଉଠାନ୍ତୁ</string>
   <string name="wake_when_plugged_or_unplugged_summary">ଏକ ପାୱାର୍‍ ଉତ୍ସ ସଂଯୋଗ ବା ବିଛିନ୍ନ କରିବା ସମୟରେ ସ୍କ୍ରିନ୍‍ ଅନ୍‍ କରନ୍ତୁ</string>
@@ -546,7 +550,6 @@
   <string name="volume_adjust_sounds_title">ଭୋଲ୍ୟୁମ୍‍ ଆଡ୍‍ଜଷ୍ଟ ସାଉଣ୍ଡ</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">ଭାଇବ୍ରେଟର୍‍ ତୀବ୍ରତା</string>
-  <string name="vibrator_warning">%1$Dରୁ ଅଧିକ ମୂଲ୍ୟ ପାଇଁ ଅନୁମତି ଦିଆଯାଇନାହିଁ</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">ରଙ୍ଗ କାଲିବ୍ରେସନ୍‍</string>
   <string name="color_calibration_summary">ଅନ୍‍-ସ୍କ୍ରିନ୍‍ ରଙ୍ଗ କାଲିବ୍ରେଟ୍‍ କରନ୍ତୁ</string>
@@ -569,23 +572,6 @@
   <string name="display_rotation_90_title">90 ଡିଗ୍ରୀ</string>
   <string name="display_rotation_180_title">180 ଡିଗ୍ରୀ</string>
   <string name="display_rotation_270_title">270 ଡିଗ୍ରୀ</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">ସ୍କ୍ରିନ୍‍ ରଙ୍ଗ</string>
-  <string name="screencolor_summary">ଘ୍ୟୁ, ସାଚୁରେସନ୍‍, କଂଟ୍ରାଷ୍ଟ ବା ତୀବ୍ରତା ଟ୍ଯୁନ୍‍ କରନ୍ତୁ</string>
-  <string name="custom_screencolor">ସ୍କ୍ରିନ୍‍ ରଙ୍ଗ କଷ୍ଟମ୍‍ କରନ୍ତୁ</string>
-  <string name="screencolor_save">ସଞ୍ଚୟ</string>
-  <string name="screencolor_cancel">ବାତିଲ</string>
-  <string name="restore_preview">ଡିଫଲ୍ଟ ଚିତ୍ର ଦେଖାନ୍ତୁ</string>
-  <string name="selectnewfile_menu">ଗ୍ୟାଲେରୀରୁ ନୂଆ ଚିତ୍ର ଦେଖାନ୍ତୁ</string>
-  <string name="selectfile_menu">ଗ୍ୟାଲେରୀରୁ ଚିତ୍ର ଦେଖାନ୍ତୁ</string>
-  <string name="restore_default_str">ପୁନଃସେଟ୍</string>
-  <string name="hue_str">ହ୍ୟୁ: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">ସାଚୁରେସନ୍‍: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">କଣ୍ଟ୍ରାଷ୍ଟ: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">ତୀବ୍ରତା: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">ମାନାଙ୍କ</string>
-  <string name="screen_color_vivid">ଭିଭିଦ</string>
-  <string name="screen_color_custom">କଷ୍ଟମ୍</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">ରିଡେବିଲିଟି ବୃଦ୍ଧି କରିବା ପାଇଁ ଓ ୱ୍ୱିଷ୍ଟ୍ରେନ୍‍ ହ୍ରାସ କରିବା ପାଇଁ ଆପଣଙ୍କ ସ୍କ୍ରିନ୍‍ ଦିନର ସମୟ ଓ ଆମ୍ବିଏଣ୍ଟ ସର୍ତ୍ତାବଳି ଉପରେ ନିଭର କରି ଅପ୍ଟିମାଇଜ୍‍ କରନ୍ତୁ</string>
   <string name="live_display_mode">ଡିସ୍‍ପ୍ଲେ ମୋଡ୍‍</string>
@@ -615,6 +601,9 @@
   <string name="live_display_color_profile_photography_summary">ଫଟୋଗୁଡିକ ପାଇଁ ସଠିକ୍‍ ରଙ୍ଗ ପୁନଃପ୍ରସ୍ତୁତି</string>
   <string name="live_display_color_profile_basic_title">ସାଧାରଣ</string>
   <string name="live_display_color_profile_basic_summary">ଡିସ୍‍ପ୍ଲେ ଅନ୍‍କାଲିବ୍ରେଟ୍‍ କରି ବ୍ୟବହାର କରନ୍ତୁ</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">ସମ୍ପୃକ୍ତି</string>
+  <string name="adj_contrast_title">କଣ୍ଟ୍ରାଷ୍ଟ</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">ଆଇକନ୍‍ ଚୟନ</string>
   <string name="ime_switcher_notify_summary">ଇନ୍‍ପୁଟ୍‍ ପଧତି ସିଲେକ୍ଟର ଆଇକନ୍‍ ଡିସ୍‍ପ୍ଲେ କରନ୍ତୁ</string>
@@ -940,6 +929,7 @@
   <string name="zen_mode_summary_selected_callers">ଚୟନ କରାଯାଥିବା କଲର୍‍ଗୁଡିକ</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">ଚୟନ କରାଯାଥିବା ସଂଦେଶଗୁଡିକ</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">ହେଡ: %1$s W/kg</string>
@@ -1013,9 +1003,11 @@
   <string name="app_notification_show_on_keyguard_summary">ଲ୍କ୍‍ ସ୍କ୍ରିନ୍‍ରେ ଏହି ଆପ୍ଲିକେସନ୍‍ରୁ ନିର୍ଦେଶାବଳି ଦେଖା୍ନ୍ତୁ</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">ଲ୍କ୍‍ ସ୍କ୍ରିନ୍‍ରେ ‍ସ୍ଥାୟୀ ନିର୍ଦ୍ଦେଶାବଳି ଅ‍କ୍ଷମ କରନ୍ତୁ</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">ଲ୍କ୍‍ ସ୍କ୍ରିନ୍‍ରେ ଏହି ଆପ୍ଲିକେସନ୍‍ରୁ ‍ସ୍ଥାୟୀ ନିର୍ଦ୍ଦେଶାବଳି କଦାପି ଦେଖାନ୍ତୁ ନାହିଁ</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

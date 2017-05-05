@@ -16,6 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
+  <string name="show_device_id_clipboard_label">Enheds-ID</string>
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">Du er nu <xliff:g id="step_count">%1$d</xliff:g> skridt fra at aktivere Indstillinger for udviklere.</item>
@@ -38,6 +43,8 @@
   <string name="root_access_apps">Kun apps</string>
   <string name="root_access_adb">Kun ADB</string>
   <string name="root_access_all">Apps og ADB</string>
+  <!-- Preference link for root appops -->
+  <string name="root_appops_title">Administrer root adgang</string>
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -273,6 +280,7 @@
   <!-- Lights settings, LED notification -->
   <string name="led_notification_title">Lysindstillinger</string>
   <string name="led_notification_text">LED-lys aktiveret via indstillinger</string>
+  <string name="notification_light_no_apps_summary">Aktivér \'%1$s\' og tryk på \'\u002b\' på menulinjen for at tilføje per app-kontrol</string>
   <!-- Setting checkbox title for Whether to enable Android debugging support on the phone. -->
   <string name="enable_adb_cm">Android-fejlfinding</string>
   <!-- Setting checkbox summary for Whether to enable Android debugging support on the phone -->
@@ -381,6 +389,7 @@
   <string name="app_ops_labels_receive_sms">Modtag SMS/MMS</string>
   <string name="app_ops_labels_receive_emergency_sms">Modtag nød-SMS</string>
   <string name="app_ops_labels_receive_mms">Modtag SMS/MMS</string>
+  <string name="app_ops_labels_receive_wap_push">Modtag WAP push</string>
   <string name="app_ops_labels_send_sms">Send SMS/MMS</string>
   <string name="app_ops_labels_read_icc_sms">Læs ICC SMS</string>
   <string name="app_ops_labels_write_icc_sms">Skriv ICC SMS</string>
@@ -532,7 +541,7 @@
   <string name="double_tap_to_sleep_summary">Dobbelttryk på statuslinjen for at slukke skærmen</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Undgå utilsigtet vækning</string>
-  <string name="proximity_wake_summary">Check nærhedsføleren før skærmen vækkes</string>
+  <string name="proximity_wake_summary">Check nærhedsføler før oplåsning udløst af bevægelser</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Væk ved strøm</string>
   <string name="wake_when_plugged_or_unplugged_summary">Tænd skærmen, når du tilslutter eller frakobler en strømkilde</string>
@@ -543,7 +552,6 @@
   <string name="volume_adjust_sounds_title">Lyd for lydstyrkejustering</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Vibrator-intensitet</string>
-  <string name="vibrator_warning">Værdier højere end %1$d anbefales ikke</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Farvekalibrering</string>
   <string name="color_calibration_summary">Kalibrér skærmfarver</string>
@@ -566,23 +574,6 @@
   <string name="display_rotation_90_title">90 grader</string>
   <string name="display_rotation_180_title">180 grader</string>
   <string name="display_rotation_270_title">270 grader</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Skærmfarve</string>
-  <string name="screencolor_summary">Indstil skærmens nuance, mætning, kontrast eller intensitet</string>
-  <string name="custom_screencolor">Tilpasset skærmfarve</string>
-  <string name="screencolor_save">Gem</string>
-  <string name="screencolor_cancel">Annuller</string>
-  <string name="restore_preview">Vis standardbillede</string>
-  <string name="selectnewfile_menu">Vis nyt billede fra Galleri</string>
-  <string name="selectfile_menu">Vis billede fra Galleri</string>
-  <string name="restore_default_str">Nulstil</string>
-  <string name="hue_str">Farvetone: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Farvemætning: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Kontrast: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Intensitet: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">Standard</string>
-  <string name="screen_color_vivid">Levende</string>
-  <string name="screen_color_custom">Egen</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">Optimér din skærm baseret på tidspunktet på dagen, samt omgivelserne, for at forbedre læsbarheden og nedsætte anstrengelsen af øjnene</string>
   <string name="live_display_mode">Visningstilstand</string>
@@ -612,6 +603,13 @@
   <string name="live_display_color_profile_photography_summary">Perfekt farvegengivelse for fotos</string>
   <string name="live_display_color_profile_basic_title">Grundlæggende</string>
   <string name="live_display_color_profile_basic_summary">Brug skærmen ukalibreret</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="picture_adjustment_title">Billedjustering</string>
+  <string name="picture_adjustment_summary">Justerer farvetone, mætning, lysstyrke og kontrast</string>
+  <string name="adj_hue_title">Farvetone</string>
+  <string name="adj_saturation_title">Farvemætning</string>
+  <string name="adj_intensity_title">Lysstyrke</string>
+  <string name="adj_contrast_title">Kontrast</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Ikon for valg</string>
   <string name="ime_switcher_notify_summary">Vis ikon til valg af input-metode</string>
@@ -929,6 +927,7 @@
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_callers, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">valgte beskeder</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Hoved: %1$s W/kg</string>
@@ -1027,6 +1026,14 @@
   <string name="app_notification_show_on_keyguard_summary">Vis meddelelser fra denne app på låseskærmen</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Deaktivere vedvarende meddelelser på låseskærmen</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">Vis aldrig vedvarende meddelelser fra denne app på låseskærmen</string>
+  <!-- Notification sound timeout -->
+  <string name="app_notification_sound_timeout_value_none">Ingen begrænsning</string>
+  <string name="app_notification_sound_timeout_value_10_seconds">10 sekunder</string>
+  <string name="app_notification_sound_timeout_value_30_seconds">30 sekunder</string>
+  <string name="app_notification_sound_timeout_value_1_minute">1 minut</string>
+  <string name="app_notification_sound_timeout_value_5_minutes">5 minutter</string>
+  <string name="app_notification_sound_timeout_value_15_minutes">10 minutter</string>
+  <string name="app_notification_sound_timeout_value_30_minutes">30 minutter</string>
   <!-- CmRadioInfo -->
   <string name="cm_radio_info_label">Udvidet radiokontrol</string>
   <!-- Radio Control (IMS/MBN etc.) -->
@@ -1047,4 +1054,10 @@
   <string name="not_available_with_app">Ikke tilgængelig med %1$s</string>
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <string name="security_settings_fingerprint_sensor_location_back">tilbage</string>
+  <string name="security_settings_fingerprint_sensor_location_front">front</string>
+  <string name="security_settings_fingerprint_sensor_location_left">venstre side</string>
+  <string name="security_settings_fingerprint_sensor_location_right">højre side</string>
+  <!-- SIM status format string -->
+  <string name="sim_status_format_string">Stemme: <xliff:g id="voice_state">%1$s</xliff:g>, data: <xliff:g id="data_state">%2$s</xliff:g></string>
 </resources>

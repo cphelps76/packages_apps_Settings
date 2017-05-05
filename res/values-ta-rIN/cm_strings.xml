@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">வளர்ச்சி அமைப்புகளை செயல்படுத்துவதற்கு <xliff:g id="step_count">%1$d</xliff:g>  படி தொலைவில் நீங்கள் இப்போது உள்ளீர்கள்.</item>
@@ -38,6 +42,7 @@
   <string name="root_access_apps">பயன்பாடுகள் மட்டும்</string>
   <string name="root_access_adb">ADB மட்டும்</string>
   <string name="root_access_all">ஆப்கள் மற்றும் ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -535,7 +540,6 @@
   <string name="double_tap_to_sleep_summary">காட்சியை ஆஃப் செய்ய நிலை பட்டை மீது இருமுறை தட்டு</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">தற்செயலான விழித்தலை தடு</string>
-  <string name="proximity_wake_summary">திரையை விழிப்லாக்வதற்கு முன்பாக அருகாமை சென்சரை சரிபார்க்கவும்</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">பிளக் செய்தால் விழி</string>
   <string name="wake_when_plugged_or_unplugged_summary">ஒரு மின் வளத்தை இணைத்தல் அல்லது துண்டித்தலின் போது திரையை ஆன் செய்க</string>
@@ -546,7 +550,6 @@
   <string name="volume_adjust_sounds_title">வால்யூம் சரிசெய்தல் ஆடியோகள்</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">அதிர்வான் அளவு</string>
-  <string name="vibrator_warning">%1$dஐவிட உயர்வான மதிப்புகள் பரிந்துரைக்கப்படுவதில்லை</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">நிற அளவிடுதல்</string>
   <string name="color_calibration_summary">திரைமீதுள்ள நிறங்களை அளவிடு</string>
@@ -569,23 +572,6 @@
   <string name="display_rotation_90_title">90 டிகிரீ</string>
   <string name="display_rotation_180_title">180 டிகிரீ</string>
   <string name="display_rotation_270_title">270 டிகிரீ</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">திரை நிறம்</string>
-  <string name="screencolor_summary">திரை வண்ணக்கூறு, கான்டிராஸ்ட் அல்லது தீவிரத்தை டியூன் செய்</string>
-  <string name="custom_screencolor">தனிப்பயனாக்கப்பட்ட திரை நிறம்</string>
-  <string name="screencolor_save">சேமி</string>
-  <string name="screencolor_cancel">ரத்துசெய்</string>
-  <string name="restore_preview">இயல்நிலை படத்தை காண்</string>
-  <string name="selectnewfile_menu">கேலரியில் இருந்து புது படத்தைக் காண்</string>
-  <string name="selectfile_menu">கேலரியில் இருநந்து படத்தைக் காண்</string>
-  <string name="restore_default_str">மீட்டமை</string>
-  <string name="hue_str">வண்ணக்கூறு: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">சாச்சுரேசன்: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">கான்டிராஸ்ட்: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">இன்டென்சிட்டி: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">நிலையான</string>
-  <string name="screen_color_vivid">தெளிவு</string>
-  <string name="screen_color_custom">தனிப்பயன்</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">வாசிக்கும்தன்மையை மேம்படுத்தவும் கண்ணுக்கு சிரமத்தை குறைக்கவும் நாளின் நேரத்தையும் சுற்றுச்சூழல் நிலைமைகளையும் பொருத்து உங்கள் திரையை உகந்ததாக்குங்கள்</string>
   <string name="live_display_mode">காட்சி முறை</string>
@@ -615,6 +601,9 @@
   <string name="live_display_color_profile_photography_summary">புகைப்படங்களுக்கான கச்சிதமான வண்ன மறு உருவாக்கம்</string>
   <string name="live_display_color_profile_basic_title">அடிப்படை</string>
   <string name="live_display_color_profile_basic_summary">காட்சியை அளவிடாமல் பயன்படுத்து</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">சாச்சுரேசன்</string>
+  <string name="adj_contrast_title">மாறுபாடு</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">தேர்ந்தெடுக்கும் ஐகான்</string>
   <string name="ime_switcher_notify_summary">உள்ளீட்டு முறை தேர்ந்தெடுத்தல் ஐகானை காட்டு</string>
@@ -940,6 +929,7 @@
   <string name="zen_mode_summary_selected_callers">தேர்வுசெய்யப்பட்ட அழைப்பாளர்கள்</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">தேர்வுசெய்யப்பட்ட செய்திகள்</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">தலை: %1$s W/கிலோ</string>
@@ -1013,9 +1003,11 @@
   <string name="app_notification_show_on_keyguard_summary">லாக் திரையில் இந்த பயன்பாடு-இல் இருந்து அறிவுறுத்தல்களை காட்டு</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">பூட்டுத் திரையில் விடாப்பிடியான அறிவுறுத்தலை முடக்கு</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">இந்த பயன்பாடு-இல் இருந்து  விடாப்பிடியான அறிவுறுத்தலை பூட்டுத் திரையில் எப்போதும் காட்டாதே</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">Du är nu <xliff:g id="step_count">%1$d</xliff:g> steg från att aktivera utvecklingsinställningar.</item>
@@ -38,6 +42,8 @@
   <string name="root_access_apps">Endast appar</string>
   <string name="root_access_adb">Endast ADB</string>
   <string name="root_access_all">Appar och ADB</string>
+  <!-- Preference link for root appops -->
+  <string name="root_appops_title">Hantera root-åtkomster</string>
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -536,7 +542,6 @@
   <string name="double_tap_to_sleep_summary">Dubbeltryck på statusfältet för att stänga av skärmen</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Förhindra oavsiktlig väckning</string>
-  <string name="proximity_wake_summary">Kontrollera närhetssensorn innan väckning av skärmen</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Vakna vid koppling</string>
   <string name="wake_when_plugged_or_unplugged_summary">Starta skärmen vid anslutning till eller frånkoppling från strömkälla</string>
@@ -547,7 +552,6 @@
   <string name="volume_adjust_sounds_title">Ljud vid volymjustering</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Vibratorintensitet</string>
-  <string name="vibrator_warning">Värden högre än %1$d är inte rekommenderade</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Färgkalibrering</string>
   <string name="color_calibration_summary">Kalibrera skärmfärger</string>
@@ -570,23 +574,6 @@
   <string name="display_rotation_90_title">90 grader</string>
   <string name="display_rotation_180_title">180 grader</string>
   <string name="display_rotation_270_title">270 grader</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Skärmfärg</string>
-  <string name="screencolor_summary">Ställ in skärmnyans, mättnad, kontrast eller intensitet</string>
-  <string name="custom_screencolor">Anpassad skärmfärg</string>
-  <string name="screencolor_save">Spara</string>
-  <string name="screencolor_cancel">Avbryt</string>
-  <string name="restore_preview">Visa standardbild</string>
-  <string name="selectnewfile_menu">Visa ny bild från galleriet</string>
-  <string name="selectfile_menu">Visa bild från galleriet</string>
-  <string name="restore_default_str">Återställ</string>
-  <string name="hue_str">Nyans: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Mättnad: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Kontrast: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Intensitet: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">Standard</string>
-  <string name="screen_color_vivid">Levande</string>
-  <string name="screen_color_custom">Anpassad</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">Optimera din skärm baserad på dygnets tidpunkt och omgivande förhållanden för att förbättra läsbarhet och minska belastningen på ögonen</string>
   <string name="live_display_mode">Visningsläge</string>
@@ -616,6 +603,10 @@
   <string name="live_display_color_profile_photography_summary">Perfekt färgåtergivning för bilder</string>
   <string name="live_display_color_profile_basic_title">Grundläggande</string>
   <string name="live_display_color_profile_basic_summary">Använd skärmen okalibrerad</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_hue_title">Nyans</string>
+  <string name="adj_saturation_title">Mättnad</string>
+  <string name="adj_contrast_title">Kontrast</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Väljarikonen</string>
   <string name="ime_switcher_notify_summary">Visa ikonen för inmatningsväxlare</string>
@@ -945,6 +936,7 @@ inkluderar en unik identifikation,
   <string name="zen_mode_summary_selected_callers">valda uppringare</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">valda meddelanden</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Huvud: %1$s W/kg</string>
@@ -1033,9 +1025,11 @@ inkluderar en unik identifikation,
   <string name="app_notification_show_on_keyguard_summary">Visa aviseringar från denna app på låsskärmen</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Inaktivera beständiga aviseringar på låsskärmen</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">Visa aldrig beständiga aviseringar från denna app på låsskärmen</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

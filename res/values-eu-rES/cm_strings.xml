@@ -16,6 +16,17 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <plurals name="show_device_id_countdown_cm">
+    <item quantity="one">Gailuaren IDa kontsultatzeko urrats <xliff:g id="step_count">%1$d</xliff:g>era zaude.</item>
+    <item quantity="other">Gailuaren IDa kontsultatzeko <xliff:g id="step_count">%1$d</xliff:g> urratsetara zaude.</item>
+  </plurals>
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <string name="show_device_id_copied_cm">Gailuaren IDa:[<xliff:g id="device_id">%1$s</xliff:g>] arbelera kopiatu da</string>
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <string name="show_device_id_failed_cm">Gailuaren IDa ez dago eskuragarri konpilazio honetan</string>
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
+  <string name="show_device_id_clipboard_label">Gailuaren IDa</string>
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">Garapen ezarpenak gaitzeko urrats <xliff:g id="step_count">%1$d</xliff:g>era zaude.</item>
@@ -38,6 +49,9 @@
   <string name="root_access_apps">Aplikazioak bakarrik</string>
   <string name="root_access_adb">ADB bakarrik</string>
   <string name="root_access_all">ADB eta aplikazioak</string>
+  <!-- Preference link for root appops -->
+  <string name="root_appops_title">Kudeatu root sarbideak</string>
+  <string name="root_appops_summary">Ikusi eta kontrolatu root arauak</string>
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -150,7 +164,7 @@
   <!-- Profiles - system settings -->
   <string name="profile_system_settings_title">Sistemaren ezarpenak</string>
   <string name="profile_lockmode_title">Blokeo-pantaila modua</string>
-  <string name="profile_lockmode_policy_disabled_summary">Profil aukera hau gailuaren administrazio politika betek ezgaitu du</string>
+  <string name="profile_lockmode_policy_disabled_summary">Profileko aukera hau gailuaren administrazio politika batek desgaitu du</string>
   <string name="profile_lockmode_insecure_summary">Ez eskatu PINa edo pasahitza</string>
   <string name="profile_lockmode_disabled_summary">Ezgaitu blokeo-pantaila</string>
   <string name="profile_airplanemode_title">Hegaldi modua</string>
@@ -222,7 +236,7 @@
   <string name="navigation_bar_left_title">Ezkertientzako modua</string>
   <string name="navigation_bar_left_summary">Kokatu nabigazio-barra pantailaren ezkerraldean paisaia moduan</string>
   <string name="navigation_bar_title">Botoiak eta diseinua</string>
-  <string name="navigation_bar_help_text">Hasteko sakatu editatu ikonoa nabigazio barra ediziorako askatzeko.\n\nikono bat sakatu dezakezu bere lasterbidea aldatzeko, edo luze sakatu dezakezu ikonoa diseinua berrantolatzeko.\n\nSakatu \'Gorde\' aldaketak bidaltzeko, edo \'Berrezarri lehenetsitakoak\' diseinua lehenetsitako ezarpenetara bueltatzeko.</string>
+  <string name="navigation_bar_help_text">Sakatu editatu ikonoa nabigazio-barra ediziorako desblokeatzeko.\n\nIkono bat sakatu dezakezu bere lasterbidea aldatzeko, edo luze sakatu dezakezu ikonoa diseinua berrantolatzeko.\n\nSakatu \'Gorde\' aldaketak bidaltzeko, edo \'Berrezarri lehenetsitakoak\' diseinua lehenetsitako ezarpenetara bueltatzeko.</string>
   <string name="navigation_restore_button_text">Berrezarri\nbalio lehenetsiak</string>
   <string name="navigation_edit_button_text">Editatu</string>
   <string name="navigation_save_button_text">Gorde</string>
@@ -231,7 +245,7 @@
   <string name="navigation_bar_arrow_keys_summary">Bistaratu ezker zein eskuin kurtsore botoiak idaztean. IME aldatzailea gainidazten du.</string>
   <string name="navigation_bar_recents_title">Azkenak botoian luze sakatzearen ekintza</string>
   <!-- Notification light dialogs -->
-  <string name="edit_light_settings">Jakinarazpena editatu</string>
+  <string name="edit_light_settings">Editatu argiaren ezarpenak</string>
   <string name="pulse_speed_title">Dirdiraren iraupena eta abiadura</string>
   <string name="default_time">Arrunta</string>
   <string name="custom_time">Lehenetsia</string>
@@ -261,11 +275,11 @@
   <string name="notification_light_general_title">Orokorra</string>
   <string name="notification_light_applist_title">Aplikazioak</string>
   <string name="notification_light_phonelist_title">Telefonoa</string>
-  <string name="notification_light_use_custom">Balio pertsonalizatuak erabili</string>
+  <string name="notification_light_use_custom">Erabili balio pertsonalizatuak</string>
   <string name="notification_light_default_value">Lehenetsia</string>
   <string name="notification_light_missed_call_title">Dei galdua</string>
   <string name="notification_light_voicemail_title">Ahots postontzia</string>
-  <string name="notification_light_screen_on">Argitu pantaila piztean</string>
+  <string name="notification_light_screen_on">Argiak pantaila piztuta dagoenean</string>
   <string name="notification_light_zen_mode">Argiak ez eten moduan</string>
   <string name="notification_light_use_multiple_leds">Hainbat LED</string>
   <string name="keywords_lights_brightness_level">ilundu LEDaren argitasuna</string>
@@ -469,7 +483,7 @@
   <string name="hardware_keys_double_tap_title">Birritan sakatzearen ekintza</string>
   <string name="hardware_keys_action_nothing">Ekintzarik ez</string>
   <string name="hardware_keys_action_menu">Ireki/itxi menua</string>
-  <string name="hardware_keys_action_app_switch">Azken aplikazioen kommutadorea</string>
+  <string name="hardware_keys_action_app_switch">Azken aplikazioen aldatzailea</string>
   <string name="hardware_keys_action_search">Bilaketa laguntzailea</string>
   <string name="hardware_keys_action_voice_search">Ahotsezko bilaketa</string>
   <string name="hardware_keys_action_in_app_search">Aplikazio barneko bilaketa</string>
@@ -522,7 +536,7 @@
   <string name="power_menu_screenshot_title">Pantaila-argazkia</string>
   <string name="power_menu_airplane_title">Hegaldi modua</string>
   <string name="power_menu_users_title">Erabiltzaile aldaketa</string>
-  <string name="power_menu_settings_title">Ezarpenera lasterbidea</string>
+  <string name="power_menu_settings_title">Ezarpenetara lasterbidea</string>
   <string name="power_menu_lockdown_title">Gailu blokeoa</string>
   <string name="power_menu_bug_report_title">Errore-txostena</string>
   <string name="power_menu_sound_title">Soinu panela</string>
@@ -538,7 +552,7 @@
   <string name="double_tap_to_sleep_summary">Birritan sakatu egoera barran pantaila itzaltzeko</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Ekidin ustekabeko esnatzea</string>
-  <string name="proximity_wake_summary">Kontsultatu gertutasun sentsorea pantaila piztu aurretik</string>
+  <string name="proximity_wake_summary">Egiaztatu hurbiltasun sentsorea keinuen bidez eragindako esnatzeen aurretik</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Esnatu kargadorearekin</string>
   <string name="wake_when_plugged_or_unplugged_summary">Piztu pantaila kargadorea konektatu edo deskonektatzean</string>
@@ -549,7 +563,7 @@
   <string name="volume_adjust_sounds_title">Bolumen doitze soinuak</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Bibrazioaren intentsitatea</string>
-  <string name="vibrator_warning">%1$d -tik gorako balioak ez daude gomendatuta</string>
+  <string name="vibrator_warning">%1$d%% baino gorago dauden balioak ez dira gomendatzen</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Kolore kalibrazioa</string>
   <string name="color_calibration_summary">Pantailaren koloreak kalibratu</string>
@@ -572,23 +586,6 @@
   <string name="display_rotation_90_title">90 gradu</string>
   <string name="display_rotation_180_title">180 gradu</string>
   <string name="display_rotation_270_title">270 gradu</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Pantailaren kolorea</string>
-  <string name="screencolor_summary">Doitu pantailaren ñabardura, saturazioa, kontrastea edo intentsitatea</string>
-  <string name="custom_screencolor">Pertsonalizatutako pantaila kolorea</string>
-  <string name="screencolor_save">Gorde</string>
-  <string name="screencolor_cancel">Utzi</string>
-  <string name="restore_preview">Ikusi lehenetsitako irudia</string>
-  <string name="selectnewfile_menu">Ikusi irudi berria galeriatik</string>
-  <string name="selectfile_menu">Ikusi irudia galeriatik</string>
-  <string name="restore_default_str">Leheneratu</string>
-  <string name="hue_str">Ñabardura:<xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Saturazioa:<xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Kontrastea:<xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Intentsitatea:<xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">Estandarra</string>
-  <string name="screen_color_vivid">Bizia</string>
-  <string name="screen_color_custom">Lehenetsia</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">Optimizatu zure pantaila eguneko orduaren eta inguruneko baldintzen arabera irakurgarritasuna hobetzeko eta begien nekea gutxiagotzeko</string>
   <string name="live_display_mode">Pantaila modua</string>
@@ -620,6 +617,13 @@
   <string name="live_display_color_profile_basic_summary">Erabili pantaila kalibratu gabe</string>
   <string name="live_display_color_profile_adaptive_title">Moldakorra</string>
   <string name="live_display_color_profile_adaptive_summary">Koloreak inguruko baldintzetara moldatzen dira</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="picture_adjustment_title">Irudiaren doikuntza</string>
+  <string name="picture_adjustment_summary">Doitu ñabardura, saturazioa, intentsitatea eta kontrastea</string>
+  <string name="adj_hue_title">Ñabardura</string>
+  <string name="adj_saturation_title">Saturazioa</string>
+  <string name="adj_intensity_title">Intentsitatea</string>
+  <string name="adj_contrast_title">Kontrastea</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Hautaketa ikonoa</string>
   <string name="ime_switcher_notify_summary">Bistaratu sarrera metodoa hautatzeko ikonoa</string>
@@ -786,7 +790,7 @@
   <string name="advanced_reboot_summary">Desblokeatuta dagoenean, erakutsi itzaltze menuan berreskuratze-irudira edo abiarazlera berrabiatzeko edo berrabiatze leuna burutzeko aukerak</string>
   <string name="category_interface">Interfazea</string>
   <!-- Expanded desktop -->
-  <string name="power_menu_expanded_desktop">Mahaigaina hedatu</string>
+  <string name="power_menu_expanded_desktop">Mahaigain hedatua</string>
   <string name="expanded_hide_nothing">Ez ezkutatu ezer</string>
   <string name="expanded_hide_status">Ezkutatu egoera barra</string>
   <string name="expanded_hide_navigation">Ezkutatu nabigazio-barra</string>
@@ -801,7 +805,7 @@
   <string name="kill_app_longpress_back_summary">Hil aurrealdeko aplikazioa atzera botoia luze sakatuz</string>
   <!-- Show/Hide Search Bar -->
   <string name="recents_show_searchbar">Erakutsi bilaketa barra azkenak menuan</string>
-  <string name="keywords_recents_show_searchbar">oraintsukoa oraintsukoak ezgaitu gaitu erakutsi ezkutatu bilatu barra bilaketa-barra</string>
+  <string name="keywords_recents_show_searchbar">azkena azkenak desgaitu gaitu erakutsi ezkutatu bilatu barra bilaketa-barra</string>
   <!-- Voice Wakeup -->
   <string name="voice_wakeup_settings_title">Esnatu ahotsaren bidez</string>
   <string name="voice_wakeup_retrain_title">Ahotsa entrenatu</string>
@@ -854,7 +858,7 @@
   <!-- Anonymous Statistics #CM -->
   <!-- About device screen, list item title. Takes the user to the screen about opting in or out of anonymous statistics. -->
   <string name="anonymous_statistics_title">CyanogenMod estatistikak</string>
-  <string name="anonymous_statistics_summary">CyanogenMod hobetzera lagundu estatistika anonimoak bidaliz</string>
+  <string name="anonymous_statistics_summary">CyanogenMod hobetzen lagundu estatistika anonimoak bidaliz</string>
   <string name="anonymous_statistics_warning_title">Honi buruz</string>
   <string name="anonymous_statistics_warning">CyanogenMod estatistikak baimenduz, CyanogenMod garatzaileei pertsonala ez den informazioa bidaltzea baimentzen duzu, gailu desberdinetako instalazioei segimendua egitea baimentzen diena. Igorritako datuen artean identifikatzaile esklusibo bat dago, honek ez du zure pribatutasuna edo datu pertsonalak arriskuan jartzen. Datuak abiarazte bakoitzean bidaltzen dira.\n\nIgorriko liratekeen datuen adibide bat ikusteko sakatu Aurreikusi Datuak.</string>
   <string name="enable_reporting_title">Gaitu txosten bidalketa</string>
@@ -871,14 +875,14 @@
   <string name="stats_collection_summary">Gaitzean, datuak biltzea baimentzen du</string>
   <!-- Protected apps lockpattern reset button -->
   <string name="lockpattern_reset_button">Leheneratu eredua</string>
-  <string name="lockpattern_settings_reset_summary">Idatzi eposta kontu nagusia eta bere pasahitza eredu blokeoa kentzeko</string>
+  <string name="lockpattern_settings_reset_summary">Idatzi e-posta kontu nagusia eta bere pasahitza eredu blokeoa kentzeko</string>
   <!-- Protected Apps -->
   <string name="menu_hidden_apps_delete">Leheneratu</string>
   <string name="menu_hidden_apps_reset_lock">Berrezarri eredu blokeoa</string>
   <string name="protected_apps">Babesturiko aplikazioak</string>
   <string name="protected_apps_summary">Kudeatu blokeo ziurrarekin ezkutatuko diren aplikazioak</string>
   <string name="saving_protected_components">Osagaiaren egoera gordetzen\u2026</string>
-  <string name="pa_login_username_hint">Erabiltzaile izena (eposta)</string>
+  <string name="pa_login_username_hint">Erabiltzaile izena (e-posta)</string>
   <string name="pa_login_password_hint">Pasahitza</string>
   <string name="pa_login_submit_button">Hasi saioa</string>
   <string name="pa_login_checking_password">Kontua berresten\u2026</string>
@@ -946,6 +950,11 @@
   <string name="zen_mode_summary_selected_callers">hautatutako deitzaileak</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">hautatutako mezuak</string>
+  <!-- Allow vibration in zen mode -->
+  <string name="zen_mode_vibration">Bibrazioa</string>
+  <string name="zen_mode_vibration_never">Ez bibratu</string>
+  <string name="zen_mode_vibration_calls_only">Bibratu deiekin besterik ez</string>
+  <string name="zen_mode_vibration_calls_and_notifications">Bibratu deiekin eta jakinarazpenekin</string>
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Burua:%1$s W/kg</string>
@@ -1051,6 +1060,16 @@
   <string name="app_notification_show_on_keyguard_summary">Bistaratu aplikazio honen jakinarazpenak blokeo-pantailan</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Ezgaitu jakinarazpen iraunkorra blokeo-pantailan</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">Ez bistaratu inoiz aplikazio honen jakinarazpen iraunkorrak blokeo-pantailan</string>
+  <!-- Notification sound timeout -->
+  <string name="app_notification_sound_timeout_title">Gutxieneko denbora jakinarazpen soinuen artean</string>
+  <string name="app_notification_sound_timeout_summary_template">Ez baimendu soinua edo bibrazioa aurrekotik denbora bat pasatu arte: <xliff:g id="duration">%1$s</xliff:g></string>
+  <string name="app_notification_sound_timeout_value_none">Mugarik gabe</string>
+  <string name="app_notification_sound_timeout_value_10_seconds">10 segundo</string>
+  <string name="app_notification_sound_timeout_value_30_seconds">30 segundo</string>
+  <string name="app_notification_sound_timeout_value_1_minute">minutu bat</string>
+  <string name="app_notification_sound_timeout_value_5_minutes">5 minutu</string>
+  <string name="app_notification_sound_timeout_value_15_minutes">10 minutu</string>
+  <string name="app_notification_sound_timeout_value_30_minutes">30 minutu</string>
   <!-- CmRadioInfo -->
   <string name="cm_radio_info_label">Irrati kontrol hobetua</string>
   <!-- Radio Control (IMS/MBN etc.) -->
@@ -1076,4 +1095,6 @@
   <string name="security_settings_fingerprint_sensor_location_front">aurrealdean</string>
   <string name="security_settings_fingerprint_sensor_location_left">ezkerraldean</string>
   <string name="security_settings_fingerprint_sensor_location_right">eskuinaldean</string>
+  <!-- SIM status format string -->
+  <string name="sim_status_format_string">Ahotsa: <xliff:g id="voice_status">%1$s</xliff:g> / Datuak: <xliff:g id="data_status">%2$s</xliff:g></string>
 </resources>

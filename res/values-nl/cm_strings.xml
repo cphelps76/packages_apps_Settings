@@ -16,15 +16,26 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <plurals name="show_device_id_countdown_cm">
+    <item quantity="one">U bent nog <xliff:g id="step_count">%1$d</xliff:g> stap verwijderd van het opvragen van het apparaat-ID.</item>
+    <item quantity="other">U bent nog <xliff:g id="step_count">%1$d</xliff:g> stappen verwijderd van het opvragen van het apparaat-ID.</item>
+  </plurals>
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <string name="show_device_id_copied_cm">Apparaat-ID:[<xliff:g id="device_id">%1$s</xliff:g>] naar klembord gekopieerd</string>
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <string name="show_device_id_failed_cm">Apparaat-ID is niet beschikbaar in deze versie</string>
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
+  <string name="show_device_id_clipboard_label">Apparaat-ID</string>
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">U bent nog <xliff:g id="step_count">%1$d</xliff:g> stap verwijderd van de opties voor ontwikkelaars.</item>
     <item quantity="other">U bent nog <xliff:g id="step_count">%1$d</xliff:g> stappen verwijderd van de opties voor ontwikkelaars.</item>
   </plurals>
   <!-- [CHAR LIMIT=NONE] Device Info screen. Confirmation that developer settings are enabled -->
-  <string name="show_dev_on_cm">U heeft de opties voor ontwikkelaars ingeschakeld.</string>
+  <string name="show_dev_on_cm">U hebt de opties voor ontwikkelaars ingeschakeld!</string>
   <!-- [CHAR LIMIT=NONE] Device Info screen. Okay we get it, stop pressing, you already have it on -->
-  <string name="show_dev_already_cm">Niet nodig, u heeft de opties voor ontwikkelaars al ingeschakeld.</string>
+  <string name="show_dev_already_cm">Niet nodig, u hebt de opties voor ontwikkelaars al ingeschakeld.</string>
   <!-- Launch Dev Tools -->
   <string name="development_tools_title">Opties voor ontwikkelaars</string>
   <!-- Development shortcut -->
@@ -38,6 +49,9 @@
   <string name="root_access_apps">Alleen apps</string>
   <string name="root_access_adb">Alleen ADB</string>
   <string name="root_access_all">Apps en ADB</string>
+  <!-- Preference link for root appops -->
+  <string name="root_appops_title">Root-toegang beheren</string>
+  <string name="root_appops_summary">Root-instellingen bekijken en beheren</string>
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -73,18 +87,18 @@
   <string name="profiles_add">Toevoegen</string>
   <string name="profile_menu_delete">Verwijderen</string>
   <string name="profile_settings_title">Profiel</string>
-  <string name="profile_empty_list_profiles_off">Om systeemprofielen te gebruiken, schakelt u Profielen in</string>
+  <string name="profile_empty_list_profiles_off">Om systeemprofielen te gebruiken, schakelt u Profielen in.</string>
   <string name="profile_trigger_configure">Trigger instellen</string>
   <string name="profile_write_nfc_tag">Schrijven naar NFC-tag</string>
   <string name="profile_write_touch_tag">Raak tag aan om te schrijven</string>
   <string name="profile_write_success">Tag succesvol geschreven</string>
   <string name="profile_write_failed">Tag schrijven mislukt</string>
-  <string name="profile_selected">Geselecteerd profiel: %1$s</string>
+  <string name="profile_selected">Gekozen profiel: %1$s</string>
   <string name="profile_nfc_text">Een profiel naar een NFC-tag schrijven maakt het mogelijk een profiel te kiezen door de tag aan te raken. Een tweede keer aanraken selecteert het vorig gekozen profiel.</string>
   <string name="profile_unknown_nfc_tag">Onbekend profiel</string>
   <string name="profile_add_nfc_text">Deze NFC-tag verwijst naar een onbekend profiel. Door deze NFC-tag toe te wijzen aan een bestaand profiel wordt het kiezen van het profiel mogelijk.</string>
   <string name="profile_select">Profiel kiezen</string>
-  <string name="profile_remove_dialog_message">Profiel verwijderen %1$s?</string>
+  <string name="profile_remove_dialog_message">Profiel %1$s verwijderen?</string>
   <string name="profile_populate_profile_from_state">Profiel instellen met behulp van huidige apparaatinstellingen?</string>
   <string name="profile_menu_fill_from_state">Huidige apparaatinstellingen importeren</string>
   <string name="profile_remove_current_profile">Kan huidige profiel niet verwijderen.</string>
@@ -273,6 +287,7 @@
   <!-- Lights settings, LED notification -->
   <string name="led_notification_title">Verlichtingsinstellingen</string>
   <string name="led_notification_text">LED-verlichting ingeschakeld door instellingen</string>
+  <string name="notification_light_no_apps_summary">Om controle per app toe te voegen, activeer %1$s en tik \'\u002b\' op de menubalk</string>
   <!-- Setting checkbox title for Whether to enable Android debugging support on the phone. -->
   <string name="enable_adb_cm">Android-foutopsporing</string>
   <!-- Setting checkbox summary for Whether to enable Android debugging support on the phone -->
@@ -442,6 +457,7 @@
   <string name="app_ops_allowed_count"><xliff:g id="count" example="2 times">%s</xliff:g> toegestaan</string>
   <string name="app_ops_ignored_count"><xliff:g id="count" example="2 times">%s</xliff:g> geweigerd</string>
   <string name="app_ops_both_count"><xliff:g id="count">%1$s</xliff:g> toegestaan, <xliff:g id="count">%2$s</xliff:g> geweigerd</string>
+  <string name="app_ops_disabled_by_optimization">Uitgeschakeld door accuoptimalisatie</string>
   <!-- App ops menu options -->
   <string name="app_ops_show_user_apps">Gebruikersapps tonen</string>
   <string name="app_ops_show_system_apps">Ingebouwde apps tonen</string>
@@ -480,7 +496,7 @@
   <string name="camera_launch_summary">Lang indrukken en loslaten om camera te openen</string>
   <string name="volbtn_music_controls_title">Muziek beheren</string>
   <string name="volbtn_music_controls_summary">Bij scherm uit door nummers spoelen door volumeknoppen lang in te drukken</string>
-  <string name="volbtn_cursor_control_title">Toetsenbordcursor beheren</string>
+  <string name="volbtn_cursor_control_title">Toetsenbordcursor</string>
   <string name="volbtn_cursor_control_off">Uitgeschakeld</string>
   <string name="volbtn_cursor_control_on">Volume omhoog/omlaag beweegt cursor naar links/rechts</string>
   <string name="volbtn_cursor_control_on_reverse">Volume omhoog/omlaag beweegt cursor naar rechts/links</string>
@@ -536,7 +552,7 @@
   <string name="double_tap_to_sleep_summary">Dubbeltikken op de statusbalk voor slaapstand</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Per ongeluk ontwaken voorkomen</string>
-  <string name="proximity_wake_summary">Nabijheidssensor gebruiken voorafgaand aan ontwaken van scherm</string>
+  <string name="proximity_wake_summary">Nabijheidssensor gebruiken voorafgaand aan ontwaken door gebaren</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Ontwaken door lader</string>
   <string name="wake_when_plugged_or_unplugged_summary">Scherm aan bij het aansluiten of loskoppelen van een lader</string>
@@ -547,7 +563,7 @@
   <string name="volume_adjust_sounds_title">Aanpassingsgeluid volume</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Trilintensiteit</string>
-  <string name="vibrator_warning">Waarden hoger dan %1$d worden niet aangeraden</string>
+  <string name="vibrator_warning">Waarden hoger dan %1$d%% worden niet aangeraden</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Kleuren kalibreren</string>
   <string name="color_calibration_summary">Schermkleur kalibreren</string>
@@ -570,23 +586,6 @@
   <string name="display_rotation_90_title">90 graden</string>
   <string name="display_rotation_180_title">180 graden</string>
   <string name="display_rotation_270_title">270 graden</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Schermkleur</string>
-  <string name="screencolor_summary">Tint, verzadiging, contrast en intensiteit van het scherm aanpassen</string>
-  <string name="custom_screencolor">Aangepaste schermkleur</string>
-  <string name="screencolor_save">Opslaan</string>
-  <string name="screencolor_cancel">Annuleren</string>
-  <string name="restore_preview">Standaardfoto bekijken</string>
-  <string name="selectnewfile_menu">Nieuwe foto uit Galerij bekijken</string>
-  <string name="selectfile_menu">Foto uit Galerij bekijken</string>
-  <string name="restore_default_str">Opnieuw instellen</string>
-  <string name="hue_str">Tint: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Verzadiging: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Contrast: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Intensiteit: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">Standaard</string>
-  <string name="screen_color_vivid">Levendig</string>
-  <string name="screen_color_custom">Aangepast</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">Uw scherm optimaliseren aan de hand van tijdstip op de dag en lichtomstandigheden om de leesbaarheid te verbeteren en oogvermoeidheid te verminderen</string>
   <string name="live_display_mode">Weergavemodus</string>
@@ -616,6 +615,15 @@
   <string name="live_display_color_profile_photography_summary">Perfecte kleurweergave voor foto\'s</string>
   <string name="live_display_color_profile_basic_title">Basis</string>
   <string name="live_display_color_profile_basic_summary">Scherm ongekalibreerd gebruiken</string>
+  <string name="live_display_color_profile_adaptive_title">Aanpasbaar</string>
+  <string name="live_display_color_profile_adaptive_summary">Kleuren passen zich aan aan de omgeving</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="picture_adjustment_title">Beeldaanpassingen</string>
+  <string name="picture_adjustment_summary">Tint, verzadiging, intensiteit en contrast aanpassen</string>
+  <string name="adj_hue_title">Tint</string>
+  <string name="adj_saturation_title">Verzadiging</string>
+  <string name="adj_intensity_title">Intensiteit</string>
+  <string name="adj_contrast_title">Contrast</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Melding invoermethode</string>
   <string name="ime_switcher_notify_summary">Invoermethodepictogram weergeven</string>
@@ -779,7 +787,7 @@
   <string name="notification_ringtone_title_cm">Meldingstoon</string>
   <!-- Advanced reboot options -->
   <string name="advanced_reboot_title">Geavanceerd herstarten</string>
-  <string name="advanced_reboot_summary">Indien ontgrendeld, opties tonen in het afsluitmenu voor herstarten naar recovery of bootloader of het uitvoeren van een soft reboot</string>
+  <string name="advanced_reboot_summary">Indien ontgrendeld, opties tonen in het afsluitmenu voor herstarten naar recovery of bootloader of het uitvoeren van een snelle herstart</string>
   <string name="category_interface">Uiterlijk</string>
   <!-- Expanded desktop -->
   <string name="power_menu_expanded_desktop">Uitgebreid bureaublad</string>
@@ -887,7 +895,7 @@
   <string name="contributor_info_menu">Informatie over bijdragers</string>
   <string name="contributor_info_msg">
         <![CDATA[<b>Naam:</b> <xliff:g id="name">%1$s</xliff:g><br/><br/>
-                 <b>Alias::</b> <xliff:g id="nick">%2$s</xliff:g><br/><br/>
+                 <b>Alias:</b> <xliff:g id="nick">%2$s</xliff:g><br/><br/>
                  <b>Commits:</b> <xliff:g id="commits">%3$s</xliff:g>]]></string>
   <string name="contributions_info_menu">Informatie over bijdragers</string>
   <string name="contributions_info_msg">
@@ -942,6 +950,11 @@
   <string name="zen_mode_summary_selected_callers">geselecteerde bellers</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">geselecteerde berichten</string>
+  <!-- Allow vibration in zen mode -->
+  <string name="zen_mode_vibration">Trillen</string>
+  <string name="zen_mode_vibration_never">Niet trillen</string>
+  <string name="zen_mode_vibration_calls_only">Alleen trillen bij oproepen</string>
+  <string name="zen_mode_vibration_calls_and_notifications">Trillen bij oproepen en meldingen</string>
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Hoofd: %1$s W/kg</string>
@@ -1004,17 +1017,42 @@
   <string name="battery_info_status_charging_dock_ac">Opladen via dock (AC)</string>
   <!-- [CHAR_LIMIT=20] Battery use screen. Battery status shown in chart label when charging over Dock USB. -->
   <string name="battery_info_status_charging_dock_usb">Opladen via dock (USB)</string>
+  <string name="restrict_app_wlan_title">Wifi-gebruik van deze app uitschakelen</string>
+  <string name="restrict_app_wlan_summary">Voorkomen dat de app gebruik maakt van de wifi-gegevensverbinding</string>
+  <string name="restrict_app_cellular_title">Mobiel gegevensgebruik van deze app uitschakelen</string>
+  <string name="restrict_app_cellular_summary">Voorkomen dat de app gebruik maakt van de mobiele gegevensverbinding</string>
   <string name="privacy_guard_internet_category">Internet</string>
   <!-- Weather -->
   <string name="weather_settings_title">Weer</string>
+  <string name="weather_settings_no_services_prompt">Geen weeraanbiederservices geïnstalleerd</string>
+  <string name="weather_settings_button">Instellingen aanbieder</string>
+  <string name="weather_settings_activity_not_found">Kan instellingenmenu van deze aanbieder niet openen</string>
+  <string name="weather_settings_add_weather_provider">Weeraanbieder toevoegen</string>
   <string name="weather_settings_general_settings_title">Algemeen</string>
+  <string name="weather_settings_providers_title">Aanbieders</string>
+  <string name="weather_settings_temp_units_title">Eenheid temperatuur</string>
   <string name="weather_settings_temp_celsius">Celsius</string>
   <string name="weather_settings_temp_fahrenheit">Fahrenheit</string>
+  <string name="weather_settings_keyword">weer</string>
+  <string name="background_data_access">Toegang tot achtergrondgegevens</string>
+  <string name="allow_background_both">Via mobiele gegevens &amp; wifi</string>
   <string name="allow_background_wlan">Alleen via wifi</string>
   <string name="allow_background_none">Geen toegang</string>
+  <string name="mobile_data_alert">Waarschuwing mobiele gegevens</string>
+  <string name="mobile_data_alert_summary">Waarschuwen als de app een grote hoeveelheid gegevens gebruikt</string>
+  <string name="data_usage_menu_enable_data_alerts">Waarschuwingen over gegevensgebruik inschakelen</string>
+  <string name="data_usage_menu_disable_data_alerts">Waarschuwingen over gegevensgebruik uitschakelen</string>
+  <string name="data_usage_menu_reset_stats">Gegevensstatistieken opnieuw instellen</string>
+  <string name="reset_data_stats_msg">Dit zal alle oude en huidige gegevensgeschiedenis verwijderen</string>
   <string name="reset_stats_confirm">Bevestigen</string>
+  <string name="restrict_cellular_access_title">Toegang tot mobiele gegevens beperken</string>
+  <string name="restrict_cellular_access_summary">Gegevenstoegang op mobiele netwerken uitschakelen</string>
+  <string name="restrict_cellular_access_dialog_title">Mobiele gegevenstoegang beperken?</string>
+  <string name="restrict_cellular_access_dialog_summary">Deze functie kan ervoor zorgen dat een app die internet nodig heeft stopt met werken als er alleen een mobiel netwerk beschikbaar is.\n\nU kunt meer relevante instellingen voor gegevensgebruik vinden in de instellingen van de app.</string>
   <!-- Label for settings shortcut: carrier selection -->
+  <string name="shortcut_carrier_title">Netwerkproviders</string>
   <!-- title for lock screen blur preference -->
+  <string name="lockscreen_blur_enabled_title">Achtergrond vervagen</string>
   <!-- title for lock screen weather preference -->
   <string name="lockscreen_weather_enabled_title">Weer weergeven</string>
   <!-- Per app controls for LP keyguard notifications -->
@@ -1022,9 +1060,41 @@
   <string name="app_notification_show_on_keyguard_summary">Meldingen van deze app weergeven op het vergrendelingsscherm</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Permanente meldingen op vergrendelingsscherm uitschakelen</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">Permanente meldingen van deze app niet weergeven op het vergrendelingsscherm</string>
+  <!-- Notification sound timeout -->
+  <string name="app_notification_sound_timeout_title">Minimale tijd tussen meldingsgeluiden</string>
+  <string name="app_notification_sound_timeout_summary_template">Geluid of trillen niet meer dan één keer per <xliff:g id="duration">%1$s</xliff:g> toestaan</string>
+  <string name="app_notification_sound_timeout_value_none">Geen beperking</string>
+  <string name="app_notification_sound_timeout_value_10_seconds">10 seconden</string>
+  <string name="app_notification_sound_timeout_value_30_seconds">30 seconden</string>
+  <string name="app_notification_sound_timeout_value_1_minute">1 minuut</string>
+  <string name="app_notification_sound_timeout_value_5_minutes">5 minuten</string>
+  <string name="app_notification_sound_timeout_value_15_minutes">10 minuten</string>
+  <string name="app_notification_sound_timeout_value_30_minutes">30 minuten</string>
   <!-- CmRadioInfo -->
+  <string name="cm_radio_info_label">Geavanceerde modeminstellingen</string>
   <!-- Radio Control (IMS/MBN etc.) -->
+  <string name="cm_radio_info_mbn_auto_load_on_label">Automatisch laden MBN uitschakelen</string>
+  <string name="cm_radio_info_mbn_auto_load_off_label">Automatisch laden MBN inschakelen</string>
+  <string name="cm_radio_info_volte_avail_ovr_on_label">VoLTE foutopsporing uitschakelen</string>
+  <string name="cm_radio_info_volte_avail_ovr_off_label">VoLTE foutopsporing inschakelen</string>
+  <string name="cm_radio_info_vt_avail_ovr_on_label">VT foutopsporing uitschakelen</string>
+  <string name="cm_radio_info_vt_avail_ovr_off_label">VT foutopsporing inschakelen</string>
+  <string name="cm_radio_info_wfc_avail_ovr_on_label">WFC foutopsporing uitschakelen</string>
+  <string name="cm_radio_info_wfc_avail_ovr_off_label">WFC foutopsporing inschakelen</string>
+  <string name="cm_radio_info_adb_log_on_label">ADB radio logboek uitschakelen</string>
+  <string name="cm_radio_info_adb_log_off_label">ADB radio logboek inschakelen</string>
+  <string name="cm_radio_info_diag_log_on_label">Diag logboek uitschakelen</string>
+  <string name="cm_radio_info_diag_log_off_label">Diag logboek inschakelen</string>
   <!-- Lock screen wallpaper -->
+  <string name="lockscreen_wallpaper_title">Achtergrond</string>
+  <string name="not_available_with_app">Niet beschikbaar met %1$s</string>
   <!-- Format string for fingerprint location message -->
+  <string name="security_settings_fingerprint_enroll_find_sensor_message_cm">Vind de vingerafdruksensor op de <xliff:g id="sensor_location">%1$s</xliff:g> van uw telefoon.</string>
   <!-- Fingerprint sensor locations -->
+  <string name="security_settings_fingerprint_sensor_location_back">achterkant</string>
+  <string name="security_settings_fingerprint_sensor_location_front">voorkant</string>
+  <string name="security_settings_fingerprint_sensor_location_left">linkerkant</string>
+  <string name="security_settings_fingerprint_sensor_location_right">rechterkant</string>
+  <!-- SIM status format string -->
+  <string name="sim_status_format_string">Spraak: <xliff:g id="voice_status">%1$s</xliff:g> / Gegevens: <xliff:g id="data_status">%2$s</xliff:g></string>
 </resources>

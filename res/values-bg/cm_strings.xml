@@ -16,6 +16,17 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <plurals name="show_device_id_countdown_cm">
+    <item quantity="one">Вече сте на <xliff:g id="step_count">%1$d </xliff:g> крачка от включването на идентификационният номер на устройството.</item>
+    <item quantity="other">Вече сте на <xliff:g id="step_count">%1$d </xliff:g> крачки от включването на идентификационният номер на устройството.</item>
+  </plurals>
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <string name="show_device_id_copied_cm">Идентификационният номер на устройството: [<xliff:g id="device_id">%1$s </xliff:g>] e копиран в клипборда</string>
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <string name="show_device_id_failed_cm">Идентификационният номер на устройството не е достъпно в тава изграждане</string>
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
+  <string name="show_device_id_clipboard_label">Идентификационният номер на устройството</string>
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">Вече сте на <xliff:g id="step_count">%1$d </xliff:g> крачка от включването на \"Опции на програмиста\".</item>
@@ -38,6 +49,9 @@
   <string name="root_access_apps">Само за приложения</string>
   <string name="root_access_adb">Само за ADB</string>
   <string name="root_access_all">За приложения и ADB</string>
+  <!-- Preference link for root appops -->
+  <string name="root_appops_title">Управление на администраторски достъп</string>
+  <string name="root_appops_summary">Преглед и управление на правилата за администраторски достъп</string>
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -57,8 +71,8 @@
   <!-- Settings switch for updating Cyanogen recovery -->
   <string name="update_recovery_title">Актуализирай режима за възстановяване</string>
   <string name="update_recovery_summary">Актуализирай режима за възстановяване със системните актуализации</string>
-  <string name="update_recovery_on_warning">Забележка: Когато тази функция е активна, вашият режим за възстановяване ще бъде заменен с включения в текущата версия на операционната система.\n\nВашия режима за възстановяване ще се актуализира заедно с ъпгрейдите на вашата система, за да се гарантира съвместимост с бъдещите версии.\n\nИскате ли да активирате тази функция?</string>
-  <string name="update_recovery_off_warning">Предупреждение: Когато тази функция е забранена, вашия режима за възстановяване няма да бъде актуализиран с актуализациите на операционната система.\n\nБъдещи актуализации на операционната система не могат да се инсталират с остарели или потребителски режими за възстановяване.\n\nНаистина ли искате да забраните тази функция?</string>
+  <string name="update_recovery_on_warning">ЗАБЕЛЕЖКА: Когато тази функция е активна, вашият режим за възстановяване ще бъде заменен с включения в текущата версия на операционната система.\n\nВашият режим за възстановяване ще се актуализира заедно с надгражданията на вашата система, за да се гарантира съвместимост с бъдещи версии.\n\nИскате ли да активирате тази функция?</string>
+  <string name="update_recovery_off_warning">ПРЕДУПРЕЖДЕНИЕ: Когато тази функция е забранена, вашият режим за възстановяване няма да бъде актуализиран с актуализациите на операционната система.\n\nБъдещи актуализации на операционната система не могат да се инсталират с остарели или потребителски режими за възстановяване.\n\nНаистина ли искате да забраните тази функция?</string>
   <!-- Themes Settings -->
   <!-- Settings main menu entry -->
   <string name="themes_settings_title">Теми</string>
@@ -272,7 +286,7 @@
   <string name="notification_light_automagic">Автоматичен избор на цветове</string>
   <!-- Lights settings, LED notification -->
   <string name="led_notification_title">Настройки на светлината</string>
-  <string name="led_notification_text">Светлинните индикации са разрешени от настройките</string>
+  <string name="led_notification_text">LED светлини, разрешени в настройките</string>
   <string name="notification_light_no_apps_summary">За да добавите отделен контрол за приложение, активирайте \'%1$s\' и натиснете \'\u002b\' в лентата на менюто</string>
   <!-- Setting checkbox title for Whether to enable Android debugging support on the phone. -->
   <string name="enable_adb_cm">Режим за отстраняване на грешки</string>
@@ -426,7 +440,7 @@
   <string name="app_ops_labels_mock_location">Неистинско местоположение</string>
   <string name="app_ops_labels_read_external_storage">прочети външната памет</string>
   <string name="app_ops_labels_write_external_storage">пишете на външната памет</string>
-  <string name="app_ops_labels_turn_screen_on">включване на екрана</string>
+  <string name="app_ops_labels_turn_screen_on">Включване на екрана</string>
   <string name="app_ops_labels_get_accounts">Вземи акаунти</string>
   <string name="app_ops_labels_toggle_wifi">активирай/деактивирай Wi-Fi</string>
   <string name="app_ops_labels_toggle_bluetooth">Превключване на Bluetooth</string>
@@ -538,7 +552,7 @@
   <string name="double_tap_to_sleep_summary">Двукратно почукване върху лентата на състоянието изключва на дисплея</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Предотвратяване на случайно събуждане</string>
-  <string name="proximity_wake_summary">Проверява сензора за близост преди включване на екрана</string>
+  <string name="proximity_wake_summary">Проверете сензора за близост за събуждане чрез жестове</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Събуждане при зареждане</string>
   <string name="wake_when_plugged_or_unplugged_summary">Включване на екрана, когато включвате или изключвате източник на захранване</string>
@@ -548,8 +562,8 @@
   <!-- Volume settings - Volume adjustment sound -->
   <string name="volume_adjust_sounds_title">Звук при регулиране на силата на звука</string>
   <!-- Hardware tunables - Vibrator intensity -->
-  <string name="vibrator_intensity_title">Честота на вибрацията</string>
-  <string name="vibrator_warning">Стойности по-високи от %1$d не се препоръчват</string>
+  <string name="vibrator_intensity_title">Мощност на вибрация</string>
+  <string name="vibrator_warning">Стойности по-високи от %1$d%% не са препоръчителни</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Калибриране на цвета</string>
   <string name="color_calibration_summary">Калибриране на цветовете на екрана</string>
@@ -572,23 +586,6 @@
   <string name="display_rotation_90_title">90 градуса</string>
   <string name="display_rotation_180_title">180 градуса</string>
   <string name="display_rotation_270_title">270 градуса</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Цвят на екрана</string>
-  <string name="screencolor_summary">Настройване на отенъка, наситеността, контраста или интензитета на екрана</string>
-  <string name="custom_screencolor">Персонализиран цвят на екрана</string>
-  <string name="screencolor_save">Запиши</string>
-  <string name="screencolor_cancel">Отказ</string>
-  <string name="restore_preview">Изглед на картините по подразбиране</string>
-  <string name="selectnewfile_menu">Виж нова снимка от галерията</string>
-  <string name="selectfile_menu">Виж снимка от галерията</string>
-  <string name="restore_default_str">Нулиране</string>
-  <string name="hue_str">Отенък: <xliff:g id="hue_value">%1$s </xliff:g></string>
-  <string name="saturation_str">Наситеност: <xliff:g id="saturation_value">%1$s </xliff:g></string>
-  <string name="contrast_str">Контраст: <xliff:g id="contrast_value">%1$s </xliff:g></string>
-  <string name="intensity_str">Интензитет: <xliff:g id="intensity_str_value">%1$s </xliff:g></string>
-  <string name="screen_color_standard">Стандартен</string>
-  <string name="screen_color_vivid">Ярък</string>
-  <string name="screen_color_custom">По избор</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">Оптимизира настройките на екрана, въз основа на времето от деня и условията на околната среда за да се подобри четливостта и да намали умората на очите</string>
   <string name="live_display_mode">Режим на екрана</string>
@@ -618,6 +615,15 @@
   <string name="live_display_color_profile_photography_summary">Перфектния цвят за възпроизвеждане на снимки</string>
   <string name="live_display_color_profile_basic_title">Основни</string>
   <string name="live_display_color_profile_basic_summary">Използвате дисплея не калибриран</string>
+  <string name="live_display_color_profile_adaptive_title">Адаптивно</string>
+  <string name="live_display_color_profile_adaptive_summary">Цветовете се адаптират към условията на околната среда</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="picture_adjustment_title">Настройка на изображението</string>
+  <string name="picture_adjustment_summary">Настройте нюанс, насищане, интензивност и контраст</string>
+  <string name="adj_hue_title">Отенък</string>
+  <string name="adj_saturation_title">Насищане</string>
+  <string name="adj_intensity_title">Интензивност</string>
+  <string name="adj_contrast_title">Контраст</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Селектор на икона</string>
   <string name="ime_switcher_notify_summary">Покажи метода на въвеждане на селектирана икона</string>
@@ -693,8 +699,8 @@
   <string name="status_bar_title">Лента на състоянието</string>
   <string name="status_bar_toggle_brightness">Контрол на яркостта</string>
   <string name="status_bar_toggle_brightness_summary">Настройване на яркостта чрез плъзгане в лентата на състоянието</string>
-  <string name="status_bar_notif_count_title">Показване броя на известията</string>
-  <string name="status_bar_notif_count_summary">Показва броя на новите известия</string>
+  <string name="status_bar_notif_count_title">Брой известия</string>
+  <string name="status_bar_notif_count_summary">Показва броя на новите известия в лентата на състоянието</string>
   <string name="status_bar_quick_qs_pulldown_title">Бързи настройки</string>
   <string name="status_bar_quick_qs_pulldown_summary">Дръпнете %1$s лентата на състоянието за бързи настройки</string>
   <string name="status_bar_quick_qs_pulldown_summary_left">Вляво</string>
@@ -944,6 +950,11 @@
   <string name="zen_mode_summary_selected_callers">избрани повиквания</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">избрани съобщения</string>
+  <!-- Allow vibration in zen mode -->
+  <string name="zen_mode_vibration">Вибрация</string>
+  <string name="zen_mode_vibration_never">Без вибрация</string>
+  <string name="zen_mode_vibration_calls_only">Вибрирация само при обаждания</string>
+  <string name="zen_mode_vibration_calls_and_notifications">Вибрация само при обаждания и известия</string>
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Глава: %1$s W/kg</string>
@@ -1049,6 +1060,16 @@
   <string name="app_notification_show_on_keyguard_summary">Показвай известия от това приложение при заключен екран</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Забрани постоянна нотификация при заключен екран</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">Никога не показвай постоянни нотификации от това приложение при заключен екран</string>
+  <!-- Notification sound timeout -->
+  <string name="app_notification_sound_timeout_title">Минимално време между напомняния</string>
+  <string name="app_notification_sound_timeout_summary_template">Разреши звуци или вибрации, но не повече от веднъж на всеки <xliff:g id="duration">%1$s </xliff:g></string>
+  <string name="app_notification_sound_timeout_value_none">Без ограничение</string>
+  <string name="app_notification_sound_timeout_value_10_seconds">10 секунди</string>
+  <string name="app_notification_sound_timeout_value_30_seconds">30 секунди</string>
+  <string name="app_notification_sound_timeout_value_1_minute">1 минута</string>
+  <string name="app_notification_sound_timeout_value_5_minutes">5 минути</string>
+  <string name="app_notification_sound_timeout_value_15_minutes">10 минути</string>
+  <string name="app_notification_sound_timeout_value_30_minutes">30 минути</string>
   <!-- CmRadioInfo -->
   <string name="cm_radio_info_label">Подобрен радио контрол</string>
   <!-- Radio Control (IMS/MBN etc.) -->
@@ -1074,4 +1095,6 @@
   <string name="security_settings_fingerprint_sensor_location_front">Отпред</string>
   <string name="security_settings_fingerprint_sensor_location_left">Лява страна</string>
   <string name="security_settings_fingerprint_sensor_location_right">Дясна страна</string>
+  <!-- SIM status format string -->
+  <string name="sim_status_format_string">Глас: <xliff:g id="voice_status">%1$s</xliff:g> / Данни: <xliff:g id="data_status">%2$s</xliff:g></string>
 </resources>

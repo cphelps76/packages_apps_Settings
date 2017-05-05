@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">Ești la <xliff:g id="step_count">%1$d</xliff:g> pas distanță de a activa opțiunile de dezvoltator.</item>
@@ -38,6 +42,7 @@
   <string name="root_access_apps">Doar aplicații</string>
   <string name="root_access_adb">Doar ADB</string>
   <string name="root_access_all">Aplicații și ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -507,7 +512,6 @@
   <string name="double_tap_to_sleep_summary">Atingeți de două ori bara de stare pentru a dezactiva afișarea</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Previne trezirea accidentală</string>
-  <string name="proximity_wake_summary">Verificați senzorul de proximitate înainte de trezirea ecranului</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Trezire la alimentare</string>
   <string name="wake_when_plugged_or_unplugged_summary">Aprinde ecranul când se conectează sau deconectează sursa de alimentare</string>
@@ -518,7 +522,6 @@
   <string name="volume_adjust_sounds_title">Sunet ajustare volum</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Intensitate vibrare</string>
-  <string name="vibrator_warning">Valorile mai mari de %1$d nu sunt recomandate</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Calibrare culoare</string>
   <string name="color_calibration_summary">Calibrare culori pe ecran</string>
@@ -541,23 +544,6 @@
   <string name="display_rotation_90_title">90 de grade</string>
   <string name="display_rotation_180_title">180 de grade</string>
   <string name="display_rotation_270_title">270 de grade</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Culoare ecran</string>
-  <string name="screencolor_summary">Reglează nuanța, saturația, contrastul sau intensitatea ecranului</string>
-  <string name="custom_screencolor">Culoare ecran personalizată</string>
-  <string name="screencolor_save">Salvaţi</string>
-  <string name="screencolor_cancel">Revocaţi</string>
-  <string name="restore_preview">Vezi imaginea implicită</string>
-  <string name="selectnewfile_menu">Vezi noua imagine din Galerie</string>
-  <string name="selectfile_menu">Vezi imaginea din Galerie</string>
-  <string name="restore_default_str">Resetare</string>
-  <string name="hue_str">Nuanța: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Saturația: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Contrastul: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Intensitatea: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">Standard</string>
-  <string name="screen_color_vivid">Viu</string>
-  <string name="screen_color_custom">Particularizat</string>
   <!-- LiveDisplay -->
   <string name="live_display_mode">Mod de afișare</string>
   <string name="live_display_color_temperature_title">Temperatura culorii</string>
@@ -578,6 +564,9 @@
   <string name="live_display_color_profile_astronomy_title">Astronomie</string>
   <string name="live_display_color_profile_photography_title">Fotografie</string>
   <string name="live_display_color_profile_basic_summary">Utilizează ecranul necalibrat</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">Saturație</string>
+  <string name="adj_contrast_title">Contrast</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Selectorul pictogramă</string>
   <string name="ime_switcher_notify_summary">Afișează pictograma selectorului metodei de introducere</string>
@@ -880,6 +869,7 @@
   <string name="zen_mode_summary_selected_callers">apelanții selectați</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">mesajele selectate</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Cap: %1$s W/kg</string>
@@ -938,9 +928,11 @@
   <string name="app_notification_show_on_keyguard_summary">Afișează notificări de la acestă aplicație pe ecranul de blocare</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Dezactivați notificarea persistentă pe ecranul de blocare</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">Nu arată notificări persistente de la acestă aplicație pe ecranul de blocare</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

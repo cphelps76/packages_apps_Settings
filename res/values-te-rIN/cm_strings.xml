@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">డెవలప్మెంట్ సెట్టింగులను ప్రారంభించడానికి ఇప్పుడు మీరు <xliff:g id="step_count">%1$d</xliff:g> అడుగు దూరంలో ఉన్నారు.</item>
@@ -38,6 +42,7 @@
   <string name="root_access_apps">అనువర్తనాలు మాత్రమే</string>
   <string name="root_access_adb">ADB మాత్రమే</string>
   <string name="root_access_all">అనువర్తనాలు మరియు ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -535,7 +540,6 @@
   <string name="double_tap_to_sleep_summary">డిస్ప్లేను ఆపివేయడానికి స్టేటస్ బార్ పైన రెండుసార్లు ట్యాప్ చేయండి</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">అప్రయత్నంగా మేల్కొల్పబడటాన్ని నివారించండి</string>
-  <string name="proximity_wake_summary">స్క్రీనును ఉపయోగించే ముందు సమీప సెన్సారును పరిశీలించండి</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">మేల్కొలుపు ప్లగ్</string>
   <string name="wake_when_plugged_or_unplugged_summary">విద్యుత్ ఆధారాన్ని అనుసంధానం చేసేటప్పుడు లేదా తొలిగించేటప్పుడు స్క్రీనును ఆన్ చేయండి</string>
@@ -546,7 +550,6 @@
   <string name="volume_adjust_sounds_title">వాల్యూమ్ సవరణ శబ్దాలు</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">వైబ్రేటర్ తీవ్రత</string>
-  <string name="vibrator_warning">%1$d కంటే ఎక్కువగా ఉండే విలువలు సిఫార్సు చేయబడవు</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">రంగు క్రమాంకనం</string>
   <string name="color_calibration_summary">ఆన్-స్క్రీన్ రంగులను క్రమాంకనం చేయుము</string>
@@ -569,23 +572,6 @@
   <string name="display_rotation_90_title">90 డిగ్రీలు</string>
   <string name="display_rotation_180_title">180 డిగ్రీలు</string>
   <string name="display_rotation_270_title">270 డిగ్రీలు</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">స్క్రీన్ రంగు</string>
-  <string name="screencolor_summary">స్క్రీన్ వర్ణం, సంతృప్తత, వర్ణ వ్యత్యాసం లేదా తీవ్రతలను ట్యూన్ చేయుము</string>
-  <string name="custom_screencolor">స్క్రీన్ రంగును అనుకూలితం చేయుము</string>
-  <string name="screencolor_save">సేవ్ చేయి</string>
-  <string name="screencolor_cancel">రద్దు చేయి</string>
-  <string name="restore_preview">స్వయంసిద్ధ చిత్రాన్ని వీక్షించుము</string>
-  <string name="selectnewfile_menu">గ్యాలరీ నుండి క్రొత్త చిత్రాన్ని వీక్షించుము</string>
-  <string name="selectfile_menu">గ్యాలరీ నుండి చిత్రాన్ని వీక్షించుము</string>
-  <string name="restore_default_str">రీసెట్ చేయి</string>
-  <string name="hue_str">వర్ణం: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">సంతృప్తత: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">వర్ణ వ్యత్యాసం: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">తీవ్రత: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">ప్రామాణిక</string>
-  <string name="screen_color_vivid">ప్రకాశవంతమైన</string>
-  <string name="screen_color_custom">అనుకూలం</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">చదవడానికి అనుకూలంగా ఉండే విధంగా మరియు కళ్ళ పైన ఒత్తిడిని తగ్గించేందుకు రోజు యొక్క సమయం మరియు పరిసర పరిస్థితులను బట్టి సమయాన్ని సెట్ చేయండి</string>
   <string name="live_display_mode">ప్రదర్శిత మోడ్</string>
@@ -615,6 +601,9 @@
   <string name="live_display_color_profile_photography_summary">ఫోటోల కొరకు సరైన వర్ణ పునరుత్పత్తి</string>
   <string name="live_display_color_profile_basic_title">ప్రాధమిక</string>
   <string name="live_display_color_profile_basic_summary">అన్‌కాలిబ్రేటెడ్ ప్రదర్శనను ఉపయోగించుము</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">సంతృప్తత</string>
+  <string name="adj_contrast_title">వ్యత్యాసం</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">సెలెక్టర్ చిహ్నం</string>
   <string name="ime_switcher_notify_summary">ఇన్పుట్ ప్రక్రియను ఎంచుకునే చిహ్నాన్ని ప్రదర్శించుము</string>
@@ -940,6 +929,7 @@
   <string name="zen_mode_summary_selected_callers">ఎంచుకున్న కాలర్‌లు</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">సందేశాలు ఎంచుకోబడ్డాయి</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">ప్రారంభం: %1$s W/kg</string>
@@ -1013,9 +1003,11 @@
   <string name="app_notification_show_on_keyguard_summary">ఈ ప్రోగ్రాం నుండి వచ్చే నోటిఫికేషన్లను లాక్ స్క్రీన్ పైన చూపుము</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">లాక్ స్క్రీన్ పైన నిరంతర నోటిఫికేషన్లను నిలిపివేయుము</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">ఎప్పుడూ కూడా ఈ ప్రోగ్రాం నుండి వచ్చే నిరంతర నోటిఫికేషన్లను లాక్ స్క్రీన్ పైన చూపవద్దు</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

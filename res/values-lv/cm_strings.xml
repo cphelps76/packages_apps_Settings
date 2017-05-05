@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Confirmation that developer settings are enabled -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Okay we get it, stop pressing, you already have it on -->
@@ -30,6 +34,7 @@
   <string name="root_access_apps">Tikai lietotnēm</string>
   <string name="root_access_adb">Tikai ADB</string>
   <string name="root_access_all">Lietotnēm un ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <!-- About phone screen, CyanogenMod version -->
   <string name="mod_version">CyanogenMod versija</string>
@@ -340,7 +345,6 @@
   <string name="double_tap_to_sleep_title">Lai iemidzinātu, veiciet dubultu piesitienu</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Novērsiet nejaušu pamodināšanu</string>
-  <string name="proximity_wake_summary">Pirms pamodināt ekrānu, pārbaudīt tuvuma sensoru</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Pamodināt, iespraužot vadu</string>
   <string name="wake_when_plugged_or_unplugged_summary">Pievienojot, vai atvienojot no barošanas avota, ieslēgt ekrānu</string>
@@ -350,7 +354,6 @@
   <!-- Volume settings - Volume adjustment sound -->
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Vibrāciju stiprums</string>
-  <string name="vibrator_warning">Vērtības, lielākas par %1$d, nav ieteicamas</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Krāsu kalibrēšana</string>
   <string name="color_calibration_summary">Kalibrēt ekrāna krāsas</string>
@@ -370,21 +373,8 @@
   <string name="display_rotation_90_title">90 grādi</string>
   <string name="display_rotation_180_title">180 grādi</string>
   <string name="display_rotation_270_title">270 grādi</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Ekrāna krāsa</string>
-  <string name="custom_screencolor">Pielāgota ekrāna krāsa</string>
-  <string name="screencolor_save">Saglabāt</string>
-  <string name="screencolor_cancel">Atcelt</string>
-  <string name="restore_preview">Skatīt noklusēto attēlu</string>
-  <string name="selectnewfile_menu">Skatīt jaunu attēlu no galerijas</string>
-  <string name="selectfile_menu">Skatīt attēlu no galerijas</string>
-  <string name="restore_default_str">Atstatīt</string>
-  <string name="hue_str">Tonis: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Piesātinājums: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Kontrasts: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Spilgtums: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_custom">Pielāgots</string>
   <!-- LiveDisplay -->
+  <!-- LiveDisplay : Picture Adjustment -->
   <!-- Whether to display IME switcher notifcation -->
   <!-- Heads up -->
   <!-- Bluetooth settings.  A checkbox to set if we should accept all the file types regardless of their presence in MIME type whitelist -->
@@ -522,6 +512,7 @@
   <!-- [CHAR LIMIT=50] Like zen_mode_events, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_callers, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Galva: %1$s W/kg</string>
@@ -554,9 +545,11 @@
   <!-- title for lock screen blur preference -->
   <!-- title for lock screen weather preference -->
   <!-- Per app controls for LP keyguard notifications -->
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

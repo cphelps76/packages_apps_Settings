@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">Ahora estás a <xliff:g id="step_count">%1$d </xliff:g> paso de activar las configuraciones de desarrollo.</item>
@@ -38,6 +42,7 @@
   <string name="root_access_apps">Solo aplicaciones</string>
   <string name="root_access_adb">Solo ADB</string>
   <string name="root_access_all">Aplicaciones y ADB</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -538,7 +543,6 @@
   <string name="double_tap_to_sleep_summary">Apagar la pantalla mediante un doble toque sobre la barra de estado</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Prevenir activación accidental</string>
-  <string name="proximity_wake_summary">Comprobar el sensor de proximidad antes de encender la pantalla</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Activar con cargador</string>
   <string name="wake_when_plugged_or_unplugged_summary">Encender la pantalla al conectar o desconectar el cargador</string>
@@ -549,7 +553,6 @@
   <string name="volume_adjust_sounds_title">Sonidos de ajuste de volumen</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Intensidad de vibración</string>
-  <string name="vibrator_warning">No son recomendables valores superiores a %1$d</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Calibración de color</string>
   <string name="color_calibration_summary">Calibrar los colores de la pantalla</string>
@@ -572,23 +575,6 @@
   <string name="display_rotation_90_title">90 grados</string>
   <string name="display_rotation_180_title">180 grados</string>
   <string name="display_rotation_270_title">270 grados</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Color de pantalla</string>
-  <string name="screencolor_summary">Ajustar el matiz de la pantalla, saturación, contraste o intensidad</string>
-  <string name="custom_screencolor">Personalizar color de pantalla</string>
-  <string name="screencolor_save">Guardar</string>
-  <string name="screencolor_cancel">Cancelar</string>
-  <string name="restore_preview">Ver imagen predeterminada</string>
-  <string name="selectnewfile_menu">Ver nueva imagen desde la galería</string>
-  <string name="selectfile_menu">Ver imagen desde la galería</string>
-  <string name="restore_default_str">Restablecer</string>
-  <string name="hue_str">Color: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Saturación: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Contraste: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Intensidad: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">Estándar</string>
-  <string name="screen_color_vivid">Intenso</string>
-  <string name="screen_color_custom">Personalizado</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">Optimizar la pantalla según la hora del día y las condiciones ambientales para mejorar la legibilidad y reducir la fatiga visual</string>
   <string name="live_display_mode">Modo de visualización</string>
@@ -618,6 +604,9 @@
   <string name="live_display_color_profile_photography_summary">Reproducción de color perfecta para fotos</string>
   <string name="live_display_color_profile_basic_title">Básico</string>
   <string name="live_display_color_profile_basic_summary">Utilizar pantalla sin calibrar</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">Saturación</string>
+  <string name="adj_contrast_title">Contraste</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Icono de selección</string>
   <string name="ime_switcher_notify_summary">Mostrar el icono de selección del método de entrada</string>
@@ -944,6 +933,7 @@
   <string name="zen_mode_summary_selected_callers">llamadores seleccionados</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">mensajes seleccionados</string>
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Cabeza: %1$s W/kg</string>
@@ -1048,9 +1038,11 @@
   <string name="app_notification_show_on_keyguard_summary">Mostrar notificaciones de esta aplicación en la pantalla bloqueada</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Desactivar notificaciones persistentes en la pantalla bloqueada</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">No mostrar nunca notificaciones persistentes de esta aplicación en la pantalla bloqueada</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

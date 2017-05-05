@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">شما اکنون <xliff:g id="step_count">%1$d</xliff:g> ضربه با فعال‌سازی ابزارهای توسعه فاصله دارید.</item>
@@ -38,6 +42,7 @@
   <string name="root_access_apps">فقط برنامه‌ها</string>
   <string name="root_access_adb">فقط ای‌دی‌بی</string>
   <string name="root_access_all">برنامه‌ها و ای‌دی‌بی</string>
+  <!-- Preference link for root appops -->
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">ان‌اف‌سی</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -472,7 +477,6 @@
   <string name="double_tap_to_sleep_summary">خاموش شدن صفحه با دوبار ضربه زدن روی نوار وضعیت</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">جلوگیری از بیدار شدن تصادفی</string>
-  <string name="proximity_wake_summary">بررسی حسگر مجاورت قبل از روشن کردن صفحه</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">بیدار شدن هنگام اتصال به برق</string>
   <string name="wake_when_plugged_or_unplugged_summary">روشن شدن صفحه هنگام اتصال یا قطع اتصال منبع برق</string>
@@ -483,7 +487,6 @@
   <string name="volume_adjust_sounds_title">تن تنظیم بلندی صدا</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">شدت لرزش</string>
-  <string name="vibrator_warning">مقادیر بالاتر از %1$d توصیه نمی‌شود</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">تنظیم رنگ</string>
   <string name="color_calibration_summary">تنظیم رنگ‌های خروجی صفحه</string>
@@ -506,23 +509,6 @@
   <string name="display_rotation_90_title">۹۰ درجه</string>
   <string name="display_rotation_180_title">۱۸۰ درجه</string>
   <string name="display_rotation_270_title">۲۷۰ درجه</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">رنگ صفحه</string>
-  <string name="screencolor_summary">تنظیم ته‌رنگ، اشباع، کنتراست یا شدت رنگ صفحه</string>
-  <string name="custom_screencolor">رنگ سفارشی صفحه</string>
-  <string name="screencolor_save">ذخیره</string>
-  <string name="screencolor_cancel">لغو</string>
-  <string name="restore_preview">مشاهده تصویر پیش‌فرض</string>
-  <string name="selectnewfile_menu">مشاهده تصویر جدید از گالری</string>
-  <string name="selectfile_menu">مشاهده تصویر از گالری</string>
-  <string name="restore_default_str">تنظیم مجدد</string>
-  <string name="hue_str">ته‌رنگ: <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">اشباع: <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">کنتراست: <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">شدت رنگ: <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">استاندارد</string>
-  <string name="screen_color_vivid">واضح</string>
-  <string name="screen_color_custom">شخصی</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">بهینه کردن صفحه بر اساس ساعات روز و شرایط محیطی برای افزایش خوانایی و کاهش خستگی چشم</string>
   <string name="live_display_mode">حالت نمایش</string>
@@ -547,6 +533,9 @@
   <string name="live_display_color_profile_cinema_title">سینما</string>
   <string name="live_display_color_profile_astronomy_title">نجوم</string>
   <string name="live_display_color_profile_astronomy_summary">قرمز پررنگ برای مراقبت از بینایی در شب</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">اشباع</string>
+  <string name="adj_contrast_title">کنتراست</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">آیکون انتخابگر</string>
   <string name="ime_switcher_notify_summary">نمایش آیکون انتخابگر روش ورودی</string>
@@ -842,6 +831,7 @@
   <!-- [CHAR LIMIT=50] Like zen_mode_events, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_callers, but part of a list, so lower case if needed -->
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
+  <!-- Allow vibration in zen mode -->
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">سر: %1$s W/kg</string>
@@ -902,9 +892,11 @@
   <string name="app_notification_show_on_keyguard_summary">نمایش اعلان‌های این برنامه در قفل صفحه</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">غیرفعال کردن اعلان‌های پایدار در قفل صفحه</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">اعلان‌های پایدار این برنامه هرگز در قفل صفحه نشان داده نشود</string>
+  <!-- Notification sound timeout -->
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
   <!-- Format string for fingerprint location message -->
   <!-- Fingerprint sensor locations -->
+  <!-- SIM status format string -->
 </resources>

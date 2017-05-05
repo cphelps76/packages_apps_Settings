@@ -16,6 +16,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to show Device Id -->
+  <!--  Device Info screen. Confirmation that Device ID is copied to clipboard -->
+  <!--  Device Info screen. Confirmation that Device ID is not available -->
+  <!-- [CHAR LIMIT=NONE] Device Info screen. Label for the deviceID text put to clipboard -->
   <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
   <plurals name="show_dev_countdown_cm">
     <item quantity="one">Vous êtes maintenant à <xliff:g id="step_count">%1$d</xliff:g> étape de l\'activation des paramètres de développement.
@@ -39,6 +43,9 @@ Vous êtes maintenant à <xliff:g id="step_count">%1$d</xliff:g> étapes de l\'a
   <string name="root_access_apps">Applications uniquement</string>
   <string name="root_access_adb">ADB uniquement</string>
   <string name="root_access_all">Applications et ADB</string>
+  <!-- Preference link for root appops -->
+  <string name="root_appops_title">Gérer les accès root</string>
+  <string name="root_appops_summary">Visualiser et contrôler les règles root</string>
   <!-- NFC PreferenceCategory title -->
   <string name="nfc_title_category">NFC</string>
   <!-- About phone screen, CyanogenMod version -->
@@ -539,7 +546,6 @@ Vous êtes maintenant à <xliff:g id="step_count">%1$d</xliff:g> étapes de l\'a
   <string name="double_tap_to_sleep_summary">Appui double sur la barre d\'état pour éteindre l\'écran</string>
   <!-- Proximity wake -->
   <string name="proximity_wake_title">Empêcher un réveil accidentel</string>
-  <string name="proximity_wake_summary">Vérifier le capteur de proximité avant de réveiller l\'écran</string>
   <!-- Turn on display when power connected; turn off display when power disconnected -->
   <string name="wake_when_plugged_or_unplugged_title">Réveiller au branchement</string>
   <string name="wake_when_plugged_or_unplugged_summary">Allumer l\'écran lors du branchement ou du débranchement d\'une source d\'alimentation</string>
@@ -550,7 +556,6 @@ Vous êtes maintenant à <xliff:g id="step_count">%1$d</xliff:g> étapes de l\'a
   <string name="volume_adjust_sounds_title">Son lors du réglage du volume</string>
   <!-- Hardware tunables - Vibrator intensity -->
   <string name="vibrator_intensity_title">Intensité du vibreur</string>
-  <string name="vibrator_warning">Les valeurs supérieures à %1$d ne sont pas recommandées</string>
   <!-- Hardware tunables - Color calibration -->
   <string name="color_calibration_title">Calibrage des couleurs</string>
   <string name="color_calibration_summary">Calibrer les couleurs de l\'écran</string>
@@ -573,23 +578,6 @@ Vous êtes maintenant à <xliff:g id="step_count">%1$d</xliff:g> étapes de l\'a
   <string name="display_rotation_90_title">90 degrés</string>
   <string name="display_rotation_180_title">180 degrés</string>
   <string name="display_rotation_270_title">270 degrés</string>
-  <!-- Display settings.  Screen color. -->
-  <string name="screencolor">Couleur de l\'écran</string>
-  <string name="screencolor_summary">Régler la teinte, la saturation, le contraste ou l\'intensité de l\'écran</string>
-  <string name="custom_screencolor">Couleur d\'écran personnalisée</string>
-  <string name="screencolor_save">Enregistrer</string>
-  <string name="screencolor_cancel">Annuler</string>
-  <string name="restore_preview">Afficher l\'image par défaut</string>
-  <string name="selectnewfile_menu">Afficher la nouvelle image depuis la galerie</string>
-  <string name="selectfile_menu">Afficher l\'image depuis la galerie</string>
-  <string name="restore_default_str">Réinitialiser</string>
-  <string name="hue_str">Teinte : <xliff:g id="hue_value">%1$s</xliff:g></string>
-  <string name="saturation_str">Saturation : <xliff:g id="saturation_value">%1$s</xliff:g></string>
-  <string name="contrast_str">Contraste : <xliff:g id="contrast_value">%1$s</xliff:g></string>
-  <string name="intensity_str">Intensité : <xliff:g id="intensity_str_value">%1$s</xliff:g></string>
-  <string name="screen_color_standard">Standard</string>
-  <string name="screen_color_vivid">Vive</string>
-  <string name="screen_color_custom">Personnalisée</string>
   <!-- LiveDisplay -->
   <string name="live_display_summary">Optimiser votre écran en fonction de l\'heure et des conditions ambiantes pour améliorer la lisibilité et réduire la fatigue oculaire</string>
   <string name="live_display_mode">Mode d\'affichage</string>
@@ -619,6 +607,10 @@ Vous êtes maintenant à <xliff:g id="step_count">%1$d</xliff:g> étapes de l\'a
   <string name="live_display_color_profile_photography_summary">Reproduction parfaite des couleurs pour les photos</string>
   <string name="live_display_color_profile_basic_title">Basique</string>
   <string name="live_display_color_profile_basic_summary">Utiliser l\'écran sans étalonnage</string>
+  <!-- LiveDisplay : Picture Adjustment -->
+  <string name="adj_saturation_title">Saturation</string>
+  <string name="adj_intensity_title">Intensité</string>
+  <string name="adj_contrast_title">Contraste</string>
   <!-- Whether to display IME switcher notifcation -->
   <string name="ime_switcher_notify">Icône du sélecteur</string>
   <string name="ime_switcher_notify_summary">Afficher l\'icône du sélecteur de mode de saisie</string>
@@ -944,6 +936,11 @@ Vous êtes maintenant à <xliff:g id="step_count">%1$d</xliff:g> étapes de l\'a
   <string name="zen_mode_summary_selected_callers">appelants sélectionnés</string>
   <!-- [CHAR LIMIT=50] Like zen_mode_summary_selected_messages, but part of a list, so lower case if needed -->
   <string name="zen_mode_summary_selected_messages">messages sélectionnés</string>
+  <!-- Allow vibration in zen mode -->
+  <string name="zen_mode_vibration">Vibreur</string>
+  <string name="zen_mode_vibration_never">Ne pas vibrer</string>
+  <string name="zen_mode_vibration_calls_only">Vibrer uniquement pour les appels</string>
+  <string name="zen_mode_vibration_calls_and_notifications">Vibrer pour les appels et les notifications</string>
   <!-- About phone settings screen, setting option dialog title to show regulatory information [CHAR LIMIT=25] -->
   <!-- SAR information -->
   <string name="maximum_head_level">Tête : %1$s W/kg</string>
@@ -1048,9 +1045,26 @@ Vous êtes maintenant à <xliff:g id="step_count">%1$d</xliff:g> étapes de l\'a
   <string name="app_notification_show_on_keyguard_summary">Afficher les notifications de cette application sur l\'écran de verrouillage</string>
   <string name="app_notification_no_ongoing_on_keyguard_title">Désactiver les notifications persistantes sur l\'écran de verrouillage</string>
   <string name="app_notification_no_ongoing_on_keyguard_summary">Ne jamais afficher les notifications persistantes de cette application sur l\'écran de verrouillage</string>
+  <!-- Notification sound timeout -->
+  <string name="app_notification_sound_timeout_title">Temps minimum entre les sons de notification</string>
+  <string name="app_notification_sound_timeout_summary_template">Ne pas permettre plus d\'un son ou une vibration toutes les <xliff:g id="duration">%1$s</xliff:g></string>
+  <string name="app_notification_sound_timeout_value_none">Aucune restriction</string>
+  <string name="app_notification_sound_timeout_value_10_seconds">10 secondes</string>
+  <string name="app_notification_sound_timeout_value_30_seconds">30 secondes</string>
+  <string name="app_notification_sound_timeout_value_1_minute">1 minute</string>
+  <string name="app_notification_sound_timeout_value_5_minutes">5 minutes</string>
+  <string name="app_notification_sound_timeout_value_15_minutes">10 minutes</string>
+  <string name="app_notification_sound_timeout_value_30_minutes">30 minutes</string>
   <!-- CmRadioInfo -->
   <!-- Radio Control (IMS/MBN etc.) -->
   <!-- Lock screen wallpaper -->
+  <string name="lockscreen_wallpaper_title">Fond d\'écran</string>
   <!-- Format string for fingerprint location message -->
+  <string name="security_settings_fingerprint_enroll_find_sensor_message_cm">Localiser le capteur d’empreintes digitales sur <xliff:g id="sensor_location">%1$s </xliff:g> de votre téléphone.</string>
   <!-- Fingerprint sensor locations -->
+  <string name="security_settings_fingerprint_sensor_location_back">l\'arrière</string>
+  <string name="security_settings_fingerprint_sensor_location_front">la façade</string>
+  <string name="security_settings_fingerprint_sensor_location_left">le côté gauche</string>
+  <string name="security_settings_fingerprint_sensor_location_right">le côté droit</string>
+  <!-- SIM status format string -->
 </resources>
